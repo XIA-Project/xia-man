@@ -1,0 +1,47 @@
+.TH "HandlerCallArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HandlerCallArg \- Parser class for handler call specifications\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <handlercall\&.hh>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHandlerCallArg\fP (int f)"
+.br
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, \fBHandlerCall\fP &result, const \fBArgContext\fP &args)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBflags\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Parser class for handler call specifications\&. 
+
+The constructor argument should generally be either HandlerCall::writable or HandlerCall::readable\&. For example:
+.PP
+.PP
+.nf
+HandlerCall end_h;
+\&.\&.\&. Args(\&.\&.\&.) \&.\&.\&.
+   \&.read("END_CALL", HandlerCallArg(HandlerCall::writable), end_h)
+   \&.\&.\&.
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

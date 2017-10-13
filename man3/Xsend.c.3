@@ -1,0 +1,100 @@
+.TH "xsocket/Xsend.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xsend.c \- \fBXsend()\fP, \fBXsendto()\fP - - send a message on a socket\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+\fC#include 'Xinit\&.h'\fP
+.br
+\fC#include 'Xutil\&.h'\fP
+.br
+\fC#include 'errno\&.h'\fP
+.br
+\fC#include 'dagaddr\&.hpp'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBfmsg\fP   '%s is not currently supported, clearing\&.\&.\&.\\n'"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXsend\fP (int sockfd, const void *buf, size_t len, int flags)"
+.br
+.RI "\fISend a message on an Xsocket\&. \fP"
+.ti -1c
+.RI "int \fBXsendto\fP (int sockfd, const void *buf, size_t len, int flags, const struct sockaddr *addr, socklen_t addrlen)"
+.br
+.RI "\fISends a datagram message on an Xsocket\&. \fP"
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define fmsg   '%s is not currently supported, clearing\&.\&.\&.\\n'"
+
+.SH "Function Documentation"
+.PP 
+.SS "int Xsend (int sockfd, const void * buf, size_t len, int flags)"
+The \fBXsend()\fP call may be used only when the socket is in a connected state (so that the intended recipient is known)\&. It only works with an Xsocket of type XSOCK_STREAM that has previously been connecteted with \fBXaccept()\fP or \fBXconnect()\fP\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP The socket to send the data on 
+.br
+\fIbuf\fP the data to send 
+.br
+\fIlen\fP length of the data to send\&. Currently the Xsend api is limited to sending at most XIA_MAXBUF bytes\&. 
+.br
+\fIflags\fP (This is not currently used but is kept to be compatible with the standard sendto socket call\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of bytes sent on success 
+.PP
+-1 on failure with errno set to an error compatible with those returned by the standard send call\&. 
+.RE
+.PP
+
+.SS "int Xsendto (int sockfd, const void * buf, size_t len, int flags, const struct sockaddr * addr, socklen_t addrlen)"
+Xsendto sends a datagram to the specified address\&. The final intent of the address should be a valid SID\&.
+.PP
+Unlike a standard socket, \fBXsendto()\fP is only valid on Xsockets of type XSOCK_DGRAM\&.
+.PP
+If the buffer is too large, \fBXsendto()\fP will truncate the message and send what it can\&. This is different from the standard sendto which returns an error\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP The socket to send the data on 
+.br
+\fIbuf\fP the data to send 
+.br
+\fIlen\fP lenngth of the data to send\&. The Xsendto api is limited to sending at most XIA_MAXBUF bytes\&. 
+.br
+\fIflags\fP (This is not currently used but is kept to be compatible with the standard sendto socket call\&. 
+.br
+\fIaddr\fP address (SID) to send the datagram to 
+.br
+\fIaddrlen\fP length of the DAG
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of bytes sent on success 
+.PP
+-1 on failure with errno set to an error compatible with those returned by the standard sendto call\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

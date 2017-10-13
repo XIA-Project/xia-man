@@ -1,0 +1,118 @@
+.TH "TokenBucketJiffyParameters< T >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TokenBucketJiffyParameters< T > \- Helper class for token bucket rate limiter\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <click/tokenbucket\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef T \fBtoken_type\fP"
+.br
+.RI "\fIThe type of tokens\&. Always unsigned\&. \fP"
+.ti -1c
+.RI "typedef click_jiffies_t \fBtime_point_type\fP"
+.br
+.RI "\fIThe type of a time point\&. Always unsigned\&. \fP"
+.ti -1c
+.RI "typedef click_jiffies_difference_t \fBduration_type\fP"
+.br
+.RI "\fIThe type of a difference between time points\&. Always signed\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBtime_point_type\fP \fBnow\fP ()"
+.br
+.RI "\fIReturn the current time point\&. \fP"
+.ti -1c
+.RI "static \fBtime_point_type\fP \fBtime_point\fP (\fBtime_point_type\fP t)"
+.br
+.ti -1c
+.RI "static \fBduration_type\fP \fBtime_monotonic_difference\fP (\fBtime_point_type\fP a, \fBtime_point_type\fP b)"
+.br
+.RI "\fIReturn \fIb\fP - \fIa\fP, assuming that \fIb\fP was measured after \fIa\fP\&. \fP"
+.ti -1c
+.RI "static bool \fBtime_less\fP (\fBtime_point_type\fP a, \fBtime_point_type\fP b)"
+.br
+.RI "\fIReturn true if \fIa\fP happened before \fIb\fP\&. \fP"
+.ti -1c
+.RI "static unsigned \fBfrequency\fP ()"
+.br
+.RI "\fIReturn the number of time points per period\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBtimestamp\fP (\fBtime_point_type\fP x)"
+.br
+.RI "\fIReturn the \fBTimestamp\fP representing a given time point\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBtimestamp\fP (\fBduration_type\fP x)"
+.br
+.RI "\fIReturn the \fBTimestamp\fP representing a given tick count\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T>
+.br
+class TokenBucketJiffyParameters< T >"
+Helper class for token bucket rate limiter\&. 
+
+never Pass this class as the parameter to \fBTokenRateX\fP\&. \fBTokenBucketJiffyParameters\fP measures ticks in units of jiffies\&. The template parameter is the type of tokens\&. 
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<typename T > typedef T \fBTokenBucketJiffyParameters\fP< T >::\fBtoken_type\fP"
+
+.PP
+The type of tokens\&. Always unsigned\&. 
+.SS "template<typename T > typedef click_jiffies_t \fBTokenBucketJiffyParameters\fP< T >::\fBtime_point_type\fP"
+
+.PP
+The type of a time point\&. Always unsigned\&. 
+.SS "template<typename T > typedef click_jiffies_difference_t \fBTokenBucketJiffyParameters\fP< T >::\fBduration_type\fP"
+
+.PP
+The type of a difference between time points\&. Always signed\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T > static \fBtime_point_type\fP \fBTokenBucketJiffyParameters\fP< T >::now ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the current time point\&. 
+.PP
+\fBNote:\fP
+.RS 4
+\fBTokenBucketJiffyParameters\fP measures time points in jiffies\&. 
+.RE
+.PP
+
+.SS "template<typename T > static \fBduration_type\fP \fBTokenBucketJiffyParameters\fP< T >::time_monotonic_difference (\fBtime_point_type\fP a, \fBtime_point_type\fP b)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return \fIb\fP - \fIa\fP, assuming that \fIb\fP was measured after \fIa\fP\&. Some time measurements can, in rare cases, appear to jump backwards, as timestamps do when the user changes the current time\&. If this happens, and \fIb\fP < \fIa\fP (even though \fIb\fP happened after \fIa\fP), time_monotonic_difference must return 0\&. 
+.SS "template<typename T > static bool \fBTokenBucketJiffyParameters\fP< T >::time_less (\fBtime_point_type\fP a, \fBtime_point_type\fP b)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return true if \fIa\fP happened before \fIb\fP\&. 
+.SS "template<typename T > static unsigned \fBTokenBucketJiffyParameters\fP< T >::frequency ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the number of time points per period\&. Here, this is the number of jiffies per second\&. 
+.SS "template<typename T > static \fBTimestamp\fP \fBTokenBucketJiffyParameters\fP< T >::timestamp (\fBtime_point_type\fP x)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the \fBTimestamp\fP representing a given time point\&. 
+.SS "template<typename T > static \fBTimestamp\fP \fBTokenBucketJiffyParameters\fP< T >::timestamp (\fBduration_type\fP x)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the \fBTimestamp\fP representing a given tick count\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

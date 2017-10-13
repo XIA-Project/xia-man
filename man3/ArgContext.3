@@ -1,0 +1,134 @@
+.TH "ArgContext" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ArgContext \- Argument context class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <args\&.hh>\fP
+.PP
+Inherited by \fBArgs\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBArgContext\fP (\fBErrorHandler\fP *\fBerrh\fP=0)"
+.br
+.RI "\fIConstruct an argument context\&. \fP"
+.ti -1c
+.RI "\fBArgContext\fP (const \fBElement\fP *\fBcontext\fP, \fBErrorHandler\fP *\fBerrh\fP=0)"
+.br
+.RI "\fIConstruct an argument context\&. \fP"
+.ti -1c
+.RI "const \fBElement\fP * \fBcontext\fP () const "
+.br
+.RI "\fIReturn the element context\&. \fP"
+.ti -1c
+.RI "\fBErrorHandler\fP * \fBerrh\fP () const "
+.br
+.RI "\fIReturn the associated error handler\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBerror_prefix\fP () const "
+.br
+.RI "\fIReturn a prefix string associated with the current argument\&. \fP"
+.ti -1c
+.RI "void \fBerror\fP (const char *fmt,\&.\&.\&.) const "
+.br
+.RI "\fIReport a parse error for the current argument\&. \fP"
+.ti -1c
+.RI "void \fBwarning\fP (const char *fmt,\&.\&.\&.) const "
+.br
+.RI "\fIReport a parse warning for the current argument\&. \fP"
+.ti -1c
+.RI "void \fBmessage\fP (const char *fmt,\&.\&.\&.) const "
+.br
+.RI "\fIReport a message for the current argument\&. \fP"
+.ti -1c
+.RI "void \fBxmessage\fP (const \fBString\fP &anno, const \fBString\fP &str) const "
+.br
+.ti -1c
+.RI "void \fBxmessage\fP (const \fBString\fP &anno, const char *fmt, va_list val) const "
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "const \fBElement\fP * \fB_context\fP"
+.br
+.ti -1c
+.RI "\fBErrorHandler\fP * \fB_errh\fP"
+.br
+.ti -1c
+.RI "const char * \fB_arg_keyword\fP"
+.br
+.ti -1c
+.RI "bool \fB_read_status\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Argument context class\&. 
+
+The \fBArgContext\fP class encapsulates state useful for parsing arguments: an element context and an \fBErrorHandler\fP for reporting parse errors\&.
+.PP
+\fBArgs\fP is derived from \fBArgContext\fP\&. Some parser functions take an \fBArgContext\fP reference rather than an \fBArgs\fP reference\&. This clarifies that the parser function doesn't modify \fBArgs\fP internals\&. Also, \fBArgContext\fP objects are smaller and quicker to construct than \fBArgs\fP objects\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ArgContext::ArgContext (\fBErrorHandler\fP * errh = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Construct an argument context\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP optional error handler 
+.RE
+.PP
+
+.SS "ArgContext::ArgContext (const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Construct an argument context\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "const \fBElement\fP* ArgContext::context () const\fC [inline]\fP"
+
+.PP
+Return the element context\&. 
+.SS "\fBErrorHandler\fP* ArgContext::errh () const\fC [inline]\fP"
+
+.PP
+Return the associated error handler\&. 
+.SS "\fBString\fP ArgContext::error_prefix () const"
+
+.PP
+Return a prefix string associated with the current argument\&. If the current argument is keyword FOO, returns 'FOO: '\&. 
+.SS "void ArgContext::error (const char * fmt,  \&.\&.\&.) const"
+
+.PP
+Report a parse error for the current argument\&. 
+.SS "void ArgContext::warning (const char * fmt,  \&.\&.\&.) const"
+
+.PP
+Report a parse warning for the current argument\&. 
+.SS "void ArgContext::message (const char * fmt,  \&.\&.\&.) const"
+
+.PP
+Report a message for the current argument\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

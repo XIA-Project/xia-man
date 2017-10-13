@@ -1,0 +1,67 @@
+.TH "xsocket/Xgetaddrinfo.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xgetaddrinfo.c \- \fBXgetaddrinfo()\fP, \fBXfreeaddrinfo()\fP, \fBXgai_strerror()\fP - network address and service translation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBXgai_strerror\fP (int code)"
+.br
+.ti -1c
+.RI "int \fBXgetaddrinfo\fP (const char *name, const char *service, const struct addrinfo *hints, struct addrinfo **pai)"
+.br
+.RI "\fIGet the full DAG of the remote socket\&. \fP"
+.ti -1c
+.RI "void \fBXfreeaddrinfo\fP (struct addrinfo *ai)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void Xfreeaddrinfo (struct addrinfo * ai)"
+
+.SS "const char* Xgai_strerror (int code)"
+
+.SS "int Xgetaddrinfo (const char * name, const char * service, const struct addrinfo * hints, struct addrinfo ** pai)"
+
+.PP
+\fBTodo\fP
+.RS 4
+flesh out \fBXgetaddrinfo()\fP text
+.RE
+.PP
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP An Xsocket of type SOCK_STREAM 
+.br
+\fIdag\fP A sockaddr to hold the returned DAG\&. 
+.br
+\fIlen\fP On input contans the size of the sockaddr on output contains sizeof(sockaddr_x)\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on failure with errno set 
+.PP
+errno = EFAULT if dag is NULL 
+.PP
+errno = EOPNOTSUPP if sockfd is not of type XSSOCK_STREAM 
+.PP
+errno = ENOTCONN if sockfd is not in a connected state 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

@@ -1,0 +1,218 @@
+.TH "Graph" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Graph \- Build DAGs for use as addresses in XIA\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <dagaddr\&.hpp>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBGraph\fP (const \fBNode\fP &n)"
+.br
+.ti -1c
+.RI "\fBGraph\fP (const \fBGraph\fP &r)"
+.br
+.ti -1c
+.RI "\fBGraph\fP (std::string dag_string)"
+.br
+.ti -1c
+.RI "\fBGraph\fP (const sockaddr_x *s)"
+.br
+.ti -1c
+.RI "\fBGraph\fP & \fBoperator=\fP (const \fBGraph\fP &r)"
+.br
+.ti -1c
+.RI "\fBGraph\fP & \fBoperator*=\fP (const \fBGraph\fP &r)"
+.br
+.ti -1c
+.RI "\fBGraph\fP \fBoperator*\fP (const \fBGraph\fP &r) const "
+.br
+.ti -1c
+.RI "\fBGraph\fP & \fBoperator+=\fP (const \fBGraph\fP &r)"
+.br
+.ti -1c
+.RI "\fBGraph\fP \fBoperator+\fP (const \fBGraph\fP &r) const "
+.br
+.ti -1c
+.RI "\fBGraph\fP \fBoperator*\fP (const \fBNode\fP &r) const "
+.br
+.RI "\fIAppend a node\&. \fP"
+.ti -1c
+.RI "\fBGraph\fP \fBoperator+\fP (const \fBNode\fP &r) const "
+.br
+.RI "\fIMerge with a node\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBGraph\fP &r) const "
+.br
+.ti -1c
+.RI "void \fBappend_node_str\fP (std::string node_str)"
+.br
+.ti -1c
+.RI "void \fBprint_graph\fP () const "
+.br
+.ti -1c
+.RI "std::string \fBhttp_url_string\fP () const "
+.br
+.ti -1c
+.RI "std::string \fBdag_string\fP () const "
+.br
+.ti -1c
+.RI "bool \fBhas_intent_AD\fP () const "
+.br
+.ti -1c
+.RI "const \fBNode\fP & \fBintent_AD\fP () const "
+.br
+.ti -1c
+.RI "const \fBNode\fP & \fBintent_HID\fP () const "
+.br
+.ti -1c
+.RI "const \fBNode\fP & \fBintent_SID\fP () const "
+.br
+.ti -1c
+.RI "std::string \fBintent_AD_str\fP () const "
+.br
+.ti -1c
+.RI "std::string \fBintent_HID_str\fP () const "
+.br
+.ti -1c
+.RI "std::string \fBintent_SID_str\fP () const "
+.br
+.ti -1c
+.RI "bool \fBis_valid\fP () const "
+.br
+.ti -1c
+.RI "bool \fBis_final_intent\fP (const \fBNode\fP &n)"
+.br
+.ti -1c
+.RI "bool \fBis_final_intent\fP (const std::string xid_string)"
+.br
+.ti -1c
+.RI "\fBGraph\fP \fBnext_hop\fP (const \fBNode\fP &n)"
+.br
+.ti -1c
+.RI "\fBGraph\fP \fBnext_hop\fP (const std::string xid_string)"
+.br
+.ti -1c
+.RI "\fBGraph\fP \fBfirst_hop\fP ()"
+.br
+.ti -1c
+.RI "uint8_t \fBnum_nodes\fP () const "
+.br
+.ti -1c
+.RI "\fBNode\fP \fBget_node\fP (int i) const "
+.br
+.ti -1c
+.RI "size_t \fBfill_wire_buffer\fP (node_t *buf) const "
+.br
+.ti -1c
+.RI "void \fBfill_sockaddr\fP (sockaddr_x *s) const "
+.br
+.ti -1c
+.RI "void \fBfrom_wire_format\fP (uint8_t num_nodes, const node_t *buf)"
+.br
+.ti -1c
+.RI "void \fBfrom_sockaddr\fP (const sockaddr_x *s)"
+.br
+.ti -1c
+.RI "void \fBreplace_final_intent\fP (const \fBNode\fP &new_intent)"
+.br
+.ti -1c
+.RI "\fBNode\fP \fBget_final_intent\fP () const "
+.br
+.ti -1c
+.RI "bool \fBreplace_intent_HID\fP (std::string new_hid_str)"
+.br
+.ti -1c
+.RI "bool \fBreplace_intent_AD\fP (std::string new_ad_str)"
+.br
+.ti -1c
+.RI "size_t \fBunparse_node_size\fP () const "
+.br
+.ti -1c
+.RI "bool \fBflatten\fP ()"
+.br
+.ti -1c
+.RI "bool \fBfirst_hop_is_sid\fP () const "
+.br
+.ti -1c
+.RI "bool \fBremove_intent_sid_node\fP ()"
+.br
+.ti -1c
+.RI "bool \fBremove_intent_node\fP ()"
+.br
+.ti -1c
+.RI "std::vector< const \fBNode\fP * > \fBget_nodes_of_type\fP (unsigned int type) const "
+.br
+.ti -1c
+.RI "std::string \fBxid_str_from_index\fP (std::size_t node) const "
+.br
+.ti -1c
+.RI "std::size_t \fBfinal_intent_index\fP () const "
+.br
+.ti -1c
+.RI "int \fBcompare_except_intent_AD\fP (\fBGraph\fP other) const "
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static const std::size_t \fBMAX_XIDS_IN_ALL_PATHS\fP = 30"
+.br
+.ti -1c
+.RI "static const std::size_t \fBINVALID_GRAPH_INDEX\fP = 255"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Build DAGs for use as addresses in XIA\&. 
+
+This class provides the user a simple set of operators to build a DAG for use as address within XIA\&.
+.PP
+.SS "NOTE: "
+.PP
+Create \fBNode(s)\fP first and then build \fBGraph\fP from them \fBNode\fP objects are compared by reference\&. So even if two Nodes have the same \fBXID\fP, they are considered separate\&. This allows us to build Graphs with the same \fBXID\fP appearing more than once\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBGraph\fP Graph::operator* (const \fBNode\fP & r) const\fC [inline]\fP"
+
+.PP
+Append a node\&. Append a node to the end of this graph and return the result\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP The node to append
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The resulting graph 
+.RE
+.PP
+
+.SS "\fBGraph\fP Graph::operator+ (const \fBNode\fP & r) const\fC [inline]\fP"
+
+.PP
+Merge with a node\&. Merge the supplied node with this graph\&. If the node is already present in this graph, the resulting graph will be the same\&. If the node is different, the new node will be added to the graph but will not be connected by any edges\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP The node with which to merge
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The resulting graph 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

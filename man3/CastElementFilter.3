@@ -1,0 +1,77 @@
+.TH "CastElementFilter" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+CastElementFilter \- Cast-based filter predicate for elements\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBElementFilter\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCastElementFilter\fP (const \fBString\fP &name)"
+.br
+.RI "\fIConstruct a \fBCastElementFilter\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcheck_match\fP (\fBElement\fP *e, bool isoutput, int port)"
+.br
+.RI "\fIDetermine whether an element matches this filter\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Cast-based filter predicate for elements\&. 
+
+
+.PP
+\fBDeprecated\fP
+.RS 4
+This class is deprecated\&. Use \fBElementCastTracker\fP instead\&.
+.RE
+.PP
+.PP
+This \fBElementFilter\fP type matches elements that match a given cast type\&. The constructor's string is passed to \fBElement::cast()\fP; the filter matches an element iff the result is non-null\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "CastElementFilter::CastElementFilter (const \fBString\fP & name)"
+
+.PP
+Construct a \fBCastElementFilter\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP cast name of matching elements 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "bool CastElementFilter::check_match (\fBElement\fP * e, bool isoutput, int port)\fC [virtual]\fP"
+
+.PP
+Determine whether an element matches this filter\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element 
+.br
+\fIisoutput\fP ignored 
+.br
+\fIport\fP ignored 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True iff \fIe->cast\fP(\fIname\fP) != NULL, where \fIname\fP is the cast name passed to the constructor\&. 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBElementFilter\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

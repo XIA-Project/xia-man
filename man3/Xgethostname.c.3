@@ -1,0 +1,47 @@
+.TH "xsocket/Xgethostname.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xgethostname.c \- \fBXgethostname()\fP - get XIA host name\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXgethostname\fP (char *name, size_t len)"
+.br
+.RI "\fIget the XIA host name \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xgethostname (char * name, size_t len)"
+
+.IP "\(bu" 2
+Returns the XIA host name in a null-terminated string\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP the destination for the host name\&. On exit name contains a null terminated string\&. It will be truncated if there is not enough room\&. 
+.br
+\fIlen\fP the length of name
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on failure with errno is set appropriately\&. 
+.RE
+.PP
+
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

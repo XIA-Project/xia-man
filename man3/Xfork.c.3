@@ -1,0 +1,41 @@
+.TH "xsocket/Xfork.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xfork.c \- \fBXfork()\fP - create a child process\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXfork\fP (void)"
+.br
+.RI "\fICreates a new process by duplicating the calling process\&. \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xfork (void)"
+This function must be used rather than the standard fork() call when uisng Xsockets\&. Because all of the XIA code resides in user space, we don't get the correct behavior from systems calls that affect the kernel\&. \fBXfork()\fP wraps the system fork() call so that correct internal socket state is maintained\&. This prevents issues such as calling \fBXclose()\fP in a child process also closing the same socket in the parent process\&.
+.PP
+\fBNote:\fP
+.RS 4
+See the man page for the standard fork() call for more details\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+On success, the PID of the child process is returned in the parent, and 0 is returned in the child\&. 
+.PP
+-1 on failure to the parent\&. No child process is created, and errno is set appropriately\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

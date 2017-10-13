@@ -1,0 +1,24 @@
+.TH "fast_argument< T, use_reference >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+fast_argument< T, use_reference > \- Template defining a fast argument type for objects of type T\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <type_traits\&.hh>\fP
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T, bool use_reference = (!is_reference<T>::value					    && (!has_trivial_copy<T>::value						|| sizeof(T) > sizeof(void *)))>
+.br
+class fast_argument< T, use_reference >"
+Template defining a fast argument type for objects of type T\&. 
+
+fast_argument<T>::type equals either 'const T &' or 'T'\&. fast_argument<T>::is_reference is true iff fast_argument<T>::type is a reference\&. If fast_argument<T>::is_reference is true, then fast_argument<T>::enable_rvalue_reference is a typedef to void; otherwise it is not defined\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

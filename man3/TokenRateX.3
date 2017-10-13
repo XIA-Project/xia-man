@@ -1,0 +1,245 @@
+.TH "TokenRateX< P >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TokenRateX< P > \- Token bucket rate template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <click/tokenbucket\&.hh>\fP
+.PP
+Inherits P\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBmax_tokens\fP = (token_type) -1 }"
+.br
+.ti -1c
+.RI "typedef P \fBparameter_type\fP"
+.br
+.RI "\fIThe template parameter type\&. \fP"
+.ti -1c
+.RI "typedef P::token_type \fBtoken_type\fP"
+.br
+.RI "\fIUnsigned type of token counts\&. \fP"
+.ti -1c
+.RI "typedef P::time_point_type \fBtime_point_type\fP"
+.br
+.RI "\fIType of time points\&. \fP"
+.ti -1c
+.RI "typedef \fBmake_unsigned\fP< typename P::duration_type >::type \fBticks_type\fP"
+.br
+.RI "\fIUnsigned type of tick counts (differences between time points)\&. \fP"
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTokenRateX\fP ()"
+.br
+.RI "\fIConstruct an idle token rate\&. \fP"
+.ti -1c
+.RI "\fBTokenRateX\fP (bool \fBunlimited\fP)"
+.br
+.RI "\fIConstruct an idle or unlimited token rate\&. \fP"
+.ti -1c
+.RI "\fBTokenRateX\fP (\fBtoken_type\fP \fBrate\fP, \fBtoken_type\fP \fBcapacity\fP)"
+.br
+.RI "\fIConstruct a token rate representing \fIrate\fP\&. \fP"
+.ti -1c
+.RI "void \fBassign\fP (bool \fBunlimited\fP=false)"
+.br
+.RI "\fISet the token rate to idle or unlimited\&. \fP"
+.ti -1c
+.RI "void \fBassign\fP (\fBtoken_type\fP \fBrate\fP, \fBtoken_type\fP \fBcapacity\fP)"
+.br
+.RI "\fISet the token rate and capacity\&. \fP"
+.ti -1c
+.RI "bool \fBunlimited\fP () const "
+.br
+.RI "\fIReturn true iff the token rate is unlimited\&. \fP"
+.ti -1c
+.RI "bool \fBidle\fP () const "
+.br
+.RI "\fIReturn true iff the token rate is idle\&. \fP"
+.ti -1c
+.RI "\fBtoken_type\fP \fBrate\fP () const "
+.br
+.RI "\fIReturn the rate in tokens per period\&. \fP"
+.ti -1c
+.RI "\fBtoken_type\fP \fBcapacity\fP () const "
+.br
+.RI "\fIReturn the capacity in tokens\&. \fP"
+.ti -1c
+.RI "\fBtoken_type\fP \fBtokens_per_tick\fP () const "
+.br
+.RI "\fIReturn the number of tokens per tick\&. \fP"
+.ti -1c
+.RI "\fBtoken_type\fP \fBtoken_scale\fP () const "
+.br
+.RI "\fIReturn the ratio of fractional tokens to real tokens\&. \fP"
+.ti -1c
+.RI "\fBticks_type\fP \fBtime_until_full\fP () const "
+.br
+.RI "\fIReturn the number of ticks required to refill a counter to capacity\&. \fP"
+.ti -1c
+.RI "\fBtime_point_type\fP \fBnow\fP () const "
+.br
+.RI "\fIReturn the current time point\&. \fP"
+.ti -1c
+.RI "template<typename U > \fBtime_point_type\fP \fBtime_point\fP (U time) const "
+.br
+.RI "\fIReturn the time point corresponding to the \fItime\fP parameter\&. \fP"
+.ti -1c
+.RI "\fBticks_type\fP \fBtime_monotonic_difference\fP (\fBtime_point_type\fP a, \fBtime_point_type\fP b) const "
+.br
+.RI "\fIReturn \fIb\fP - \fIa\fP, assuming that \fIb\fP was measured after \fIa\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename P>
+.br
+class TokenRateX< P >"
+Token bucket rate template\&. 
+
+The \fBTokenRateX\fP class implements a token bucket rate\&. \fBTokenBucketX\fP is initialized with a rate, in tokens per second, and a capacity in tokens\&. Associated token buckets fill up with tokens at the given rate, to a maximum of the capacity\&.
+.PP
+Two special types of rate are supported\&. An \fIunlimited\fP \fBTokenRateX\fP always refills associated counters to full capacity\&. Its \fBcapacity()\fP equals token_max\&. An \fIidle\fP \fBTokenRateX\fP never refills\&.
+.PP
+Most users will be satisfied with the \fBTokenRate\fP type, which is equal to \fBTokenRateX\fP<TokenBucketJiffyParameters<unsigned> >\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBTokenCounterX\fP, \fBTokenBucketX\fP 
+.RE
+.PP
+
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<typename P > typedef P \fBTokenRateX\fP< P >::\fBparameter_type\fP"
+
+.PP
+The template parameter type\&. 
+.SS "template<typename P > typedef P::token_type \fBTokenRateX\fP< P >::\fBtoken_type\fP"
+
+.PP
+Unsigned type of token counts\&. 
+.SS "template<typename P > typedef P::time_point_type \fBTokenRateX\fP< P >::\fBtime_point_type\fP"
+
+.PP
+Type of time points\&. 
+.SS "template<typename P > typedef \fBmake_unsigned\fP<typename P::duration_type>::type \fBTokenRateX\fP< P >::\fBticks_type\fP"
+
+.PP
+Unsigned type of tick counts (differences between time points)\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename P > \fBTokenRateX\fP< P >::\fBTokenRateX\fP ()\fC [inline]\fP"
+
+.PP
+Construct an idle token rate\&. 
+.SS "template<typename P > \fBTokenRateX\fP< P >::\fBTokenRateX\fP (bool unlimited)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct an idle or unlimited token rate\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIunlimited\fP idle if false, unlimited if true 
+.RE
+.PP
+
+.SS "template<typename P > \fBTokenRateX\fP< P >::\fBTokenRateX\fP (\fBtoken_type\fP rate, \fBtoken_type\fP capacity)\fC [inline]\fP"
+
+.PP
+Construct a token rate representing \fIrate\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP refill rate in tokens per period 
+.br
+\fIcapacity\fP maximum token accumulation
+.RE
+.PP
+The rate is idle if either \fIrate\fP or \fIcapacity\fP is 0\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBassign\fP(\fI\fBrate\fP\fP, \fI\fBcapacity\fP\fP) 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename P > void \fBTokenRateX\fP< P >::assign (bool unlimited = \fCfalse\fP)\fC [inline]\fP"
+
+.PP
+Set the token rate to idle or unlimited\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIunlimited\fP idle if false, unlimited if true 
+.RE
+.PP
+
+.SS "template<typename P > void \fBTokenRateX\fP< P >::assign (\fBtoken_type\fP rate, \fBtoken_type\fP capacity)\fC [inline]\fP"
+
+.PP
+Set the token rate and capacity\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP refill rate in tokens per period 
+.br
+\fIcapacity\fP maximum token accumulation
+.RE
+.PP
+Sets the token bucket's rate to \fIrate\fP and capacity to \fIcapacity\fP\&. If either \fIrate\fP or \fIcapacity\fP is 0, the rate becomes idle\&. 
+.SS "template<typename P > bool \fBTokenRateX\fP< P >::unlimited () const\fC [inline]\fP"
+
+.PP
+Return true iff the token rate is unlimited\&. 
+.SS "template<typename P > bool \fBTokenRateX\fP< P >::idle () const\fC [inline]\fP"
+
+.PP
+Return true iff the token rate is idle\&. 
+.SS "template<typename P > P::token_type \fBTokenRateX\fP< P >::rate () const"
+
+.PP
+Return the rate in tokens per period\&. Returns max_tokens for unlimited rates\&. Imprecise computer arithmetic may cause the result to differ from the configured rate\&. 
+.SS "template<typename P > \fBtoken_type\fP \fBTokenRateX\fP< P >::capacity () const\fC [inline]\fP"
+
+.PP
+Return the capacity in tokens\&. Returns max_tokens for unlimited rates\&. Imprecise computer arithmetic may cause the result to differ from the configured capacity\&. 
+.SS "template<typename P > \fBtoken_type\fP \fBTokenRateX\fP< P >::tokens_per_tick () const\fC [inline]\fP"
+
+.PP
+Return the number of tokens per tick\&. 
+.SS "template<typename P > \fBtoken_type\fP \fBTokenRateX\fP< P >::token_scale () const\fC [inline]\fP"
+
+.PP
+Return the ratio of fractional tokens to real tokens\&. 
+.SS "template<typename P > \fBticks_type\fP \fBTokenRateX\fP< P >::time_until_full () const\fC [inline]\fP"
+
+.PP
+Return the number of ticks required to refill a counter to capacity\&. Returns (ticks_type) -1 for idle rates\&. 
+.SS "template<typename P > \fBtime_point_type\fP \fBTokenRateX\fP< P >::now () const\fC [inline]\fP"
+
+.PP
+Return the current time point\&. Implemented as P::now()\&. 
+.SS "template<typename P > template<typename U > \fBtime_point_type\fP \fBTokenRateX\fP< P >::time_point (U time) const\fC [inline]\fP"
+
+.PP
+Return the time point corresponding to the \fItime\fP parameter\&. May not be available for all U types\&. Implemented as P::time_point(\fItime\fP)\&. 
+.SS "template<typename P > \fBticks_type\fP \fBTokenRateX\fP< P >::time_monotonic_difference (\fBtime_point_type\fP a, \fBtime_point_type\fP b) const\fC [inline]\fP"
+
+.PP
+Return \fIb\fP - \fIa\fP, assuming that \fIb\fP was measured after \fIa\fP\&. Some time measurements can, in rare cases, appear to jump backwards, as timestamps do when the user changes the current time\&. If this happens (\fIb\fP < \fIa\fP), time_monotonic_difference returns 0\&. Implemented as P::time_monotonic_difference(\fIa\fP, \fIb\fP)\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

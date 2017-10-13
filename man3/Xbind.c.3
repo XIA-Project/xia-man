@@ -1,0 +1,50 @@
+.TH "xsocket/Xbind.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xbind.c \- \fBXbind()\fP - bind a name to a socket\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXbind\fP (int sockfd, const struct sockaddr *addr, socklen_t addrlen)"
+.br
+.RI "\fIbind a DAG to an Xsocket \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xbind (int sockfd, const struct sockaddr * addr, socklen_t addrlen)"
+Assign the specified DAG to to the Xsocket referred to by sockfd\&. The DAG's final intent should be a valid SID\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP The socket 
+.br
+\fIaddr\fP sockaddr_x structure containing the DAG to be assigned 
+.br
+\fIaddrlen\fP The size of addr
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+See the man page for the standard bind() call for more details\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on error with errno set to an error compatible with those retuned by the standard bind call\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

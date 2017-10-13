@@ -1,0 +1,994 @@
+.TH "Router" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Router \- A router configuration\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBSTOP_RUNCOUNT\fP = -2147483647 - 1 }"
+.br
+.ti -1c
+.RI "enum { \fBFIRST_GLOBAL_HANDLER\fP = 0x40000000 }"
+.br
+.ti -1c
+.RI "Master * \fBmaster\fP () const "
+.br
+.RI "\fIReturn the Master object for this router\&. \fP"
+.ti -1c
+.RI "bool \fBinitialized\fP () const "
+.br
+.RI "\fIReturn true iff the router has been successfully initialized\&. \fP"
+.ti -1c
+.RI "bool \fBhandlers_ready\fP () const "
+.br
+.RI "\fIReturn true iff the router's handlers have been initialized\&. \fP"
+.ti -1c
+.RI "bool \fBrunning\fP () const "
+.br
+.RI "\fIReturn true iff the router is currently running\&. \fP"
+.ti -1c
+.RI "int32_t \fBruncount\fP () const "
+.br
+.RI "\fIReturn the router's runcount\&. \fP"
+.ti -1c
+.RI "void \fBadjust_runcount\fP (int32_t delta)"
+.br
+.RI "\fIAdjust the runcount by \fIdelta\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_runcount\fP (int32_t rc)"
+.br
+.RI "\fISet the runcount\&. \fP"
+.ti -1c
+.RI "void \fBplease_stop_driver\fP ()"
+.br
+.RI "\fIRequest a driver stop by adjusting the runcount by -1\&. \fP"
+.ti -1c
+.RI "const \fBVector\fP< \fBElement\fP * > & \fBelements\fP () const "
+.br
+.RI "\fIReturns a vector containing all the router's elements\&. \fP"
+.ti -1c
+.RI "int \fBnelements\fP () const "
+.br
+.RI "\fIReturns the number of elements in the router\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBelement\fP (int i) const "
+.br
+.RI "\fIReturns the element with index \fIi\fP\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBroot_element\fP () const "
+.br
+.RI "\fIReturns this router's root element\&. \fP"
+.ti -1c
+.RI "const \fBString\fP & \fBename\fP (int i) const "
+.br
+.RI "\fIReturns element index \fIeindex's\fP name\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBename_context\fP (int i) const "
+.br
+.RI "\fIReturns element index \fIeindex's\fP name context\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBelandmark\fP (int i) const "
+.br
+.RI "\fIReturns element index \fIeindex's\fP landmark\&. \fP"
+.ti -1c
+.RI "const \fBString\fP & \fBeconfiguration\fP (int i) const "
+.br
+.RI "\fIReturns element index \fIeindex's\fP configuration string\&. \fP"
+.ti -1c
+.RI "void \fBset_econfiguration\fP (int i, const \fBString\fP &conf)"
+.br
+.RI "\fISets element index \fIeindex's\fP configuration string\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBfind\fP (const \fBString\fP &name, \fBErrorHandler\fP *errh=0) const "
+.br
+.RI "\fIFinds an element named \fIname\fP\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBfind\fP (const \fBString\fP &name, \fBString\fP context, \fBErrorHandler\fP *errh=0) const "
+.br
+.RI "\fIFinds an element named \fIname\fP\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBfind\fP (const \fBString\fP &name, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0) const "
+.br
+.RI "\fIFinds an element named \fIname\fP\&. \fP"
+.ti -1c
+.RI "int \fBvisit\fP (\fBElement\fP *e, bool isoutput, int port, \fBRouterVisitor\fP *visitor) const "
+.br
+.RI "\fITraverse the router configuration from one of \fIe's\fP ports\&. \fP"
+.ti -1c
+.RI "int \fBvisit_downstream\fP (\fBElement\fP *e, int port, \fBRouterVisitor\fP *visitor) const "
+.br
+.RI "\fITraverse the router configuration downstream of \fIe\fP[\fIport\fP]\&. \fP"
+.ti -1c
+.RI "int \fBvisit_upstream\fP (\fBElement\fP *e, int port, \fBRouterVisitor\fP *visitor) const "
+.br
+.RI "\fITraverse the router configuration upstream of [\fIport\fP]\fIe\fP\&. \fP"
+.ti -1c
+.RI "int \fBdownstream_elements\fP (\fBElement\fP *e, int port, \fBElementFilter\fP *filter, \fBVector\fP< \fBElement\fP * > &result)"
+.br
+.RI "\fISearch for elements downstream from \fIe\fP\&. \fP"
+.ti -1c
+.RI "int \fBupstream_elements\fP (\fBElement\fP *e, int port, \fBElementFilter\fP *filter, \fBVector\fP< \fBElement\fP * > &result)"
+.br
+.RI "\fISearch for elements upstream from \fIe\fP\&. \fP"
+.ti -1c
+.RI "const char * \fBflow_code_override\fP (int eindex) const "
+.br
+.RI "\fIReturns the overriding flow code for element \fIe\fP, if any\&. \fP"
+.ti -1c
+.RI "void \fBset_flow_code_override\fP (int eindex, const \fBString\fP &flow_code)"
+.br
+.ti -1c
+.RI "void * \fBattachment\fP (const \fBString\fP &aname) const "
+.br
+.ti -1c
+.RI "void *& \fBforce_attachment\fP (const \fBString\fP &aname)"
+.br
+.ti -1c
+.RI "void * \fBset_attachment\fP (const \fBString\fP &aname, void *value)"
+.br
+.ti -1c
+.RI "\fBErrorHandler\fP * \fBchatter_channel\fP (const \fBString\fP &channel_name) const "
+.br
+.ti -1c
+.RI "HashMap_ArenaFactory * \fBarena_factory\fP () const "
+.br
+.ti -1c
+.RI "ThreadSched * \fBthread_sched\fP () const "
+.br
+.ti -1c
+.RI "void \fBset_thread_sched\fP (ThreadSched *scheduler)"
+.br
+.ti -1c
+.RI "int \fBhome_thread_id\fP (const \fBElement\fP *e) const "
+.br
+.ti -1c
+.RI "\fBString\fP \fBconfiguration_string\fP () const "
+.br
+.RI "\fIReturns the router's initial configuration string\&. \fP"
+.ti -1c
+.RI "void \fBunparse\fP (\fBStringAccum\fP &sa, const \fBString\fP &indent=\fBString\fP()) const "
+.br
+.RI "\fIUnparse this router into \fIsa\fP\&. \fP"
+.ti -1c
+.RI "void \fBunparse_requirements\fP (\fBStringAccum\fP &sa, const \fBString\fP &indent=\fBString\fP()) const "
+.br
+.RI "\fIUnparse the router's requirements into \fIsa\fP\&. \fP"
+.ti -1c
+.RI "void \fBunparse_declarations\fP (\fBStringAccum\fP &sa, const \fBString\fP &indent=\fBString\fP()) const "
+.br
+.RI "\fIUnparse declarations of the router's elements into \fIsa\fP\&. \fP"
+.ti -1c
+.RI "void \fBunparse_connections\fP (\fBStringAccum\fP &sa, const \fBString\fP &indent=\fBString\fP()) const "
+.br
+.RI "\fIUnparse the router's connections into \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBelement_ports_string\fP (const \fBElement\fP *e) const "
+.br
+.RI "\fIReturn a string representing \fIe's\fP ports\&. \fP"
+.ti -1c
+.RI "static \fBElement\fP * \fBelement\fP (const \fBRouter\fP *router, int i)"
+.br
+.RI "\fIReturn \fIrouter's\fP element with index \fIeindex\fP\&. \fP"
+.ti -1c
+.RI "static const \fBHandler\fP * \fBhandler\fP (const \fBElement\fP *e, const \fBString\fP &hname)"
+.br
+.RI "\fIReturn element \fIe's\fP handler named \fIhname\fP\&. \fP"
+.ti -1c
+.RI "static void \fBadd_read_handler\fP (const \fBElement\fP *e, const \fBString\fP &hname, ReadHandlerCallback callback, void *user_data, uint32_t flags=0)"
+.br
+.RI "\fIAdd an \fIe\fP\&.\fIhname\fP read handler\&. \fP"
+.ti -1c
+.RI "static void \fBadd_write_handler\fP (const \fBElement\fP *e, const \fBString\fP &hname, WriteHandlerCallback callback, void *user_data, uint32_t flags=0)"
+.br
+.RI "\fIAdd an \fIe\fP\&.\fIhname\fP write handler\&. \fP"
+.ti -1c
+.RI "static void \fBset_handler\fP (const \fBElement\fP *e, const \fBString\fP &hname, uint32_t flags, HandlerCallback callback, void *read_user_data=0, void *write_user_data=0)"
+.br
+.RI "\fIAdd a comprehensive \fIe\fP\&.\fIhname\fP handler\&. \fP"
+.ti -1c
+.RI "static int \fBset_handler_flags\fP (const \fBElement\fP *e, const \fBString\fP &hname, uint32_t set_flags, uint32_t clear_flags=0)"
+.br
+.RI "\fIChange the \fIe\fP\&.\fIhname\fP handler's flags\&. \fP"
+.ti -1c
+.RI "static int \fBhindex\fP (const \fBElement\fP *e, const \fBString\fP &hname)"
+.br
+.RI "\fIReturn the handler index for element \fIe's\fP handler named \fIhname\fP\&. \fP"
+.ti -1c
+.RI "static const \fBHandler\fP * \fBhandler\fP (const \fBRouter\fP *router, int \fBhindex\fP)"
+.br
+.RI "\fIReturn \fIrouter's\fP handler with index \fIhindex\fP\&. \fP"
+.ti -1c
+.RI "static void \fBelement_hindexes\fP (const \fBElement\fP *e, \fBVector\fP< int > &result)"
+.br
+.RI "\fIReturn the handler indexes for element \fIe's\fP handlers\&. \fP"
+.in -1c
+.SS "Internal Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBRouter\fP (const \fBString\fP &configuration, Master *\fBmaster\fP)"
+.br
+.RI "\fICreate a router\&. \fP"
+.ti -1c
+.RI "\fB~Router\fP ()"
+.br
+.RI "\fIDestroy the router\&. \fP"
+.ti -1c
+.RI "void \fBuse\fP ()"
+.br
+.RI "\fIIncrement the router's reference count\&. \fP"
+.ti -1c
+.RI "void \fBunuse\fP ()"
+.br
+.RI "\fIDecrement the router's reference count\&. \fP"
+.ti -1c
+.RI "void \fBadd_requirement\fP (const \fBString\fP &type, const \fBString\fP &value)"
+.br
+.ti -1c
+.RI "int \fBadd_element\fP (\fBElement\fP *e, const \fBString\fP &name, const \fBString\fP &conf, const \fBString\fP &filename, unsigned lineno)"
+.br
+.ti -1c
+.RI "int \fBadd_connection\fP (int from_idx, int from_port, int to_idx, int to_port)"
+.br
+.ti -1c
+.RI "int \fBadd_module_ref\fP (struct module *module)"
+.br
+.ti -1c
+.RI "\fBRouter\fP * \fBhotswap_router\fP () const "
+.br
+.RI "\fIReturns the currently-installed router this router will eventually replace\&. \fP"
+.ti -1c
+.RI "void \fBset_hotswap_router\fP (\fBRouter\fP *router)"
+.br
+.ti -1c
+.RI "int \fBinitialize\fP (\fBErrorHandler\fP *errh)"
+.br
+.ti -1c
+.RI "void \fBactivate\fP (bool foreground, \fBErrorHandler\fP *errh)"
+.br
+.ti -1c
+.RI "void \fBactivate\fP (\fBErrorHandler\fP *errh)"
+.br
+.ti -1c
+.RI "void \fBset_foreground\fP (bool foreground)"
+.br
+.ti -1c
+.RI "int \fBnew_notifier_signal\fP (const char *name, \fBNotifierSignal\fP &signal)"
+.br
+.RI "\fICreate a new basic signal\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBnotifier_signal_name\fP (const \fBatomic_uint32_t\fP *signal) const "
+.br
+.ti -1c
+.RI "static void \fBstatic_initialize\fP ()"
+.br
+.ti -1c
+.RI "static void \fBstatic_cleanup\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A router configuration\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Router::Router (const \fBString\fP & configuration, Master * master)"
+
+.PP
+Create a router\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconfiguration\fP router configuration 
+.br
+\fImaster\fP Master object
+.RE
+.PP
+Users generally do not call this function directly, instead creating a router object by calling Lexer functions (this function doesn't actually parse the configuration string)\&. The router is registered with the Master object, but not initialized or activated\&. 
+.SS "Router::~Router ()"
+
+.PP
+Destroy the router\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+The reference count must be zero\&.
+.RE
+.PP
+Users generally do not destroy \fBRouter\fP objects directly, instead calling \fBRouter::unuse()\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "Master * Router::master () const\fC [inline]\fP"
+
+.PP
+Return the Master object for this router\&. never 
+.SS "bool Router::initialized () const\fC [inline]\fP"
+
+.PP
+Return true iff the router has been successfully initialized\&. 
+.SS "bool Router::handlers_ready () const\fC [inline]\fP"
+
+.PP
+Return true iff the router's handlers have been initialized\&. \fBhandlers_ready()\fP returns false until each element's \fBElement::add_handlers()\fP method has been called\&. This happens after \fBElement::configure()\fP, but before \fBElement::initialize()\fP\&. 
+.SS "bool Router::running () const\fC [inline]\fP"
+
+.PP
+Return true iff the router is currently running\&. A running router has been successfully initialized (so \fBrunning()\fP implies \fBinitialized()\fP), and has not stopped yet\&. 
+.SS "int32_t Router::runcount () const\fC [inline]\fP"
+
+.PP
+Return the router's runcount\&. The runcount is an integer that determines whether the router is running\&. A running router has positive runcount\&. Decrementing the router's runcount to zero or below will cause the router to stop, although elements like DriverManager can intercept the stop request and continue processing\&.
+.PP
+Elements request that the router stop its processing by calling \fBadjust_runcount()\fP or \fBplease_stop_driver()\fP\&. 
+.SS "void Router::adjust_runcount (int32_t delta)"
+
+.PP
+Adjust the runcount by \fIdelta\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdelta\fP runcount adjustment
+.RE
+.PP
+Essentially performs the assignment 'runcount += delta' with compensation for integer overflow\&. (For instance, if runcount is INT_MAX and delta is INT_MAX, the resulting runcount will be INT_MAX, not -2\&.) Uses atomic operations to ensure that runcount adjustments are not lost\&.
+.PP
+If the adjusted runcount is zero or negative, the router is asked to stop its normal processing\&. This will happen soon, although not necessarily immediately\&. Once it stops, the router will search for an element to manage the stop event (see the Script and DriverManager elements)\&. If no such element exists, or the script completes without raising the runcount, the router stops permanently\&. 
+.SS "void Router::set_runcount (int32_t rc)"
+
+.PP
+Set the runcount\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrc\fP new runcount
+.RE
+.PP
+Sets the runcount to a specific value\&. If the new runcount is zero or negative, stops the router; see \fBadjust_runcount()\fP\&. 
+.SS "void Router::please_stop_driver ()\fC [inline]\fP"
+
+.PP
+Request a driver stop by adjusting the runcount by -1\&. 
+.PP
+\fBNote:\fP
+.RS 4
+Equivalent to adjust_runcount(-1)\&. 
+.RE
+.PP
+
+.SS "const \fBVector\fP< \fBElement\fP * > & Router::elements () const\fC [inline]\fP"
+
+.PP
+Returns a vector containing all the router's elements\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBelements()\fP[i] == element(i) for all i in range\&. 
+.RE
+.PP
+
+.SS "int Router::nelements () const\fC [inline]\fP"
+
+.PP
+Returns the number of elements in the router\&. 
+.SS "\fBElement\fP * Router::element (int i) const\fC [inline]\fP"
+
+.PP
+Returns the element with index \fIi\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP element index, or -1 for \fBroot_element()\fP 
+.RE
+.PP
+\fBInvariant:\fP
+.RS 4
+If element(i) isn't null, then element(i)->\fBeindex\fP() == i\&.
+.RE
+.PP
+This function returns the element with index \fIi\fP\&. If \fIi\fP == -1, returns \fBroot_element()\fP\&. If \fIi\fP is otherwise out of range, returns null\&. 
+.SS "\fBElement\fP * Router::root_element () const\fC [inline]\fP"
+
+.PP
+Returns this router's root element\&. Every router has a root \fBElement\fP\&. This element has \fBElement::eindex()\fP -1 and name ''\&. It is not configured or initialized, and doesn't appear in the configuration; it exists only for convenience, when other Click code needs to refer to some arbitrary element at the top level of the compound element hierarchy\&. 
+.SS "\fBElement\fP * Router::element (const \fBRouter\fP * router, int eindex)\fC [static]\fP"
+
+.PP
+Return \fIrouter's\fP element with index \fIeindex\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrouter\fP the router (may be null) 
+.br
+\fIeindex\fP element index, or -1 for router->\fBroot_element()\fP
+.RE
+.PP
+This function returns \fIrouter's\fP element with index \fIeindex\fP\&. If \fIrouter\fP is null or \fIeindex\fP is out of range, returns null\&. 
+.SS "const \fBString\fP & Router::ename (int eindex) const"
+
+.PP
+Returns element index \fIeindex's\fP name\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIeindex\fP element index
+.RE
+.PP
+Returns the empty string if \fIeindex\fP is out of range\&. 
+.SS "\fBString\fP Router::ename_context (int eindex) const"
+
+.PP
+Returns element index \fIeindex's\fP name context\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIeindex\fP element index
+.RE
+.PP
+The result is the context prefix for the element's name\&. This is the string up to, and including, the last slash in the element's name\&. Returns the empty string if \fIeindex\fP is out of range\&. 
+.SS "\fBString\fP Router::elandmark (int eindex) const"
+
+.PP
+Returns element index \fIeindex's\fP landmark\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIeindex\fP element index
+.RE
+.PP
+A landmark is a short string specifying where the element was defined\&. A typical landmark has the form 'file:linenumber', as in \fC'file\&.click:30'\fP\&. Returns the empty string if \fIeindex\fP is out of range\&. 
+.SS "const \fBString\fP & Router::econfiguration (int eindex) const"
+
+.PP
+Returns element index \fIeindex's\fP configuration string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIeindex\fP element index
+.RE
+.PP
+Returns the empty string if \fIeindex\fP is out of range\&.
+.PP
+\fBNote:\fP
+.RS 4
+\fBeconfiguration()\fP returns the element's most recently specified static configuration string, which might differ from the element's active configuration string\&. For the active configuration, call \fBElement::configuration()\fP, which might include post-initialization changes\&. 
+.RE
+.PP
+
+.SS "void Router::set_econfiguration (int eindex, const \fBString\fP & conf)"
+
+.PP
+Sets element index \fIeindex's\fP configuration string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIeindex\fP element index 
+.br
+\fIconf\fP configuration string
+.RE
+.PP
+Does nothing if \fIeindex\fP is out of range\&. 
+.SS "\fBElement\fP * Router::find (const \fBString\fP & name, \fBErrorHandler\fP * errh = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Finds an element named \fIname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP element name 
+.br
+\fIerrh\fP optional error handler
+.RE
+.PP
+Returns the unique element named \fIname\fP, if any\&. If no element named \fIname\fP is found, reports an error to \fIerrh\fP and returns null\&. The error is '<tt>no element named 'name'</tt>'\&. If \fIerrh\fP is null, no error is reported\&.
+.PP
+This function is equivalent to find(const String&, String, ErrorHandler*) with a context argument of the empty string\&. 
+.SS "\fBElement\fP * Router::find (const \fBString\fP & name, \fBString\fP context, \fBErrorHandler\fP * errh = \fC0\fP) const"
+
+.PP
+Finds an element named \fIname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP element name 
+.br
+\fIcontext\fP compound element context 
+.br
+\fIerrh\fP optional error handler
+.RE
+.PP
+Searches for an element named \fIname\fP in the compound element context specified by \fIcontext\fP, returning the first element found\&. For example, if \fIcontext\fP was \fC'aaa/bbb/ccc/'\fP, then \fBfind()\fP would search for elements named \fCaaa/bbb/ccc/name\fP, \fCaaa/bbb/name\fP, \fCaaa/name\fP, and finally \fCname\fP, returning the first element found\&. If nonempty, \fIcontext\fP should end with a slash\&.
+.PP
+If no element named \fIname\fP is found, reports an error to \fIerrh\fP and returns null\&. The error is '<tt>no element named 'name'</tt>'\&. If \fIerrh\fP is null, no error is reported\&. 
+.SS "\fBElement\fP * Router::find (const \fBString\fP & name, const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP) const"
+
+.PP
+Finds an element named \fIname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP element name 
+.br
+\fIcontext\fP compound element context 
+.br
+\fIerrh\fP optional error handler
+.RE
+.PP
+Searches for an element named \fIname\fP in the compound element context specified by \fIcontext\fP, returning the first element found\&. For example, if ename(\fIcontext\fP) was \fC'aaa/bbb/element'\fP, then find(\fIname\fP, \fIcontext\fP, \fIerrh\fP) is equivalent to find(\fIname\fP, \fC'aaa/bbb/'\fP, \fIerrh\fP), and will search for elements named \fCaaa/bbb/name\fP, \fCaaa/name\fP, and finally \fCname\fP\&.
+.PP
+If no element named \fIname\fP is found, reports an error to \fIerrh\fP and returns null\&. The error is '<tt>no element named 'name'</tt>'\&. If \fIerrh\fP is null, no error is reported\&. 
+.SS "int Router::visit (\fBElement\fP * first_element, bool forward, int first_port, \fBRouterVisitor\fP * visitor) const"
+
+.PP
+Traverse the router configuration from one of \fIe's\fP ports\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element to start search 
+.br
+\fIforward\fP true to search down from outputs, false to search up from inputs 
+.br
+\fIport\fP port (or -1 to search all ports) 
+.br
+\fIvisitor\fP \fBRouterVisitor\fP traversal object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -1 in early router configuration stages
+.RE
+.PP
+Calls \fIvisitor\fP ->\fBvisit() \fP on each reachable port starting from a port on \fIe\fP\&. Follows connections and traverses inside elements from port to port by \fBElement::flow_code()\fP\&. The visitor can stop a traversal path by returning false from \fBvisit()\fP\&.
+.PP
+\fIvisitor\fP ->\fBvisit() is called on input ports if \fIforward\fP is true and output ports if \fIforward\fP is false\&. Equivalent to either visit_downstream() or visit_upstream(), depending on \fIforward\fP  visit_downstream(), visit_upstream() \fP
+.SS "int Router::visit_downstream (\fBElement\fP * e, int port, \fBRouterVisitor\fP * visitor) const\fC [inline]\fP"
+
+.PP
+Traverse the router configuration downstream of \fIe\fP[\fIport\fP]\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element to start search 
+.br
+\fIport\fP output port (or -1 to search all output ports) 
+.br
+\fIvisitor\fP \fBRouterVisitor\fP traversal object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -1 in early router configuration stages
+.RE
+.PP
+Calls \fIvisitor\fP ->\fBvisit() \fP on each reachable input port starting from the output port \fIe\fP[\fIport\fP]\&. Follows connections and traverses inside elements from port to port by \fBElement::flow_code()\fP\&. The visitor can stop a traversal path by returning false from \fBvisit()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBvisit_upstream()\fP, \fBvisit()\fP 
+.RE
+.PP
+
+.SS "int Router::visit_upstream (\fBElement\fP * e, int port, \fBRouterVisitor\fP * visitor) const\fC [inline]\fP"
+
+.PP
+Traverse the router configuration upstream of [\fIport\fP]\fIe\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element to start search 
+.br
+\fIport\fP input port (or -1 to search all input ports) 
+.br
+\fIvisitor\fP \fBRouterVisitor\fP traversal object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -1 in early router configuration stages
+.RE
+.PP
+Calls \fIvisitor\fP ->\fBvisit() \fP on each reachable output port starting from the input port [\fIport\fP]\fIe\fP\&. Follows connections and traverses inside elements from port to port by \fBElement::flow_code()\fP\&. The visitor can stop a traversal path by returning false from \fBvisit()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBvisit_downstream()\fP, \fBvisit()\fP 
+.RE
+.PP
+
+.SS "int Router::downstream_elements (\fBElement\fP * e, int port, \fBElementFilter\fP * filter, \fBVector\fP< \fBElement\fP * > & result)"
+
+.PP
+Search for elements downstream from \fIe\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element to start search 
+.br
+\fIport\fP output port (or -1 to search all output ports) 
+.br
+\fIfilter\fP \fBElementFilter\fP naming elements that stop the search 
+.br
+\fIresult\fP stores results 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -1 in early router configuration stages
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+This function is deprecated\&. Use \fBvisit_downstream()\fP instead\&.
+.RE
+.PP
+.PP
+This function searches the router configuration graph, starting from \fIe's\fP output port \fIport\fP and proceeding downstream along element connections, and inside elements from port to port by \fBElement::flow_code()\fP\&. All found elements are stored in \fIresult\fP\&.
+.PP
+If \fIfilter\fP != NULL, then each found port is passed to \fIfilter's\fP \fBElementFilter::check_match()\fP function to check whether to stop the search\&. For example, if \fIfilter\fP is \fBCastElementFilter\fP('Storage'), then the search will stop after any Storage element\&. The \fIresult\fP will then include the Storage elements and any elements in between \fIe\fP and the Storage elements\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBupstream_elements()\fP 
+.RE
+.PP
+
+.SS "int Router::upstream_elements (\fBElement\fP * e, int port, \fBElementFilter\fP * filter, \fBVector\fP< \fBElement\fP * > & result)"
+
+.PP
+Search for elements upstream from \fIe\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element to start search 
+.br
+\fIport\fP input port (or -1 to search all ports) 
+.br
+\fIfilter\fP \fBElementFilter\fP naming elements that stop the search 
+.br
+\fIresult\fP stores results 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -1 in early router configuration stages
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+This function is deprecated\&. Use \fBvisit_upstream()\fP instead\&.
+.RE
+.PP
+.PP
+This function searches the router configuration graph, starting from \fIe's\fP input port \fIport\fP and proceeding upstream along element connections, and inside elements from port to port by \fBElement::flow_code()\fP\&. All found elements are stored in \fIresult\fP\&.
+.PP
+If \fIfilter\fP != NULL, then each found port is passed to \fIfilter's\fP \fBElementFilter::check_match()\fP function to check whether to stop the search\&. For example, if \fIfilter\fP is \fBCastElementFilter\fP('Storage'), then the search will stop after any Storage element\&. The \fIresult\fP will then include the Storage elements and any elements in between \fIe\fP and the Storage elements\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBdownstream_elements()\fP 
+.RE
+.PP
+
+.SS "const char * Router::flow_code_override (int eindex) const\fC [inline]\fP"
+
+.PP
+Returns the overriding flow code for element \fIe\fP, if any\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIeindex\fP element index 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The flow code, or null if none has been set\&. 
+.RE
+.PP
+
+.SS "const \fBHandler\fP * Router::handler (const \fBElement\fP * e, const \fBString\fP & hname)\fC [static]\fP"
+
+.PP
+Return element \fIe's\fP handler named \fIhname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element, if any 
+.br
+\fIhname\fP handler name 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the \fBHandler\fP, or null if no such handler exists
+.RE
+.PP
+Searches for element \fIe's\fP handler named \fIhname\fP\&. Returns NULL if no such handler exists\&. If \fIe\fP is NULL or equal to some \fBroot_element()\fP, then this function searches for a global handler named \fIhname\fP\&.
+.PP
+The return \fBHandler\fP pointer remains valid until the named handler is changed in some way (\fBadd_read_handler()\fP, \fBadd_write_handler()\fP, \fBset_handler()\fP, or \fBset_handler_flags()\fP)\&. 
+.SS "void Router::add_read_handler (const \fBElement\fP * e, const \fBString\fP & hname, ReadHandlerCallback callback, void * user_data, uint32_t flags = \fC0\fP)\fC [static]\fP"
+
+.PP
+Add an \fIe\fP\&.\fIhname\fP read handler\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIcallback\fP read callback 
+.br
+\fIuser_data\fP user data for read callback 
+.br
+\fIflags\fP additional flags to set (\fBHandler::flags()\fP)
+.RE
+.PP
+Adds a read handler named \fIhname\fP for element \fIe\fP\&. If \fIe\fP is NULL or equal to some \fBroot_element()\fP, then adds a global read handler\&. The handler's callback function is \fIcallback\fP\&. When the read handler is triggered, Click will call \fIcallback\fP(\fIe\fP, \fIuser_data\fP)\&.
+.PP
+Any previous read handler with the same name and element is replaced\&. Any comprehensive handler function (see \fBset_handler()\fP) is replaced\&. Any write-only handler (\fBadd_write_handler()\fP) remains\&.
+.PP
+The new handler's flags equal the old flags or'ed with \fIflags\fP\&. Any special flags in \fIflags\fP are ignored\&.
+.PP
+To create a read handler with parameters, you must use \fI\fBset_handler()\fP\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_write_handler()\fP, \fBset_handler()\fP, \fBset_handler_flags()\fP 
+.RE
+.PP
+
+.SS "void Router::add_write_handler (const \fBElement\fP * e, const \fBString\fP & hname, WriteHandlerCallback callback, void * user_data, uint32_t flags = \fC0\fP)\fC [static]\fP"
+
+.PP
+Add an \fIe\fP\&.\fIhname\fP write handler\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIcallback\fP read callback 
+.br
+\fIuser_data\fP user data for write callback 
+.br
+\fIflags\fP additional flags to set (\fBHandler::flags()\fP)
+.RE
+.PP
+Adds a write handler named \fIhname\fP for element \fIe\fP\&. If \fIe\fP is NULL or equal to some \fBroot_element()\fP, then adds a global write handler\&. The handler's callback function is \fIcallback\fP\&. When the write handler is triggered, Click will call \fIcallback\fP(data, \fIe\fP, \fIuser_data\fP, errh)\&.
+.PP
+Any previous write handler with the same name and element is replaced\&. Any comprehensive handler function (see \fBset_handler()\fP) is replaced\&. Any read-only handler (\fBadd_read_handler()\fP) remains\&.
+.PP
+The new handler's flags equal the old flags or'ed with \fIflags\fP\&. Any special flags in \fIflags\fP are ignored\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_read_handler()\fP, \fBset_handler()\fP, \fBset_handler_flags()\fP 
+.RE
+.PP
+
+.SS "void Router::set_handler (const \fBElement\fP * e, const \fBString\fP & hname, uint32_t flags, HandlerCallback callback, void * read_user_data = \fC0\fP, void * write_user_data = \fC0\fP)\fC [static]\fP"
+
+.PP
+Add a comprehensive \fIe\fP\&.\fIhname\fP handler\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIflags\fP flags to set (\fBHandler::flags()\fP) 
+.br
+\fIcallback\fP comprehensive handler callback 
+.br
+\fIread_user_data\fP read user data for \fIcallback\fP 
+.br
+\fIwrite_user_data\fP write user data for \fIcallback\fP 
+.RE
+.PP
+Sets a handler named \fIhname\fP for element \fIe\fP\&. If \fIe\fP is NULL or equal to some \fBroot_element()\fP, then sets a global handler\&. The handler's callback function is \fIcallback\fP\&. The resulting handler is a read handler if \fIflags\fP contains \fBHandler::f_read\fP, and a write handler if \fIflags\fP contains \fBHandler::f_write\fP\&. If the flags contain \fBHandler::f_read_param\fP, then any read handler will accept parameters\&.
+.PP
+When the handler is triggered, Click will call \fIcallback\fP(operation, data, \fIe\fP, h, errh), where:
+.PP
+.PD 0
+.IP "\(bu" 2
+'operation' is \fBHandler::f_read\fP or \fBHandler::f_write\fP; 
+.IP "\(bu" 2
+'data' is the handler data (empty for reads without parameters); 
+.IP "\(bu" 2
+'h' is a pointer to a \fBHandler\fP object; and 
+.IP "\(bu" 2
+'errh' is an \fBErrorHandler\fP\&. 
+.PP
+.PP
+Any previous handlers with the same name and element are replaced\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_read_handler()\fP, \fBadd_write_handler()\fP, \fBset_handler_flags()\fP 
+.RE
+.PP
+
+.SS "int Router::set_handler_flags (const \fBElement\fP * e, const \fBString\fP & hname, uint32_t set_flags, uint32_t clear_flags = \fC0\fP)\fC [static]\fP"
+
+.PP
+Change the \fIe\fP\&.\fIhname\fP handler's flags\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIset_flags\fP flags to set (\fBHandler::flags()\fP) 
+.br
+\fIclear_flags\fP flags to clear (\fBHandler::flags()\fP) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 if the handler existed, -1 otherwise
+.RE
+.PP
+Changes the handler flags for the handler named \fIhname\fP on element \fIe\fP\&. If \fIe\fP is NULL or equal to some \fBroot_element()\fP, then changes a global handler\&. The handler's flags are changed by clearing the \fIclear_flags\fP and then setting the \fIset_flags\fP, except that the special flags (\fBHandler::f_special\fP) are unchanged\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_read_handler()\fP, \fBadd_write_handler()\fP, \fBset_handler()\fP 
+.RE
+.PP
+
+.SS "int Router::hindex (const \fBElement\fP * e, const \fBString\fP & hname)\fC [static]\fP"
+
+.PP
+Return the handler index for element \fIe's\fP handler named \fIhname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element, if any 
+.br
+\fIhname\fP handler name 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the handler index, or -1 if no such handler exists
+.RE
+.PP
+Searches for element \fIe's\fP handler named \fIhname\fP\&. Returns -1 if no such handler exists\&. If \fIe\fP is NULL or equal to some \fBroot_element()\fP, then this function searches for a global handler named \fIhname\fP\&.
+.PP
+The returned integer is a handler index, which is a number that identifies the handler\&. An integer >= FIRST_GLOBAL_HANDLER corresponds to a global handler\&. 
+.SS "const \fBHandler\fP * Router::handler (const \fBRouter\fP * router, int hindex)\fC [static]\fP"
+
+.PP
+Return \fIrouter's\fP handler with index \fIhindex\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrouter\fP the router 
+.br
+\fIhindex\fP handler index (\fBRouter::hindex()\fP) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the \fBHandler\fP, or null if no such handler exists
+.RE
+.PP
+Returns the \fBHandler\fP object on \fIrouter\fP with handler index \fIhindex\fP\&. If \fIhindex\fP >= FIRST_GLOBAL_HANDLER, then returns a global handler\&. If \fIhindex\fP is < 0 or corresponds to no existing handler, returns null\&.
+.PP
+The return \fBHandler\fP pointer remains valid until the named handler is changed in some way (\fBadd_read_handler()\fP, \fBadd_write_handler()\fP, \fBset_handler()\fP, or \fBset_handler_flags()\fP)\&. 
+.SS "void Router::element_hindexes (const \fBElement\fP * e, \fBVector\fP< int > & result)\fC [static]\fP"
+
+.PP
+Return the handler indexes for element \fIe's\fP handlers\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element, if any 
+.br
+\fIresult\fP collector for handler indexes
+.RE
+.PP
+Iterates over all element \fIe's\fP handlers, and appends their handler indexes to \fIresult\fP\&. If \fIe\fP is NULL or equal to some \fBroot_element()\fP, then iterates over the global handlers\&. 
+.SS "\fBString\fP Router::configuration_string () const"
+
+.PP
+Returns the router's initial configuration string\&. never
+.PP
+\fBReturns:\fP
+.RS 4
+The configuration string specified to the constructor\&. 
+.RE
+.PP
+
+.SS "void Router::unparse (\fBStringAccum\fP & sa, const \fBString\fP & indent = \fC\fBString\fP()\fP) const"
+
+.PP
+Unparse this router into \fIsa\fP\&. Calls \fBunparse_requirements()\fP, \fBunparse_declarations()\fP, and \fBunparse_connections()\fP, in that order\&. Each line is prefixed by \fIindent\fP\&. 
+.SS "void Router::unparse_requirements (\fBStringAccum\fP & sa, const \fBString\fP & indent = \fC\fBString\fP()\fP) const"
+
+.PP
+Unparse the router's requirements into \fIsa\fP\&. neverAppends at most one require() statement to \fIsa\fP\&. 
+.SS "void Router::unparse_declarations (\fBStringAccum\fP & sa, const \fBString\fP & indent = \fC\fBString\fP()\fP) const"
+
+.PP
+Unparse declarations of the router's elements into \fIsa\fP\&. Appends this router's elements' declarations to \fIsa\fP\&. If the router is initialized, then each element's configuration string is found by \fBElement::configuration()\fP, which might include post-initialization changes\&. 
+.SS "void Router::unparse_connections (\fBStringAccum\fP & sa, const \fBString\fP & indent = \fC\fBString\fP()\fP) const"
+
+.PP
+Unparse the router's connections into \fIsa\fP\&. Appends this router's connections to \fIsa\fP in parseable format\&. 
+.SS "\fBString\fP Router::element_ports_string (const \fBElement\fP * e) const"
+
+.PP
+Return a string representing \fIe's\fP ports\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element
+.RE
+.PP
+The returned string is suitable for an element's \fCports\fP handler\&. It lists the input ports, then the output ports\&. For example:
+.PP
+.PP
+.nf
+
+1 input
+push~   -       InfiniteSource@1 [0], InfiniteSource@4 [0]
+1 output
+push~   -       [0] Align@3
+.fi
+.PP
+.PP
+In the port lines, the first column describes the processing type (a tilde suffix represents an agnostic port); the second column lists any packet statistics available; and the third column lists other ports that are connected to this port\&. 
+.SS "void Router::use ()\fC [inline]\fP"
+
+.PP
+Increment the router's reference count\&. Routers are reference counted objects\&. A \fBRouter\fP is created with one reference, which is held by its Master object\&. Normally the \fBRouter\fP and all its elements will be deleted when the Master drops this reference, but you can preserve the \fBRouter\fP for longer by adding a reference yourself\&. 
+.SS "void Router::unuse ()"
+
+.PP
+Decrement the router's reference count\&. Destroys the router if the reference count decrements to zero\&. 
+.SS "\fBRouter\fP * Router::hotswap_router () const\fC [inline]\fP"
+
+.PP
+Returns the currently-installed router this router will eventually replace\&. This function is only meaningful during a router's initialization\&. If this router was installed with the hotswap option, then \fBhotswap_router()\fP will return the currently-installed router that this router will eventually replace (assuming error-free initialization)\&. Otherwise, \fBhotswap_router()\fP will return 0\&. 
+.SS "int Router::new_notifier_signal (const char * name, \fBNotifierSignal\fP & signal)"
+
+.PP
+Create a new basic signal\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP signal name 
+.br
+\fIsignal\fP set to new signal
+.RE
+.PP
+Creates a new basic \fBNotifierSignal\fP and stores it in \fIsignal\fP\&. The signal is initially active\&.
+.PP
+\fBNote:\fP
+.RS 4
+Users will not generally call this function directly; \fBNotifier::initialize()\fP will call it as required\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+>= 0 on success, < 0 on failure 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBNotifierSignal\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

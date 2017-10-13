@@ -1,0 +1,905 @@
+.TH "ErrorHandler" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ErrorHandler \- Error reporting class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <error\&.hh>\fP
+.PP
+Inherited by \fBErrorVeneer\fP, \fBFileErrorHandler\fP, \fBSilentErrorHandler\fP, and \fBSyslogErrorHandler\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBLevel\fP { \fBel_abort\fP = -999, \fBel_fatal\fP = -1, \fBel_emergency\fP = 0, \fBel_alert\fP = 1, \fBel_critical\fP = 2, \fBel_error\fP = 3, \fBel_warning\fP = 4, \fBel_notice\fP = 5, \fBel_info\fP = 6, \fBel_debug\fP = 7 }
+.RI "\fIError level constants\&. \fP""
+.br
+.ti -1c
+.RI "enum \fBConversionFlags\fP { \fBcf_zero_pad\fP = 1, \fBcf_plus_positive\fP = 2, \fBcf_space_positive\fP = 4, \fBcf_left_just\fP = 8, \fBcf_alternate_form\fP = 16, \fBcf_singlequote\fP = 32, \fBcf_uppercase\fP = 64, \fBcf_signed\fP = 128, \fBcf_negative\fP = 256, \fBcf_utf8\fP = 1024 }"
+.br
+.ti -1c
+.RI "typedef \fBString\fP(* \fBConversionFunction\fP) (int flags, VA_LIST_REF_T)"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBErrorHandler\fP ()"
+.br
+.RI "\fIConstruct an \fBErrorHandler\fP\&. \fP"
+.ti -1c
+.RI "void \fBdebug\fP (const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint a debug message (level el_debug)\&. \fP"
+.ti -1c
+.RI "void \fBmessage\fP (const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint an informational message (level el_info)\&. \fP"
+.ti -1c
+.RI "int \fBwarning\fP (const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint a warning message (level el_warning)\&. \fP"
+.ti -1c
+.RI "int \fBerror\fP (const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint an error message (level el_error)\&. \fP"
+.ti -1c
+.RI "int \fBfatal\fP (const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint a fatal error message (level el_fatal)\&. \fP"
+.ti -1c
+.RI "void \fBldebug\fP (const \fBString\fP &landmark, const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint a debug message with a landmark annotation\&. \fP"
+.ti -1c
+.RI "void \fBlmessage\fP (const \fBString\fP &landmark, const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint an informational message with a landmark annotation\&. \fP"
+.ti -1c
+.RI "int \fBlwarning\fP (const \fBString\fP &landmark, const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint a warning message with a landmark annotation\&. \fP"
+.ti -1c
+.RI "int \fBlerror\fP (const \fBString\fP &landmark, const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint an error message with a landmark annotation\&. \fP"
+.ti -1c
+.RI "int \fBlfatal\fP (const \fBString\fP &landmark, const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIPrint a fatal error message with a landmark annotation\&. \fP"
+.ti -1c
+.RI "int \fBxmessage\fP (const \fBString\fP &str)"
+.br
+.RI "\fIPrint an annotated error message\&. \fP"
+.ti -1c
+.RI "int \fBxmessage\fP (const \fBString\fP &anno, const \fBString\fP &str)"
+.br
+.RI "\fIPrint an error message, adding annotations\&. \fP"
+.ti -1c
+.RI "int \fBxmessage\fP (const \fBString\fP &anno, const char *fmt, va_list val)"
+.br
+.RI "\fIFormat and print an error message, adding annotations\&. \fP"
+.ti -1c
+.RI "int \fBxmessage\fP (const \fBString\fP &landmark, const \fBString\fP &anno, const \fBString\fP &str)"
+.br
+.RI "\fIPrint an error message, adding landmark and other annotations\&. \fP"
+.ti -1c
+.RI "int \fBxmessage\fP (const \fBString\fP &landmark, const \fBString\fP &anno, const char *fmt, va_list val)"
+.br
+.RI "\fIFormat and print an error message, adding landmark and other annotations\&. \fP"
+.ti -1c
+.RI "int \fBnerrors\fP () const "
+.br
+.RI "\fIReturn the number of errors reported via this handler\&. \fP"
+.ti -1c
+.RI "virtual \fBString\fP \fBvformat\fP (const char *fmt, va_list val)"
+.br
+.RI "\fIFormat an error string\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBformat\fP (const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIFormat an error string\&. \fP"
+.ti -1c
+.RI "virtual \fBString\fP \fBdecorate\fP (const \fBString\fP &str)"
+.br
+.RI "\fIDecorate an error message\&. \fP"
+.ti -1c
+.RI "virtual void * \fBemit\fP (const \fBString\fP &str, void *user_data, bool more)"
+.br
+.RI "\fIOutput an error message line\&. \fP"
+.ti -1c
+.RI "virtual void \fBaccount\fP (int level)"
+.br
+.RI "\fIAccount for an error message at level \fIlevel\fP\&. \fP"
+.ti -1c
+.RI "virtual void \fBclear\fP ()"
+.br
+.RI "\fIClear accumulated error state\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBErrorHandler\fP * \fBstatic_initialize\fP (\fBErrorHandler\fP *errh)"
+.br
+.RI "\fIInitialize the \fBErrorHandler\fP implementation\&. \fP"
+.ti -1c
+.RI "static void \fBstatic_cleanup\fP ()"
+.br
+.RI "\fITear down the \fBErrorHandler\fP implementation\&. \fP"
+.ti -1c
+.RI "static \fBErrorHandler\fP * \fBdefault_handler\fP ()"
+.br
+.RI "\fIReturn the default \fBErrorHandler\fP\&. \fP"
+.ti -1c
+.RI "static void \fBset_default_handler\fP (\fBErrorHandler\fP *errh)"
+.br
+.RI "\fISet the default \fBErrorHandler\fP to \fIerrh\fP\&. \fP"
+.ti -1c
+.RI "static \fBErrorHandler\fP * \fBsilent_handler\fP ()"
+.br
+.RI "\fIReturn the global silent \fBErrorHandler\fP\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBxformat\fP (int default_flags, const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIFormat an error string\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBvxformat\fP (int default_flags, const char *fmt, va_list val)"
+.br
+.ti -1c
+.RI "static \fBString\fP \fBxformat\fP (const char *fmt,\&.\&.\&.)"
+.br
+.ti -1c
+.RI "static \fBString\fP \fBvxformat\fP (const char *fmt, va_list val)"
+.br
+.ti -1c
+.RI "static \fBString\fP \fBmake_anno\fP (const char *name, const \fBString\fP &value)"
+.br
+.RI "\fICreate an error annotation\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBcombine_anno\fP (const \fBString\fP &str, const \fBString\fP &anno)"
+.br
+.RI "\fIApply annotations from \fIanno\fP to every line in \fIstr\fP\&. \fP"
+.ti -1c
+.RI "static const char * \fBparse_anno\fP (const \fBString\fP &str, const char *begin, const char *end,\&.\&.\&.) ERRH_SENTINEL"
+.br
+.RI "\fIParse error annotations from a string\&. \fP"
+.ti -1c
+.RI "static const char * \fBskip_anno\fP (const char *begin, const char *end)"
+.br
+.RI "\fISkip a string's error annotations\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBmake_landmark_anno\fP (const \fBString\fP &x)"
+.br
+.RI "\fIReturn a landmark annotation equal to \fIx\fP\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBclean_landmark\fP (const \fBString\fP &landmark, bool colon=false)"
+.br
+.RI "\fIClean the \fIlandmark\fP\&. \fP"
+.ti -1c
+.RI "static Conversion * \fBadd_conversion\fP (const \fBString\fP &name, ConversionFunction func)"
+.br
+.ti -1c
+.RI "static int \fBremove_conversion\fP (Conversion *conversion)"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static const char \fBe_abort\fP [] = '<\-999>'"
+.br
+.RI "\fIError level indicators\&. \fP"
+.ti -1c
+.RI "static const char \fBe_fatal\fP [] = '<\-1>'"
+.br
+.ti -1c
+.RI "static const char \fBe_emergency\fP [] = '<0>'"
+.br
+.ti -1c
+.RI "static const char \fBe_alert\fP [] = '<1>'"
+.br
+.ti -1c
+.RI "static const char \fBe_critical\fP [] = '<2>'"
+.br
+.ti -1c
+.RI "static const char \fBe_error\fP [] = '<3>'"
+.br
+.ti -1c
+.RI "static const char \fBe_warning\fP [] = '<4>'"
+.br
+.ti -1c
+.RI "static const char \fBe_warning_annotated\fP [] = '<4>warning: '"
+.br
+.ti -1c
+.RI "static const char \fBe_notice\fP [] = '<5>'"
+.br
+.ti -1c
+.RI "static const char \fBe_info\fP [] = '<6>'"
+.br
+.ti -1c
+.RI "static const char \fBe_debug\fP [] = '<7>'"
+.br
+.ti -1c
+.RI "static const int \fBok_result\fP = 0"
+.br
+.ti -1c
+.RI "static const int \fBerror_result\fP = \-EINVAL"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Error reporting class\&. 
+
+Click elements report errors through \fBErrorHandler\fP objects, which represent error collectors and printers\&. ErrorHandlers are passed to configure() and initialize() methods explicitly, as well as to write handlers; the click_chatter() function calls \fBErrorHandler\fP implicitly\&.
+.PP
+.SS "Cooked error messages"
+.PP
+Most \fBErrorHandler\fP interactions consist of a simple call like this: 
+.PP
+.nf
+errh->error("not enough arguments (%d needed)", 5);
+    // prints something like "not enough arguments (5 needed)\n"
+
+.fi
+.PP
+.PP
+This function constructs an error message string from the format arguments, annotates the string with a default error level (here, el_error), and prints it\&. Alternate versions take a landmark specifying where the error took place: 
+.PP
+.nf
+errh->lwarning("file\&.click:2", "syntax error at '%s'", word\&.c_str());
+    // prints something like "file\&.click:2: syntax error at 'foo'\n"
+
+.fi
+.PP
+.PP
+.SS "Raw error messages"
+.PP
+For finer control over error levels and annotations, construct an error message string directly\&. An error message is a string consisting of one or more lines\&. Each line begins with a set of optional textual \fIannotations\fP\&. The following error message has a \fIlevel\fP annotation determining how serious the error is (this one is critical, since el_critical == 2), and a \fIlandmark\fP annotation, which specifies where the error took place (here, 'x\&.click:1'):
+.PP
+\fC'<2>{l:x\&.click:1}syntax error'\fP
+.PP
+Click's default ErrorHandlers understand the level and landmark annotations\&. Users can add other arbitrary annotations, which can be useful to pass error metadata\&. A pair of braces ends the annotation area\&. This example has one user annotation \fCeoc\fP, and a message area that would be mistaken for an annotation were it not for the \fC{}\fP:
+.PP
+\fC'<2>{l:x\&.click:1}{eoc:520}{}{not:an annotation}'\fP
+.PP
+.SS "Stacking handlers"
+.PP
+Some ErrorHandlers stack on top of others, adding useful functionality like automatic context description and prefixing\&. For example, \fBContextErrorHandler\fP can be used to print messages like 'In function
+'xxx':'\&. 
+.PP
+.nf
+FileErrorHandler errh1(stderr);
+ContextErrorHandler errh2(&errh1, "While counting to 2:");
+errh2\&.error("An error occurred\&.");
+errh2\&.error("Another error occurred\&.");
+    // prints "While counting to 2:\n"
+    //        "  An error occurred\&.\n"
+    //        "  Another error occurred\&.\n"
+
+.fi
+.PP
+ 
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBErrorHandler::Level\fP"
+
+.PP
+Error level constants\&. Lower values represent more serious errors\&. Levels 0-7 correspond to Linux's error levels\&. Negative levels request immediate exit; at user level, the Click process's exit status is the absolute value of the error level\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIel_abort \fP\fP
+Error level that triggers abort()\&. 
+.TP
+\fB\fIel_fatal \fP\fP
+Fatal exit error level\&. Exit status equals -(level)\&. 
+.TP
+\fB\fIel_emergency \fP\fP
+Emergency error level: system is unusable\&. 
+.TP
+\fB\fIel_alert \fP\fP
+Alert error level: action must be taken\&. 
+.TP
+\fB\fIel_critical \fP\fP
+Error level for critical conditions\&. 
+.TP
+\fB\fIel_error \fP\fP
+Error level for normal error conditions\&. 
+.TP
+\fB\fIel_warning \fP\fP
+Error level for warning conditions\&. 
+.TP
+\fB\fIel_notice \fP\fP
+Error level for normal, but significant conditions\&. 
+.TP
+\fB\fIel_info \fP\fP
+Error level for informational messages\&. 
+.TP
+\fB\fIel_debug \fP\fP
+Error level for debug messages\&. 
+.SS "enum \fBErrorHandler::ConversionFlags\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIcf_zero_pad \fP\fP
+Set for conversions using the '0' flag\&. 
+.TP
+\fB\fIcf_plus_positive \fP\fP
+Set for conversions using the '+' flag\&. 
+.TP
+\fB\fIcf_space_positive \fP\fP
+Set for conversions using the ' ' flag\&. 
+.TP
+\fB\fIcf_left_just \fP\fP
+Set for conversions using the '-' flag\&. 
+.TP
+\fB\fIcf_alternate_form \fP\fP
+Set for conversions using the '#' flag\&. 
+.TP
+\fB\fIcf_singlequote \fP\fP
+Set for conversions using the '\\'' flag\&. 
+.TP
+\fB\fIcf_uppercase \fP\fP
+Set for 'X' conversions (not 'x')\&. 
+.TP
+\fB\fIcf_signed \fP\fP
+Set for conversions of signed numbers\&. 
+.TP
+\fB\fIcf_negative \fP\fP
+Set for conversions of negative numbers\&. 
+.TP
+\fB\fIcf_utf8 \fP\fP
+Set to use UTF-8 characters on output\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ErrorHandler::ErrorHandler ()\fC [inline]\fP"
+
+.PP
+Construct an \fBErrorHandler\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBErrorHandler\fP * ErrorHandler::static_initialize (\fBErrorHandler\fP * errh)\fC [static]\fP"
+
+.PP
+Initialize the \fBErrorHandler\fP implementation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP default error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fIerrh\fP 
+.RE
+.PP
+Call this function to initialize the \fBErrorHandler\fP implementation\&. The function installs the default conversions, creates the \fBsilent_handler()\fP, and installs \fIerrh\fP as the default error handler (see \fBdefault_handler()\fP)\&.
+.PP
+\fBNote:\fP
+.RS 4
+The \fIerrh\fP object becomes the property of the \fBErrorHandler\fP implementation and must not be deleted\&. (\fBErrorHandler::static_cleanup()\fP will delete it\&.) Only the first call to \fBstatic_initialize()\fP has any effect\&. 
+.RE
+.PP
+
+.SS "void ErrorHandler::static_cleanup ()\fC [static]\fP"
+
+.PP
+Tear down the \fBErrorHandler\fP implementation\&. Deletes the internal ErrorHandlers and uninstalls default conversions\&. 
+.SS "static \fBErrorHandler\fP* ErrorHandler::default_handler ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the default \fBErrorHandler\fP\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBstatic_initialize()\fP 
+.RE
+.PP
+
+.SS "void ErrorHandler::set_default_handler (\fBErrorHandler\fP * errh)\fC [static]\fP"
+
+.PP
+Set the default \fBErrorHandler\fP to \fIerrh\fP\&. 
+.PP
+\fBNote:\fP
+.RS 4
+\fIerrh\fP becomes property of the \fBErrorHandler\fP implementation, and will be freed by \fBstatic_cleanup()\fP\&. However, any prior default handler is \fInot\fP destroyed\&. Callers should delete the prior handler when necessary\&. 
+.RE
+.PP
+
+.SS "static \fBErrorHandler\fP* ErrorHandler::silent_handler ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the global silent \fBErrorHandler\fP\&. 
+.SS "void ErrorHandler::debug (const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print a debug message (level el_debug)\&. \fIfmt\fP and any following arguments are parsed as by \fBformat()\fP, and the resulting string is passed to \fBxmessage()\fP\&. 
+.SS "void ErrorHandler::message (const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print an informational message (level el_info)\&. 
+.SS "int ErrorHandler::warning (const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print a warning message (level el_warning)\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+error_result
+.RE
+.PP
+The string 'warning: ' is prepended to every line of the message\&. 
+.SS "int ErrorHandler::error (const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print an error message (level el_error)\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+error_result 
+.RE
+.PP
+
+.SS "int ErrorHandler::fatal (const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print a fatal error message (level el_fatal)\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+error_result
+.RE
+.PP
+In many ErrorHandlers, calling \fBfatal()\fP will cause Click to abort\&. 
+.SS "void ErrorHandler::ldebug (const \fBString\fP & landmark, const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print a debug message with a landmark annotation\&. 
+.SS "void ErrorHandler::lmessage (const \fBString\fP & landmark, const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print an informational message with a landmark annotation\&. 
+.SS "int ErrorHandler::lwarning (const \fBString\fP & landmark, const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print a warning message with a landmark annotation\&. 
+.SS "int ErrorHandler::lerror (const \fBString\fP & landmark, const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print an error message with a landmark annotation\&. 
+.SS "int ErrorHandler::lfatal (const \fBString\fP & landmark, const char * fmt,  \&.\&.\&.)"
+
+.PP
+Print a fatal error message with a landmark annotation\&. 
+.SS "int ErrorHandler::xmessage (const \fBString\fP & str)"
+
+.PP
+Print an annotated error message\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+ok_result if the minimum error level was el_notice or higher, otherwise error_result
+.RE
+.PP
+This function drives the virtual functions actually responsible for error message decoration and printing\&. It passes \fIstr\fP to \fBdecorate()\fP, separates the result into lines, calls \fBemit()\fP for each line, and calls \fBaccount()\fP with the minimum error level of any line\&.
+.PP
+Most users will call shorthand functions like \fBerror()\fP, \fBwarning()\fP, or \fBlmessage()\fP, which add relevant annotations to the message\&. 
+.SS "int ErrorHandler::xmessage (const \fBString\fP & anno, const \fBString\fP & str)\fC [inline]\fP"
+
+.PP
+Print an error message, adding annotations\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIanno\fP annotations 
+.br
+\fIstr\fP error message
+.RE
+.PP
+Shorthand for xmessage(combine_anno(\fIstr\fP, \fIanno\fP))\&. 
+.SS "int ErrorHandler::xmessage (const \fBString\fP & anno, const char * fmt, va_list val)\fC [inline]\fP"
+
+.PP
+Format and print an error message, adding annotations\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIanno\fP annotations 
+.br
+\fIfmt\fP error message format 
+.br
+\fIval\fP format arguments
+.RE
+.PP
+Shorthand for xmessage(\fIanno\fP, vformat(\fIfmt\fP, \fIval\fP))\&. 
+.SS "int ErrorHandler::xmessage (const \fBString\fP & landmark, const \fBString\fP & anno, const \fBString\fP & str)\fC [inline]\fP"
+
+.PP
+Print an error message, adding landmark and other annotations\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlandmark\fP landmark annotation 
+.br
+\fIanno\fP additional annotations 
+.br
+\fIstr\fP error message
+.RE
+.PP
+Shorthand for xmessage(combine_anno(\fIanno\fP, make_landmark_anno(\fIlandmark\fP)), \fIstr\fP)\&. 
+.SS "int ErrorHandler::xmessage (const \fBString\fP & landmark, const \fBString\fP & anno, const char * fmt, va_list val)\fC [inline]\fP"
+
+.PP
+Format and print an error message, adding landmark and other annotations\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlandmark\fP landmark annotation 
+.br
+\fIanno\fP additional annotations 
+.br
+\fIfmt\fP error message format 
+.br
+\fIval\fP format arguments
+.RE
+.PP
+Shorthand for xmessage(\fIlandmark\fP, \fIanno\fP, vformat(\fIfmt\fP, \fIval\fP))\&. 
+.SS "int ErrorHandler::nerrors () const\fC [inline]\fP"
+
+.PP
+Return the number of errors reported via this handler\&. An error is any message that contains at least one line with error level 3 (\fBel_error\fP) or below\&.
+.PP
+\fBNote:\fP
+.RS 4
+The error count will also contain errors reported via stacked handlers\&. For instance: 
+.PP
+.nf
+SilentErrorHandler errh1;
+PrefixErrorHandler errh2(&errh1, "");
+assert(errh1\&.nerrors() == 0);
+errh2\&.error("blah");
+assert(errh1\&.nerrors() == 1);
+
+.fi
+.PP
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBaccount\fP, \fBclear\fP 
+.RE
+.PP
+
+.SS "\fBString\fP ErrorHandler::xformat (int default_flags, const char * fmt,  \&.\&.\&.)\fC [static]\fP"
+
+.PP
+Format an error string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdefault_flags\fP default ConversionFlags 
+.br
+\fIfmt\fP printf-like format string 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+formatted error string
+.RE
+.PP
+Formats an error string using printf-like % conversions\&. Conversions include:
+.PP
+\fC%d\fP, \fC%i\fPFormat an \fCint\fP as a decimal string\&. Understands flags in \fC#0- +\fP, field widths (including \fC*\fP), and precisions\&.
+.PP
+\fC%hd\fP, \fC%ld\fP, \fC%lld\fP, \fC%zd\fPFormat a \fCshort\fP, \fClong\fP, \fClong long\fP, or \fCsize_t\fP\&.
+.PP
+\fC%^16d\fP, \fC%^32d\fP, \fC%^64d\fP Format a 16-, 32-, or 64-bit integer\&.
+.PP
+\fC%o\fP, \fC%u\fP, \fC%x\fP, \fC%X\fPFormat an unsigned integer in octal, decimal, or hexadecimal (with lower-case or upper-case letters)\&.
+.PP
+\fC%s\fPFormat a C string (\fCconst char *\fP)\&. The alternate form \fC%#s\fP calls \fBString::printable()\fP on the input string\&. Both \fC%#s\fP and the alternate form \fC%'s\fP ensure that no part of the string is mistaken for an error annotation\&.
+.PP
+\fC%c\fPFormat a character\&. Prints a C-like escape if the input character isn't printable ASCII\&.
+.PP
+\fC%p\fPFormat a pointer as a hexadecimal value\&.
+.PP
+\fC%e\fP, \fC%E\fP, \fC%f\fP, \fC%F\fP, \fC%g\fP, \fC%G\fPFormat a \fCdouble\fP (user-level only)\&.
+.PP
+\fC%p{\&.\&.\&.}\fPCall a user-provided conversion function\&. For example, \fC%p{ip_ptr}\fP reads an \fC\fBIPAddress\fP *\fP argument from the argument list, and formats the pointed-to address using \fBIPAddress::unparse()\fP\&.
+.PP
+\fC%%\fPFormat a literal % character\&.
+.PP
+\fC%<\fPFormat a left quote string\&. Usually prints a single quote\&.
+.PP
+\fC%>\fPFormat a right quote string\&. Usually prints a single quote\&.
+.PP
+\fC%,\fPFormat an apostrophe string\&. Usually prints a single quote\&.
+.PP
+
+.SS "\fBString\fP ErrorHandler::vxformat (int default_flags, const char * fmt, va_list val)\fC [static]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBString\fP ErrorHandler::xformat (const char * fmt,  \&.\&.\&.)\fC [static]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "static \fBString\fP ErrorHandler::vxformat (const char * fmt, va_list val)\fC [inline]\fP, \fC [static]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBString\fP ErrorHandler::vformat (const char * fmt, va_list val)\fC [virtual]\fP"
+
+.PP
+Format an error string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfmt\fP format string 
+.br
+\fIval\fP argument list
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+This virtual function is called to format an error message\&. The default implementation returns the result of vxformat(\fIfmt\fP, \fIval\fP)\&. 
+.PP
+Reimplemented in \fBFileErrorHandler\fP, \fBErrorVeneer\fP, and \fBSyslogErrorHandler\fP\&.
+.SS "\fBString\fP ErrorHandler::format (const char * fmt,  \&.\&.\&.)"
+
+.PP
+Format an error string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfmt\fP format string
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't usually need to call this function directly\&.
+.RE
+.PP
+This is a convenience function that calls vformat(const char *fmt, va_list val) for a va_list taken from the ellipsis arguments\&. 
+.SS "\fBString\fP ErrorHandler::decorate (const \fBString\fP & str)\fC [virtual]\fP"
+
+.PP
+Decorate an error message\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP error message, possibly with annotations 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+decorated error message
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+This virtual function is called to decorate an error message before it is emitted\&. The input \fIstr\fP is an error message string, possibly annotated\&. The default implementation returns \fIstr\fP unchanged\&. Other ErrorHandlers might add context lines (\fBContextErrorHandler\fP), prefixes (\fBPrefixErrorHandler\fP), or a default landmark (\fBLandmarkErrorHandler\fP)\&. 
+.PP
+Reimplemented in \fBLandmarkErrorHandler\fP, \fBPrefixErrorHandler\fP, \fBContextErrorHandler\fP, and \fBErrorVeneer\fP\&.
+.SS "void * ErrorHandler::emit (const \fBString\fP & str, void * user_data, bool more)\fC [virtual]\fP"
+
+.PP
+Output an error message line\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP error message line, possibly with annotations 
+.br
+\fIuser_data\fP callback data, 0 for first line in a message 
+.br
+\fImore\fP true iff this is the last line in the current message 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fIuser_data\fP to be passed to \fBemit()\fP for the next line
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+After calling \fBdecorate()\fP, \fBErrorHandler\fP splits the message into individual lines and calls \fBemit()\fP once per line\&. \fBErrorHandler\fP subclasses should output the error lines as appropriate; for example, \fBFileErrorHandler\fP outputs the error message to a file\&.
+.PP
+\fIstr\fP does not contain a newline, but may contain annotations, including a landmark annotation\&. Most ErrorHandlers use \fBparse_anno()\fP to extract the landmark annotation, clean it with \fBclean_landmark()\fP, and print it ahead of the error message proper\&.
+.PP
+\fBErrorHandler\fP can handle multi-line error messages\&. However, the \fBemit()\fP function takes a line at a time; this is more useful in practice for most error message printers\&. The \fIuser_data\fP and \fImore\fP arguments can help an \fBErrorHandler\fP combine the lines of a multi-line error message\&. \fIuser_data\fP is null for the first line; for second and subsequent lines, \fBErrorHandler\fP passes the result of the last line's \fBemit()\fP call\&. \fImore\fP is true iff this is the last line in the current message\&.
+.PP
+The default \fBemit()\fP implementation does nothing\&. 
+.PP
+Reimplemented in \fBFileErrorHandler\fP, \fBErrorVeneer\fP, and \fBSyslogErrorHandler\fP\&.
+.SS "virtual void ErrorHandler::account (int level)\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Account for an error message at level \fIlevel\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlevel\fP minimum error level in the message
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+After calling \fBemit()\fP for the lines of an error message, \fBErrorHandler\fP calls \fBaccount()\fP, passing the minimum (worst) error level of any message line (or 1000 if no line had a level)\&. The default implementation updates the \fBnerrors()\fP counter\&. Some other ErrorHandlers add \fBaccount()\fP behavior that, for example, exits after printing messages at el_fatal level or below\&. 
+.PP
+Reimplemented in \fBBailErrorHandler\fP, \fBFileErrorHandler\fP, \fBErrorVeneer\fP, and \fBSyslogErrorHandler\fP\&.
+.SS "virtual void ErrorHandler::clear ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Clear accumulated error state\&. The default implementation sets the \fBnerrors()\fP counter to zero\&. 
+.SS "\fBString\fP ErrorHandler::make_anno (const char * name, const \fBString\fP & value)\fC [static]\fP"
+
+.PP
+Create an error annotation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP annotation name 
+.br
+\fIvalue\fP annotation value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+annotation string
+.RE
+.PP
+Returns an error annotation that associates annotation \fIname\fP with \fIvalue\fP\&.
+.PP
+If \fIname\fP equals '<>', then returns a level annotation of the form '<@a value>'\&. \fIvalue\fP must be valid number; if it isn't, the function returns the empty string\&.
+.PP
+Otherwise, \fIname\fP must be a nonempty series of letters and digits\&. \fBmake_anno()\fP returns a string of the form '{@a name:@a value}', where special characters in \fIvalue\fP are quoted with backslashes\&. 
+.SS "\fBString\fP ErrorHandler::combine_anno (const \fBString\fP & str, const \fBString\fP & anno)\fC [static]\fP"
+
+.PP
+Apply annotations from \fIanno\fP to every line in \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIanno\fP annotation string
+.RE
+.PP
+The annotations from \fIanno\fP are applied to every line in \fIstr\fP\&. New annotations do not override existing annotations with the same names\&. If the \fIanno\fP string ends with non-annotation characters, this substring is prefixed to every line in \fIstr\fP\&.
+.PP
+For example: 
+.PP
+.nf
+combine_anno("Line 1\n{l:old}{x:x}Line 2\n", "<0>{l:new}  ")
+   // returns "<0>{l:new}  Line 1\n<0>{l:old}{x:x}  Line 2\n"
+
+.fi
+.PP
+ 
+.SS "const char * ErrorHandler::parse_anno (const \fBString\fP & str, const char * begin, const char * end,  \&.\&.\&.)\fC [static]\fP"
+
+.PP
+Parse error annotations from a string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP the string 
+.br
+\fIbegin\fP pointer within \fIstr\fP to start of annotation area 
+.br
+\fIend\fP pointer to end of error region, usually \fIstr\&.end()\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to first character after annotation area 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIstr\&.begin()\fP <= {\fIbegin\fP, \fIend}\fP <= \fIstr\&.end()\fP 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fIbegin\fP <= returned value <= \fIend\fP 
+.RE
+.PP
+Use this function to skip an error line's annotation area, possibly extracting named annotations\&.
+.PP
+The variable arguments portion consists of a series of pairs of C strings and value pointers, terminated by a null character pointer\&. Each C string is an annotation name\&. The corresponding annotation value, if found, is stored as a \fBString\fP object in the value pointer\&. You can also store the \fCint\fP value of an annotation by prefixing an annotation name with the '#' character\&.
+.PP
+For example: 
+.PP
+.nf
+String line = "{l:file:30}<4\&.5>error message\n";
+String landmark_str, level_str;
+const char *s = ErrorHandler::parse_anno(line, line\&.begin(), line\&.end(),
+           "l", &landmark_str, "<>", &level_str, (const char *) 0);
+    // Results: s points to "error message\n",
+    // landmark_str == "file:30", level_str == "4\&.5"
+
+int level;
+s = ErrorHandler::parse_anno(line, line\&.begin(), line\&.end(),
+           "#<>", &level, (const char *) 0);
+    // Results: s points to "error message\n", level_str == 4
+
+.fi
+.PP
+ 
+.SS "static const char* ErrorHandler::skip_anno (const char * begin, const char * end)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Skip a string's error annotations\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbegin\fP pointer to start of string 
+.br
+\fIend\fP pointer one past end of string 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to first character after annotation area 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fIbegin\fP <= returned value <= \fIend\fP 
+.RE
+.PP
+Use this function to skip an error line's annotation area\&. The error line is defined as a pair of iterators\&. 
+.SS "static \fBString\fP ErrorHandler::make_landmark_anno (const \fBString\fP & x)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a landmark annotation equal to \fIx\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP landmark
+.RE
+.PP
+If \fIx\fP is empty, returns the empty string\&. Otherwise, if \fIx\fP looks like a formatted annotation (it starts with an open brace), returns \fIx\fP unchanged\&. Otherwise, returns make_anno('l', \fIx\fP)\&. 
+.SS "\fBString\fP ErrorHandler::clean_landmark (const \fBString\fP & landmark, bool colon = \fCfalse\fP)\fC [static]\fP"
+
+.PP
+Clean the \fIlandmark\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlandmark\fP landmark text 
+.br
+\fIcolon\fP if true, append \fC': '\fP to a nonempty landmark
+.RE
+.PP
+Removes trailing space and an optional trailing colon from \fIlandmark\fP and returns the result\&. If \fIcolon\fP is true, and the cleaned landmark isn't the empty string, then appends \fC': '\fP to the result\&. 
+.SH "Member Data Documentation"
+.PP 
+.SS "const char ErrorHandler::e_abort = '<\-999>'\fC [static]\fP"
+
+.PP
+Error level indicators\&. 
+.SS "const int ErrorHandler::ok_result = 0\fC [static]\fP"
+Equals 0, used for error levels <5> and above 
+.SS "const int ErrorHandler::error_result = \-EINVAL\fC [static]\fP"
+Equals -EINVAL, used for error levels <4> and below 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,58 @@
+.TH "xsocket/Xsocket.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xsocket.c \- \fBXsocket()\fP - create a socket\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXsocket\fP (int family, int transport_type, int protocol)"
+.br
+.RI "\fICreate an XIA socket\&. \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xsocket (int family, int transport_type, int protocol)"
+Creates an XIA socket of the specified type\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfamily\fP socket family, currently must be AF_XIA 
+.br
+\fItransport_type\fP Valid values are: 
+.br
+ SOCK_STREAM for reliable communications (SID) 
+.br
+ SOCK_DGRAM for a ligher weight connection, but with unguranteed delivery (SID) 
+.br
+ SOCK_RAW for a raw socket that can have direct edits made to the header 
+.br
+ SOCK_NONBLOCK may be or'd into the transport_type to create the socket in nonblocking mode 
+.br
+\fIprotocol\fP for posix compatibility, currently ignored
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+socket id on success\&. 
+.PP
+-1 on failure with errno set to an error compatible with those from the standard socket call\&.
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+The returned socket is actually a normal UDP socket on localhost that is used to communicate with the click XIA implementation\&. Using this socket with normal unix socket calls will cause unexpected behaviors\&. Attempting to pass a socket created with the the standard socket function to the Xsocket API will have similar results\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

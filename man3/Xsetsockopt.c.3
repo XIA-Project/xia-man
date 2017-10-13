@@ -1,0 +1,123 @@
+.TH "xsocket/Xsetsockopt.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xsetsockopt.c \- \fBXsetsockopt()\fP,X getsockopt() - get and set options on sockets\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXsetsockopt\fP (int sockfd, int optname, const void *optval, socklen_t optlen)"
+.br
+.RI "\fIXsocket implemention of the standard setsockopt function\&. \fP"
+.ti -1c
+.RI "int \fBXgetsockopt\fP (int sockfd, int optname, void *optval, socklen_t *optlen)"
+.br
+.RI "\fIXsocket implemention of the standard getsockopt function\&. \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xgetsockopt (int sockfd, int optname, void * optval, socklen_t * optlen)"
+Xgetsockopt is used to retrieve the settings of the underlying Xsocket in the Click layer\&. It does not access the settings of the actual socket passed in which is used by the API to communicate with Click\&.
+.PP
+Supported Options: 
+.br
+ XOPT_HLIM: retrieves the 'hop limit' element of the XIA header as an integer value 
+.br
+ XOPT_NEXT_PROTO: gets the next proto field in the XIA header 
+.br
+ SO_TYPE: returns the type of socket (SOCK_STREAM, etc\&.\&.\&.) 
+.br
+ XOPT_ERROR_PEEK: returns the socket's error code without resetting it 
+.br
+ SO_ACCEPTCONN: indicates whether the socket is in listen mode 
+.br
+ SO_ERROR: return the socket's error cod\&. Useful for non-blocking connect calls 
+.br
+ SO_DEBUG: return the value of the socket's debug flag 
+.br
+ SO_DOMAIN: always returns AF_XIA 
+.br
+ SO_PROTOCOL: returns the socket's protocol flags\&. Currently always 0\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP The control socket 
+.br
+\fIoptname\fP The socket option to set (currently must be IP_TTL) 
+.br
+\fIoptval\fP A pointer to the value to retrieve 
+.br
+\fIoptlen\fP A pointer to the length of optval\&. On input this should be set to the length of the data passed in\&. If optlen is not large enough, Xgetsockopt will set it to the size needed and return with errno set to EINVAL\&. If larger than needed, Xgetsockopt will set it to the actual length of the returned data\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on error with errno set 
+.PP
+errno values: 
+.PP
+EBADF: The socket descriptor is invalid 
+.PP
+EINVAL: Either optval is null, or optlen is invalid, or optval is out of range 
+.PP
+ENOPROTOOPT: the specified optname is not recognized 
+.RE
+.PP
+
+.SS "int Xsetsockopt (int sockfd, int optname, const void * optval, socklen_t optlen)"
+Xsetsockopt is used to set options on the underlying Xsocket in the Click layer\&. It does not affect the actual socket passed in which used by the API to communicate with Click\&.
+.PP
+Supported Options: 
+.br
+ XOPT_HLIM: sets the 'hop limit' (hlim) element of the XIA header to the specified integer value\&. (Default is 250) 
+.br
+ XOPT_NEXT_PROTO: sets the next proto field in the XIA header 
+.br
+ XOPT_BLOCK: alternate method of setting the blocking flag \fBXfcntl()\fP or \fBXsocket()\fP is preferred 
+.br
+ SO_ERROR: set the socket error code inside click\&. (Not recommended) 
+.br
+ SO_DEBUG: enable debug mode for this socket 
+.br
+ most other socket options will do nothing and return success
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP The control socket 
+.br
+\fIoptname\fP The socket option to set 
+.br
+\fIoptval\fP A pointer to the value to set 
+.br
+\fIoptlen\fP The length of the option being set
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on error with errno set 
+.PP
+errno values: 
+.PP
+EBADF: The socket descriptor is invalid 
+.PP
+EINVAL: Either optval is null, or optlen is invalid, or optval is out of range 
+.PP
+ENOPROTOOPT: the specified optname is not recognized 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

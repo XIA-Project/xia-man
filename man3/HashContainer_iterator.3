@@ -1,0 +1,63 @@
+.TH "HashContainer_iterator< T, A >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HashContainer_iterator< T, A > \- The iterator type for \fBHashContainer\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <hashcontainer\&.hh>\fP
+.PP
+Inherits \fBHashContainer_const_iterator< T, A >\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBHashContainer_const_iterator\fP< T, A > \fBinherited\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHashContainer_iterator\fP ()"
+.br
+.RI "\fIConstruct an uninitialized iterator\&. \fP"
+.ti -1c
+.RI "bool \fBcan_insert\fP () const "
+.br
+.RI "\fIReturn true iff elements can be inserted here\&. \fP"
+.ti -1c
+.RI "\fBHashContainer\fP< T, A > * \fBhashcontainer\fP () const "
+.br
+.RI "\fIReturn the corresponding \fBHashContainer\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T, typename A>
+.br
+class HashContainer_iterator< T, A >"
+The iterator type for \fBHashContainer\fP\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T , typename A > \fBHashContainer_iterator\fP< T, A >::\fBHashContainer_iterator\fP ()\fC [inline]\fP"
+
+.PP
+Construct an uninitialized iterator\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T , typename A > bool \fBHashContainer_iterator\fP< T, A >::can_insert () const\fC [inline]\fP"
+
+.PP
+Return true iff elements can be inserted here\&. Specifically, returns true iff this iterator is valid to pass to \fBHashContainer::insert_at()\fP or \fBHashContainer::set()\fP\&. All \fBlive()\fP iterators \fBcan_insert()\fP, but some !live() iterators \fBcan_insert()\fP as well\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP<T, A>* \fBHashContainer_iterator\fP< T, A >::hashcontainer () const\fC [inline]\fP"
+
+.PP
+Return the corresponding \fBHashContainer\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

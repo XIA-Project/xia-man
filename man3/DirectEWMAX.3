@@ -1,0 +1,212 @@
+.TH "DirectEWMAX< P >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+DirectEWMAX< P > \- An exponentially weighted moving average\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <click/ewma\&.hh>\fP
+.PP
+Inherits P\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef P::value_type \fBvalue_type\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDirectEWMAX\fP ()"
+.br
+.RI "\fIConstruct a EWMA with initial average 0\&. \fP"
+.ti -1c
+.RI "\fBDirectEWMAX\fP (value_type scaled_value)"
+.br
+.RI "\fIConstruct a EWMA with initial scaled average \fIscaled_value\fP\&. \fP"
+.ti -1c
+.RI "value_type \fBscaled_average\fP () const "
+.br
+.RI "\fIReturn the current scaled moving average\&. \fP"
+.ti -1c
+.RI "value_type \fBunscaled_average\fP () const "
+.br
+.RI "\fIReturn the current moving average, rounded up\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIReset the EWMA to value 0\&. \fP"
+.ti -1c
+.RI "void \fBassign\fP (value_type scaled_value)"
+.br
+.RI "\fIAssign the EWMA to scaled average \fIscaled_value\fP\&. \fP"
+.ti -1c
+.RI "void \fBupdate\fP (value_type x)"
+.br
+.RI "\fIUpdate the moving average with a new observation\&. \fP"
+.ti -1c
+.RI "void \fBupdate_n\fP (value_type x, unsigned n)"
+.br
+.RI "\fIUpdate the moving average with \fIn\fP identical observations\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse\fP () const "
+.br
+.RI "\fIUnparse the current average into a \fBString\fP\&. \fP"
+.ti -1c
+.RI "void \fBupdate_with\fP (value_type x)"
+.br
+.RI "\fIUpdate the moving average with a new observation (deprecated)\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename P>
+.br
+class DirectEWMAX< P >"
+An exponentially weighted moving average\&. 
+
+The \fBDirectEWMAX\fP template class represents a simple exponentially weighted moving average\&. The average starts out with value 0\&. The \fBupdate()\fP function adds a new observation to the average\&.
+.PP
+The template parameter P defines three EWMA parameters: value type, stability shift, and scale factor\&.
+.PP
+The value type is simply the unsigned integral type used to store the average\&. It is also the type of each observation\&. \fCunsigned\fP and \fCuint64_t\fP are examples\&.
+.PP
+The stability shift specifies alpha, the stability parameter\&. Concretely, alpha = 1\&. / (2 ** stability_shift)\&. Thus, a stability shift of 4 corresponds to an alpha of 1/16\&.
+.PP
+The scaling factor specifies how many bits of fraction are kept per observation\&. Fraction bits are necessary to account for small differences between observations\&. For example, consider a EWMA with value 0, alpha 1/16, and 0 bits of fraction\&. Assume the EWMA begins to observe a stream of observations equal to 1\&. Despite these observations, the EWMA's value will never change from 0, since the 1/16 alpha factor rounds the new observations down to 0\&. At least 4 bits of fraction are required to account for this difference\&. There is a tradeoff: the more bits of fraction, the more precise the EWMA, but the less bits available to account for large values\&.
+.PP
+These EWMA parameters are defined by five of P's members, two typedefs and three possibly static member functions\&.
+.PP
+.IP "\fB\fBP::value_type\fP \fP" 1c
+The EWMA's value type\&. Example: \fCunsigned\fP\&.
+.PP
+.IP "\fB\fBP::signed_value_type\fP \fP" 1c
+The signed version of \fCP::value_type\fP\&. Used internally\&. Example: \fCint\fP\&.
+.PP
+.IP "\fB\fBunsigned P::stability_shift()\fP \fP" 1c
+This function should return this EWMA's stability shift (see above)\&.
+.PP
+.IP "\fB\fBunsigned P::scale()\fP \fP" 1c
+This function should return this EWMA's scaling factor (see above)\&.
+.PP
+.IP "\fB\fBunsigned P::compensation()\fP \fP" 1c
+This function should return this EWMA's stability compensation, which normally equals 1 << (stability_shift - 1)\&. 
+.PP
+.PP
+Since \fBDirectEWMAX\fP inherits from an object of type P, these members are also directly available to callers\&.
+.PP
+The \fBFixedEWMAXParameters\fP and \fBStabilityEWMAXParameters\fP types are good template arguments for \fBDirectEWMAX\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBRateEWMAX\fP 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename P> \fBDirectEWMAX\fP< P >::\fBDirectEWMAX\fP ()\fC [inline]\fP"
+
+.PP
+Construct a EWMA with initial average 0\&. 
+.SS "template<typename P> \fBDirectEWMAX\fP< P >::\fBDirectEWMAX\fP (value_type scaled_value)\fC [inline]\fP"
+
+.PP
+Construct a EWMA with initial scaled average \fIscaled_value\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename P> value_type \fBDirectEWMAX\fP< P >::scaled_average () const\fC [inline]\fP"
+
+.PP
+Return the current scaled moving average\&. 
+.PP
+\fBNote:\fP
+.RS 4
+The returned value has scale() bits of fraction\&. 
+.RE
+.PP
+
+.SS "template<typename P> value_type \fBDirectEWMAX\fP< P >::unscaled_average () const\fC [inline]\fP"
+
+.PP
+Return the current moving average, rounded up\&. 
+.PP
+\fBNote:\fP
+.RS 4
+The returned value is unscaled (has zero bits of fraction)\&. 
+.RE
+.PP
+
+.SS "template<typename P> void \fBDirectEWMAX\fP< P >::clear ()\fC [inline]\fP"
+
+.PP
+Reset the EWMA to value 0\&. 
+.SS "template<typename P> void \fBDirectEWMAX\fP< P >::assign (value_type scaled_value)\fC [inline]\fP"
+
+.PP
+Assign the EWMA to scaled average \fIscaled_value\fP\&. 
+.SS "template<typename P > void \fBDirectEWMAX\fP< P >::update (value_type x)\fC [inline]\fP"
+
+.PP
+Update the moving average with a new observation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP the observation (unscaled) 
+.RE
+.PP
+
+.SS "template<typename P > void \fBDirectEWMAX\fP< P >::update_n (value_type x, unsigned n)"
+
+.PP
+Update the moving average with \fIn\fP identical observations\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP the observation (unscaled) 
+.br
+\fIn\fP number of observations 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This may be faster than calling update(\fIx\fP) \fIn\fP times\&. 
+.RE
+.PP
+
+.SS "template<typename P > \fBString\fP \fBDirectEWMAX\fP< P >::unparse () const\fC [inline]\fP"
+
+.PP
+Unparse the current average into a \fBString\fP\&. 
+.PP
+\fBNote:\fP
+.RS 4
+The returned value is unscaled, but may contain a fractional part\&. 
+.RE
+.PP
+
+.SS "template<typename P > void \fBDirectEWMAX\fP< P >::update_with (value_type x)\fC [inline]\fP"
+
+.PP
+Update the moving average with a new observation (deprecated)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP the observation (unscaled) 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+Use \fBupdate()\fP instead\&. 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,821 @@
+.TH "StringAccum" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+StringAccum \- Efficiently build up Strings from pieces\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef const char * \fBconst_iterator\fP"
+.br
+.ti -1c
+.RI "typedef char * \fBiterator\fP"
+.br
+.ti -1c
+.RI "typedef int(StringAccum::* \fBunspecified_bool_type\fP) () const "
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBStringAccum\fP ()"
+.br
+.RI "\fIConstruct an empty \fBStringAccum\fP (with length 0)\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP (int \fBcapacity\fP)"
+.br
+.RI "\fIConstruct a \fBStringAccum\fP with room for at least \fIcapacity\fP characters\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP (const \fBString\fP &str)"
+.br
+.RI "\fIConstruct a \fBStringAccum\fP containing the characters in \fIstr\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP (const \fBStringAccum\fP &x)"
+.br
+.RI "\fIConstruct a \fBStringAccum\fP containing a copy of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fB~StringAccum\fP ()"
+.br
+.RI "\fIDestroy a \fBStringAccum\fP, freeing its memory\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator=\fP (const \fBStringAccum\fP &x)"
+.br
+.RI "\fIAssign this \fBStringAccum\fP to \fIx\fP\&. \fP"
+.ti -1c
+.RI "const char * \fBdata\fP () const "
+.br
+.RI "\fIReturn the contents of the \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "char * \fBdata\fP ()"
+.br
+.ti -1c
+.RI "int \fBlength\fP () const "
+.br
+.RI "\fIReturn the length of the \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "int \fBcapacity\fP () const "
+.br
+.RI "\fIReturn the \fBStringAccum\fP's current capacity\&. \fP"
+.ti -1c
+.RI "const char * \fBc_str\fP ()"
+.br
+.RI "\fINull-terminate this \fBStringAccum\fP and return its data\&. \fP"
+.ti -1c
+.RI "\fBoperator unspecified_bool_type\fP () const "
+.br
+.RI "\fITest if the \fBStringAccum\fP contains characters\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fITest if the \fBStringAccum\fP is empty\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!\fP () const "
+.br
+.RI "\fITest if the \fBStringAccum\fP is empty\&. \fP"
+.ti -1c
+.RI "const_iterator \fBbegin\fP () const "
+.br
+.RI "\fIReturn an iterator for the first character in the \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "iterator \fBbegin\fP ()"
+.br
+.ti -1c
+.RI "const_iterator \fBend\fP () const "
+.br
+.RI "\fIReturn an iterator for the end of the \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "iterator \fBend\fP ()"
+.br
+.ti -1c
+.RI "char \fBoperator[]\fP (int i) const "
+.br
+.RI "\fIReturn the ith character in the string\&. \fP"
+.ti -1c
+.RI "char & \fBoperator[]\fP (int i)"
+.br
+.RI "\fIReturn a reference to the ith character in the string\&. \fP"
+.ti -1c
+.RI "char \fBfront\fP () const "
+.br
+.RI "\fIReturn the first character in the string\&. \fP"
+.ti -1c
+.RI "char & \fBfront\fP ()"
+.br
+.RI "\fIReturn a reference to the first character in the string\&. \fP"
+.ti -1c
+.RI "char \fBback\fP () const "
+.br
+.RI "\fIReturn the last character in the string\&. \fP"
+.ti -1c
+.RI "char & \fBback\fP ()"
+.br
+.RI "\fIReturn a reference to the last character in the string\&. \fP"
+.ti -1c
+.RI "bool \fBout_of_memory\fP () const "
+.br
+.RI "\fITest if the \fBStringAccum\fP is out-of-memory\&. \fP"
+.ti -1c
+.RI "void \fBassign_out_of_memory\fP ()"
+.br
+.RI "\fIChange this \fBStringAccum\fP into an out-of-memory \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIClear the \fBStringAccum\fP's comments\&. \fP"
+.ti -1c
+.RI "char * \fBreserve\fP (int n)"
+.br
+.RI "\fIReserve space for at least \fIn\fP characters\&. \fP"
+.ti -1c
+.RI "void \fBset_length\fP (int len)"
+.br
+.RI "\fISet the \fBStringAccum\fP's length to \fIlen\fP\&. \fP"
+.ti -1c
+.RI "int \fBresize\fP (int len)"
+.br
+.RI "\fISet the \fBStringAccum\fP's length to \fIlen\fP\&. \fP"
+.ti -1c
+.RI "void \fBadjust_length\fP (int delta)"
+.br
+.RI "\fIAdjust the \fBStringAccum\fP's length\&. \fP"
+.ti -1c
+.RI "char * \fBextend\fP (int nadjust, int nreserve=0)"
+.br
+.RI "\fIReserve space and adjust length in one operation\&. \fP"
+.ti -1c
+.RI "void \fBpop_back\fP (int n=1)"
+.br
+.RI "\fIRemove characters from the end of the \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (char c)"
+.br
+.RI "\fIAppend character \fIc\fP to the \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (unsigned char c)"
+.br
+.ti -1c
+.RI "bool \fBappend_utf8\fP (int ch)"
+.br
+.RI "\fIAppend Unicode character \fIch\fP encoded in UTF-8\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (const char *cstr)"
+.br
+.RI "\fIAppend the null-terminated C string \fIs\fP to this \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (const char *s, int len)"
+.br
+.RI "\fIAppend the first \fIlen\fP characters of \fIs\fP to this \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (const unsigned char *s, int len)"
+.br
+.ti -1c
+.RI "void \fBappend\fP (const char *first, const char *last)"
+.br
+.RI "\fIAppend the data from \fIfirst\fP to \fIlast\fP to the end of this \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (const unsigned char *first, const unsigned char *last)"
+.br
+.ti -1c
+.RI "void \fBappend_fill\fP (int c, int len)"
+.br
+.RI "\fIAppend \fIlen\fP copies of character \fIc\fP to the \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "void \fBappend_numeric\fP (String::intmax_t x, int base=10, bool uppercase=true)"
+.br
+.RI "\fIAppend string representation of \fIx\fP to this \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "void \fBappend_numeric\fP (String::uintmax_t x, int base=10, bool uppercase=true)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBsnprintf\fP (int n, const char *format,\&.\&.\&.) CLICK_SNPRINTF_ATTR"
+.br
+.RI "\fIAppend result of \fBsnprintf()\fP to this \fBStringAccum\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBtake_string\fP ()"
+.br
+.RI "\fIReturn a \fBString\fP object with this \fBStringAccum\fP's contents\&. \fP"
+.ti -1c
+.RI "void \fBswap\fP (\fBStringAccum\fP &x)"
+.br
+.RI "\fISwap this \fBStringAccum\fP's contents with \fIx\fP\&. \fP"
+.ti -1c
+.RI "void \fBforward\fP (int delta)"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, const \fBString\fP &str)"
+.br
+.RI "\fIAppend the contents of \fIstr\fP to \fIsa\fP\&. \fP"
+.in -1c
+.SS "Related Functions"
+(Note that these are not member functions\&.) 
+.in +1c
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, char c)"
+.br
+.RI "\fIAppend character \fIc\fP to \fBStringAccum\fP \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, unsigned char c)"
+.br
+.RI "\fIAppend character \fIc\fP to \fBStringAccum\fP \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, const char *cstr)"
+.br
+.RI "\fIAppend null-terminated C string \fIcstr\fP to \fBStringAccum\fP \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, bool x)"
+.br
+.RI "\fIAppend 'true' or 'false' to \fIsa\fP, depending on \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, short x)"
+.br
+.RI "\fIAppend decimal representation of \fIx\fP to \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, const \fBStringAccum\fP &x)"
+.br
+.RI "\fIAppend the contents of \fIx\fP to \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, long i)"
+.br
+.RI "\fIAppend decimal representation of \fIi\fP to \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, unsigned long u)"
+.br
+.RI "\fIAppend decimal representation of \fIu\fP to \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, double d)"
+.br
+.RI "\fIAppend decimal representation of \fId\fP to \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, void *ptr)"
+.br
+.RI "\fIAppend hexadecimal representation of \fIptr's\fP value to \fIsa\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Efficiently build up Strings from pieces\&. 
+
+Like the \fBString\fP class, \fBStringAccum\fP represents a string of characters\&. However, unlike a \fBString\fP, a \fBStringAccum\fP is inherently mutable, and efficiently supports building up a large string from many smaller pieces\&.
+.PP
+\fBStringAccum\fP objects support \fBoperator<<()\fP operations for most fundamental data types\&. A \fBStringAccum\fP is generally built up by \fBoperator<<()\fP, and then turned into a \fBString\fP by the \fBtake_string()\fP method\&. Extracting the \fBString\fP from a \fBStringAccum\fP does no memory allocation or copying; the \fBStringAccum\fP's memory is donated to the \fBString\fP\&.
+.PP
+.SS "Out-of-memory StringAccums"
+.PP
+When there is not enough memory to add requested characters to a \fBStringAccum\fP object, the object becomes a special 'out-of-memory' \fBStringAccum\fP\&. Out-of-memory objects are contagious: the result of any concatenation operation involving an out-of-memory \fBStringAccum\fP is another out-of-memory \fBStringAccum\fP\&. Calling \fBtake_string()\fP on an out-of-memory \fBStringAccum\fP returns an out-of-memory \fBString\fP\&.
+.PP
+Note that appending an out-of-memory \fBString\fP to a \fBStringAccum\fP \fIdoes not\fP make the \fBStringAccum\fP out-of-memory\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "StringAccum::StringAccum ()\fC [inline]\fP"
+
+.PP
+Construct an empty \fBStringAccum\fP (with length 0)\&. 
+.SS "StringAccum::StringAccum (int capacity)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct a \fBStringAccum\fP with room for at least \fIcapacity\fP characters\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcapacity\fP initial capacity
+.RE
+.PP
+If \fIcapacity\fP == 0, the \fBStringAccum\fP is created empty\&. If \fIcapacity\fP is too large (so that \fIcapacity\fP bytes of memory can't be allocated), the \fBStringAccum\fP falls back to a smaller capacity (possibly zero)\&. 
+.SS "StringAccum::StringAccum (const \fBString\fP & str)\fC [inline]\fP"
+
+.PP
+Construct a \fBStringAccum\fP containing the characters in \fIstr\fP\&. 
+.SS "StringAccum::StringAccum (const \fBStringAccum\fP & x)\fC [inline]\fP"
+
+.PP
+Construct a \fBStringAccum\fP containing a copy of \fIx\fP\&. 
+.SS "StringAccum::~StringAccum ()\fC [inline]\fP"
+
+.PP
+Destroy a \fBStringAccum\fP, freeing its memory\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBStringAccum\fP & StringAccum::operator= (const \fBStringAccum\fP & x)\fC [inline]\fP"
+
+.PP
+Assign this \fBStringAccum\fP to \fIx\fP\&. 
+.SS "const char * StringAccum::data () const\fC [inline]\fP"
+
+.PP
+Return the contents of the \fBStringAccum\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The \fBStringAccum\fP's contents\&.
+.RE
+.PP
+The returned \fBdata()\fP value points to \fBlength()\fP bytes of writable memory (unless the \fBStringAccum\fP itself is const)\&. 
+.SS "char * StringAccum::data ()\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int StringAccum::length () const\fC [inline]\fP"
+
+.PP
+Return the length of the \fBStringAccum\fP\&. 
+.SS "int StringAccum::capacity () const\fC [inline]\fP"
+
+.PP
+Return the \fBStringAccum\fP's current capacity\&. The capacity is the maximum length the \fBStringAccum\fP can hold without incurring a memory allocation\&. Returns -1 for out-of-memory StringAccums\&. 
+.SS "const char * StringAccum::c_str ()"
+
+.PP
+Null-terminate this \fBStringAccum\fP and return its data\&. Note that the null character does not contribute to the \fBStringAccum\fP's \fBlength()\fP, and later \fBappend()\fP and similar operations can overwrite it\&. If appending the null character fails, the \fBStringAccum\fP becomes out-of-memory and the returned value is a null string\&. 
+.SS "StringAccum::operator unspecified_bool_type () const\fC [inline]\fP"
+
+.PP
+Test if the \fBStringAccum\fP contains characters\&. 
+.SS "bool StringAccum::empty () const\fC [inline]\fP"
+
+.PP
+Test if the \fBStringAccum\fP is empty\&. 
+.SS "bool StringAccum::operator! () const\fC [inline]\fP"
+
+.PP
+Test if the \fBStringAccum\fP is empty\&. Returns true iff \fBlength()\fP == 0\&. 
+.SS "StringAccum::const_iterator StringAccum::begin () const\fC [inline]\fP"
+
+.PP
+Return an iterator for the first character in the \fBStringAccum\fP\&. \fBStringAccum\fP iterators are simply pointers into string data, so they are quite efficient\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBStringAccum::data\fP 
+.RE
+.PP
+
+.SS "StringAccum::iterator StringAccum::begin ()\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "StringAccum::const_iterator StringAccum::end () const\fC [inline]\fP"
+
+.PP
+Return an iterator for the end of the \fBStringAccum\fP\&. The return value points one character beyond the last character in the \fBStringAccum\fP\&. 
+.SS "StringAccum::iterator StringAccum::end ()\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "char StringAccum::operator[] (int i) const\fC [inline]\fP"
+
+.PP
+Return the ith character in the string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP character index 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBlength()\fP 
+.RE
+.PP
+
+.SS "char & StringAccum::operator[] (int i)\fC [inline]\fP"
+
+.PP
+Return a reference to the ith character in the string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP character index 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBlength()\fP 
+.RE
+.PP
+
+.SS "char StringAccum::front () const\fC [inline]\fP"
+
+.PP
+Return the first character in the string\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fBlength()\fP > 0 
+.RE
+.PP
+
+.SS "char & StringAccum::front ()\fC [inline]\fP"
+
+.PP
+Return a reference to the first character in the string\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fBlength()\fP > 0 
+.RE
+.PP
+
+.SS "char StringAccum::back () const\fC [inline]\fP"
+
+.PP
+Return the last character in the string\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fBlength()\fP > 0 
+.RE
+.PP
+
+.SS "char & StringAccum::back ()\fC [inline]\fP"
+
+.PP
+Return a reference to the last character in the string\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fBlength()\fP > 0 
+.RE
+.PP
+
+.SS "bool StringAccum::out_of_memory () const\fC [inline]\fP"
+
+.PP
+Test if the \fBStringAccum\fP is out-of-memory\&. 
+.SS "void StringAccum::assign_out_of_memory ()"
+
+.PP
+Change this \fBStringAccum\fP into an out-of-memory \fBStringAccum\fP\&. 
+.SS "void StringAccum::clear ()\fC [inline]\fP"
+
+.PP
+Clear the \fBStringAccum\fP's comments\&. All characters in the \fBStringAccum\fP are erased\&. Also resets the \fBStringAccum\fP's out-of-memory status\&. 
+.SS "char * StringAccum::reserve (int n)\fC [inline]\fP"
+
+.PP
+Reserve space for at least \fIn\fP characters\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+a pointer to at least \fIn\fP characters, or null if allocation fails 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIn\fP >= 0
+.RE
+.PP
+\fBreserve()\fP does not change the string's \fBlength()\fP, only its \fBcapacity()\fP\&. In a frequent usage pattern, code calls \fBreserve()\fP, passing an upper bound on the characters that could be written by a series of operations\&. After writing into the returned buffer, \fBadjust_length()\fP is called to account for the number of characters actually written\&. 
+.SS "void StringAccum::set_length (int len)\fC [inline]\fP"
+
+.PP
+Set the \fBStringAccum\fP's length to \fIlen\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlen\fP new length in characters 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIlen\fP <= \fBcapacity()\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadjust_length\fP 
+.RE
+.PP
+
+.SS "int StringAccum::resize (int len)"
+
+.PP
+Set the \fBStringAccum\fP's length to \fIlen\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIlen\fP >= 0 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -ENOMEM on failure 
+.RE
+.PP
+
+.SS "void StringAccum::adjust_length (int delta)\fC [inline]\fP"
+
+.PP
+Adjust the \fBStringAccum\fP's length\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdelta\fP length adjustment 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+If \fIdelta\fP > 0, then \fBlength()\fP + \fIdelta\fP <= \fBcapacity()\fP\&. If \fIdelta\fP < 0, then \fBlength()\fP + delta >= 0\&.
+.RE
+.PP
+The \fBStringAccum\fP's length after adjust_length(\fIdelta\fP) equals its old length plus \fIdelta\fP\&. Generally \fBadjust_length()\fP is used after a call to \fBreserve()\fP\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_length\fP 
+.RE
+.PP
+
+.SS "char * StringAccum::extend (int nadjust, int nreserve = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Reserve space and adjust length in one operation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fInadjust\fP number of characters to reserve and adjust length 
+.br
+\fInreserve\fP additional characters to reserve 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fInadjust\fP >= 0 and \fInreserve\fP >= 0
+.RE
+.PP
+This operation combines the effects of reserve(\fInadjust\fP + \fInreserve\fP) and adjust_length(\fInadjust\fP)\&. Returns the result of the \fBreserve()\fP call\&. 
+.SS "void StringAccum::pop_back (int n = \fC1\fP)\fC [inline]\fP"
+
+.PP
+Remove characters from the end of the \fBStringAccum\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIn\fP number of characters to remove 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIn\fP >= 0 and \fIn\fP <= \fBlength()\fP
+.RE
+.PP
+Same as adjust_length(-\fIn\fP)\&. 
+.SS "void StringAccum::append (char c)\fC [inline]\fP"
+
+.PP
+Append character \fIc\fP to the \fBStringAccum\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIc\fP character to append 
+.RE
+.PP
+
+.SS "void StringAccum::append (unsigned char c)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "bool StringAccum::append_utf8 (int ch)\fC [inline]\fP"
+
+.PP
+Append Unicode character \fIch\fP encoded in UTF-8\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+true if character was valid\&.
+.RE
+.PP
+Appends nothing if \fIch\fP is not a valid Unicode character\&. 
+.SS "void StringAccum::append (const char * cstr)\fC [inline]\fP"
+
+.PP
+Append the null-terminated C string \fIs\fP to this \fBStringAccum\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIs\fP data to append 
+.RE
+.PP
+
+.SS "void StringAccum::append (const char * s, int len)\fC [inline]\fP"
+
+.PP
+Append the first \fIlen\fP characters of \fIs\fP to this \fBStringAccum\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIs\fP data to append 
+.br
+\fIlen\fP length of data 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIlen\fP >= 0 
+.RE
+.PP
+
+.SS "void StringAccum::append (const unsigned char * s, int len)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void StringAccum::append (const char * first, const char * last)\fC [inline]\fP"
+
+.PP
+Append the data from \fIfirst\fP to \fIlast\fP to the end of this \fBStringAccum\fP\&. Does nothing if \fIfirst\fP >= \fIlast\fP\&. 
+.SS "void StringAccum::append (const unsigned char * first, const unsigned char * last)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void StringAccum::append_fill (int c, int len)"
+
+.PP
+Append \fIlen\fP copies of character \fIc\fP to the \fBStringAccum\fP\&. 
+.SS "void StringAccum::append_numeric (String::intmax_t num, int base = \fC10\fP, bool uppercase = \fCtrue\fP)"
+
+.PP
+Append string representation of \fIx\fP to this \fBStringAccum\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP number to append 
+.br
+\fIbase\fP numeric base: must be 8, 10, or 16 
+.br
+\fIuppercase\fP true means use uppercase letters in base 16 
+.RE
+.PP
+
+.SS "void StringAccum::append_numeric (String::uintmax_t num, int base = \fC10\fP, bool uppercase = \fCtrue\fP)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBStringAccum\fP & StringAccum::snprintf (int n, const char * format,  \&.\&.\&.)"
+
+.PP
+Append result of \fBsnprintf()\fP to this \fBStringAccum\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIn\fP maximum number of characters to print 
+.br
+\fIformat\fP format argument to \fBsnprintf()\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+The terminating null character is not appended to the string\&.
+.PP
+\fBNote:\fP
+.RS 4
+The safe vsnprintf() variant is called if it exists\&. It does in the Linux kernel, and on modern Unix variants\&. However, if it does not exist on your machine, then this function is actually unsafe, and you should make sure that the printf() invocation represented by your arguments will never write more than \fIn\fP characters, not including the terminating null\&. 
+.RE
+.PP
+
+.SS "\fBString\fP StringAccum::take_string ()"
+
+.PP
+Return a \fBString\fP object with this \fBStringAccum\fP's contents\&. This operation donates the \fBStringAccum\fP's memory to the returned \fBString\fP\&. After a call to \fBtake_string()\fP, the \fBStringAccum\fP object becomes empty, and any future \fBappend()\fP operations may cause memory allocations\&. If the \fBStringAccum\fP is out-of-memory, the returned \fBString\fP is also out-of-memory, but the \fBStringAccum\fP's out-of-memory state is reset\&. 
+.SS "void StringAccum::swap (\fBStringAccum\fP & x)"
+
+.PP
+Swap this \fBStringAccum\fP's contents with \fIx\fP\&. 
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, const \fBString\fP & str)\fC [friend]\fP"
+
+.PP
+Append the contents of \fIstr\fP to \fIsa\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, char c)\fC [related]\fP"
+
+.PP
+Append character \fIc\fP to \fBStringAccum\fP \fIsa\fP\&. never 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+Same as \fIsa\&.append\fP(\fIc\fP)\&. 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, unsigned char c)\fC [related]\fP"
+
+.PP
+Append character \fIc\fP to \fBStringAccum\fP \fIsa\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+Same as \fIsa\&.append\fP(\fIc\fP)\&. 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, const char * cstr)\fC [related]\fP"
+
+.PP
+Append null-terminated C string \fIcstr\fP to \fBStringAccum\fP \fIsa\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+Same as \fIsa\&.append\fP(\fIcstr\fP)\&. 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, bool x)\fC [related]\fP"
+
+.PP
+Append 'true' or 'false' to \fIsa\fP, depending on \fIx\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, short x)\fC [related]\fP"
+
+.PP
+Append decimal representation of \fIx\fP to \fIsa\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, const \fBStringAccum\fP & x)\fC [related]\fP"
+
+.PP
+Append the contents of \fIx\fP to \fIsa\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, long i)\fC [related]\fP"
+
+.PP
+Append decimal representation of \fIi\fP to \fIsa\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, unsigned long u)\fC [related]\fP"
+
+.PP
+Append decimal representation of \fIu\fP to \fIsa\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, double d)\fC [related]\fP"
+
+.PP
+Append decimal representation of \fId\fP to \fIsa\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, void * ptr)\fC [related]\fP"
+
+.PP
+Append hexadecimal representation of \fIptr's\fP value to \fIsa\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fIsa\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

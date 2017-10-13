@@ -1,0 +1,90 @@
+.TH "xsocket/Xkeys.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xkeys.c \- \fBXmakeNewSID()\fP, \fBXremoveSID()\fP, \fBXcreateFID()\fP, \fBXremoveFID()\fP -- create/delete cryptographic SIDs & FIDs\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXremoveSID\fP (const char *sid)"
+.br
+.ti -1c
+.RI "int \fBXmakeNewSID\fP (char *randomSID, int randomSIDlen)"
+.br
+.ti -1c
+.RI "int \fBXcreateFID\fP (char *fid, int len)"
+.br
+.RI "\fIcreate and register an FID \fP"
+.ti -1c
+.RI "int \fBXremoveFID\fP (const char *fid)"
+.br
+.RI "\fIdelete and un-register an FID \fP"
+.ti -1c
+.RI "int \fBXexistsSID\fP (const char *sid)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBTodo\fP
+.RS 4
+write docs 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "int XcreateFID (char * fid, int len)"
+Returns a text string containing a FID made from the a 160 bit cryptographic hash from a newly created public/private keypair in the form of \fCFID:nnnnn\&.\&.\&.\&.\fP\&.
+.PP
+The new FID is also registered in the local routing table so that destination DAGs using the FID will be handled locally\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfid\fP a buffer to receive the newly created FID\&. 
+.br
+\fIlen\fP the length of fid\&. If less then 45 characters an error will be returned\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on error with errno set 
+.RE
+.PP
+
+.SS "int XexistsSID (const char * sid)"
+
+.SS "int XmakeNewSID (char * randomSID, int randomSIDlen)"
+
+.SS "int XremoveFID (const char * fid)"
+Remove the FID from the local routing table and delete the associated keypair\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfid\fP the FID to remove
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on error 
+.RE
+.PP
+
+.SS "int XremoveSID (const char * sid)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

@@ -1,0 +1,58 @@
+.TH "xsocket/Xfcntl.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xfcntl.c \- \fBXfcntl()\fP - manipulate a socket\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXfcntl\fP (int sockfd, int cmd,\&.\&.\&.)"
+.br
+.RI "\fImanipulate an Xsocket \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xfcntl (int sockfd, int cmd,  \&.\&.\&.)"
+\fBXfcntl()\fP performs a subset of the fcntl() system call supporting the operations described below on the open Xsocket sockfd\&. The operation is determined by cmd\&.
+.PP
+\fBXfcntl()\fP can take an optional third argument\&. Whether or not this argument is required is determined by cmd\&. The required argument type is an int or void if the argument is not required\&.
+.PP
+\fBNote:\fP
+.RS 4
+See the man page for the standard fcntl() call for more details\&.
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP a file descriptor create by \fBXsocket()\fP 
+.br
+\fIcmd\fP the command to execute 
+.br
+F_GETFL: Get the socket's status flags 
+.br
+F_SETFL: Set the socket's flags\&. Currently only O_NONBLOCK is supported\&. Other flags are ignored but do not cause an error\&. 
+.br
+\fIarg\fP the flag to set if cmd == F_GETFL, otherwise omitted
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+socket flags if cmd == F_GETFL 
+.PP
+0 on success if cmd == F_SETFL 
+.PP
+-1 on error with errno set to an error compatible with those returned by the standard fcntl call\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

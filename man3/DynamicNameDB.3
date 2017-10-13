@@ -1,0 +1,132 @@
+.TH "DynamicNameDB" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+DynamicNameDB \- A modifiable database mapping names to arbitrary values\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBNameDB\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDynamicNameDB\fP (uint32_t \fBtype\fP, const \fBString\fP &\fBcontext\fP, size_t \fBvalue_size\fP)"
+.br
+.RI "\fIConstruct a dynamic name database\&. \fP"
+.ti -1c
+.RI "bool \fBquery\fP (const \fBString\fP &name, void *value, size_t \fBvalue_size\fP)"
+.br
+.RI "\fIQuery this database for a given name\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBrevquery\fP (const void *value, size_t \fBvalue_size\fP)"
+.br
+.RI "\fIQuery this database for a given value\&. \fP"
+.ti -1c
+.RI "bool \fBdefine\fP (const \fBString\fP &name, const void *value, size_t \fBvalue_size\fP)"
+.br
+.RI "\fIDefine a name in this database to a given value\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A modifiable database mapping names to arbitrary values\&. 
+
+\fBDynamicNameDB\fP is a \fBNameDB\fP database that maps names to arbitrary values\&. The database is initially empty\&. \fBDynamicNameDB\fP supports \fBdefine()\fP operations; that's how information is added to it\&.
+.PP
+\fBDynamicNameDB\fP objects are automatically created by \fBNameInfo::getdb()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBNameInfo\fP, \fBNameDB\fP 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "DynamicNameDB::DynamicNameDB (uint32_t type, const \fBString\fP & context, size_t value_size)\fC [inline]\fP"
+
+.PP
+Construct a dynamic name database\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP database compound element context, as a \fBString\fP 
+.br
+\fIvalue_size\fP database value size
+.RE
+.PP
+\fIvalue_size\fP must be greater than 0\&. The database is initially empty\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool DynamicNameDB::query (const \fBString\fP & name, void * value, size_t value_size)\fC [virtual]\fP"
+
+.PP
+Query this database for a given name\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP name to look up 
+.br
+\fIvalue\fP points to value storage 
+.br
+\fIvalue_size\fP size of value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the query succeeded
+.RE
+.PP
+The \fIvalue_size\fP parameter must equal this database's value size\&. 
+.PP
+Implements \fBNameDB\fP\&.
+.SS "\fBString\fP DynamicNameDB::revquery (const void * value, size_t value_size)\fC [virtual]\fP"
+
+.PP
+Query this database for a given value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP points to value to look up 
+.br
+\fIvalue_size\fP size of value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the name for the given value, or an empty string if the value has not been defined
+.RE
+.PP
+The \fIvalue_size\fP parameter must equal this database's value size\&. 
+.PP
+Reimplemented from \fBNameDB\fP\&.
+.SS "bool DynamicNameDB::define (const \fBString\fP & name, const void * value, size_t value_size)\fC [virtual]\fP"
+
+.PP
+Define a name in this database to a given value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP name to define 
+.br
+\fIvalue\fP points to value to define 
+.br
+\fIvalue_size\fP size of value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the name was defined
+.RE
+.PP
+The \fIvalue_size\fP parameter must equal this database's value size\&. 
+.PP
+Reimplemented from \fBNameDB\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

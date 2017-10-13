@@ -1,0 +1,61 @@
+.TH "integer_traits< T >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+integer_traits< T > \- Numeric traits template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <type_traits\&.hh>\fP
+.PP
+Inherited by integer_traits< char >\&.
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static constexpr bool \fBis_numeric\fP = false"
+.br
+.ti -1c
+.RI "static constexpr bool \fBis_integral\fP = false"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T>
+.br
+class integer_traits< T >"
+Numeric traits template\&. 
+
+The \fBinteger_traits\fP template defines constants and type definitions related to integers\&. Where T is an integer, integer_traits<T> defines:
+.PP
+.IP "\fBconst T const_min \fP" 1c
+The minimum value defined for the type\&. 
+.IP "\fBconst T const_max \fP" 1c
+The maximum value available for the type\&. 
+.IP "\fBconst bool is_numeric \fP" 1c
+True\&. 
+.IP "\fBconst bool is_integral \fP" 1c
+True\&. 
+.IP "\fBconst bool is_signed \fP" 1c
+True iff the type is signed\&. 
+.IP "\fBsigned_type (typedef) \fP" 1c
+Signed version of the type\&. 
+.IP "\fBunsigned_type (typedef) \fP" 1c
+Unsigned version of the type\&. 
+.PP
+.PP
+If T is \fInot\fP an integer, integer_traits<T> defines:
+.PP
+.IP "\fBconstexpr bool is_numeric \fP" 1c
+False\&. 
+.IP "\fBconstexpr bool is_integral \fP" 1c
+False\&. 
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

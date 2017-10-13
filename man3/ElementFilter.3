@@ -1,0 +1,90 @@
+.TH "ElementFilter" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ElementFilter \- Base class for filter predicates for elements and ports\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherited by \fBCastElementFilter\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBElementFilter\fP ()"
+.br
+.RI "\fIConstruct an \fBElementFilter\fP\&. \fP"
+.ti -1c
+.RI "virtual \fB~ElementFilter\fP ()"
+.br
+.RI "\fIDestroy an \fBElementFilter\fP\&. \fP"
+.ti -1c
+.RI "virtual bool \fBcheck_match\fP (\fBElement\fP *e, bool isoutput, int port)"
+.br
+.RI "\fIDetermine whether an element or port matches this filter\&. \fP"
+.ti -1c
+.RI "void \fBfilter\fP (\fBVector\fP< \fBElement\fP * > &es)"
+.br
+.RI "\fIRemove all non-matching elements from \fIes\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Base class for filter predicates for elements and ports\&. 
+
+
+.PP
+\fBDeprecated\fP
+.RS 4
+This class is deprecated\&. Use \fBRouterVisitor\fP instead\&.
+.RE
+.PP
+.PP
+\fBElementFilter\fP objects are used to search the router configuration graph for matching elements\&. They are usually passed to the \fBRouter::downstream_elements()\fP and \fBRouter::upstream_elements()\fP functions\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ElementFilter::ElementFilter ()\fC [inline]\fP"
+
+.PP
+Construct an \fBElementFilter\fP\&. 
+.SS "virtual ElementFilter::~ElementFilter ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Destroy an \fBElementFilter\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool ElementFilter::check_match (\fBElement\fP * e, bool isoutput, int port)\fC [virtual]\fP"
+
+.PP
+Determine whether an element or port matches this filter\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element 
+.br
+\fIisoutput\fP true for output ports, false for input ports 
+.br
+\fIport\fP port number, or -1 to check the element as a whole
+.RE
+.PP
+This virtual function is the core of \fBElementFilter\fP's functionality\&. The function should return true iff the specified element or port matches the filter\&. \fIisoutput\fP and \fIport\fP define the interesting port; if \fIport\fP < 0, the element should be checked as a whole\&.
+.PP
+The default implementation returns false for any element\&. 
+.PP
+Reimplemented in \fBCastElementFilter\fP\&.
+.SS "void ElementFilter::filter (\fBVector\fP< \fBElement\fP * > & es)"
+
+.PP
+Remove all non-matching elements from \fIes\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIes\fP array of elements
+.RE
+.PP
+Calls check_match(e, false, -1) for each element of \fIes\fP, removing those elements that do not match (i\&.e\&., \fBcheck_match()\fP returns false)\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

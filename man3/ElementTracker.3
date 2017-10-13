@@ -1,0 +1,125 @@
+.TH "ElementTracker" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ElementTracker \- Base class for router configuration visitors that collect elements\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <routervisitor\&.hh>\fP
+.PP
+Inherits \fBRouterVisitor\fP\&.
+.PP
+Inherited by \fBElementCastTracker\fP, and \fBElementNeighborhoodTracker\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBVector\fP< \fBElement\fP * >::\fBconst_iterator\fP \fBconst_iterator\fP"
+.br
+.RI "\fIIterator type\&. \fP"
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBElementTracker\fP (\fBRouter\fP *router)"
+.br
+.RI "\fIConstruct an \fBElementTracker\fP\&. \fP"
+.ti -1c
+.RI "const \fBVector\fP< \fBElement\fP * > & \fBelements\fP () const "
+.br
+.RI "\fIReturn the elements that matched\&. \fP"
+.ti -1c
+.RI "int \fBsize\fP () const "
+.br
+.RI "\fIReturn the number of matching elements\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBoperator[]\fP (int i) const "
+.br
+.RI "\fIReturn the \fIi'th\fP matching element\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBbegin\fP () const "
+.br
+.RI "\fIReturn an iterator for the first matching element\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBend\fP () const "
+.br
+.RI "\fIReturn an iterator for the end of the container\&. \fP"
+.ti -1c
+.RI "bool \fBcontains\fP (const \fBElement\fP *e) const "
+.br
+.RI "\fIReturn true iff element \fIe\fP is a matching element\&. \fP"
+.ti -1c
+.RI "void \fBinsert\fP (\fBElement\fP *e)"
+.br
+.RI "\fIAdd element \fIe\fP to the set of matching elements\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIClear the set of matching elements\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Base class for router configuration visitors that collect elements\&. 
+
+\fBElementTracker\fP is a type of \fBRouterVisitor\fP used to traverse the router configuration graph and collect matching elements\&. A subclass's \fBvisit() \fP function will call \fBinsert()\fP to store elements that match\&. \fBElementTracker\fP objects are usually passed to the \fBRouter::visit_downstream()\fP and \fBRouter::visit_upstream()\fP functions\&. 
+.SH "Member Typedef Documentation"
+.PP 
+.SS "typedef \fBVector\fP<\fBElement\fP *>::\fBconst_iterator\fP \fBElementTracker::const_iterator\fP"
+
+.PP
+Iterator type\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ElementTracker::ElementTracker (\fBRouter\fP * router)"
+
+.PP
+Construct an \fBElementTracker\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrouter\fP the router to be traversed 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "const \fBVector\fP<\fBElement\fP *>& ElementTracker::elements () const\fC [inline]\fP"
+
+.PP
+Return the elements that matched\&. 
+.SS "int ElementTracker::size () const\fC [inline]\fP"
+
+.PP
+Return the number of matching elements\&. 
+.SS "\fBElement\fP* ElementTracker::operator[] (int i) const\fC [inline]\fP"
+
+.PP
+Return the \fIi'th\fP matching element\&. Elements are ordered by their time of first insertion\&. 
+.SS "\fBconst_iterator\fP ElementTracker::begin () const\fC [inline]\fP"
+
+.PP
+Return an iterator for the first matching element\&. 
+.SS "\fBconst_iterator\fP ElementTracker::end () const\fC [inline]\fP"
+
+.PP
+Return an iterator for the end of the container\&. 
+.SS "bool ElementTracker::contains (const \fBElement\fP * e) const\fC [inline]\fP"
+
+.PP
+Return true iff element \fIe\fP is a matching element\&. 
+.SS "void ElementTracker::insert (\fBElement\fP * e)\fC [inline]\fP"
+
+.PP
+Add element \fIe\fP to the set of matching elements\&. 
+.SS "void ElementTracker::clear ()\fC [inline]\fP"
+
+.PP
+Clear the set of matching elements\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

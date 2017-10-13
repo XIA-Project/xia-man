@@ -1,0 +1,80 @@
+.TH "SpinlockIRQ" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SpinlockIRQ \- A spinlock that disables interrupts\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <sync\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned long \fBflags_t\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSpinlockIRQ\fP ()"
+.br
+.RI "\fICreates a \fBSpinlockIRQ\fP\&. \fP"
+.ti -1c
+.RI "flags_t \fBacquire\fP () CLICK_ALWAYS_INLINE"
+.br
+.RI "\fIAcquires the \fBSpinlockIRQ\fP\&. \fP"
+.ti -1c
+.RI "void \fBrelease\fP (flags_t) CLICK_ALWAYS_INLINE"
+.br
+.RI "\fIReleases the \fBSpinlockIRQ\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A spinlock that disables interrupts\&. 
+
+The \fBSpinlockIRQ\fP class abstracts a spinlock, or polling mutex, that also turns off interrupts\&. Spinlocks are a type of mutual-exclusion lock in which acquiring the lock is a polling operation (basically a 'while
+(lock\&.acquired()) do nothing;' loop)\&. The \fBSpinlockIRQ\fP variant can be used to protect Click data structures from interrupts and from other threads\&. Very few objects in Click need this protection; the Click Master object, which protects the task list, uses it, but that's hidden from users\&. Spinlocks should not be held for long periods of time: use them for quick updates and such\&.
+.PP
+In the Linux kernel, \fBSpinlockIRQ\fP is equivalent to a combination of local_irq_save and the spinlock_t type\&.
+.PP
+The \fBSpinlockIRQ\fP operations are \fBacquire()\fP, which acquires the lock, and \fBrelease()\fP, which releases the lock\&.
+.PP
+It is NOT OK for a \fBSpinlockIRQ\fP thread to acquire a lock it has already acquired\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "SpinlockIRQ::SpinlockIRQ ()\fC [inline]\fP"
+
+.PP
+Creates a \fBSpinlockIRQ\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "SpinlockIRQ::flags_t SpinlockIRQ::acquire ()\fC [inline]\fP"
+
+.PP
+Acquires the \fBSpinlockIRQ\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The current state of the interrupt flags\&. 
+.RE
+.PP
+
+.SS "void SpinlockIRQ::release (flags_t flags)\fC [inline]\fP"
+
+.PP
+Releases the \fBSpinlockIRQ\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIflags\fP The value returned by \fBSpinlockIRQ::acquire()\fP\&. 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

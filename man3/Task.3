@@ -1,0 +1,423 @@
+.TH "Task" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Task \- Represents a frequently-scheduled computational task\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits TaskLink\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBSTRIDE1\fP = 1U<<16, \fBMAX_STRIDE\fP = 1U<<31 }"
+.br
+.ti -1c
+.RI "enum { \fBMAX_TICKETS\fP = 1<<15, \fBDEFAULT_TICKETS\fP = 1<<10 }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTask\fP (TaskCallback f, void *\fBuser_data\fP)"
+.br
+.RI "\fIConstruct a task that calls \fIf\fP with \fIuser_data\fP argument\&. \fP"
+.ti -1c
+.RI "\fBTask\fP (\fBElement\fP *e)"
+.br
+.RI "\fIConstruct a task that calls \fIe\fP ->\fBrun_task()\fP\&. \fP"
+.ti -1c
+.RI "\fB~Task\fP ()"
+.br
+.RI "\fIDestroy a task\&. \fP"
+.ti -1c
+.RI "TaskCallback \fBcallback\fP () const "
+.br
+.RI "\fIReturn the task's callback function\&. \fP"
+.ti -1c
+.RI "void * \fBuser_data\fP () const "
+.br
+.RI "\fIReturn the task callback function's user data\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBelement\fP () const "
+.br
+.RI "\fIReturn the task's owning element\&. \fP"
+.ti -1c
+.RI "bool \fBinitialized\fP () const "
+.br
+.RI "\fIReturn true iff the task has been \fBinitialize()\fPd\&. \fP"
+.ti -1c
+.RI "int \fBhome_thread_id\fP () const "
+.br
+.RI "\fIReturn the task's home thread ID\&. \fP"
+.ti -1c
+.RI "\fBRouterThread\fP * \fBthread\fP () const "
+.br
+.RI "\fIReturn the thread on which this task is currently scheduled, or would be scheduled\&. \fP"
+.ti -1c
+.RI "\fBRouter\fP * \fBrouter\fP () const "
+.br
+.RI "\fIReturn the router to which this task belongs\&. \fP"
+.ti -1c
+.RI "Master * \fBmaster\fP () const "
+.br
+.RI "\fIReturn the master where this task will be scheduled\&. \fP"
+.ti -1c
+.RI "void \fBinitialize\fP (\fBElement\fP *owner, bool schedule)"
+.br
+.RI "\fIInitialize the \fBTask\fP, and optionally schedule it\&. \fP"
+.ti -1c
+.RI "void \fBinitialize\fP (\fBRouter\fP *\fBrouter\fP, bool schedule)"
+.br
+.RI "\fIInitialize the \fBTask\fP, and optionally schedule it\&. \fP"
+.ti -1c
+.RI "bool \fBscheduled\fP () const "
+.br
+.RI "\fIReturn true iff the task is currently scheduled to run\&. \fP"
+.ti -1c
+.RI "void \fBunschedule\fP ()"
+.br
+.RI "\fIUnschedule the task\&. \fP"
+.ti -1c
+.RI "void \fBreschedule\fP ()"
+.br
+.RI "\fIReschedule the task\&. \fP"
+.ti -1c
+.RI "void \fBfast_reschedule\fP ()"
+.br
+.RI "\fIReschedule a task from the task's callback function\&. \fP"
+.ti -1c
+.RI "void \fBstrong_unschedule\fP ()"
+.br
+.RI "\fIUnschedule the \fBTask\fP until \fBstrong_reschedule()\fP\&. \fP"
+.ti -1c
+.RI "void \fBstrong_reschedule\fP ()"
+.br
+.RI "\fIReschedule the \fBTask\fP, undoing a prior \fBstrong_unschedule()\fP\&. \fP"
+.ti -1c
+.RI "void \fBmove_thread\fP (int new_thread_id)"
+.br
+.RI "\fIMove the \fBTask\fP to a new home thread\&. \fP"
+.ti -1c
+.RI "int \fBtickets\fP () const "
+.br
+.RI "\fIReturn the task's number of tickets\&. \fP"
+.ti -1c
+.RI "void \fBset_tickets\fP (int n)"
+.br
+.RI "\fISet the task's ticket count\&. \fP"
+.ti -1c
+.RI "void \fBadjust_tickets\fP (int delta)"
+.br
+.RI "\fIAdd \fIdelta\fP to the \fBTask\fP's ticket count\&. \fP"
+.ti -1c
+.RI "bool \fBfire\fP ()"
+.br
+.RI "\fIFire the task by calling its callback function\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Represents a frequently-scheduled computational task\&. 
+
+Click schedules a router's CPU or CPUs with one or more \fItask queues\fP\&. These queues are simply lists of \fItasks\fP, which represent functions that would like unconditional access to the CPU\&. Tasks are generally associated with elements\&. When scheduled, most tasks call some element's \fBrun_task()\fP method\&.
+.PP
+Click tasks are represented by \fBTask\fP objects\&. An element that would like special access to a router's CPU should include and initialize a \fBTask\fP instance variable\&.
+.PP
+Tasks are called very frequently, up to tens of thousands of times per second\&. Elements generally use Tasks for frequent tasks, and implement their own algorithms for scheduling and unscheduling the tasks when there's work to be done\&. For infrequent events, it is far more efficient to use \fBTimer\fP objects\&.
+.PP
+A \fBTask\fP's callback function, which is called when the task fires, has bool return type\&. The callback should return true if the task did useful work, and false if it was not able to do useful work (for example, because there were no packets in the configuration to return)\&. Adaptive algorithms may use this information to fine-tune Click's scheduling behavior\&.
+.PP
+Since Click tasks are cooperatively scheduled, executing a task should not take a long time\&. Slow tasks can inappropriately delay timers and other periodic events\&.
+.PP
+This code shows how \fBTask\fP objects tend to be used\&. For fuller examples, see InfiniteSource and similar elements\&.
+.PP
+.PP
+.nf
+class InfiniteSource { \&.\&.\&.
+    bool run_task(Task *t);
+  private:
+    Task _task;
+};
+
+InfiniteSource::InfiniteSource() : _task(this) {
+}
+
+int InfiniteSource::initialize(ErrorHandler *errh) {
+    ScheduleInfo::initialize_task(this, &_task, errh);
+    return 0;
+}
+
+bool InfiniteSource::run_task(Task *) {
+    Packet *p = \&.\&.\&. generate packet \&.\&.\&.;
+    output(0)\&.push(p);
+    if (packets left to send)
+        _task\&.fast_reschedule();
+    return true;  // the task did useful work
+}
+.fi
+.PP
+ 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Task::Task (TaskCallback f, void * user_data)\fC [inline]\fP"
+
+.PP
+Construct a task that calls \fIf\fP with \fIuser_data\fP argument\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIf\fP callback function 
+.br
+\fIuser_data\fP argument for callback function
+.RE
+.PP
+Constructs a task that, when fired, calls \fIf\fP like so:
+.PP
+.PP
+.nf
+bool work_done = f(task, user_data);
+.fi
+.PP
+.PP
+where \fItask\fP is a pointer to this task\&. \fIf\fP should return true if the task accomplished some meaningful work, and false if it did not\&. For example, a task that polls a network driver for packets should return true if it emits at least one packet, and false if no packets were available\&. 
+.SS "Task::Task (\fBElement\fP * e)\fC [inline]\fP"
+
+.PP
+Construct a task that calls \fIe\fP ->\fBrun_task()\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element to call
+.RE
+.PP
+Constructs a task that, when fired, calls the element \fIe's\fP \fBrun_task()\fP method, passing this \fBTask\fP as an argument\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBTask(TaskCallback, void *)\fP 
+.RE
+.PP
+
+.SS "Task::~Task ()"
+
+.PP
+Destroy a task\&. Unschedules the task if necessary\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "TaskCallback Task::callback () const\fC [inline]\fP"
+
+.PP
+Return the task's callback function\&. Returns null if the task was constructed with the \fBTask(Element *)\fP constructor\&. 
+.SS "void* Task::user_data () const\fC [inline]\fP"
+
+.PP
+Return the task callback function's user data\&. 
+.SS "\fBElement\fP* Task::element () const\fC [inline]\fP"
+
+.PP
+Return the task's owning element\&. 
+.SS "bool Task::initialized () const\fC [inline]\fP"
+
+.PP
+Return true iff the task has been \fBinitialize()\fPd\&. 
+.SS "int Task::home_thread_id () const\fC [inline]\fP"
+
+.PP
+Return the task's home thread ID\&. This is the \fBthread_id()\fP of the thread on which this \fBTask\fP would run if it were scheduled\&. This need not equal the ID of the current \fBthread()\fP, since changes in \fBhome_thread_id()\fP aren't always implemented immediately (because of locking issues)\&.
+.PP
+never 
+.SS "\fBRouterThread\fP * Task::thread () const\fC [inline]\fP"
+
+.PP
+Return the thread on which this task is currently scheduled, or would be scheduled\&. Usually, task->\fBthread()\fP->\fBthread_id()\fP == task->\fBhome_thread_id()\fP\&. They can differ, however, if \fBmove_thread()\fP was called but the task hasn't yet been moved to the new thread\&. 
+.SS "\fBRouter\fP* Task::router () const\fC [inline]\fP"
+
+.PP
+Return the router to which this task belongs\&. 
+.SS "Master * Task::master () const"
+
+.PP
+Return the master where this task will be scheduled\&. 
+.SS "void Task::initialize (\fBElement\fP * owner, bool schedule)"
+
+.PP
+Initialize the \fBTask\fP, and optionally schedule it\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIowner\fP specifies the element owning the \fBTask\fP 
+.br
+\fIschedule\fP if true, the \fBTask\fP will be scheduled immediately
+.RE
+.PP
+This function must be called on every \fBTask\fP before it is used\&. The corresponding router's ThreadSched, if any, is used to determine the task's initial thread assignment\&. The task initially has the default number of tickets, and is scheduled iff \fIschedule\fP is true\&.
+.PP
+An assertion will fail if a \fBTask\fP is initialized twice\&.
+.PP
+Most elements call ScheduleInfo::initialize_task() to initialize a \fBTask\fP object\&. The ScheduleInfo method additionally sets the task's scheduling parameters, such as ticket count and thread preference, based on a router's ScheduleInfo\&. ScheduleInfo::initialize_task() calls \fBTask::initialize()\fP\&. 
+.SS "void Task::initialize (\fBRouter\fP * router, bool schedule)"
+
+.PP
+Initialize the \fBTask\fP, and optionally schedule it\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrouter\fP specifies the router owning the \fBTask\fP 
+.br
+\fIschedule\fP if true, the \fBTask\fP will be scheduled immediately
+.RE
+.PP
+This function is shorthand for \fBTask::initialize\fP(\fIrouter\fP ->\fBroot_element\fP(), \fIscheduled\fP)\&. However, it is better to explicitly associate tasks with real elements\&. 
+.SS "bool Task::scheduled () const\fC [inline]\fP"
+
+.PP
+Return true iff the task is currently scheduled to run\&. 
+.PP
+\fBNote:\fP
+.RS 4
+A scheduled task will usually run very soon, but not always; due to locking issues, the effects of some \fBreschedule()\fP requests may be delayed\&. Also, a task unscheduled with \fBstrong_unschedule()\fP may apper \fBscheduled()\fP, but will not run until \fBstrong_reschedule()\fP is called\&. 
+.RE
+.PP
+
+.SS "void Task::unschedule ()\fC [inline]\fP"
+
+.PP
+Unschedule the task\&. After \fBunschedule()\fP returns, the task will not run until it is rescheduled with \fBreschedule()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBreschedule\fP, \fBstrong_unschedule\fP 
+.RE
+.PP
+
+.SS "void Task::reschedule ()\fC [inline]\fP"
+
+.PP
+Reschedule the task\&. The task is rescheduled on its home thread\&. The task will eventually run (unless the home thread is quiescent)\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBunschedule\fP, \fBstrong_reschedule\fP 
+.RE
+.PP
+
+.SS "void Task::fast_reschedule ()\fC [inline]\fP"
+
+.PP
+Reschedule a task from the task's callback function\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+Only call \fItask\&.fast_reschedule()\fP while \fItask\fP is being fired, i\&.e\&., in its callback function\&. It is an error to call \&.\fBfast_reschedule()\fP at other times -- the task may not actually be rescheduled\&.
+.RE
+.PP
+Here's a typical, correct use of \fBfast_reschedule()\fP:
+.PP
+.PP
+.nf
+class MyElement : public Element {
+    \&.\&.\&. Task _task; \&.\&.\&. bool run_task(Task *t); \&.\&.\&.
+};
+bool MyElement::run_task(Task *) {
+    do_some_work();
+    _task\&.fast_reschedule();
+    return true;
+}
+.fi
+.PP
+.PP
+This assumes, however, that run_task() is only called directly by the driver\&. If you call run_task() from another context, _task may not actually be scheduled\&.
+.PP
+.PP
+.nf
+void MyElement::run_timer(Timer *) {
+    run_task();   // XXX might not reschedule _task!
+}
+.fi
+.PP
+ 
+.SS "void Task::strong_unschedule ()\fC [inline]\fP"
+
+.PP
+Unschedule the \fBTask\fP until \fBstrong_reschedule()\fP\&. Like \fBunschedule()\fP, but in addition, future \fBreschedule()\fP calls will not actually schedule the task\&. Only after \fBstrong_reschedule()\fP will the task run again\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBstrong_reschedule\fP, \fBunschedule\fP 
+.RE
+.PP
+
+.SS "void Task::strong_reschedule ()\fC [inline]\fP"
+
+.PP
+Reschedule the \fBTask\fP, undoing a prior \fBstrong_unschedule()\fP\&. This function undoes any previous \fBstrong_unschedule()\fP and reschedules the task\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBreschedule\fP, \fBstrong_unschedule\fP 
+.RE
+.PP
+
+.SS "void Task::move_thread (int new_thread_id)"
+
+.PP
+Move the \fBTask\fP to a new home thread\&. The home thread ID is set to \fInew_thread_id\fP\&. The task, if it is currently scheduled, is rescheduled on thread \fInew_thread_id\fP (which generally takes some time to take effect)\&. If \fInew_thread_id\fP is less than zero or greater than the number of threads on the router, it is coerced to -1, and the task is scheduled on a quiescent thread that never actually runs\&. 
+.SS "int Task::tickets () const\fC [inline]\fP"
+
+.PP
+Return the task's number of tickets\&. Tasks with larger numbers of tickets are scheduled more often\&. Tasks are initialized with \fBtickets()\fP == DEFAULT_TICKETS\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_tickets\fP, \fBadjust_tickets\fP 
+.RE
+.PP
+
+.SS "void Task::set_tickets (int n)\fC [inline]\fP"
+
+.PP
+Set the task's ticket count\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIn\fP the ticket count
+.RE
+.PP
+The ticket count \fIn\fP is pinned to the range [1, MAX_TICKETS]\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtickets\fP, \fBadjust_tickets\fP 
+.RE
+.PP
+
+.SS "void Task::adjust_tickets (int delta)\fC [inline]\fP"
+
+.PP
+Add \fIdelta\fP to the \fBTask\fP's ticket count\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdelta\fP adjustment to the ticket count
+.RE
+.PP
+The ticket count cannot be adjusted below 1 or above MAX_TICKETS\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_tickets\fP 
+.RE
+.PP
+
+.SS "bool Task::fire ()\fC [inline]\fP"
+
+.PP
+Fire the task by calling its callback function\&. This function is generally called by the \fBRouterThread\fP implementation; there should be no need to call it yourself\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

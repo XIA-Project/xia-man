@@ -1,0 +1,80 @@
+.TH "include/click/error.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/error.hh \- Flexible error handling classes\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/string\&.hh>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdarg\&.h>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBErrorHandler\fP"
+.br
+.RI "\fIError reporting class\&. \fP"
+.ti -1c
+.RI "class \fBSilentErrorHandler\fP"
+.br
+.RI "\fIAn \fBErrorHandler\fP that does not report messages\&. \fP"
+.ti -1c
+.RI "class \fBErrorVeneer\fP"
+.br
+.RI "\fIBase class for ErrorHandlers that forward messages\&. \fP"
+.ti -1c
+.RI "class \fBFileErrorHandler\fP"
+.br
+.RI "\fIAn \fBErrorHandler\fP that prints error messages to a given file\&. \fP"
+.ti -1c
+.RI "class \fBLocalErrorHandler\fP"
+.br
+.RI "\fIA convenience stackable \fBErrorHandler\fP\&. \fP"
+.ti -1c
+.RI "class \fBContextErrorHandler\fP"
+.br
+.RI "\fIA stackable \fBErrorHandler\fP that prints context lines\&. \fP"
+.ti -1c
+.RI "class \fBPrefixErrorHandler\fP"
+.br
+.RI "\fIA stackable \fBErrorHandler\fP that adds a prefix to error messages\&. \fP"
+.ti -1c
+.RI "class \fBLandmarkErrorHandler\fP"
+.br
+.RI "\fIA stackable \fBErrorHandler\fP that adds a default landmark to error messages\&. \fP"
+.ti -1c
+.RI "class \fBBailErrorHandler\fP"
+.br
+.RI "\fIA stackable \fBErrorHandler\fP that exits when errors occur\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBVA_LIST_REF_T\fP   va_list"
+.br
+.ti -1c
+.RI "#define \fBVA_LIST_DEREF\fP(val)   (val)"
+.br
+.ti -1c
+.RI "#define \fBVA_LIST_REF\fP(val)   (val)"
+.br
+.ti -1c
+.RI "#define \fBERRH_SENTINEL\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Flexible error handling classes\&. 
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

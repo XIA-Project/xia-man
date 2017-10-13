@@ -1,0 +1,108 @@
+.TH "StaticNameDB" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+StaticNameDB \- A fixed database mapping names to 4-byte integer values\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBNameDB\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBStaticNameDB\fP (uint32_t \fBtype\fP, const \fBString\fP &\fBcontext\fP, const Entry *entry, size_t nentry)"
+.br
+.RI "\fIConstruct a static name database\&. \fP"
+.ti -1c
+.RI "bool \fBquery\fP (const \fBString\fP &name, void *value, size_t \fBvalue_size\fP)"
+.br
+.RI "\fIQuery this database for a given name\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBrevquery\fP (const void *value, size_t \fBvalue_size\fP)"
+.br
+.RI "\fIQuery this database for a given value\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A fixed database mapping names to 4-byte integer values\&. 
+
+\fBStaticNameDB\fP is a \fBNameDB\fP database that maps names to 4-byte integer values\&. The database contents are taken from an array of Entry structures passed in to the constructor\&. Each Entry specifies a name-value definition\&. The entries must be sorted by name\&. This is the most space-efficient way to implement a static name database for integers\&.
+.PP
+\fBStaticNameDB\fP \fBdefine()\fP operations always fail\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBNameInfo\fP, \fBNameDB\fP 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "StaticNameDB::StaticNameDB (uint32_t type, const \fBString\fP & context, const Entry * entry, size_t nentry)\fC [inline]\fP"
+
+.PP
+Construct a static name database\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP database compound element context, as a \fBString\fP 
+.br
+\fIentry\fP pointer to static entry list 
+.br
+\fInentry\fP number of entries
+.RE
+.PP
+The entry array specifies the contents of the database\&. It must be sorted by name: entry[i]\&.name < entry[i+1]\&.name for all 0 <= i < nentry-1\&. The entry array must also persist as long as the database is in use; the database doesn't copy the entry array into its own memory, but continues to use the array passed in\&. The resulting database has \fBvalue_size()\fP 4\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool StaticNameDB::query (const \fBString\fP & name, void * value, size_t value_size)\fC [virtual]\fP"
+
+.PP
+Query this database for a given name\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP name to look up 
+.br
+\fIvalue\fP points to value storage 
+.br
+\fIvalue_size\fP size of value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the query succeeded
+.RE
+.PP
+The \fIvalue_size\fP parameter must equal 4\&. 
+.PP
+Implements \fBNameDB\fP\&.
+.SS "\fBString\fP StaticNameDB::revquery (const void * value, size_t value_size)\fC [virtual]\fP"
+
+.PP
+Query this database for a given value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP points to value to look up 
+.br
+\fIvalue_size\fP size of value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the name for the given value, or an empty string if the value has not been defined
+.RE
+.PP
+The \fIvalue_size\fP parameter must equal 4\&. 
+.PP
+Reimplemented from \fBNameDB\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

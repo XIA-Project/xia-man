@@ -1,0 +1,46 @@
+.TH "xsocket/Xclose.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xclose.c \- \fBXclose()\fP - close a socket\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXclose\fP (int sockfd)"
+.br
+.RI "\fIclose an Xsocket \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xclose (int sockfd)"
+Causes the XIA transport to tear down the underlying XIA socket state and also closes the UDP control socket used to talk to the transport\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP the socket
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+See the man page for the standard close() call for more details\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on error with errno set to a value compatible with the standard close API call\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

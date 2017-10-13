@@ -1,0 +1,108 @@
+.TH "Clp_Parser" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Clp_Parser \- Command line parser\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <clp\&.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "const \fBClp_Option\fP * \fBoption\fP"
+.br
+.ti -1c
+.RI "int \fBnegated\fP"
+.br
+.ti -1c
+.RI "int \fBhave_val\fP"
+.br
+.ti -1c
+.RI "const char * \fBvstr\fP"
+.br
+.ti -1c
+.RI "union {"
+.br
+.ti -1c
+.RI "   int \fBi\fP"
+.br
+.ti -1c
+.RI "   unsigned \fBu\fP"
+.br
+.ti -1c
+.RI "   long \fBl\fP"
+.br
+.ti -1c
+.RI "   unsigned long \fBul\fP"
+.br
+.ti -1c
+.RI "   double \fBd\fP"
+.br
+.ti -1c
+.RI "   const char * \fBs\fP"
+.br
+.ti -1c
+.RI "   void * \fBpv\fP"
+.br
+.ti -1c
+.RI "   int64_t \fBi64\fP"
+.br
+.ti -1c
+.RI "   uint64_t \fBu64\fP"
+.br
+.ti -1c
+.RI "   char \fBcs\fP [\fBClp_ValSize\fP]"
+.br
+.ti -1c
+.RI "   unsigned char \fBucs\fP [\fBClp_ValSize\fP]"
+.br
+.ti -1c
+.RI "   int \fBis\fP [\fBClp_ValIntSize\fP]"
+.br
+.ti -1c
+.RI "   unsigned \fBus\fP [\fBClp_ValIntSize\fP]"
+.br
+.ti -1c
+.RI "} \fBval\fP"
+.br
+.ti -1c
+.RI "void * \fBuser_data\fP"
+.br
+.ti -1c
+.RI "struct Clp_Internal * \fBinternal\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Command line parser\&. 
+
+A \fBClp_Parser\fP object defines an instance of CLP, including allowed options, value types, and current arguments\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_NewParser\fP, \fBClp_SetOptions\fP, \fBClp_SetArguments\fP 
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "const \fBClp_Option\fP* Clp_Parser::option"
+The last option\&. 
+.SS "int Clp_Parser::negated"
+Whether the last option was negated\&. 
+.SS "int Clp_Parser::have_val"
+Whether the last option had a value\&. 
+.SS "const char* Clp_Parser::vstr"
+The string value provided with the last option\&. 
+.SS "union { \&.\&.\&. }   Clp_Parser::val"
+The parsed value provided with the last option\&. 
+.SS "void* Clp_Parser::user_data"
+Uninterpreted by CLP; users can set arbitrarily\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,180 @@
+.TH "Node" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Node \- Class defining XIDs that are used by the \fBGraph\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <dagaddr\&.hpp>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBNode\fP (const \fBNode\fP &r)"
+.br
+.ti -1c
+.RI "\fBNode\fP (uint32_t type, const void *id, int dummy)"
+.br
+.ti -1c
+.RI "\fBNode\fP (int type, const std::string id_string)"
+.br
+.ti -1c
+.RI "\fBNode\fP (const std::string type_string, const std::string id_string)"
+.br
+.ti -1c
+.RI "\fBNode\fP (const std::string node_string)"
+.br
+.ti -1c
+.RI "const uint32_t & \fBtype\fP () const "
+.br
+.ti -1c
+.RI "const unsigned char * \fBid\fP () const "
+.br
+.ti -1c
+.RI "std::string \fBtype_string\fP () const "
+.br
+.ti -1c
+.RI "std::string \fBid_string\fP () const "
+.br
+.ti -1c
+.RI "std::string \fBto_string\fP () const "
+.br
+.ti -1c
+.RI "bool \fBhas_valid_xid\fP () const "
+.br
+.ti -1c
+.RI "\fBNode\fP & \fBoperator=\fP (const \fBNode\fP &r)"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBNode\fP &r) const "
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBNode\fP &r) const "
+.br
+.ti -1c
+.RI "\fBGraph\fP \fBoperator*\fP (const \fBNode\fP &r) const "
+.br
+.RI "\fIMake a graph by appending a node\&. \fP"
+.ti -1c
+.RI "\fBGraph\fP \fBoperator*\fP (const \fBGraph\fP &r) const "
+.br
+.RI "\fIMake a graph by appending a graph\&. \fP"
+.ti -1c
+.RI "\fBGraph\fP \fBoperator+\fP (const \fBNode\fP &r) const "
+.br
+.RI "\fIMake a graph by merging with a node\&. \fP"
+.ti -1c
+.RI "\fBGraph\fP \fBoperator+\fP (const \fBGraph\fP &r) const "
+.br
+.RI "\fIMake a graph by merging with a graph\&. \fP"
+.ti -1c
+.RI "bool \fBequal_to\fP (const \fBNode\fP &r) const "
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static const std::size_t \fBID_LEN\fP = 20"
+.br
+.ti -1c
+.RI "static const std::string \fBXID_TYPE_UNKNOWN_STRING\fP"
+.br
+.ti -1c
+.RI "static const std::string \fBXID_TYPE_DUMMY_SOURCE_STRING\fP"
+.br
+.ti -1c
+.RI "static const std::string \fBXID_TYPE_AD_STRING\fP"
+.br
+.ti -1c
+.RI "static const std::string \fBXID_TYPE_HID_STRING\fP"
+.br
+.ti -1c
+.RI "static const std::string \fBXID_TYPE_CID_STRING\fP"
+.br
+.ti -1c
+.RI "static const std::string \fBXID_TYPE_SID_STRING\fP"
+.br
+.ti -1c
+.RI "static const std::string \fBXID_TYPE_FID_STRING\fP"
+.br
+.ti -1c
+.RI "static const std::string \fBXID_TYPE_IP_STRING\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Class defining XIDs that are used by the \fBGraph\fP class\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBGraph\fP Node::operator* (const \fBNode\fP & r) const\fC [inline]\fP"
+
+.PP
+Make a graph by appending a node\&. Make a graph by appending a node to this node\&. The resulting graph will have one edge from this node to the supplied node\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP The node to append
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The resulting graph 
+.RE
+.PP
+
+.SS "\fBGraph\fP Node::operator* (const \fBGraph\fP & r) const\fC [inline]\fP"
+
+.PP
+Make a graph by appending a graph\&. Make a graph by appending an existing graph to this node\&. The resulting graph will have an edge from this node to the source node of the supplied one\&. The edges of the supplied graph will not be affected\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP The graph to append
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The resulting graph 
+.RE
+.PP
+
+.SS "\fBGraph\fP Node::operator+ (const \fBNode\fP & r) const\fC [inline]\fP"
+
+.PP
+Make a graph by merging with a node\&. Make a graph by merging this node with another node\&. If the nodes are equal, the resulting graph will contain one node and no edges\&. Otherwise, the resulting graph will contain two nodes and no edges\&. Each node will be both a source and a sink\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP The node with which to merge
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The resulting graph 
+.RE
+.PP
+
+.SS "\fBGraph\fP Node::operator+ (const \fBGraph\fP & r) const\fC [inline]\fP"
+
+.PP
+Make a graph by merging with a graph\&. Make a graph by merging this node with the supplied graph\&. If the node is already present in this graph, the resulting graph will be the same as the supplied graph\&. If the node is different, this node will be added to the graph but will not be connected by any edges\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP The graph with which to merge
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The resulting graph 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

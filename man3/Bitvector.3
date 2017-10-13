@@ -1,0 +1,556 @@
+.TH "Bitvector" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Bitvector \- \fBVector\fP of bits\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <bitvector\&.hh>\fP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBBit\fP"
+.br
+.RI "\fIA wrapper class that acts like a single bit\&. \fP"
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBwbits\fP = 32, \fBwshift\fP = 5, \fBwmask\fP = 31 }"
+.br
+.ti -1c
+.RI "typedef bool(Bitvector::* \fBunspecified_bool_type\fP) () const "
+.br
+.ti -1c
+.RI "typedef uint32_t \fBword_type\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBitvector\fP ()"
+.br
+.RI "\fIConstruct an empty bitvector\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP (int n)"
+.br
+.RI "\fIConstruct an all-false bitvector with \fIn\fP elements\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP (bool bit)"
+.br
+.RI "\fIConstruct a \fIbit-valued\fP length-1 bitvector\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP (int n, bool bit)"
+.br
+.RI "\fIConstruct a \fIbit-valued\fP length-\fIn\fP bitvector\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP (const \fBBitvector\fP &x)"
+.br
+.RI "\fIConstruct a bitvector as a copy of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fB~Bitvector\fP ()"
+.br
+.RI "\fIDestroy a bitvector\&. \fP"
+.ti -1c
+.RI "int \fBsize\fP () const "
+.br
+.RI "\fIReturn the number of bits in the bitvector\&. \fP"
+.ti -1c
+.RI "\fBBit\fP \fBoperator[]\fP (int i)"
+.br
+.RI "\fIReturn the bit at position \fIi\fP\&. \fP"
+.ti -1c
+.RI "bool \fBoperator[]\fP (int i) const "
+.br
+.ti -1c
+.RI "\fBBit\fP \fBforce_bit\fP (int i)"
+.br
+.RI "\fIReturn the bit at position \fIi\fP, extending if necessary\&. \fP"
+.ti -1c
+.RI "int \fBword_size\fP () const "
+.br
+.RI "\fIReturn the number of valid data words\&. \fP"
+.ti -1c
+.RI "int \fBmax_word\fP () const "
+.br
+.RI "\fIReturn the index of the maximum valid data word\&. \fP"
+.ti -1c
+.RI "word_type * \fBwords\fP ()"
+.br
+.RI "\fIReturn a pointer to this bitvector's data words\&. \fP"
+.ti -1c
+.RI "const word_type * \fBwords\fP () const "
+.br
+.ti -1c
+.RI "bool \fBzero\fP () const "
+.br
+.RI "\fITest if the bitvector's bits are all false\&. \fP"
+.ti -1c
+.RI "\fBoperator unspecified_bool_type\fP () const "
+.br
+.RI "\fITest if the bitvector contains at least one true bit\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!\fP () const "
+.br
+.RI "\fITest if the bitvector contains no true bits\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP & \fBassign\fP (int n, bool bit)"
+.br
+.RI "\fISet the bitvector to \fIbit-valued\fP length-\fIn\fP\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP & \fBoperator=\fP (const \fBBitvector\fP &x)"
+.br
+.RI "\fISet this bitvector to a copy of \fIx\fP\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fISet all bits to false\&. \fP"
+.ti -1c
+.RI "void \fBresize\fP (int n)"
+.br
+.RI "\fIResize the bitvector to \fIn\fP bits\&. \fP"
+.ti -1c
+.RI "bool \fBnonzero_intersection\fP (const \fBBitvector\fP &x) const "
+.br
+.RI "\fITest whether this bitvector and \fIx\fP have a common true bit\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP \fBoperator~\fP () const "
+.br
+.RI "\fIReturn the bitwise negation of this bitvector\&. \fP"
+.ti -1c
+.RI "void \fBflip\fP ()"
+.br
+.RI "\fIFlip all bits in this bitvector\&. \fP"
+.ti -1c
+.RI "void \fBnegate\fP ()"
+.br
+.RI "\fIFlip all bits in this bitvector\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP & \fBoperator&=\fP (const \fBBitvector\fP &x)"
+.br
+.RI "\fIModify this bitvector by bitwise and with \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP & \fBoperator|=\fP (const \fBBitvector\fP &x)"
+.br
+.RI "\fIModify this bitvector by bitwise or with \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP & \fBoperator^=\fP (const \fBBitvector\fP &x)"
+.br
+.RI "\fIModify this bitvector by bitwise exclusive or with \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP & \fBoperator\-=\fP (const \fBBitvector\fP &x)"
+.br
+.RI "\fIModify this bitvector by bitwise subtraction with \fIx\fP\&. \fP"
+.ti -1c
+.RI "void \fBoffset_or\fP (const \fBBitvector\fP &x, int offset)"
+.br
+.RI "\fIModify this bitvector by bitwise or with an offset \fIx\fP\&. \fP"
+.ti -1c
+.RI "void \fBor_with_difference\fP (const \fBBitvector\fP &x, \fBBitvector\fP &difference)"
+.br
+.RI "\fIModify this bitvector by bitwise or, returning difference\&. \fP"
+.ti -1c
+.RI "void \fBswap\fP (\fBBitvector\fP &x)"
+.br
+.RI "\fISwap the contents of this bitvector and \fIx\fP\&. \fP"
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBBitvector\fP &a, const \fBBitvector\fP &b)"
+.br
+.RI "\fITest bitvectors for equality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBBitvector\fP &a, const \fBBitvector\fP &b)"
+.br
+.RI "\fITest bitvectors for inequality\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP \fBoperator&\fP (\fBBitvector\fP a, const \fBBitvector\fP &b)"
+.br
+.RI "\fIReturn the bitwise and of two bitvectors\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP \fBoperator|\fP (\fBBitvector\fP a, const \fBBitvector\fP &b)"
+.br
+.RI "\fIReturn the bitwise or of two bitvectors\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP \fBoperator^\fP (\fBBitvector\fP a, const \fBBitvector\fP &b)"
+.br
+.RI "\fIReturn the bitwise exclusive or of two bitvectors\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP \fBoperator\-\fP (\fBBitvector\fP a, const \fBBitvector\fP &b)"
+.br
+.RI "\fIReturn the bitwise subtraction of two bitvectors\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBVector\fP of bits\&. 
+
+The \fBBitvector\fP class implements a vector of individually addressable bits\&. It supports bitwise operations such as |= and &= as well as the usual assignment and indexing operations\&.
+.PP
+Bitvectors are stored as arrays of data words with type word_type, each containing wbits bits\&. For some purposes it may be faster or easier to manipulate data words directly\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Bitvector::Bitvector ()\fC [inline]\fP"
+
+.PP
+Construct an empty bitvector\&. 
+.SS "Bitvector::Bitvector (int n)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct an all-false bitvector with \fIn\fP elements\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIn\fP >= 0 
+.RE
+.PP
+
+.SS "Bitvector::Bitvector (bool bit)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct a \fIbit-valued\fP length-1 bitvector\&. 
+.SS "Bitvector::Bitvector (int n, bool b)\fC [inline]\fP"
+
+.PP
+Construct a \fIbit-valued\fP length-\fIn\fP bitvector\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIn\fP >= 0 
+.RE
+.PP
+
+.SS "Bitvector::Bitvector (const \fBBitvector\fP & x)\fC [inline]\fP"
+
+.PP
+Construct a bitvector as a copy of \fIx\fP\&. 
+.SS "Bitvector::~Bitvector ()\fC [inline]\fP"
+
+.PP
+Destroy a bitvector\&. All outstanding \fBBit\fP objects become invalid\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "int Bitvector::size () const\fC [inline]\fP"
+
+.PP
+Return the number of bits in the bitvector\&. 
+.SS "\fBBitvector::Bit\fP Bitvector::operator[] (int i)\fC [inline]\fP"
+
+.PP
+Return the bit at position \fIi\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBsize()\fP 
+.RE
+.PP
+
+.SS "bool Bitvector::operator[] (int i) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBBitvector::Bit\fP Bitvector::force_bit (int i)\fC [inline]\fP"
+
+.PP
+Return the bit at position \fIi\fP, extending if necessary\&. If \fIi\fP >= \fBsize()\fP, then the bitvector is \fBresize()\fPd to length \fIi+1\fP, which adds false bits to fill out the vector\&.
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fIi\fP < \fBsize()\fP 
+.RE
+.PP
+
+.SS "int Bitvector::word_size () const\fC [inline]\fP"
+
+.PP
+Return the number of valid data words\&. 
+.SS "int Bitvector::max_word () const\fC [inline]\fP"
+
+.PP
+Return the index of the maximum valid data word\&. 
+.SS "Bitvector::word_type * Bitvector::words ()\fC [inline]\fP"
+
+.PP
+Return a pointer to this bitvector's data words\&. 
+.SS "const Bitvector::word_type * Bitvector::words () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "bool Bitvector::zero () const"
+
+.PP
+Test if the bitvector's bits are all false\&. 
+.SS "Bitvector::operator unspecified_bool_type () const\fC [inline]\fP"
+
+.PP
+Test if the bitvector contains at least one true bit\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBzero()\fP 
+.RE
+.PP
+
+.SS "bool Bitvector::operator! () const\fC [inline]\fP"
+
+.PP
+Test if the bitvector contains no true bits\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBzero()\fP 
+.RE
+.PP
+
+.SS "\fBBitvector\fP & Bitvector::assign (int n, bool bit)"
+
+.PP
+Set the bitvector to \fIbit-valued\fP length-\fIn\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIn\fP >= 0 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBBitvector\fP & Bitvector::operator= (const \fBBitvector\fP & x)"
+
+.PP
+Set this bitvector to a copy of \fIx\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "void Bitvector::clear ()"
+
+.PP
+Set all bits to false\&. 
+.SS "void Bitvector::resize (int n)"
+
+.PP
+Resize the bitvector to \fIn\fP bits\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIn\fP >= 0
+.RE
+.PP
+Any bits added to the bitvector are false\&. 
+.SS "bool Bitvector::nonzero_intersection (const \fBBitvector\fP & x) const"
+
+.PP
+Test whether this bitvector and \fIx\fP have a common true bit\&. This bitvector and \fIx\fP may have different sizes\&. 
+.SS "\fBBitvector\fP Bitvector::operator~ () const\fC [inline]\fP"
+
+.PP
+Return the bitwise negation of this bitvector\&. 
+.SS "void Bitvector::flip ()"
+
+.PP
+Flip all bits in this bitvector\&. 
+.SS "void Bitvector::negate ()\fC [inline]\fP"
+
+.PP
+Flip all bits in this bitvector\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnegate()\fP 
+.RE
+.PP
+
+.SS "\fBBitvector\fP & Bitvector::operator&= (const \fBBitvector\fP & x)"
+
+.PP
+Modify this bitvector by bitwise and with \fIx\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIx\&.size()\fP == \fBsize()\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBBitvector\fP & Bitvector::operator|= (const \fBBitvector\fP & x)"
+
+.PP
+Modify this bitvector by bitwise or with \fIx\fP\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+new \fBsize()\fP == max(old \fBsize()\fP, x\&.size()) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBBitvector\fP & Bitvector::operator^= (const \fBBitvector\fP & x)"
+
+.PP
+Modify this bitvector by bitwise exclusive or with \fIx\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIx\&.size()\fP == \fBsize()\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBBitvector\fP & Bitvector::operator\-= (const \fBBitvector\fP & x)\fC [inline]\fP"
+
+.PP
+Modify this bitvector by bitwise subtraction with \fIx\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIx\&.size()\fP == \fBsize()\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Equivalent to \fC*this &= ~\fIx\fP\fP\&. 
+.SS "void Bitvector::offset_or (const \fBBitvector\fP & x, int offset)"
+
+.PP
+Modify this bitvector by bitwise or with an offset \fIx\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP bitwise or operand 
+.br
+\fIoffset\fP initial offset 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIoffset\fP >= 0 && \fIoffset\fP + \fIx\&.size()\fP <= \fBsize()\fP
+.RE
+.PP
+Logically shifts \fIx\fP to start at position \fIoffset\fP, then performs a bitwise or\&. \fCa\&.offset_or(b, offset)\fP is equivalent to: 
+.PP
+.nf
+for (int i = 0; i < b\&.size(); ++i)
+    a[offset+i] |= b[i];
+
+.fi
+.PP
+ 
+.SS "void Bitvector::or_with_difference (const \fBBitvector\fP & x, \fBBitvector\fP & difference)"
+
+.PP
+Modify this bitvector by bitwise or, returning difference\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP bitwise or operand 
+.br
+\fIdifference\fP set to (\fIx\fP - old *this) 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIx\&.size()\fP == \fBsize()\fP 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fIdifference\&.size()\fP == \fBsize()\fP 
+.PP
+\fIx\fP | *this == *this 
+.PP
+(\fIdifference\fP & *this & \fIx\fP) == \fIdifference\fP 
+.RE
+.PP
+Same as operator|=, but any newly set bits are returned in \fIdifference\fP\&. 
+.SS "void Bitvector::swap (\fBBitvector\fP & x)"
+
+.PP
+Swap the contents of this bitvector and \fIx\fP\&. 
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "bool operator== (const \fBBitvector\fP & a, const \fBBitvector\fP & b)\fC [friend]\fP"
+
+.PP
+Test bitvectors for equality\&. never 
+.SS "bool \fBoperator!\fP= (const \fBBitvector\fP & a, const \fBBitvector\fP & b)\fC [friend]\fP"
+
+.PP
+Test bitvectors for inequality\&. 
+.SS "\fBBitvector\fP operator& (\fBBitvector\fP a, const \fBBitvector\fP & b)\fC [friend]\fP"
+
+.PP
+Return the bitwise and of two bitvectors\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIa\&.size()\fP == \fIb\&.size()\fP 
+.RE
+.PP
+
+.SS "\fBBitvector\fP operator| (\fBBitvector\fP a, const \fBBitvector\fP & b)\fC [friend]\fP"
+
+.PP
+Return the bitwise or of two bitvectors\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIa\&.size()\fP == \fIb\&.size()\fP 
+.RE
+.PP
+
+.SS "\fBBitvector\fP operator^ (\fBBitvector\fP a, const \fBBitvector\fP & b)\fC [friend]\fP"
+
+.PP
+Return the bitwise exclusive or of two bitvectors\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIa\&.size()\fP == \fIb\&.size()\fP 
+.RE
+.PP
+
+.SS "\fBBitvector\fP operator\- (\fBBitvector\fP a, const \fBBitvector\fP & b)\fC [friend]\fP"
+
+.PP
+Return the bitwise subtraction of two bitvectors\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIa\&.size()\fP == \fIb\&.size()\fP 
+.RE
+.PP
+\fCa - b\fP is equivalent to \fCa & ~b\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,215 @@
+.TH "List< T, member >::const_iterator" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+List< T, member >::const_iterator \- Const iterator type for \fBList\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <list\&.hh>\fP
+.PP
+Inherited by \fBList< T, member >::iterator\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef bool(const_iterator::* \fBunspecified_bool_type\fP) () const "
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBconst_iterator\fP ()"
+.br
+.RI "\fIConstruct an invalid iterator\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP (const T *x)"
+.br
+.RI "\fIConstruct an iterator pointing at \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP (const \fBList\fP< T, member > *list)"
+.br
+.RI "\fIConstruct an end iterator for \fIlist\fP\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP (const T *x, const \fBList\fP< T, member > *list)"
+.br
+.RI "\fIConstruct an iterator pointing at \fIx\fP in \fIlist\fP\&. \fP"
+.ti -1c
+.RI "\fBoperator unspecified_bool_type\fP () const "
+.br
+.RI "\fITest if this iterator points to a valid list element\&. \fP"
+.ti -1c
+.RI "bool \fBlive\fP () const "
+.br
+.RI "\fITest if this iterator points to a valid list element\&. \fP"
+.ti -1c
+.RI "const T * \fBget\fP () const "
+.br
+.RI "\fIReturn the current list element or null\&. \fP"
+.ti -1c
+.RI "const T * \fBoperator\->\fP () const "
+.br
+.RI "\fIReturn the current list element or null\&. \fP"
+.ti -1c
+.RI "const T & \fBoperator*\fP () const "
+.br
+.RI "\fIReturn the current list element\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP ()"
+.br
+.RI "\fIAdvance this iterator to the next element\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP (int)"
+.br
+.RI "\fIAdvance this iterator to the next element\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-\-\fP ()"
+.br
+.RI "\fIAdvance this iterator to the previous element\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-\-\fP (int)"
+.br
+.RI "\fIAdvance this iterator to the previous element\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP & \fBoperator+=\fP (int x)"
+.br
+.RI "\fIMove this iterator forward by \fIx\fP positions\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP & \fBoperator\-=\fP (int x)"
+.br
+.RI "\fIMove this iterator backward by \fIx\fP positions\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBoperator+\fP (int x) const "
+.br
+.RI "\fIReturn an iterator \fIx\fP positions ahead\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBoperator\-\fP (int x) const "
+.br
+.RI "\fIReturn an iterator \fIx\fP positions behind\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (\fBconst_iterator\fP x) const "
+.br
+.RI "\fITest if this iterator equals \fIx\fP\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (\fBconst_iterator\fP x) const "
+.br
+.RI "\fITest if this iterator does not equal \fIx\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T, List_member< T > T::* member>
+.br
+class List< T, member >::const_iterator"
+Const iterator type for \fBList\fP\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::const_iterator::const_iterator ()\fC [inline]\fP"
+
+.PP
+Construct an invalid iterator\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::const_iterator::const_iterator (const T * x)\fC [inline]\fP"
+
+.PP
+Construct an iterator pointing at \fIx\fP\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::const_iterator::const_iterator (const \fBList\fP< T, member > * list)\fC [inline]\fP"
+
+.PP
+Construct an end iterator for \fIlist\fP\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::const_iterator::const_iterator (const T * x, const \fBList\fP< T, member > * list)\fC [inline]\fP"
+
+.PP
+Construct an iterator pointing at \fIx\fP in \fIlist\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::const_iterator::operator unspecified_bool_type () const\fC [inline]\fP"
+
+.PP
+Test if this iterator points to a valid list element\&. 
+.SS "template<typename T, List_member< T > T::* member> bool \fBList\fP< T, member >::const_iterator::live () const\fC [inline]\fP"
+
+.PP
+Test if this iterator points to a valid list element\&. 
+.SS "template<typename T, List_member< T > T::* member> const T* \fBList\fP< T, member >::const_iterator::get () const\fC [inline]\fP"
+
+.PP
+Return the current list element or null\&. 
+.SS "template<typename T, List_member< T > T::* member> const T* \fBList\fP< T, member >::const_iterator::operator\-> () const\fC [inline]\fP"
+
+.PP
+Return the current list element or null\&. 
+.SS "template<typename T, List_member< T > T::* member> const T& \fBList\fP< T, member >::const_iterator::operator* () const\fC [inline]\fP"
+
+.PP
+Return the current list element\&. 
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::const_iterator::operator++ ()\fC [inline]\fP"
+
+.PP
+Advance this iterator to the next element\&. 
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::const_iterator::operator++ (int)\fC [inline]\fP"
+
+.PP
+Advance this iterator to the next element\&. 
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::const_iterator::operator\-\- ()\fC [inline]\fP"
+
+.PP
+Advance this iterator to the previous element\&. 
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::const_iterator::operator\-\- (int)\fC [inline]\fP"
+
+.PP
+Advance this iterator to the previous element\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBconst_iterator\fP& \fBList\fP< T, member >::const_iterator::operator+= (int x)\fC [inline]\fP"
+
+.PP
+Move this iterator forward by \fIx\fP positions\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+reference to this iterator 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This function takes O(abs(\fIx\fP)) time\&. 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> \fBconst_iterator\fP& \fBList\fP< T, member >::const_iterator::operator\-= (int x)\fC [inline]\fP"
+
+.PP
+Move this iterator backward by \fIx\fP positions\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+reference to this iterator 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This function takes O(abs(\fIx\fP)) time\&. 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> \fBconst_iterator\fP \fBList\fP< T, member >::const_iterator::operator+ (int x) const\fC [inline]\fP"
+
+.PP
+Return an iterator \fIx\fP positions ahead\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBconst_iterator\fP \fBList\fP< T, member >::const_iterator::operator\- (int x) const\fC [inline]\fP"
+
+.PP
+Return an iterator \fIx\fP positions behind\&. 
+.SS "template<typename T, List_member< T > T::* member> bool \fBList\fP< T, member >::const_iterator::operator== (\fBconst_iterator\fP x) const\fC [inline]\fP"
+
+.PP
+Test if this iterator equals \fIx\fP\&. 
+.SS "template<typename T, List_member< T > T::* member> bool \fBList\fP< T, member >::const_iterator::operator!= (\fBconst_iterator\fP x) const\fC [inline]\fP"
+
+.PP
+Test if this iterator does not equal \fIx\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

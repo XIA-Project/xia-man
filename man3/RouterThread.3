@@ -1,0 +1,191 @@
+.TH "RouterThread" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+RouterThread \- A set of Tasks scheduled on the same CPU\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBTHREAD_QUIESCENT\fP = -1, \fBTHREAD_UNKNOWN\fP = -1000 }"
+.br
+.ti -1c
+.RI "enum { \fBS_PAUSED\fP, \fBS_BLOCKED\fP, \fBS_TIMERWAIT\fP, \fBS_LOCKSELECT\fP, \fBS_LOCKTASKS\fP, \fBS_RUNTASK\fP, \fBS_RUNTIMER\fP, \fBS_RUNSIGNAL\fP, \fBS_RUNPENDING\fP, \fBS_RUNSELECT\fP, \fBNSTATES\fP }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBthread_id\fP () const "
+.br
+.RI "\fIReturns this thread's ID\&. \fP"
+.ti -1c
+.RI "Master * \fBmaster\fP () const "
+.br
+.RI "\fIReturns this thread's associated Master\&. \fP"
+.ti -1c
+.RI "TimerSet & \fBtimer_set\fP ()"
+.br
+.ti -1c
+.RI "const TimerSet & \fBtimer_set\fP () const "
+.br
+.ti -1c
+.RI "SelectSet & \fBselect_set\fP ()"
+.br
+.ti -1c
+.RI "const SelectSet & \fBselect_set\fP () const "
+.br
+.ti -1c
+.RI "bool \fBactive\fP () const "
+.br
+.RI "\fIReturns whether any tasks are scheduled\&. \fP"
+.ti -1c
+.RI "\fBTask\fP * \fBtask_begin\fP () const "
+.br
+.RI "\fIReturns the beginning of the scheduled task list\&. \fP"
+.ti -1c
+.RI "\fBTask\fP * \fBtask_next\fP (\fBTask\fP *task) const "
+.br
+.RI "\fIReturns the task following \fItask\fP in the scheduled task list\&. \fP"
+.ti -1c
+.RI "\fBTask\fP * \fBtask_end\fP () const "
+.br
+.RI "\fIReturns the end of the scheduled task list\&. \fP"
+.ti -1c
+.RI "void \fBscheduled_tasks\fP (\fBRouter\fP *router, \fBVector\fP< \fBTask\fP * > &x)"
+.br
+.ti -1c
+.RI "void \fBlock_tasks\fP ()"
+.br
+.ti -1c
+.RI "void \fBunlock_tasks\fP ()"
+.br
+.ti -1c
+.RI "void \fBschedule_block_tasks\fP ()"
+.br
+.ti -1c
+.RI "void \fBblock_tasks\fP (bool scheduled)"
+.br
+.ti -1c
+.RI "void \fBunblock_tasks\fP ()"
+.br
+.ti -1c
+.RI "bool \fBstop_flag\fP () const "
+.br
+.ti -1c
+.RI "void \fBdriver\fP ()"
+.br
+.ti -1c
+.RI "void \fBkill_router\fP (\fBRouter\fP *router)"
+.br
+.ti -1c
+.RI "bool \fBgreedy\fP () const "
+.br
+.ti -1c
+.RI "void \fBset_greedy\fP (bool g)"
+.br
+.ti -1c
+.RI "void \fBwake\fP ()"
+.br
+.ti -1c
+.RI "void \fBrun_signals\fP ()"
+.br
+.ti -1c
+.RI "void \fBset_thread_state\fP (int state)"
+.br
+.ti -1c
+.RI "void \fBset_thread_state_for_blocking\fP (int delay_type)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "unsigned \fB_tasks_per_iter\fP"
+.br
+.ti -1c
+.RI "unsigned \fB_iters_per_os\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A set of Tasks scheduled on the same CPU\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "int RouterThread::thread_id () const\fC [inline]\fP"
+
+.PP
+Returns this thread's ID\&. The result is >= 0 for true threads, and < 0 for threads that never run any of their associated Tasks\&. 
+.SS "Master * RouterThread::master () const\fC [inline]\fP"
+
+.PP
+Returns this thread's associated Master\&. 
+.SS "bool RouterThread::active () const\fC [inline]\fP"
+
+.PP
+Returns whether any tasks are scheduled\&. Returns false iff no tasks are scheduled and no events are pending\&. Since not all events actually matter (for example, a \fBTask\fP might have been scheduled and then subsequently unscheduled), \fBactive()\fP may temporarily return true even when no real events are outstanding\&. 
+.SS "\fBTask\fP * RouterThread::task_begin () const\fC [inline]\fP"
+
+.PP
+Returns the beginning of the scheduled task list\&. Each \fBRouterThread\fP maintains a list of all currently-scheduled tasks\&. Elements may traverse this list with the \fBtask_begin()\fP, \fBtask_next()\fP, and \fBtask_end()\fP functions, using iterator-like code such as:
+.PP
+.PP
+.nf
+thread->lock_tasks();
+for (Task *t = thread->task_begin();
+     t != thread->task_end();
+     t = thread->task_next(t)) {
+    // \&.\&.\&. do something with t\&.\&.\&.
+}
+thread->unlock_tasks();
+.fi
+.PP
+.PP
+The thread's task lock must be held during the traversal, as shown above\&.
+.PP
+The return value may not be a real task\&. Test it against \fBtask_end()\fP before use\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtask_next\fP, \fBtask_end\fP, lock_tasks, unlock_tasks 
+.RE
+.PP
+
+.SS "\fBTask\fP * RouterThread::task_next (\fBTask\fP * task) const\fC [inline]\fP"
+
+.PP
+Returns the task following \fItask\fP in the scheduled task list\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItask\fP the current task
+.RE
+.PP
+The return value may not be a real task\&. Test it against \fBtask_end()\fP before use\&. However, the \fItask\fP argument must be a real task; do not attempt to call task_next(task_end())\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtask_begin\fP for usage, \fBtask_end\fP 
+.RE
+.PP
+
+.SS "\fBTask\fP * RouterThread::task_end () const\fC [inline]\fP"
+
+.PP
+Returns the end of the scheduled task list\&. The return value is not a real task\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtask_begin\fP for usage, \fBtask_next\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

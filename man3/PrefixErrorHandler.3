@@ -1,0 +1,87 @@
+.TH "PrefixErrorHandler" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+PrefixErrorHandler \- A stackable \fBErrorHandler\fP that adds a prefix to error messages\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <error\&.hh>\fP
+.PP
+Inherits \fBErrorVeneer\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBPrefixErrorHandler\fP (\fBErrorHandler\fP *errh, const \fBString\fP &prefix)"
+.br
+.RI "\fIConstruct a \fBPrefixErrorHandler\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBdecorate\fP (const \fBString\fP &str)"
+.br
+.RI "\fIDecorate an error message\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+A stackable \fBErrorHandler\fP that adds a prefix to error messages\&. 
+
+The stackable \fBContextErrorHandler\fP adds a prefix to every error line printed\&. For example: 
+.PP
+.nf
+FileErrorHandler errh1(stderr);
+PrefixErrorHandler errh2(&errh1, "Blah--");
+errh2\&.error("An error occurred\&.");
+errh2\&.error("Another error occurred\&.");
+    // prints "Blah--An error occurred\&.\n"
+    //        "Blah--Another error occurred\&.\n"
+
+.fi
+.PP
+ 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "PrefixErrorHandler::PrefixErrorHandler (\fBErrorHandler\fP * errh, const \fBString\fP & prefix)"
+
+.PP
+Construct a \fBPrefixErrorHandler\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP base \fBErrorHandler\fP 
+.br
+\fIprefix\fP string to prefix to error lines 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBString\fP PrefixErrorHandler::decorate (const \fBString\fP & str)\fC [virtual]\fP"
+
+.PP
+Decorate an error message\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP error message, possibly with annotations 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+decorated error message
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+This virtual function is called to decorate an error message before it is emitted\&. The input \fIstr\fP is an error message string, possibly annotated\&. The default implementation returns \fIstr\fP unchanged\&. Other ErrorHandlers might add context lines (\fBContextErrorHandler\fP), prefixes (\fBPrefixErrorHandler\fP), or a default landmark (\fBLandmarkErrorHandler\fP)\&. 
+.PP
+Reimplemented from \fBErrorVeneer\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

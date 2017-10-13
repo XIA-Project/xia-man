@@ -1,0 +1,88 @@
+.TH "Spinlock" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Spinlock \- A recursive spinlock for SMP Click threads\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <sync\&.hh>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSpinlock\fP ()"
+.br
+.RI "\fICreate a \fBSpinlock\fP\&. \fP"
+.ti -1c
+.RI "void \fBacquire\fP ()"
+.br
+.RI "\fIAcquires the \fBSpinlock\fP\&. \fP"
+.ti -1c
+.RI "void \fBrelease\fP ()"
+.br
+.RI "\fIReleases the \fBSpinlock\fP\&. \fP"
+.ti -1c
+.RI "bool \fBattempt\fP ()"
+.br
+.RI "\fIAttempts to acquire the \fBSpinlock\fP\&. \fP"
+.ti -1c
+.RI "bool \fBnested\fP () const "
+.br
+.RI "\fIReturns true iff the \fBSpinlock\fP has been acquired more than once by the current thread\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A recursive spinlock for SMP Click threads\&. 
+
+The \fBSpinlock\fP class abstracts a recursive spinlock, or polling mutex, in SMP Click\&. This is a type of mutual-exclusion lock in which acquiring the lock is a polling operation (basically a 'while (lock\&.acquired()) do nothing;' loop)\&. Spinlocks can be used to synchronize access to shared data among multiple Click SMP threads\&. Spinlocks should not be held for long periods of time: use them for quick updates and such\&.
+.PP
+\fBSpinlock\fP operations do nothing unless Click was compiled with SMP support (with --enable-multithread)\&. Therefore, \fBSpinlock\fP should not be used to, for example, synchronize handlers with main element threads\&. See also \fBSpinlockIRQ\fP\&.
+.PP
+The main \fBSpinlock\fP operations are \fBacquire()\fP, which acquires the lock, and \fBrelease()\fP, which releases the lock\&. \fBattempt()\fP acquires the lock only if it can be acquired instantaneously\&.
+.PP
+It is OK for a thread to acquire a lock it has already acquired, but you must release it as many times as you have acquired it\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSimpleSpinlock\fP, \fBSpinlockIRQ\fP 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Spinlock::Spinlock ()\fC [inline]\fP"
+
+.PP
+Create a \fBSpinlock\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "void Spinlock::acquire ()\fC [inline]\fP"
+
+.PP
+Acquires the \fBSpinlock\fP\&. On return, this thread has acquired the lock\&. The function will spin indefinitely until the lock is acquired\&. It is OK to acquire a lock you have already acquired, but you must release it as many times as you have acquired it\&. 
+.SS "void Spinlock::release ()\fC [inline]\fP"
+
+.PP
+Releases the \fBSpinlock\fP\&. The \fBSpinlock\fP must have been previously acquired by either \fBSpinlock::acquire\fP or \fBSpinlock::attempt\fP\&. 
+.SS "bool Spinlock::attempt ()\fC [inline]\fP"
+
+.PP
+Attempts to acquire the \fBSpinlock\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+True iff the \fBSpinlock\fP was acquired\&.
+.RE
+.PP
+This function will acquire the lock and return true only if the \fBSpinlock\fP can be acquired right away, without retries\&. 
+.SS "bool Spinlock::nested () const\fC [inline]\fP"
+
+.PP
+Returns true iff the \fBSpinlock\fP has been acquired more than once by the current thread\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

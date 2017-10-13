@@ -1,0 +1,447 @@
+.TH "TokenCounterX< R >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+TokenCounterX< R > \- Token bucket counter template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <click/tokenbucket\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBmax_tokens\fP = R::max_tokens }"
+.br
+.ti -1c
+.RI "typedef R \fBrate_type\fP"
+.br
+.RI "\fIThe token rate type\&. \fP"
+.ti -1c
+.RI "typedef R::token_type \fBtoken_type\fP"
+.br
+.RI "\fIUnsigned type of token counts\&. \fP"
+.ti -1c
+.RI "typedef R::time_point_type \fBtime_point_type\fP"
+.br
+.RI "\fIType of time points\&. \fP"
+.ti -1c
+.RI "typedef R::ticks_type \fBticks_type\fP"
+.br
+.RI "\fIUnsigned type of tick counts (differences between time points)\&. \fP"
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTokenCounterX\fP ()"
+.br
+.RI "\fIConstruct an empty \fBTokenCounter\fP\&. \fP"
+.ti -1c
+.RI "\fBTokenCounterX\fP (bool \fBfull\fP)"
+.br
+.RI "\fIConstruct a \fBTokenCounter\fP\&. \fP"
+.ti -1c
+.RI "\fBtoken_type\fP \fBsize\fP (const \fBrate_type\fP &rate) const "
+.br
+.RI "\fIReturn the number of tokens in the counter\&. \fP"
+.ti -1c
+.RI "\fBtoken_type\fP \fBfraction\fP () const "
+.br
+.RI "\fIReturn the counter's fullness fraction\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fITest if the token counter is completely empty\&. \fP"
+.ti -1c
+.RI "bool \fBfull\fP () const "
+.br
+.RI "\fITest if the token counter is at full capacity\&. \fP"
+.ti -1c
+.RI "bool \fBcontains\fP (const \fBrate_type\fP &rate, \fBtoken_type\fP t) const "
+.br
+.RI "\fITest if the token counter has at least \fIt\fP tokens\&. \fP"
+.ti -1c
+.RI "bool \fBcontains_fraction\fP (\fBtoken_type\fP f) const "
+.br
+.RI "\fITest if the token counter is above a fraction of its capacity\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIClear the token counter\&. \fP"
+.ti -1c
+.RI "void \fBset_full\fP ()"
+.br
+.RI "\fIFill the token counter to capacity\&. \fP"
+.ti -1c
+.RI "void \fBset\fP (const \fBrate_type\fP &rate, \fBtoken_type\fP t)"
+.br
+.RI "\fISet the token counter to contain \fIt\fP tokens\&. \fP"
+.ti -1c
+.RI "void \fBset_fraction\fP (\fBtoken_type\fP f)"
+.br
+.RI "\fISet the token counter to a fraction of its capacity\&. \fP"
+.ti -1c
+.RI "void \fBadjust\fP (const \fBrate_type\fP &old_rate, const \fBrate_type\fP &new_rate)"
+.br
+.RI "\fICompensate the counter for a change of rate\&. \fP"
+.ti -1c
+.RI "void \fBrefill\fP (const \fBrate_type\fP &rate)"
+.br
+.RI "\fIRefill the token counter to time \fIrate\&.now()\fP\&. \fP"
+.ti -1c
+.RI "void \fBrefill\fP (const \fBrate_type\fP &rate, \fBtime_point_type\fP time)"
+.br
+.RI "\fIRefill the token counter for \fItime\fP\&. \fP"
+.ti -1c
+.RI "template<typename U > void \fBrefill\fP (const \fBrate_type\fP &rate, U time)"
+.br
+.RI "\fIRefill the token counter for \fItime\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_time_point\fP (\fBtime_point_type\fP time)"
+.br
+.RI "\fISet the token counter's internal time point to \fItime\fP\&. \fP"
+.ti -1c
+.RI "void \fBremove\fP (const \fBrate_type\fP &rate, \fBtoken_type\fP t)"
+.br
+.RI "\fIRemove \fIt\fP tokens from the counter\&. \fP"
+.ti -1c
+.RI "bool \fBremove_if\fP (const \fBrate_type\fP &rate, \fBtoken_type\fP t)"
+.br
+.RI "\fIRemove \fIt\fP tokens from the counter if it contains \fIt\fP tokens\&. \fP"
+.ti -1c
+.RI "void \fBremove_fraction\fP (\fBtoken_type\fP f)"
+.br
+.RI "\fIRemove a fullness fraction from the counter\&. \fP"
+.ti -1c
+.RI "bool \fBremove_fraction_if\fP (\fBtoken_type\fP f)"
+.br
+.RI "\fIRemove a fullness fraction from the counter if it is full enough\&. \fP"
+.ti -1c
+.RI "\fBticks_type\fP \fBtime_until_contains\fP (const \fBrate_type\fP &rate, \fBtoken_type\fP t) const "
+.br
+.RI "\fIReturn the number of ticks until contains(\fIrate\fP, \fIt\fP)\&. \fP"
+.ti -1c
+.RI "\fBticks_type\fP \fBtime_until_contains_fraction\fP (const \fBrate_type\fP &rate, \fBtoken_type\fP f) const "
+.br
+.RI "\fIReturn the number of ticks until contains_fraction(\fIf\fP)\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename R>
+.br
+class TokenCounterX< R >"
+Token bucket counter template\&. 
+
+never never The \fBTokenCounterX\fP class implements a token counter associated with a token bucket rate\&. The rate type, normally a \fBTokenRateX\fP, is specified as a template parameter\&. Most of its member functions take an explicit rate argument\&. The \fBcontains()\fP method reports whether the counter has at least a given number of tokens\&. The counter is emptied by the \fBremove()\fP and \fBremove_if()\fP methods and refilled by the \fBrefill()\fP methods\&.
+.PP
+Often the token rate associated with a counter will not change during the counter's lifetime\&. \fBTokenCounterX\fP will work correctly if the rate changes, however\&. (See the \fBadjust()\fP method for details\&.)
+.PP
+\fBTokenCounterX\fP internally maintains fractional tokens, so it should be relatively precise\&.
+.PP
+Idle and unlimited rates affect how TokenCounters are refilled\&. For idle rates, \fBrefill()\fP is a no-op\&. For unlimited rates, any \fBrefill()\fP makes the counter \fBfull()\fP, containing max_tokens tokens\&. The \fBset()\fP, \fBempty()\fP, \fBfull()\fP, \fBremove()\fP, and similar functions act as normal for idle and unlimited rates\&.
+.PP
+Most users will be satisfied with the \fBTokenCounter\fP type, which is equal to \fBTokenCounterX\fP<\fBTokenRateX\fP<TokenBucketJiffyParameters<unsigned> > >\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBTokenRateX\fP, \fBTokenBucketX\fP 
+.RE
+.PP
+
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<typename R> typedef R \fBTokenCounterX\fP< R >::\fBrate_type\fP"
+
+.PP
+The token rate type\&. 
+.SS "template<typename R> typedef R::token_type \fBTokenCounterX\fP< R >::\fBtoken_type\fP"
+
+.PP
+Unsigned type of token counts\&. 
+.SS "template<typename R> typedef R::time_point_type \fBTokenCounterX\fP< R >::\fBtime_point_type\fP"
+
+.PP
+Type of time points\&. 
+.SS "template<typename R> typedef R::ticks_type \fBTokenCounterX\fP< R >::\fBticks_type\fP"
+
+.PP
+Unsigned type of tick counts (differences between time points)\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename R> \fBTokenCounterX\fP< R >::\fBTokenCounterX\fP ()\fC [inline]\fP"
+
+.PP
+Construct an empty \fBTokenCounter\fP\&. The initial time point is 0\&. 
+.SS "template<typename R> \fBTokenCounterX\fP< R >::\fBTokenCounterX\fP (bool full)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct a \fBTokenCounter\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfull\fP whether the counter is created full
+.RE
+.PP
+The counter is initially \fBfull()\fP if \fIfull\fP is true, otherwise it is empty\&. The initial time point is 0\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename R> \fBtoken_type\fP \fBTokenCounterX\fP< R >::size (const \fBrate_type\fP & rate) const\fC [inline]\fP"
+
+.PP
+Return the number of tokens in the counter\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate
+.RE
+.PP
+The return value is a lower bound on the number of tokens, since \fBTokenCounterX\fP keeps track of fractional tokens\&. 
+.SS "template<typename R> \fBtoken_type\fP \fBTokenCounterX\fP< R >::fraction () const\fC [inline]\fP"
+
+.PP
+Return the counter's fullness fraction\&. The return value is a number between 0 and max_tokens, where max_tokens represents full capacity\&. 
+.SS "template<typename R> bool \fBTokenCounterX\fP< R >::empty () const\fC [inline]\fP"
+
+.PP
+Test if the token counter is completely empty\&. 
+.SS "template<typename R> bool \fBTokenCounterX\fP< R >::full () const\fC [inline]\fP"
+
+.PP
+Test if the token counter is at full capacity\&. 
+.SS "template<typename R> bool \fBTokenCounterX\fP< R >::contains (const \fBrate_type\fP & rate, \fBtoken_type\fP t) const\fC [inline]\fP"
+
+.PP
+Test if the token counter has at least \fIt\fP tokens\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate 
+.br
+\fIt\fP token count
+.RE
+.PP
+Returns false whenever \fIt\fP is greater than \fIrate\fP\&.\fBcapacity()\fP\&. 
+.SS "template<typename R> bool \fBTokenCounterX\fP< R >::contains_fraction (\fBtoken_type\fP f) const\fC [inline]\fP"
+
+.PP
+Test if the token counter is above a fraction of its capacity\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIf\fP fullness fraction, where max_tokens is full capacity 
+.RE
+.PP
+
+.SS "template<typename R> void \fBTokenCounterX\fP< R >::clear ()\fC [inline]\fP"
+
+.PP
+Clear the token counter\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset()\fP, \fBset_full()\fP 
+.RE
+.PP
+
+.SS "template<typename R> void \fBTokenCounterX\fP< R >::set_full ()\fC [inline]\fP"
+
+.PP
+Fill the token counter to capacity\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBclear()\fP, \fBset()\fP 
+.RE
+.PP
+
+.SS "template<typename R> void \fBTokenCounterX\fP< R >::set (const \fBrate_type\fP & rate, \fBtoken_type\fP t)\fC [inline]\fP"
+
+.PP
+Set the token counter to contain \fIt\fP tokens\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate 
+.br
+\fIt\fP number of tokens
+.RE
+.PP
+The result will never have more tokens than the associated capacity\&. 
+.SS "template<typename R> void \fBTokenCounterX\fP< R >::set_fraction (\fBtoken_type\fP f)\fC [inline]\fP"
+
+.PP
+Set the token counter to a fraction of its capacity\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIf\fP fullness fraction, where max_tokens is full capacity 
+.RE
+.PP
+
+.SS "template<typename R> void \fBTokenCounterX\fP< R >::adjust (const \fBrate_type\fP & old_rate, const \fBrate_type\fP & new_rate)\fC [inline]\fP"
+
+.PP
+Compensate the counter for a change of rate\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIold_rate\fP old associated token rate 
+.br
+\fInew_rate\fP new associated token rate
+.RE
+.PP
+\fBTokenCounterX\fP's internal representation stores the token count as a fraction of the rate's capacity\&. This means that if you change the associated rate to have a different capacity, the token count will appear to change\&. To keep the token count roughly the same, call \fBadjust()\fP with the old and new rates; \fBTokenCounterX\fP will as far as possible compensate for the rate change\&. 
+.SS "template<typename R > void \fBTokenCounterX\fP< R >::refill (const \fBrate_type\fP & rate)"
+
+.PP
+Refill the token counter to time \fIrate\&.now()\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate
+.RE
+.PP
+There are three \fBrefill()\fP methods, useful for different methods of measuring time\&. This method calls \fIrate\&.now()\fP, which returns the current time\&. Other methods use an explicit time point and a \fIrate\&.time_point(U)\fP method\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_time_point\fP 
+.RE
+.PP
+
+.SS "template<typename R > void \fBTokenCounterX\fP< R >::refill (const \fBrate_type\fP & rate, \fBtime_point_type\fP time)"
+
+.PP
+Refill the token counter for \fItime\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate 
+.br
+\fItime\fP new time point 
+.RE
+.PP
+
+.SS "template<typename R > template<typename U > void \fBTokenCounterX\fP< R >::refill (const \fBrate_type\fP & rate, U time)"
+
+.PP
+Refill the token counter for \fItime\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate 
+.br
+\fItime\fP new time 
+.RE
+.PP
+
+.SS "template<typename R> void \fBTokenCounterX\fP< R >::set_time_point (\fBtime_point_type\fP time)\fC [inline]\fP"
+
+.PP
+Set the token counter's internal time point to \fItime\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItime\fP new time point
+.RE
+.PP
+Unlike \fBrefill()\fP, this method does not refill the counter\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBrefill\fP 
+.RE
+.PP
+
+.SS "template<typename R> void \fBTokenCounterX\fP< R >::remove (const \fBrate_type\fP & rate, \fBtoken_type\fP t)\fC [inline]\fP"
+
+.PP
+Remove \fIt\fP tokens from the counter\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate 
+.br
+\fIt\fP number of tokens
+.RE
+.PP
+If the token counter contains less than \fIt\fP tokens, the new token count is 0\&. 
+.SS "template<typename R> bool \fBTokenCounterX\fP< R >::remove_if (const \fBrate_type\fP & rate, \fBtoken_type\fP t)\fC [inline]\fP"
+
+.PP
+Remove \fIt\fP tokens from the counter if it contains \fIt\fP tokens\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate 
+.br
+\fIt\fP number of tokens 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true if \fIt\fP tokens were removed, false otherwise
+.RE
+.PP
+If the counter contains \fIt\fP or more tokens, calls remove(\fIt\fP) and returns true\&. If it contains less than \fIt\fP tokens, returns false without removing any tokens\&. 
+.SS "template<typename R> void \fBTokenCounterX\fP< R >::remove_fraction (\fBtoken_type\fP f)\fC [inline]\fP"
+
+.PP
+Remove a fullness fraction from the counter\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIf\fP fullness fraction, where max_tokens is full capacity
+.RE
+.PP
+If the token counter is less than \fIf\fP full, the new token count is 0\&. 
+.SS "template<typename R> bool \fBTokenCounterX\fP< R >::remove_fraction_if (\fBtoken_type\fP f)\fC [inline]\fP"
+
+.PP
+Remove a fullness fraction from the counter if it is full enough\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIf\fP fullness fraction, where max_tokens is full capacity 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true if \fIf\fP was removed, false otherwise
+.RE
+.PP
+If \fBfraction()\fP is at least \fIf\fP, calls remove_fraction(\fIf\fP) and returns true\&. Otherwise, returns false without removing any tokens\&. 
+.SS "template<typename R> \fBticks_type\fP \fBTokenCounterX\fP< R >::time_until_contains (const \fBrate_type\fP & rate, \fBtoken_type\fP t) const\fC [inline]\fP"
+
+.PP
+Return the number of ticks until contains(\fIrate\fP, \fIt\fP)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate 
+.br
+\fIt\fP token count
+.RE
+.PP
+Returns (ticks_type) -1 if passing time will never make \fBcontains(\fIrate\fP, \fIt\fP)\fP true\&. 
+.SS "template<typename R> \fBticks_type\fP \fBTokenCounterX\fP< R >::time_until_contains_fraction (const \fBrate_type\fP & rate, \fBtoken_type\fP f) const\fC [inline]\fP"
+
+.PP
+Return the number of ticks until contains_fraction(\fIf\fP)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrate\fP associated token rate 
+.br
+\fIf\fP fullness fraction, where max_tokens is full capacity
+.RE
+.PP
+Returns (ticks_type) -1 if passing time will never make \fBcontains_fraction(\fIf\fP)\fP true\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

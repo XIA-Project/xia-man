@@ -1,0 +1,160 @@
+.TH "ContextErrorHandler" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ContextErrorHandler \- A stackable \fBErrorHandler\fP that prints context lines\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <error\&.hh>\fP
+.PP
+Inherits \fBErrorVeneer\fP\&.
+.PP
+Inherited by Router::RouterContextErrh\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBContextErrorHandler\fP (\fBErrorHandler\fP *errh, const char *fmt,\&.\&.\&.)"
+.br
+.RI "\fIConstruct a \fBContextErrorHandler\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcontext_printed\fP () const "
+.br
+.RI "\fIReturn true iff the context has already been printed\&. \fP"
+.ti -1c
+.RI "void \fBset_context_printed\fP (bool x)"
+.br
+.RI "\fISet whether the context has been printed\&. \fP"
+.ti -1c
+.RI "void \fBset_context\fP (const \fBString\fP &str)"
+.br
+.RI "\fISet the context string to \fIstr\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_indent\fP (const \fBString\fP &str)"
+.br
+.RI "\fISet the indent string to \fIstr\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_context_landmark\fP (const \fBString\fP &str)"
+.br
+.RI "\fISet the context landmark to \fIstr\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBdecorate\fP (const \fBString\fP &str)"
+.br
+.RI "\fIDecorate an error message\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+A stackable \fBErrorHandler\fP that prints context lines\&. 
+
+The stackable \fBContextErrorHandler\fP adds context to the first error message printed, and optionally indent error messages so that they appear grouped underneath the context\&. 
+.PP
+.nf
+FileErrorHandler errh1(stderr);
+ContextErrorHandler errh2(&errh1, "While counting to 2:");
+errh2\&.error("An error occurred\&.");
+errh2\&.error("Another error occurred\&.");
+    // prints "While counting to 2:\n"
+    //        "  An error occurred\&.\n"
+    //        "  Another error occurred\&.\n"
+
+.fi
+.PP
+.PP
+To prevent \fBContextErrorHandler\fP from indenting or printing context for a message, add a '{context:no}' annotation to the message's first line\&. To turn off the indent but keep the context, add a '{context:noindent}' annotation\&. 
+.PP
+.nf
+FileErrorHandler errh1(stderr);
+ContextErrorHandler errh2(&errh1, "While counting to 2:");
+errh2\&.error("{context:no}An error occurred\&.");
+errh2\&.error("Another error occurred\&.");
+    // prints "An error occurred\&.\n"
+    //        "While counting to 2:\n"
+    //        "  Another error occurred\&.\n"
+
+FileErrorHandler errh1(stderr);
+PrefixErrorHandler noctx_errh(stderr, "{context:no}");
+ContextErrorHandler errh2(&errh1, "While counting to 2:");
+errh2\&.error("An error occurred\&.");
+errh2\&.error("Another error occurred\&.");
+    // prints "An error occurred\&.\n"
+    //        "Another error occurred\&.\n"
+
+.fi
+.PP
+.PP
+\fBContextErrorHandler\fP adds the '{context:context}' annotation to context lines\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ContextErrorHandler::ContextErrorHandler (\fBErrorHandler\fP * errh, const char * fmt,  \&.\&.\&.)"
+
+.PP
+Construct a \fBContextErrorHandler\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP base \fBErrorHandler\fP 
+.br
+\fIfmt\fP format for context lines
+.RE
+.PP
+The context message is formed by \fIerrh->\fBformat()\fP\fP using \fIfmt\fP and any additional arguments\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool ContextErrorHandler::context_printed () const\fC [inline]\fP"
+
+.PP
+Return true iff the context has already been printed\&. 
+.SS "void ContextErrorHandler::set_context_printed (bool x)\fC [inline]\fP"
+
+.PP
+Set whether the context has been printed\&. 
+.SS "void ContextErrorHandler::set_context (const \fBString\fP & str)\fC [inline]\fP"
+
+.PP
+Set the context string to \fIstr\fP\&. 
+.SS "void ContextErrorHandler::set_indent (const \fBString\fP & str)\fC [inline]\fP"
+
+.PP
+Set the indent string to \fIstr\fP\&. The indent string is prepended to all non-context messages\&. It can contain landmarks as well as non-landmark text\&. The default indent string is '  ' (two spaces)\&. 
+.SS "void ContextErrorHandler::set_context_landmark (const \fBString\fP & str)\fC [inline]\fP"
+
+.PP
+Set the context landmark to \fIstr\fP\&. The context landmark is used to decorate the context, and also applied to any error messages that lack landmarks of their own\&. The default context landmark is empty\&.
+.PP
+\fBNote:\fP
+.RS 4
+The input \fIstr\fP is passed to \fBErrorHandler::make_landmark_anno()\fP\&. 
+.RE
+.PP
+
+.SS "\fBString\fP ContextErrorHandler::decorate (const \fBString\fP & str)\fC [virtual]\fP"
+
+.PP
+Decorate an error message\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP error message, possibly with annotations 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+decorated error message
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+This virtual function is called to decorate an error message before it is emitted\&. The input \fIstr\fP is an error message string, possibly annotated\&. The default implementation returns \fIstr\fP unchanged\&. Other ErrorHandlers might add context lines (\fBContextErrorHandler\fP), prefixes (\fBPrefixErrorHandler\fP), or a default landmark (\fBLandmarkErrorHandler\fP)\&. 
+.PP
+Reimplemented from \fBErrorVeneer\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

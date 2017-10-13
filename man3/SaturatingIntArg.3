@@ -1,0 +1,40 @@
+.TH "SaturatingIntArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SaturatingIntArg \- Parser class for integers with saturating overflow\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <args\&.hh>\fP
+.PP
+Inherits \fBIntArg\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSaturatingIntArg\fP (int b=0)"
+.br
+.ti -1c
+.RI "template<typename V > bool \fBparse\fP (const \fBString\fP &str, V &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Parser class for integers with saturating overflow\&. 
+
+\fBSaturatingIntArg\fP(\fIbase\fP) is like \fBIntArg\fP(\fIbase\fP), but integer overflow is not an error; instead, the closest representable value is returned\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBIntArg\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

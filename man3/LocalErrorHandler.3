@@ -1,0 +1,47 @@
+.TH "LocalErrorHandler" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+LocalErrorHandler \- A convenience stackable \fBErrorHandler\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <error\&.hh>\fP
+.PP
+Inherits \fBErrorVeneer\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBLocalErrorHandler\fP (\fBErrorHandler\fP *errh)"
+.br
+.RI "\fIConstruct a \fBLocalErrorHandler\fP\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+A convenience stackable \fBErrorHandler\fP\&. 
+
+It's often convenient to pass a null \fBErrorHandler\fP pointer when errors should not be printed\&. The \fBLocalErrorHandler\fP class simplifies dealing with \fBErrorHandler\fP pointers that may or may not be null\&. \fBLocalErrorHandler\fP is a transparent layer on the base handler; but if the base handler is null, it acts like a \fBSilentErrorHandler\fP\&. For example: 
+.PP
+.nf
+void f(ErrorHandler *errh) {   // errh might or might not be null
+    LocalErrorHandler lerrh(errh);
+    \&.\&.\&. lerrh\&.message("message") \&.\&.\&.
+}
+
+.fi
+.PP
+ 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "LocalErrorHandler::LocalErrorHandler (\fBErrorHandler\fP * errh)\fC [inline]\fP"
+
+.PP
+Construct a \fBLocalErrorHandler\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

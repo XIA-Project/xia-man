@@ -1,0 +1,183 @@
+.TH "RateEWMAX< P >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+RateEWMAX< P > \- An exponentially weighted moving average used to measure a rate\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <click/ewma\&.hh>\fP
+.PP
+Inherits P\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef P::value_type \fBvalue_type\fP"
+.br
+.ti -1c
+.RI "typedef P::signed_value_type \fBsigned_value_type\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBRateEWMAX\fP ()"
+.br
+.RI "\fICreate a rate EWMA with initial value(s) 0\&. \fP"
+.ti -1c
+.RI "signed_value_type \fBscaled_average\fP (unsigned ratenum=0) const "
+.br
+.RI "\fIReturn the current scaled moving average\&. \fP"
+.ti -1c
+.RI "unsigned \fBscale\fP (unsigned ratenum=0) const "
+.br
+.RI "\fIReturns one of the average's scaling factors (bits of fraction)\&. \fP"
+.ti -1c
+.RI "int \fBrate\fP (unsigned ratenum=0) const "
+.br
+.RI "\fIReturn the current rate in samples per second\&. \fP"
+.ti -1c
+.RI "void \fBupdate\fP (signed_value_type delta, unsigned ratenum=0)"
+.br
+.RI "\fIUpdate the sample count for the current epoch\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse_rate\fP (unsigned ratenum=0) const "
+.br
+.RI "\fIUnparse the current average into a \fBString\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename P>
+.br
+class RateEWMAX< P >"
+An exponentially weighted moving average used to measure a rate\&. 
+
+The \fBRateEWMAX\fP template class represents an exponentially weighted moving average that measures a \fIrate\fP: a count of events per unit time\&. The average starts out with value 0\&.
+.PP
+\fBRateEWMAX\fP adds to \fBDirectEWMAX\fP a concept of epochs, which are periods of time\&. A \fBRateEWMAX\fP object collects samples over the current epoch\&. When the epoch closes, the collected sample count is used to update the moving average\&. Thus, the moving average is measured in samples per epoch\&. The \fBrate()\fP and \fBunparse_rate()\fP member functions return the rate in samples per \fIsecond\fP, rather than per epoch\&. These functions use the epoch frequency to translate between epochs and seconds\&.
+.PP
+Note that it often makes sense to call \fBupdate()\fP before calling \fBscaled_average()\fP, \fBrate()\fP, or \fBunparse_rate()\fP, in case an epoch or two has passed and the average should take account of passing time\&.
+.PP
+The template parameter P defines the EWMA parameters required by \fBDirectEWMAX\fP, and three others: a rate count, an epoch measurement, and an epoch frequency\&.
+.PP
+The rate count is the number of rates measured per object\&. Usually it is 1\&.
+.PP
+The epoch measurement is a function that returns the current epoch as an unsigned number\&. Epochs should increase monotonically\&.
+.PP
+The epoch frequency is the number of epochs per second, and is only used by \fBrate()\fP and \fBunparse_rate()\fP\&.
+.PP
+These are defined by:
+.PP
+.IP "\fB\fBP::rate_count\fP \fP" 1c
+The rate count, as a static constant (for example, defined by an enum)\&.
+.PP
+.IP "\fB\fBunsigned P::epoch()\fP \fP" 1c
+This function returns the current epoch number\&.
+.PP
+.IP "\fB\fBunsigned P::epoch_frequency()\fP \fP" 1c
+This function returns the number of epochs per second\&. 
+.PP
+.PP
+Since \fBRateEWMAX\fP inherits from an object of type P, these members are also directly available to callers\&.
+.PP
+The \fBRateEWMAXParameters\fP type is a good template argument for \fBRateEWMAX\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBDirectEWMAX\fP 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename P > \fBRateEWMAX\fP< P >::\fBRateEWMAX\fP ()\fC [inline]\fP"
+
+.PP
+Create a rate EWMA with initial value(s) 0\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename P > signed_value_type \fBRateEWMAX\fP< P >::scaled_average (unsigned ratenum = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Return the current scaled moving average\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIratenum\fP rate index (0 <= ratenum < rate_count) 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+The returned value has \fBscale()\fP bits of fraction\&. 
+.PP
+\fBscaled_average()\fP does not check the current epoch\&. If an epoch might have passed since the last \fBupdate()\fP, you should call update(0, \fIratenum\fP) before calling this function\&. 
+.RE
+.PP
+
+.SS "template<typename P > unsigned \fBRateEWMAX\fP< P >::scale (unsigned ratenum = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Returns one of the average's scaling factors (bits of fraction)\&. 
+.SS "template<typename P > int \fBRateEWMAX\fP< P >::rate (unsigned ratenum = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Return the current rate in samples per second\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIratenum\fP rate index (0 <= ratenum < rate_count) 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+The returned value is unscaled\&. 
+.PP
+\fBrate()\fP does not check the current epoch\&. If an epoch might have passed since the last \fBupdate()\fP, you should call update(0, \fIratenum\fP) before calling this function\&. 
+.RE
+.PP
+
+.SS "template<typename P > void \fBRateEWMAX\fP< P >::update (signed_value_type delta, unsigned ratenum = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Update the sample count for the current epoch\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdelta\fP increment for current epoch sample count 
+.br
+\fIratenum\fP rate index (0 <= ratenum < rate_count) 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+If the epoch has changed since the last \fBupdate()\fP, this function applies the last epoch's sample count (if any) to the relevant moving average, accounts for any passage of time (in case one or more epochs have passed with no samples), and clears the sample count for the new epoch\&. 
+.RE
+.PP
+
+.SS "template<typename P > \fBString\fP \fBRateEWMAX\fP< P >::unparse_rate (unsigned ratenum = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Unparse the current average into a \fBString\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIratenum\fP rate index (0 <= ratenum < rate_count) 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+The returned value is unscaled, but may contain a fractional part\&. 
+.PP
+\fBunparse_rate()\fP does not check the current epoch\&. If an epoch might have passed since the last \fBupdate()\fP, you should call update(0, \fIratenum\fP) before calling this function\&. 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

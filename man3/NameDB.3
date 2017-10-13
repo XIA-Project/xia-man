@@ -1,0 +1,194 @@
+.TH "NameDB" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+NameDB \- Superclass for databases mapping names to values\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherited by \fBDynamicNameDB\fP, and \fBStaticNameDB\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBNameDB\fP (uint32_t \fBtype\fP, const \fBString\fP &\fBcontext\fP, size_t \fBvalue_size\fP)"
+.br
+.RI "\fIConstruct a database\&. \fP"
+.ti -1c
+.RI "virtual \fB~NameDB\fP ()"
+.br
+.RI "\fIDestroy a database\&. \fP"
+.ti -1c
+.RI "uint32_t \fBtype\fP () const "
+.br
+.RI "\fIReturn the database type\&. \fP"
+.ti -1c
+.RI "const \fBString\fP & \fBcontext\fP () const "
+.br
+.RI "\fIReturn the database's compound element context as a string\&. \fP"
+.ti -1c
+.RI "\fBNameDB\fP * \fBcontext_parent\fP () const "
+.br
+.RI "\fIReturn the contextual parent database, if any\&. \fP"
+.ti -1c
+.RI "size_t \fBvalue_size\fP () const "
+.br
+.RI "\fIReturn the database's value size\&. \fP"
+.ti -1c
+.RI "virtual bool \fBquery\fP (const \fBString\fP &name, void *value, size_t \fBvalue_size\fP)=0"
+.br
+.RI "\fIQuery this database for a given name\&. \fP"
+.ti -1c
+.RI "virtual \fBString\fP \fBrevquery\fP (const void *value, size_t \fBvalue_size\fP)"
+.br
+.RI "\fIQuery this database for a given value\&. \fP"
+.ti -1c
+.RI "virtual bool \fBdefine\fP (const \fBString\fP &name, const void *value, size_t \fBvalue_size\fP)"
+.br
+.RI "\fIDefine a name in this database to a given value\&. \fP"
+.ti -1c
+.RI "bool \fBdefine_int\fP (const \fBString\fP &name, int32_t value)"
+.br
+.RI "\fIDefine a name in this database to a 32-bit integer value\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Superclass for databases mapping names to values\&. 
+
+\fBNameDB\fP databases are Click's general way to map names to values\&. Many Click elements need to parse names into values of various types\&. They use \fBNameDB\fP to do it; \fBNameDB\fP and \fBNameInfo\fP implement generally useful properties like names local to a compound element context, and support space- and time-efficient lookups\&.
+.PP
+Most users should access \fBNameDB\fP's functionality through \fBNameInfo\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBNameInfo\fP 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "NameDB::NameDB (uint32_t type, const \fBString\fP & context, size_t value_size)\fC [inline]\fP"
+
+.PP
+Construct a database\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP database compound element context, as a \fBString\fP 
+.br
+\fIvalue_size\fP database value size
+.RE
+.PP
+\fIvalue_size\fP must be greater than 0\&. 
+.SS "virtual NameDB::~NameDB ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Destroy a database\&. Destroying an installed database automatically uninstalls it\&. See \fBNameInfo::uninstalldb()\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "uint32_t NameDB::type () const\fC [inline]\fP"
+
+.PP
+Return the database type\&. 
+.SS "const \fBString\fP& NameDB::context () const\fC [inline]\fP"
+
+.PP
+Return the database's compound element context as a string\&. 
+.SS "\fBNameDB\fP* NameDB::context_parent () const\fC [inline]\fP"
+
+.PP
+Return the contextual parent database, if any\&. The contextual parent database is the unique database, for the same router, with the same \fBtype()\fP, whose \fBcontext()\fP is a prefix of this database's \fBcontext()\fP, that has the longest \fBcontext()\fP of any matching database\&. If there is no such database returns null\&. 
+.SS "size_t NameDB::value_size () const\fC [inline]\fP"
+
+.PP
+Return the database's value size\&. 
+.SS "virtual bool NameDB::query (const \fBString\fP & name, void * value, size_t value_size)\fC [pure virtual]\fP"
+
+.PP
+Query this database for a given name\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP name to look up 
+.br
+\fIvalue\fP points to value storage 
+.br
+\fIvalue_size\fP size of value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the query succeeded
+.RE
+.PP
+The \fIvalue_size\fP parameter must equal this database's value size\&. 
+.PP
+Implemented in \fBDynamicNameDB\fP, and \fBStaticNameDB\fP\&.
+.SS "\fBString\fP NameDB::revquery (const void * value, size_t value_size)\fC [virtual]\fP"
+
+.PP
+Query this database for a given value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP points to value to look up 
+.br
+\fIvalue_size\fP size of value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the name for the given value, or an empty string if the value has not been defined
+.RE
+.PP
+The \fIvalue_size\fP parameter must equal this database's value size\&. The default implementation always returns the empty string\&. 
+.PP
+Reimplemented in \fBDynamicNameDB\fP, and \fBStaticNameDB\fP\&.
+.SS "bool NameDB::define (const \fBString\fP & name, const void * value, size_t value_size)\fC [virtual]\fP"
+
+.PP
+Define a name in this database to a given value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP name to define 
+.br
+\fIvalue\fP points to value to define 
+.br
+\fIvalue_size\fP size of value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the name was defined
+.RE
+.PP
+The \fIvalue_size\fP parameter must equal this database's value size\&. The default implementation always returns false\&. 
+.PP
+Reimplemented in \fBDynamicNameDB\fP\&.
+.SS "bool NameDB::define_int (const \fBString\fP & name, int32_t value)\fC [inline]\fP"
+
+.PP
+Define a name in this database to a 32-bit integer value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP name to define 
+.br
+\fIvalue\fP value to define 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the name was defined
+.RE
+.PP
+The database's value size must equal 4\&. The implementation is the same as \fCdefine(name, &value, 4)\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

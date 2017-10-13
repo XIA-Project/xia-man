@@ -1,0 +1,94 @@
+.TH "ElementNeighborhoodTracker" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ElementNeighborhoodTracker \- \fBRouter\fP configuration visitor that collects close-by elements\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <routervisitor\&.hh>\fP
+.PP
+Inherits \fBElementTracker\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBElementNeighborhoodTracker\fP (\fBRouter\fP *router, int diameter=1)"
+.br
+.RI "\fIConstruct an \fBElementNeighborhoodTracker\fP\&. \fP"
+.ti -1c
+.RI "bool \fBvisit\fP (\fBElement\fP *e, bool isoutput, int port, \fBElement\fP *from_e, int from_port, int distance)"
+.br
+.RI "\fIVisit an element\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+\fBRouter\fP configuration visitor that collects close-by elements\&. 
+
+When passed to \fBRouter::visit_upstream()\fP or \fBRouter::visit_downstream()\fP, \fBElementNeighborhoodTracker\fP collects the elements that are within a certain number of connections of the source element\&. For instance, this code will find all the elements connected to [0]\fIe:\fP 
+.PP
+.nf
+ElementNeighborhoodTracker tracker(e->router());
+e->router()->visit_upstream(e, 0, &tracker);
+tracker\&.elements();  // Vector<Element *> containing neighboring elements
+
+.fi
+.PP
+.PP
+Supply the constructor's \fIdiameter\fP argument to find a larger neighborhood than just the directly-connected elements\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ElementNeighborhoodTracker::ElementNeighborhoodTracker (\fBRouter\fP * router, int diameter = \fC1\fP)\fC [inline]\fP"
+
+.PP
+Construct an \fBElementNeighborhoodTracker\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrouter\fP the router to be traversed 
+.br
+\fIdiameter\fP neighborhood diameter (maximum number of connections to traverse) 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "bool ElementNeighborhoodTracker::visit (\fBElement\fP * e, bool isoutput, int port, \fBElement\fP * from_e, int from_port, int distance)\fC [virtual]\fP"
+
+.PP
+Visit an element\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element being visited 
+.br
+\fIisoutput\fP true for output ports, false for input ports 
+.br
+\fIport\fP port number being visited 
+.br
+\fIfrom_e\fP element by which \fIe\fP was reached 
+.br
+\fIfrom_port\fP port by which \fIe/\fIport\fP was\fP reached 
+.br
+\fIdistance\fP connection distance in breadth-first search 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true to continue traversing, false to stop
+.RE
+.PP
+A \fBRouter\fP configuration traversal calls this function once on each reached port\&. Configuration traversal is breadth-first; \fIdistance\fP is the minimum connection distance from the traversal's start point to \fIe/\fIport\fP\&.\fP A traversal will call a port's \fBvisit()\fP function at most once\&. \fIfrom_e\fP and \fIfrom_port\fP specify one port that is connected to \fIe\fP and \fIport\fP (there may be more than one)\&. If \fIisoutput\fP is true, then \fIe/\fIport\fP is\fP an output port and \fIfrom_e/\fIfrom_port\fP is\fP an input port; if \fIisoutput\fP is false, the opposite holds\&.
+.PP
+The return value specifies whether traversal should continue through the \fIe\fP element\&. If it is true, then the traversal will continue based on \fIe's\fP packet flow specifier, via ports that connect to \fIe/\fIport\fP \fP(see \fBElement::flow_code()\fP for more)\&.
+.PP
+The default implementation always returns true\&. 
+.PP
+Reimplemented from \fBRouterVisitor\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

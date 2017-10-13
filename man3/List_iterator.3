@@ -1,0 +1,145 @@
+.TH "List< T, member >::iterator" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+List< T, member >::iterator \- Iterator type for \fBList\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <list\&.hh>\fP
+.PP
+Inherits \fBList< T, member >::const_iterator\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBiterator\fP ()"
+.br
+.RI "\fIConstruct an invalid iterator\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP (T *x)"
+.br
+.RI "\fIConstruct an iterator pointing at \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP (\fBList\fP< T, member > *list)"
+.br
+.RI "\fIConstruct an end iterator for \fIlist\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP (T *x, \fBList\fP< T, member > *list)"
+.br
+.RI "\fIConstruct an iterator pointing at \fIx\fP in \fIlist\fP\&. \fP"
+.ti -1c
+.RI "T * \fBget\fP () const "
+.br
+.RI "\fIReturn the current list element or null\&. \fP"
+.ti -1c
+.RI "T * \fBoperator\->\fP () const "
+.br
+.RI "\fIReturn the current list element or null\&. \fP"
+.ti -1c
+.RI "T & \fBoperator*\fP () const "
+.br
+.RI "\fIReturn the current list element\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP & \fBoperator+=\fP (int x)"
+.br
+.RI "\fIMove this iterator forward by \fIx\fP positions\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP & \fBoperator\-=\fP (int x)"
+.br
+.RI "\fIMove this iterator backward by \fIx\fP positions\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBoperator+\fP (int x) const "
+.br
+.RI "\fIReturn an iterator \fIx\fP positions ahead\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBoperator\-\fP (int x) const "
+.br
+.RI "\fIReturn an iterator \fIx\fP positions behind\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T, List_member< T > T::* member>
+.br
+class List< T, member >::iterator"
+Iterator type for \fBList\fP\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::iterator::iterator ()\fC [inline]\fP"
+
+.PP
+Construct an invalid iterator\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::iterator::iterator (T * x)\fC [inline]\fP"
+
+.PP
+Construct an iterator pointing at \fIx\fP\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::iterator::iterator (\fBList\fP< T, member > * list)\fC [inline]\fP"
+
+.PP
+Construct an end iterator for \fIlist\fP\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::iterator::iterator (T * x, \fBList\fP< T, member > * list)\fC [inline]\fP"
+
+.PP
+Construct an iterator pointing at \fIx\fP in \fIlist\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T, List_member< T > T::* member> T* \fBList\fP< T, member >::iterator::get () const\fC [inline]\fP"
+
+.PP
+Return the current list element or null\&. 
+.SS "template<typename T, List_member< T > T::* member> T* \fBList\fP< T, member >::iterator::operator\-> () const\fC [inline]\fP"
+
+.PP
+Return the current list element or null\&. 
+.SS "template<typename T, List_member< T > T::* member> T& \fBList\fP< T, member >::iterator::operator* () const\fC [inline]\fP"
+
+.PP
+Return the current list element\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBiterator\fP& \fBList\fP< T, member >::iterator::operator+= (int x)\fC [inline]\fP"
+
+.PP
+Move this iterator forward by \fIx\fP positions\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+reference to this iterator 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This function takes O(abs(\fIx\fP)) time\&. 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> \fBiterator\fP& \fBList\fP< T, member >::iterator::operator\-= (int x)\fC [inline]\fP"
+
+.PP
+Move this iterator backward by \fIx\fP positions\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+reference to this iterator 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This function takes O(abs(\fIx\fP)) time\&. 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> \fBiterator\fP \fBList\fP< T, member >::iterator::operator+ (int x) const\fC [inline]\fP"
+
+.PP
+Return an iterator \fIx\fP positions ahead\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBiterator\fP \fBList\fP< T, member >::iterator::operator\- (int x) const\fC [inline]\fP"
+
+.PP
+Return an iterator \fIx\fP positions behind\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

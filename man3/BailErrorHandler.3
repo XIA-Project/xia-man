@@ -1,0 +1,70 @@
+.TH "BailErrorHandler" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+BailErrorHandler \- A stackable \fBErrorHandler\fP that exits when errors occur\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <error\&.hh>\fP
+.PP
+Inherits \fBErrorVeneer\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBailErrorHandler\fP (\fBErrorHandler\fP *errh, int level=\fBel_error\fP)"
+.br
+.RI "\fIConstruct a \fBBailErrorHandler\fP\&. \fP"
+.ti -1c
+.RI "void \fBaccount\fP (int level)"
+.br
+.RI "\fIAccount for an error message at level \fIlevel\fP\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+A stackable \fBErrorHandler\fP that exits when errors occur\&. 
+
+The stackable \fBBailErrorHandler\fP, available only at user level, causes the Click process to exit if an error worse than a configurable level occurs\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "BailErrorHandler::BailErrorHandler (\fBErrorHandler\fP * errh, int level = \fC\fBel_error\fP\fP)"
+
+.PP
+Construct a \fBBailErrorHandler\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP base \fBErrorHandler\fP 
+.br
+\fIlevel\fP error level that causes premature exit
+.RE
+.PP
+An error message with level less than or equal to \fIel_error\fP will cause the process to exit with status 1\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "void BailErrorHandler::account (int level)\fC [virtual]\fP"
+
+.PP
+Account for an error message at level \fIlevel\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlevel\fP minimum error level in the message
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+After calling \fBemit()\fP for the lines of an error message, \fBErrorHandler\fP calls \fBaccount()\fP, passing the minimum (worst) error level of any message line (or 1000 if no line had a level)\&. The default implementation updates the \fBnerrors()\fP counter\&. Some other ErrorHandlers add \fBaccount()\fP behavior that, for example, exits after printing messages at el_fatal level or below\&. 
+.PP
+Reimplemented from \fBErrorVeneer\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

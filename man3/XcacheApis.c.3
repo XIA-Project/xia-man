@@ -1,0 +1,131 @@
+.TH "xcache/XcacheApis.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xcache/XcacheApis.c \- 
+.IP "\(bu" 2
+content specific APIs 
+.PP
+ 
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'xcache\&.h'\fP
+.br
+\fC#include <iostream>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <sys/socket\&.h>\fP
+.br
+\fC#include <sys/un\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+\fC#include 'xcache_cmd\&.pb\&.h'\fP
+.br
+\fC#include 'xcache_sock\&.h'\fP
+.br
+\fC#include <sys/types\&.h>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <errno\&.h>\fP
+.br
+\fC#include 'dagaddr\&.hpp'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXbufInit\fP (XcacheBuf *xbuf)"
+.br
+.ti -1c
+.RI "int \fBXbufAdd\fP (XcacheBuf *xbuf, void *data, size_t len)"
+.br
+.ti -1c
+.RI "void \fBXbufFree\fP (XcacheBuf *xbuf)"
+.br
+.ti -1c
+.RI "int \fBXcacheHandleDestroy\fP (XcacheHandle *h)"
+.br
+.ti -1c
+.RI "int \fBXcacheHandleInit\fP (XcacheHandle *h)"
+.br
+.ti -1c
+.RI "int \fBXcacheHandleSetTtl\fP (XcacheHandle *h, time_t ttl)"
+.br
+.ti -1c
+.RI "int \fBXevictChunk\fP (XcacheHandle *h, const char *cid)"
+.br
+.ti -1c
+.RI "int \fBXputChunk\fP (XcacheHandle *h, const char *data, size_t length, sockaddr_x *addr)"
+.br
+.ti -1c
+.RI "int \fBXputMetaChunk\fP (XcacheHandle *h, sockaddr_x *metachunk, sockaddr_x *addrs, socklen_t addrlen, int count)"
+.br
+.ti -1c
+.RI "int \fBXputFile\fP (XcacheHandle *h, const char *fname, size_t chunkSize, sockaddr_x **addrs)"
+.br
+.ti -1c
+.RI "int \fBXputBuffer\fP (XcacheHandle *h, const char *data, size_t length, size_t chunkSize, sockaddr_x **addrs)"
+.br
+.ti -1c
+.RI "int \fBXbufPut\fP (XcacheHandle *h, XcacheBuf *xbuf, size_t chunkSize, sockaddr_x **addrs)"
+.br
+.ti -1c
+.RI "int \fBXfetchChunk\fP (XcacheHandle *h, void **buf, int flags, sockaddr_x *addr, socklen_t len)"
+.br
+.ti -1c
+.RI "int \fBXregisterNotif\fP (int event, void(*func)(XcacheHandle *, int event, sockaddr_x *addr, socklen_t addrlen))"
+.br
+.ti -1c
+.RI "int \fBXlaunchNotifThread\fP (XcacheHandle *h)"
+.br
+.ti -1c
+.RI "int \fBXreadChunk\fP (XcacheHandle *h, sockaddr_x *addr, socklen_t addrlen, void *buf, size_t buflen, off_t offset)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int XbufAdd (XcacheBuf * xbuf, void * data, size_t len)"
+
+.SS "void XbufFree (XcacheBuf * xbuf)"
+
+.SS "int XbufInit (XcacheBuf * xbuf)"
+
+.SS "int XbufPut (XcacheHandle * h, XcacheBuf * xbuf, size_t chunkSize, sockaddr_x ** addrs)\fC [inline]\fP"
+
+.SS "int XcacheHandleDestroy (XcacheHandle * h)"
+
+.SS "int XcacheHandleInit (XcacheHandle * h)"
+
+.SS "int XcacheHandleSetTtl (XcacheHandle * h, time_t ttl)"
+
+.SS "int XevictChunk (XcacheHandle * h, const char * cid)"
+
+.SS "int XfetchChunk (XcacheHandle * h, void ** buf, int flags, sockaddr_x * addr, socklen_t len)"
+
+.SS "int XlaunchNotifThread (XcacheHandle * h)"
+
+.SS "int XputBuffer (XcacheHandle * h, const char * data, size_t length, size_t chunkSize, sockaddr_x ** addrs)"
+
+.SS "int XputChunk (XcacheHandle * h, const char * data, size_t length, sockaddr_x * addr)"
+
+.SS "int XputFile (XcacheHandle * h, const char * fname, size_t chunkSize, sockaddr_x ** addrs)"
+
+.SS "int XputMetaChunk (XcacheHandle * h, sockaddr_x * metachunk, sockaddr_x * addrs, socklen_t addrlen, int count)"
+
+.SS "int XreadChunk (XcacheHandle * h, sockaddr_x * addr, socklen_t addrlen, void * buf, size_t buflen, off_t offset)"
+
+.SS "int XregisterNotif (int event, void(*)(XcacheHandle *, int event, sockaddr_x *addr, socklen_t addrlen) func)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

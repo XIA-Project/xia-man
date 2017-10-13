@@ -1,0 +1,134 @@
+.TH "ReadWriteLock" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ReadWriteLock \- A read/write lock\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <sync\&.hh>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBReadWriteLock\fP ()"
+.br
+.RI "\fICreates a \fBReadWriteLock\fP\&. \fP"
+.ti -1c
+.RI "void \fBacquire_read\fP ()"
+.br
+.RI "\fIAcquires the \fBReadWriteLock\fP for reading\&. \fP"
+.ti -1c
+.RI "bool \fBattempt_read\fP ()"
+.br
+.RI "\fIAttempts to acquire the \fBReadWriteLock\fP for reading\&. \fP"
+.ti -1c
+.RI "void \fBrelease_read\fP ()"
+.br
+.RI "\fIReleases the \fBReadWriteLock\fP for reading\&. \fP"
+.ti -1c
+.RI "void \fBacquire_write\fP ()"
+.br
+.RI "\fIAcquires the \fBReadWriteLock\fP for writing\&. \fP"
+.ti -1c
+.RI "bool \fBattempt_write\fP ()"
+.br
+.RI "\fIAttempts to acquire the \fBReadWriteLock\fP for writing\&. \fP"
+.ti -1c
+.RI "void \fBrelease_write\fP ()"
+.br
+.RI "\fIReleases the \fBReadWriteLock\fP for writing\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A read/write lock\&. 
+
+The \fBReadWriteLock\fP class abstracts a read/write lock in SMP Click\&. Multiple SMP Click threads can hold read locks simultaneously, but if any thread holds a write lock, then no other thread holds any kind of lock\&. The read/write lock is implemented with \fBSpinlock\fP objects, so acquiring a lock is a polling operation\&. ReadWriteLocks can be used to synchronize access to shared data among multiple Click SMP threads\&. ReadWriteLocks should not be held for long periods of time\&.
+.PP
+\fBReadWriteLock\fP operations do nothing unless Click was compiled with --enable-multithread\&. Therefore, \fBReadWriteLock\fP should not be used to, for example, synchronize handlers with main element threads\&.
+.PP
+The main \fBReadWriteLock\fP operations are \fBacquire_read()\fP and \fBacquire_write()\fP, which acquire the lock for reading or writing, respectively, and \fBrelease_read()\fP and \fBrelease_write()\fP, which similarly release the lock\&. \fBattempt_read()\fP and \fBattempt_write()\fP acquire the lock only if it can be acquired instantaneously\&.
+.PP
+It is OK for a thread to acquire a lock it has already acquired, but you must release it as many times as you have acquired it\&.
+.PP
+\fBReadWriteLock\fP objects are relatively large in terms of memory usage; don't create too many of them\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ReadWriteLock::ReadWriteLock ()\fC [inline]\fP"
+
+.PP
+Creates a \fBReadWriteLock\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "void ReadWriteLock::acquire_read ()\fC [inline]\fP"
+
+.PP
+Acquires the \fBReadWriteLock\fP for reading\&. On return, this thread has acquired the lock for reading\&. The function will spin indefinitely until the lock is acquired\&. It is OK to acquire a lock you have already acquired, but you must release it as many times as you have acquired it\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSpinlock::acquire\fP 
+.RE
+.PP
+
+.SS "bool ReadWriteLock::attempt_read ()\fC [inline]\fP"
+
+.PP
+Attempts to acquire the \fBReadWriteLock\fP for reading\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+True iff the \fBReadWriteLock\fP was acquired\&.
+.RE
+.PP
+This function will acquire the lock for reading and return true only if the \fBReadWriteLock\fP can be acquired right away, without retries\&. 
+.SS "void ReadWriteLock::release_read ()\fC [inline]\fP"
+
+.PP
+Releases the \fBReadWriteLock\fP for reading\&. The \fBReadWriteLock\fP must have been previously acquired by either \fBReadWriteLock::acquire_read\fP or \fBReadWriteLock::attempt_read\fP\&. Do not call \fBrelease_read()\fP on a lock that was acquired for writing\&. 
+.SS "void ReadWriteLock::acquire_write ()\fC [inline]\fP"
+
+.PP
+Acquires the \fBReadWriteLock\fP for writing\&. On return, this thread has acquired the lock for writing\&. The function will spin indefinitely until the lock is acquired\&. It is OK to acquire a lock you have already acquired, but you must release it as many times as you have acquired it\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBReadWriteLock::acquire_read\fP 
+.RE
+.PP
+
+.SS "bool ReadWriteLock::attempt_write ()\fC [inline]\fP"
+
+.PP
+Attempts to acquire the \fBReadWriteLock\fP for writing\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+True iff the \fBReadWriteLock\fP was acquired\&.
+.RE
+.PP
+This function will acquire the lock for writing and return true only if the \fBReadWriteLock\fP can be acquired right away, without retries\&. Note, however, that acquiring a \fBReadWriteLock\fP requires as many operations as there are CPUs\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBReadWriteLock::attempt_read\fP 
+.RE
+.PP
+
+.SS "void ReadWriteLock::release_write ()\fC [inline]\fP"
+
+.PP
+Releases the \fBReadWriteLock\fP for writing\&. The \fBReadWriteLock\fP must have been previously acquired by either \fBReadWriteLock::acquire_write\fP or \fBReadWriteLock::attempt_write\fP\&. Do not call \fBrelease_write()\fP on a lock that was acquired for reading\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBReadWriteLock::release_read\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

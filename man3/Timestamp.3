@@ -1,0 +1,804 @@
+.TH "Timestamp" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Timestamp \- Represents a moment or interval in time\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "union \fBrep_t\fP"
+.br
+.RI "\fIType of a \fBTimestamp\fP representation\&. \fP"
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBmax_seconds\fP = (seconds_type) 2147483647U, \fBmin_seconds\fP = (seconds_type) -2147483648U }"
+.br
+.ti -1c
+.RI "enum { \fBnsec_per_sec\fP = 1000000000, \fBnsec_per_msec\fP = 1000000, \fBnsec_per_usec\fP = 1000, \fBusec_per_sec\fP = 1000000, \fBusec_per_msec\fP = 1000, \fBmsec_per_sec\fP = 1000, \fBsubsec_per_sec\fP = nsec_per_sec, \fBsubsec_per_msec\fP = subsec_per_sec / msec_per_sec, \fBsubsec_per_usec\fP = subsec_per_sec / usec_per_sec }"
+.br
+.ti -1c
+.RI "enum { \fBNSUBSEC\fP = subsec_per_sec }"
+.br
+.ti -1c
+.RI "typedef int32_t \fBseconds_type\fP"
+.br
+.RI "\fIType represents a number of seconds\&. \fP"
+.ti -1c
+.RI "typedef int32_t \fBvalue_type\fP"
+.br
+.RI "\fIReturn type for \fBmsecval()\fP, \fBusecval()\fP, and \fBnsecval()\fP\&. \fP"
+.ti -1c
+.RI "typedef uninitialized_type \fBuninitialized_t\fP"
+.br
+.ti -1c
+.RI "typedef \fBseconds_type\fP(Timestamp::* \fBunspecified_bool_type\fP) () const "
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTimestamp\fP ()"
+.br
+.RI "\fIConstruct a zero-valued \fBTimestamp\fP\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP (long \fBsec\fP, uint32_t \fBsubsec\fP=0)"
+.br
+.RI "\fIConstruct a \fBTimestamp\fP of \fIsec\fP seconds plus \fIsubsec\fP subseconds\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP (int \fBsec\fP, uint32_t \fBsubsec\fP=0)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP (unsigned long \fBsec\fP, uint32_t \fBsubsec\fP=0)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP (unsigned \fBsec\fP, uint32_t \fBsubsec\fP=0)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP (double)"
+.br
+.RI "\fICreate a timestamp measuring \fId\fP seconds\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP (const struct \fBtimeval\fP &tv)"
+.br
+.RI "\fICreate a \fBTimestamp\fP measuring \fItv\fP\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP (const struct \fBtimespec\fP &ts)"
+.br
+.RI "\fICreate a \fBTimestamp\fP measuring \fIts\fP\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP (const \fBrep_t\fP &rep)"
+.br
+.RI "\fIConstruct a \fBTimestamp\fP from its internal representation\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP (const uninitialized_t &unused)"
+.br
+.RI "\fIConstruct an uninitialized timestamp\&. \fP"
+.ti -1c
+.RI "\fBoperator unspecified_bool_type\fP () const "
+.br
+.RI "\fIReturn true iff this timestamp is not zero-valued\&. \fP"
+.ti -1c
+.RI "bool \fBis_negative\fP () const "
+.br
+.RI "\fITest if this \fBTimestamp\fP is negative (< \fBTimestamp(0, 0)\fP)\&. \fP"
+.ti -1c
+.RI "\fBseconds_type\fP \fBsec\fP () const "
+.br
+.RI "\fIReturn this timestamp's seconds component\&. \fP"
+.ti -1c
+.RI "uint32_t \fBsubsec\fP () const "
+.br
+.RI "\fIReturn this timestamp's subseconds component\&. \fP"
+.ti -1c
+.RI "uint32_t \fBmsec\fP () const "
+.br
+.RI "\fIReturn this timestamp's subseconds component, converted to milliseconds\&. \fP"
+.ti -1c
+.RI "uint32_t \fBusec\fP () const "
+.br
+.RI "\fIReturn this timestamp's subseconds component, converted to microseconds\&. \fP"
+.ti -1c
+.RI "uint32_t \fBnsec\fP () const "
+.br
+.RI "\fIReturn this timestamp's subseconds component, converted to nanoseconds\&. \fP"
+.ti -1c
+.RI "void \fBset_sec\fP (\fBseconds_type\fP \fBsec\fP)"
+.br
+.RI "\fISet this timestamp's seconds component\&. \fP"
+.ti -1c
+.RI "void \fBset_subsec\fP (uint32_t \fBsubsec\fP)"
+.br
+.RI "\fISet this timestamp's subseconds component\&. \fP"
+.ti -1c
+.RI "\fBseconds_type\fP \fBmsec1\fP () const "
+.br
+.RI "\fIReturn this timestamp's interval length, converted to milliseconds\&. \fP"
+.ti -1c
+.RI "\fBseconds_type\fP \fBusec1\fP () const "
+.br
+.RI "\fIReturn this timestamp's interval length, converted to microseconds\&. \fP"
+.ti -1c
+.RI "\fBseconds_type\fP \fBnsec1\fP () const "
+.br
+.RI "\fIReturn this timestamp's interval length, converted to nanoseconds\&. \fP"
+.ti -1c
+.RI "struct timeval \fBtimeval\fP () const "
+.br
+.RI "\fIReturn a struct timeval that approximates this timestamp\&. \fP"
+.ti -1c
+.RI "struct \fBtimeval\fP \fBtimeval_ceil\fP () const "
+.br
+.RI "\fIReturn the minimum struct timeval >= this timestamp\&. \fP"
+.ti -1c
+.RI "struct timespec \fBtimespec\fP () const "
+.br
+.RI "\fIReturn a struct timespec with the same value as this timestamp\&. \fP"
+.ti -1c
+.RI "double \fBdoubleval\fP () const "
+.br
+.RI "\fIReturn this timestamp's value, converted to a real number\&. \fP"
+.ti -1c
+.RI "\fBvalue_type\fP \fBmsecval\fP () const "
+.br
+.RI "\fIReturn this timestamp's interval length in milliseconds\&. \fP"
+.ti -1c
+.RI "\fBvalue_type\fP \fBusecval\fP () const "
+.br
+.RI "\fIReturn this timestamp's interval length in microseconds\&. \fP"
+.ti -1c
+.RI "\fBvalue_type\fP \fBnsecval\fP () const "
+.br
+.RI "\fIReturn this timestamp's interval length in nanoseconds\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBmsec_ceil\fP () const "
+.br
+.RI "\fIReturn the next millisecond-valued timestamp no smaller than *this\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBusec_ceil\fP () const "
+.br
+.RI "\fIReturn the next microsecond-valued timestamp no smaller than *this\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBnsec_ceil\fP () const "
+.br
+.RI "\fIReturn the next nanosecond-valued timestamp no smaller than *this\&. \fP"
+.ti -1c
+.RI "click_jiffies_t \fBjiffies\fP () const "
+.br
+.RI "\fIReturn the number of jiffies represented by this timestamp\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIClear this timestamp\&. \fP"
+.ti -1c
+.RI "void \fBassign\fP (\fBseconds_type\fP \fBsec\fP, uint32_t \fBsubsec\fP=0)"
+.br
+.ti -1c
+.RI "void \fBassign_usec\fP (\fBseconds_type\fP \fBsec\fP, uint32_t \fBusec\fP)"
+.br
+.ti -1c
+.RI "void \fBassign_nsec\fP (\fBseconds_type\fP \fBsec\fP, uint32_t \fBnsec\fP)"
+.br
+.ti -1c
+.RI "void \fBassign_now\fP ()"
+.br
+.RI "\fISet this timestamp to the current system time\&. \fP"
+.ti -1c
+.RI "void \fBassign_recent\fP ()"
+.br
+.RI "\fISet this timestamp to a recent system time\&. \fP"
+.ti -1c
+.RI "void \fBassign_now_steady\fP ()"
+.br
+.RI "\fISet this timestamp to the current steady-clock time\&. \fP"
+.ti -1c
+.RI "void \fBassign_recent_steady\fP ()"
+.br
+.RI "\fISet this timestamp to a recent steady-clock time\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse\fP () const "
+.br
+.RI "\fIUnparse this timestamp into a \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse_interval\fP () const "
+.br
+.RI "\fIUnparse this timestamp into a \fBString\fP as an interval\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBTimestamp\fP \fBmake_jiffies\fP (click_jiffies_t \fBjiffies\fP)"
+.br
+.RI "\fIReturn a timestamp representing an interval of \fIjiffies\fP\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBmake_jiffies\fP (click_jiffies_difference_t \fBjiffies\fP)"
+.br
+.ti -1c
+.RI "static \fBTimestamp\fP \fBmake_sec\fP (\fBseconds_type\fP \fBsec\fP)"
+.br
+.RI "\fIReturn a timestamp representing \fIsec\fP seconds\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBmake_msec\fP (\fBseconds_type\fP \fBsec\fP, uint32_t \fBmsec\fP)"
+.br
+.RI "\fIReturn a timestamp representing \fIsec\fP seconds plus \fImsec\fP milliseconds\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBmake_msec\fP (\fBvalue_type\fP \fBmsec\fP)"
+.br
+.RI "\fIReturn a timestamp representing \fImsec\fP milliseconds\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBmake_usec\fP (\fBseconds_type\fP \fBsec\fP, uint32_t \fBusec\fP)"
+.br
+.RI "\fIReturn a timestamp representing \fIsec\fP seconds plus \fIusec\fP microseconds\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBmake_usec\fP (\fBvalue_type\fP \fBusec\fP)"
+.br
+.RI "\fIReturn a timestamp representing \fIusec\fP microseconds\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBmake_nsec\fP (\fBseconds_type\fP \fBsec\fP, uint32_t \fBnsec\fP)"
+.br
+.RI "\fIReturn a timestamp representing \fIsec\fP seconds plus \fInsec\fP nanoseconds\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBmake_nsec\fP (\fBvalue_type\fP \fBnsec\fP)"
+.br
+.RI "\fIReturn a timestamp representing \fInsec\fP nanoseconds\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBepsilon\fP ()"
+.br
+.RI "\fIReturn the smallest nonzero timestamp, \fBTimestamp(0, 1)\fP\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBnow\fP ()"
+.br
+.RI "\fIReturn the current system time\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBrecent\fP ()"
+.br
+.RI "\fIReturn a recent system time\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBnow_steady\fP ()"
+.br
+.RI "\fIReturn the current steady-clock time\&. \fP"
+.ti -1c
+.RI "static \fBTimestamp\fP \fBrecent_steady\fP ()"
+.br
+.RI "\fIReturn a recent steady-clock time\&. \fP"
+.ti -1c
+.RI "static uint32_t \fBmsec_to_subsec\fP (uint32_t \fBmsec\fP)"
+.br
+.RI "\fIConvert milliseconds to subseconds\&. \fP"
+.ti -1c
+.RI "static uint32_t \fBusec_to_subsec\fP (uint32_t \fBusec\fP)"
+.br
+.RI "\fIConvert microseconds to subseconds\&. \fP"
+.ti -1c
+.RI "static uint32_t \fBnsec_to_subsec\fP (uint32_t \fBnsec\fP)"
+.br
+.RI "\fIConvert nanoseconds to subseconds\&. \fP"
+.ti -1c
+.RI "static uint32_t \fBsubsec_to_msec\fP (uint32_t \fBsubsec\fP)"
+.br
+.RI "\fIConvert subseconds to milliseconds\&. \fP"
+.ti -1c
+.RI "static uint32_t \fBsubsec_to_usec\fP (uint32_t \fBsubsec\fP)"
+.br
+.RI "\fIConvert subseconds to microseconds\&. \fP"
+.ti -1c
+.RI "static uint32_t \fBsubsec_to_nsec\fP (uint32_t \fBsubsec\fP)"
+.br
+.RI "\fIConvert subseconds to nanoseconds\&. \fP"
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fICompare two timestamps for equality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fICompare two timestamps\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator\-\fP (const \fBTimestamp\fP &b)"
+.br
+.RI "\fINegate \fIa\fP and return the result\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP & \fBoperator+=\fP (\fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fIAdd \fIb\fP to \fIa\fP\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP & \fBoperator\-=\fP (\fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fISubtract \fIb\fP from \fIa\fP\&. \fP"
+.in -1c
+.SS "Related Functions"
+(Note that these are not member functions\&.) 
+.in +1c
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fICompare two timestamps for inequality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator<=\fP (const \fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fICompare two timestamps\&. \fP"
+.ti -1c
+.RI "bool \fBoperator>=\fP (const \fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fICompare two timestamps\&. \fP"
+.ti -1c
+.RI "bool \fBoperator>\fP (const \fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fICompare two timestamps\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, const \fBTimestamp\fP &ts)"
+.br
+.RI "\fIAppend the unparsed representation of \fIts\fP to \fIsa\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Represents a moment or interval in time\&. 
+
+The Click \fBTimestamp\fP class represents both moments in time and intervals in time\&. In most Click code, \fBTimestamp\fP replaces the Unix 'struct timeval' and 'struct timespec' structures; for example, \fBTimer\fP expiry times use the \fBTimestamp\fP class\&. Timestamps may be added, subtracted, and compared using the usual operators\&.
+.PP
+\fBTimestamp\fP measures time in seconds, and provides access to seconds and 'subseconds', or fractions of a second\&. Click can be configured with either microsecond or nanosecond precision\&. Thus, one subsecond might equal either one microsecond or one nanosecond\&. The subsec_per_sec enumeration constant equals the number of subseconds in a second; the timestamp's \fBsubsec()\fP value should always lie between 0 and subsec_per_sec - 1\&. (The \fC--enable-nanotimestamp\fP configuration option enables nanosecond-precision timestamps at user level; kernel modules use the kernel's native timestamp precision, which in later versions of Linux is nanosecond-precision\&.)
+.PP
+A \fBTimestamp\fP with \fBsec()\fP < 0 is negative\&. Note that \fBsubsec()\fP is always nonnegative\&. A \fBTimestamp\fP's value always equals (\fBsec()\fP + \fBsubsec()\fP / (double) subsec_per_sec); thus, the \fBTimestamp\fP value of -0\&.1 is represented as \fBsec()\fP == -1, \fBusec()\fP == +900000\&. 
+.SH "Member Typedef Documentation"
+.PP 
+.SS "typedef int32_t \fBTimestamp::seconds_type\fP"
+
+.PP
+Type represents a number of seconds\&. 
+.SS "typedef int32_t \fBTimestamp::value_type\fP"
+
+.PP
+Return type for \fBmsecval()\fP, \fBusecval()\fP, and \fBnsecval()\fP\&. 
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "anonymous enum"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fImax_seconds \fP\fP
+Maximum number of seconds representable in a \fBTimestamp\fP\&. 
+.TP
+\fB\fImin_seconds \fP\fP
+Minimum number of seconds representable in a \fBTimestamp\fP\&. 
+.SS "anonymous enum"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIsubsec_per_sec \fP\fP
+Number of subseconds in a second\&. Can be 1000000 or 1000000000, depending on how Click is compiled\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Timestamp::Timestamp ()\fC [inline]\fP"
+
+.PP
+Construct a zero-valued \fBTimestamp\fP\&. 
+.SS "Timestamp::Timestamp (long sec, uint32_t subsec = \fC0\fP)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct a \fBTimestamp\fP of \fIsec\fP seconds plus \fIsubsec\fP subseconds\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsec\fP number of seconds 
+.br
+\fIsubsec\fP number of subseconds (defaults to 0)
+.RE
+.PP
+The \fIsubsec\fP parameter must be between 0 and subsec_per_sec - 1, and the \fIsec\fP parameter must be between \fBmin_seconds \fP and \fBmax_seconds \fP\&. Errors are not necessarily checked\&. 
+.SS "Timestamp::Timestamp (int sec, uint32_t subsec = \fC0\fP)\fC [inline]\fP, \fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "Timestamp::Timestamp (unsigned long sec, uint32_t subsec = \fC0\fP)\fC [inline]\fP, \fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "Timestamp::Timestamp (unsigned sec, uint32_t subsec = \fC0\fP)\fC [inline]\fP, \fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "Timestamp::Timestamp (double d)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Create a timestamp measuring \fId\fP seconds\&. 
+.SS "Timestamp::Timestamp (const struct \fBtimeval\fP & tv)\fC [inline]\fP"
+
+.PP
+Create a \fBTimestamp\fP measuring \fItv\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItv\fP timeval structure 
+.RE
+.PP
+
+.SS "Timestamp::Timestamp (const struct \fBtimespec\fP & ts)\fC [inline]\fP"
+
+.PP
+Create a \fBTimestamp\fP measuring \fIts\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIts\fP timespec structure 
+.RE
+.PP
+
+.SS "Timestamp::Timestamp (const \fBrep_t\fP & rep)\fC [inline]\fP"
+
+.PP
+Construct a \fBTimestamp\fP from its internal representation\&. 
+.SS "Timestamp::Timestamp (const uninitialized_t & unused)\fC [inline]\fP"
+
+.PP
+Construct an uninitialized timestamp\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "Timestamp::operator unspecified_bool_type () const\fC [inline]\fP"
+
+.PP
+Return true iff this timestamp is not zero-valued\&. 
+.SS "bool Timestamp::is_negative () const\fC [inline]\fP"
+
+.PP
+Test if this \fBTimestamp\fP is negative (< \fBTimestamp(0, 0)\fP)\&. 
+.SS "\fBTimestamp::seconds_type\fP Timestamp::sec () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's seconds component\&. 
+.SS "uint32_t Timestamp::subsec () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's subseconds component\&. 
+.SS "uint32_t Timestamp::msec () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's subseconds component, converted to milliseconds\&. 
+.SS "uint32_t Timestamp::usec () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's subseconds component, converted to microseconds\&. 
+.SS "uint32_t Timestamp::nsec () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's subseconds component, converted to nanoseconds\&. 
+.SS "void Timestamp::set_sec (\fBseconds_type\fP sec)\fC [inline]\fP"
+
+.PP
+Set this timestamp's seconds component\&. The subseconds component is left unchanged\&. 
+.SS "void Timestamp::set_subsec (uint32_t subsec)\fC [inline]\fP"
+
+.PP
+Set this timestamp's subseconds component\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsubsec\fP number of subseconds
+.RE
+.PP
+The seconds component is left unchanged\&. 
+.SS "\fBTimestamp::seconds_type\fP Timestamp::msec1 () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's interval length, converted to milliseconds\&. Will overflow on intervals of more than 2147483\&.647 seconds\&. 
+.SS "\fBTimestamp::seconds_type\fP Timestamp::usec1 () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's interval length, converted to microseconds\&. Will overflow on intervals of more than 2147\&.483647 seconds\&. 
+.SS "\fBTimestamp::seconds_type\fP Timestamp::nsec1 () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's interval length, converted to nanoseconds\&. Will overflow on intervals of more than 2\&.147483647 seconds\&. 
+.SS "struct timeval Timestamp::timeval () const"
+
+.PP
+Return a struct timeval that approximates this timestamp\&. If \fBTimestamp\fP and struct timeval have the same size and representation, then this operation returns a 'const struct timeval &' whose address is the same as this \fBTimestamp\fP\&. If Timestamps have nanosecond precision, the conversion rounds down, so \fBTimestamp\fP(t\&.timeval()) <= t\&. 
+.SS "struct \fBtimeval\fP Timestamp::timeval_ceil () const"
+
+.PP
+Return the minimum struct timeval >= this timestamp\&. If \fBTimestamp\fP and struct timeval have the same size and representation, then this operation returns a 'const struct timeval &' whose address is the same as this \fBTimestamp\fP\&. 
+.SS "struct timespec Timestamp::timespec () const"
+
+.PP
+Return a struct timespec with the same value as this timestamp\&. If \fBTimestamp\fP and struct timespec have the same size and representation, then this operation returns a 'const struct timespec &' whose address is the same as this \fBTimestamp\fP\&. 
+.SS "double Timestamp::doubleval () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's value, converted to a real number\&. 
+.SS "\fBvalue_type\fP Timestamp::msecval () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's interval length in milliseconds\&. 
+.SS "\fBvalue_type\fP Timestamp::usecval () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's interval length in microseconds\&. 
+.SS "\fBvalue_type\fP Timestamp::nsecval () const\fC [inline]\fP"
+
+.PP
+Return this timestamp's interval length in nanoseconds\&. 
+.SS "\fBTimestamp\fP Timestamp::msec_ceil () const\fC [inline]\fP"
+
+.PP
+Return the next millisecond-valued timestamp no smaller than *this\&. 
+.SS "\fBTimestamp\fP Timestamp::usec_ceil () const\fC [inline]\fP"
+
+.PP
+Return the next microsecond-valued timestamp no smaller than *this\&. 
+.SS "\fBTimestamp\fP Timestamp::nsec_ceil () const\fC [inline]\fP"
+
+.PP
+Return the next nanosecond-valued timestamp no smaller than *this\&. 
+.SS "\fBTimestamp\fP Timestamp::make_jiffies (click_jiffies_t jiffies)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a timestamp representing an interval of \fIjiffies\fP\&. 
+.SS "\fBTimestamp\fP Timestamp::make_jiffies (click_jiffies_difference_t jiffies)\fC [inline]\fP, \fC [static]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "click_jiffies_t Timestamp::jiffies () const\fC [inline]\fP"
+
+.PP
+Return the number of jiffies represented by this timestamp\&. 
+.SS "static \fBTimestamp\fP Timestamp::make_sec (\fBseconds_type\fP sec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a timestamp representing \fIsec\fP seconds\&. 
+.SS "static \fBTimestamp\fP Timestamp::make_msec (\fBseconds_type\fP sec, uint32_t msec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a timestamp representing \fIsec\fP seconds plus \fImsec\fP milliseconds\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fImsec\fP < 1000 
+.RE
+.PP
+
+.SS "static \fBTimestamp\fP Timestamp::make_msec (\fBvalue_type\fP msec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a timestamp representing \fImsec\fP milliseconds\&. 
+.SS "static \fBTimestamp\fP Timestamp::make_usec (\fBseconds_type\fP sec, uint32_t usec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a timestamp representing \fIsec\fP seconds plus \fIusec\fP microseconds\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIusec\fP < 1000000 
+.RE
+.PP
+
+.SS "static \fBTimestamp\fP Timestamp::make_usec (\fBvalue_type\fP usec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a timestamp representing \fIusec\fP microseconds\&. 
+.SS "static \fBTimestamp\fP Timestamp::make_nsec (\fBseconds_type\fP sec, uint32_t nsec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a timestamp representing \fIsec\fP seconds plus \fInsec\fP nanoseconds\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fInsec\fP < 1000000000 
+.RE
+.PP
+
+.SS "static \fBTimestamp\fP Timestamp::make_nsec (\fBvalue_type\fP nsec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a timestamp representing \fInsec\fP nanoseconds\&. 
+.SS "static \fBTimestamp\fP Timestamp::epsilon ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the smallest nonzero timestamp, \fBTimestamp(0, 1)\fP\&. 
+.SS "void Timestamp::clear ()\fC [inline]\fP"
+
+.PP
+Clear this timestamp\&. 
+.SS "void Timestamp::assign (\fBseconds_type\fP sec, uint32_t subsec = \fC0\fP)\fC [inline]\fP"
+Set this timestamp to a seconds-and-subseconds value\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBTimestamp(int, int)\fP 
+.RE
+.PP
+
+.SS "void Timestamp::assign_usec (\fBseconds_type\fP sec, uint32_t usec)\fC [inline]\fP"
+Assign this timestamp to a seconds-and-microseconds value\&. 
+.SS "void Timestamp::assign_nsec (\fBseconds_type\fP sec, uint32_t nsec)\fC [inline]\fP"
+Assign this timestamp to a seconds-and-nanoseconds value\&. 
+.SS "\fBTimestamp\fP Timestamp::now ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the current system time\&. neverSystem time is measured in seconds since January 1, 1970 GMT\&. Produces the most precise timestamp available\&.
+.PP
+\fBNote:\fP
+.RS 4
+System time can jump forwards or backwards as a result of user actions\&. For a clock that never moves backwards, see \fBnow_steady()\fP\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBrecent()\fP, \fBassign_now()\fP, \fBnow_steady()\fP 
+.RE
+.PP
+
+.SS "void Timestamp::assign_now ()\fC [inline]\fP"
+
+.PP
+Set this timestamp to the current system time\&. Like '*this = Timestamp::now()'\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnow()\fP, \fBassign_recent()\fP 
+.RE
+.PP
+
+.SS "\fBTimestamp\fP Timestamp::recent ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a recent system time\&. The \fBTimestamp::now()\fP function calculates the current system time, which is relatively expensive\&. \fBTimestamp::recent()\fP can be faster, but is less precise: it returns a cached copy of a recent system time\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnow()\fP, \fBassign_recent()\fP 
+.RE
+.PP
+
+.SS "void Timestamp::assign_recent ()\fC [inline]\fP"
+
+.PP
+Set this timestamp to a recent system time\&. Like '*this = Timestamp::recent()'\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBrecent()\fP, \fBassign_now()\fP 
+.RE
+.PP
+
+.SS "\fBTimestamp\fP Timestamp::now_steady ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the current steady-clock time\&. The steady clock, often called a monotonic clock, is a system clock that never moves backwards\&. Steady-clock time is measured in seconds since an undefined start point (often related to the most recent boot)\&. Produces the most precise timestamp available\&.
+.PP
+\fBNote:\fP
+.RS 4
+Steady-clock times and system times are incomparable, since they have different start points\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBrecent_steady()\fP, \fBassign_now_steady()\fP 
+.RE
+.PP
+
+.SS "void Timestamp::assign_now_steady ()\fC [inline]\fP"
+
+.PP
+Set this timestamp to the current steady-clock time\&. Like '*this = Timestamp::now_steady()'\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnow_steady()\fP 
+.RE
+.PP
+
+.SS "\fBTimestamp\fP Timestamp::recent_steady ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a recent steady-clock time\&. The \fBTimestamp::now_steady()\fP function calculates the current steady-clock time, which is relatively expensive\&. \fBTimestamp::recent_steady()\fP can be faster, but is less precise: it returns a cached copy of a recent steady-clock time\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnow_steady()\fP, \fBassign_recent_steady()\fP 
+.RE
+.PP
+
+.SS "void Timestamp::assign_recent_steady ()\fC [inline]\fP"
+
+.PP
+Set this timestamp to a recent steady-clock time\&. Like '*this = Timestamp::recent_steady()'\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBrecent_steady()\fP, \fBassign_now_steady()\fP 
+.RE
+.PP
+
+.SS "\fBString\fP Timestamp::unparse () const"
+
+.PP
+Unparse this timestamp into a \fBString\fP\&. Returns a string formatted like '10\&.000000', with at least six subsecond digits\&. (Nanosecond-precision timestamps where the number of nanoseconds is not evenly divisible by 1000 are given nine subsecond digits\&.) 
+.SS "\fBString\fP Timestamp::unparse_interval () const"
+
+.PP
+Unparse this timestamp into a \fBString\fP as an interval\&. Returns a string formatted like '1us' or '1\&.000002s'\&. 
+.SS "static uint32_t Timestamp::msec_to_subsec (uint32_t msec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Convert milliseconds to subseconds\&. Subseconds are either microseconds or nanoseconds, depending on configuration options and driver choice\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBusec_to_subsec()\fP, \fBnsec_to_subsec()\fP, \fBsubsec_to_msec()\fP, \fBsubsec_to_usec()\fP, \fBsubsec_to_nsec()\fP 
+.RE
+.PP
+
+.SS "static uint32_t Timestamp::usec_to_subsec (uint32_t usec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Convert microseconds to subseconds\&. 
+.SS "static uint32_t Timestamp::nsec_to_subsec (uint32_t nsec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Convert nanoseconds to subseconds\&. 
+.SS "static uint32_t Timestamp::subsec_to_msec (uint32_t subsec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Convert subseconds to milliseconds\&. 
+.SS "static uint32_t Timestamp::subsec_to_usec (uint32_t subsec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Convert subseconds to microseconds\&. 
+.SS "static uint32_t Timestamp::subsec_to_nsec (uint32_t subsec)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Convert subseconds to nanoseconds\&. 
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "bool operator== (const \fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [friend]\fP"
+
+.PP
+Compare two timestamps for equality\&. never Returns true iff the two operands have the same seconds and subseconds components\&. 
+.SS "bool operator< (const \fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [friend]\fP"
+
+.PP
+Compare two timestamps\&. Returns true iff \fIa\fP represents a shorter interval than \fIb\fP, or considered as absolute time, \fIa\fP happened before \fIb\fP\&. 
+.SS "\fBTimestamp\fP operator\- (const \fBTimestamp\fP & b)\fC [friend]\fP"
+
+.PP
+Negate \fIa\fP and return the result\&. 
+.SS "\fBTimestamp\fP& operator+= (\fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [friend]\fP"
+
+.PP
+Add \fIb\fP to \fIa\fP\&. Returns the result (the new value of \fIa\fP)\&. 
+.SS "\fBTimestamp\fP& operator\-= (\fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [friend]\fP"
+
+.PP
+Subtract \fIb\fP from \fIa\fP\&. Returns the result (the new value of \fIa\fP)\&. 
+.SS "bool operator!= (const \fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [related]\fP"
+
+.PP
+Compare two timestamps for inequality\&. Returns true iff !(\fIa\fP == \fIb\fP)\&. 
+.SS "bool operator<= (const \fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [related]\fP"
+
+.PP
+Compare two timestamps\&. Returns true iff \fIa\fP measures an interval no larger than \fIb\fP, or considered as absolute time, \fIa\fP happened at or before \fIb\fP\&. 
+.SS "bool operator>= (const \fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [related]\fP"
+
+.PP
+Compare two timestamps\&. Returns true iff \fIa\fP measures an interval no shorter than \fIb\fP, or considered as absolute time, \fIa\fP happened at or after \fIb\fP\&. 
+.SS "bool operator> (const \fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [related]\fP"
+
+.PP
+Compare two timestamps\&. Returns true iff \fIa\fP measures a longer interval than \fIb\fP, or considered as absolute time, \fIa\fP happened after \fIb\fP\&. 
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, const \fBTimestamp\fP & ts)\fC [related]\fP"
+
+.PP
+Append the unparsed representation of \fIts\fP to \fIsa\fP\&. Same as \fIsa\fP << \fIts\&.unparse()\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

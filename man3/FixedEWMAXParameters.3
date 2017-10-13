@@ -1,0 +1,99 @@
+.TH "FixedEWMAXParameters< STABILITY, SCALE, T, U >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+FixedEWMAXParameters< STABILITY, SCALE, T, U > \- Parameters for a EWMA with constant scaling factor and stability shift\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <click/ewma\&.hh>\fP
+.PP
+Inherited by \fBRateEWMAXParameters< STABILITY, SCALE, T, U >\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef T \fBvalue_type\fP"
+.br
+.ti -1c
+.RI "typedef U \fBsigned_value_type\fP"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static unsigned \fBstability_shift\fP ()"
+.br
+.RI "\fIReturn this EWMA's stability shift\&. \fP"
+.ti -1c
+.RI "static unsigned \fBscale\fP ()"
+.br
+.RI "\fIReturn this EWMA's scaling factor (bits of fraction)\&. \fP"
+.ti -1c
+.RI "static value_type \fBscaled_one\fP ()"
+.br
+.RI "\fIReturn this EWMA's scaled value for one\&. \fP"
+.ti -1c
+.RI "static unsigned \fBcompensation\fP ()"
+.br
+.RI "\fIReturn this EWMA's compensation\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<unsigned STABILITY, unsigned SCALE, typename T = unsigned, typename U = int>
+.br
+class FixedEWMAXParameters< STABILITY, SCALE, T, U >"
+Parameters for a EWMA with constant scaling factor and stability shift\&. 
+
+The \fBFixedEWMAXParameters\fP template class is used as a template argument to \fBDirectEWMAX\fP\&. It defines a EWMA with fixed constant scaling factor and stability shift\&. \fBFixedEWMAXParameters\fP's first template argument is the EWMA's stability shift, its second template argument is the EWMA's scaling factor, its third template argument is the EWMA's value type, and the fourth template argument is the EWMA's signed value type\&.
+.PP
+Example 1: \fC\fBDirectEWMAX\fP<\fBFixedEWMAXParameters\fP<4, 10, unsigned, int> >\fP defines a EWMA with alpha 1/16 (stability shift 4), scaling factor 10, and value type unsigned\&. (These are the default parameters available in the DirectEWMA typedef\&.)
+.PP
+Example 2: \fC\fBDirectEWMAX\fP<\fBFixedEWMAXParameters\fP<3, 10, uint64_t, int64_t> >\fP defines a EWMA with alpha 1/8 (stability shift 3), scaling factor 10, and value type uint64_t\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<unsigned STABILITY, unsigned SCALE, typename T  = unsigned, typename U  = int> static unsigned \fBFixedEWMAXParameters\fP< STABILITY, SCALE, T, U >::stability_shift ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return this EWMA's stability shift\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+the 1st template parameter 
+.RE
+.PP
+
+.SS "template<unsigned STABILITY, unsigned SCALE, typename T  = unsigned, typename U  = int> static unsigned \fBFixedEWMAXParameters\fP< STABILITY, SCALE, T, U >::scale ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return this EWMA's scaling factor (bits of fraction)\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+the 2nd template parameter 
+.RE
+.PP
+
+.SS "template<unsigned STABILITY, unsigned SCALE, typename T  = unsigned, typename U  = int> static value_type \fBFixedEWMAXParameters\fP< STABILITY, SCALE, T, U >::scaled_one ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return this EWMA's scaled value for one\&. 
+.SS "template<unsigned STABILITY, unsigned SCALE, typename T  = unsigned, typename U  = int> static unsigned \fBFixedEWMAXParameters\fP< STABILITY, SCALE, T, U >::compensation ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return this EWMA's compensation\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+1 << (\fBstability_shift()\fP - 1) 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

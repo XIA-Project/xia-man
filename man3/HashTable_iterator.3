@@ -1,0 +1,101 @@
+.TH "HashTable_iterator< T >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HashTable_iterator< T > \- The iterator type for \fBHashTable\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <hashtable\&.hh>\fP
+.PP
+Inherits \fBHashTable_const_iterator< T >\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBHashTable_const_iterator\fP< T > \fBinherited\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHashTable_iterator\fP ()"
+.br
+.RI "\fIConstruct an uninitialized iterator\&. \fP"
+.ti -1c
+.RI "T * \fBget\fP () const "
+.br
+.RI "\fIReturn a pointer to the element, null if *this == end()\&. \fP"
+.ti -1c
+.RI "T * \fBoperator\->\fP () const "
+.br
+.RI "\fIReturn a pointer to the element\&. \fP"
+.ti -1c
+.RI "T & \fBoperator*\fP () const "
+.br
+.RI "\fIReturn a reference to the element\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T>
+.br
+class HashTable_iterator< T >"
+The iterator type for \fBHashTable\fP\&. 
+
+These iterators apply to \fBHashTable\fP classes that store either a unified key-value pair (\fBHashTable<T>\fP), or to \fBHashTable\fP classes that map keys to explicit values (HashTable<K, V>)\&.
+.PP
+Iterators for HashTable<K, V> objects have additional methods\&. Given HashTable<K, V>::iterator it:
+.PP
+.PD 0
+.IP "\(bu" 2
+*it has type Pair<const K, V>\&. 
+.IP "\(bu" 2
+it\&.key() returns the associated key, and is equivalent to it->first\&. 
+.IP "\(bu" 2
+it\&.value() returns the associated value, and is equivalent to it->second\&. 
+.IP "\(bu" 2
+it\&.value() is a mutable reference for iterator objects and a const reference for const_iterator objects\&. 
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T > \fBHashTable_iterator\fP< T >::\fBHashTable_iterator\fP ()\fC [inline]\fP"
+
+.PP
+Construct an uninitialized iterator\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T > T* \fBHashTable_iterator\fP< T >::get () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the element, null if *this == end()\&. 
+.SS "template<typename T > T* \fBHashTable_iterator\fP< T >::operator\-> () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+*this != end() 
+.RE
+.PP
+
+.SS "template<typename T > T& \fBHashTable_iterator\fP< T >::operator* () const\fC [inline]\fP"
+
+.PP
+Return a reference to the element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+*this != end() 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,97 @@
+.TH "Bitvector::Bit" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Bitvector::Bit \- A wrapper class that acts like a single bit\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <bitvector\&.hh>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBit\fP (Bitvector::word_type &w, int bit_offset)"
+.br
+.RI "\fIConstruct a bit at offset \fIbit_offset\fP in data word \fIw\fP\&. \fP"
+.ti -1c
+.RI "\fBoperator bool\fP () const "
+.br
+.RI "\fITest if this bit is true\&. \fP"
+.ti -1c
+.RI "\fBBit\fP & \fBoperator=\fP (bool x)"
+.br
+.RI "\fISet this bit to \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBBit\fP & \fBoperator=\fP (const \fBBit\fP &x)"
+.br
+.ti -1c
+.RI "void \fBflip\fP ()"
+.br
+.RI "\fIFlip this bit\&. \fP"
+.ti -1c
+.RI "\fBBit\fP & \fBoperator&=\fP (bool x)"
+.br
+.RI "\fIModify this bit by bitwise and with \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBBit\fP & \fBoperator|=\fP (bool x)"
+.br
+.RI "\fIModify this bit by bitwise or with \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBBit\fP & \fBoperator^=\fP (bool x)"
+.br
+.RI "\fIModify this bit by bitwise exclusive or with \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBBit\fP & \fBoperator\-=\fP (bool x)"
+.br
+.RI "\fIModify this bit by bitwise subtraction with \fIx\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A wrapper class that acts like a single bit\&. 
+
+Bits are returned by modifiable Bitvectors' operator[]\&. They act like bools, but \fBBit\fP operations actually index into individual bits in some shared word\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Bitvector::Bit::Bit (Bitvector::word_type & w, int bit_offset)\fC [inline]\fP"
+
+.PP
+Construct a bit at offset \fIbit_offset\fP in data word \fIw\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "Bitvector::Bit::operator bool () const\fC [inline]\fP"
+
+.PP
+Test if this bit is true\&. 
+.SS "\fBBitvector::Bit\fP & Bitvector::Bit::operator= (bool x)\fC [inline]\fP"
+
+.PP
+Set this bit to \fIx\fP\&. 
+.SS "\fBBitvector::Bit\fP & Bitvector::Bit::operator= (const \fBBit\fP & x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Bitvector::Bit::flip ()\fC [inline]\fP"
+
+.PP
+Flip this bit\&. 
+.SS "\fBBitvector::Bit\fP & Bitvector::Bit::operator&= (bool x)\fC [inline]\fP"
+
+.PP
+Modify this bit by bitwise and with \fIx\fP\&. 
+.SS "\fBBitvector::Bit\fP & Bitvector::Bit::operator|= (bool x)\fC [inline]\fP"
+
+.PP
+Modify this bit by bitwise or with \fIx\fP\&. 
+.SS "\fBBitvector::Bit\fP & Bitvector::Bit::operator^= (bool x)\fC [inline]\fP"
+
+.PP
+Modify this bit by bitwise exclusive or with \fIx\fP\&. 
+.SS "\fBBitvector::Bit\fP & Bitvector::Bit::operator\-= (bool x)\fC [inline]\fP"
+
+.PP
+Modify this bit by bitwise subtraction with \fIx\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

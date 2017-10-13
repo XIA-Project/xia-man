@@ -1,0 +1,88 @@
+.TH "xsocket/Xselect.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xselect.c \- \fBXselect()\fP, \fBXpoll()\fP - synchronous I/O multiplexing\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXpoll\fP (struct pollfd *ufds, unsigned nfds, int timeout)"
+.br
+.RI "\fIwaits for one of a set of Xsockets or file descriptors to become ready to perform I/O\&. \fP"
+.ti -1c
+.RI "int \fBXselect\fP (int nfds, fd_set *readfds, fd_set *writefds, fd_set *errorfds, struct timeval *timeout)"
+.br
+.RI "\fIwaits for one of a set of Xsockets to become ready to perform I/O\&. \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xpoll (struct pollfd * ufds, unsigned nfds, int timeout)"
+Xsocket specific version of poll\&. See the poll man page for more detailed information\&. This function is compatible with Xsockets as well as regular sockets and fds\&. Xsockets are polled via click, and regular sockets and fds are handled through the normal poll API\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIufds\fP array of pollfds indicating sockets and states to check for 
+.br
+\fInfds\fP number of entries in ufds 
+.br
+ socket ids specified as 0 or negative will be ignored 
+.br
+ valid flags for events are POLLIN | POLLOUT | POLLERR 
+.br
+ revents contains the returned flags and can be POLLIN | POLLOUT | POLLERR | POLLINVAL | POLLHUP 
+.br
+\fItimeout\fP number of milliseconds to wait for an event to happen
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 if timeout occured 
+.PP
+a positive integer indicating the number of sockets with return events 
+.PP
+-1 with errno set if an error occured 
+.RE
+.PP
+
+.SS "int Xselect (int nfds, fd_set * readfds, fd_set * writefds, fd_set * errorfds, struct timeval * timeout)"
+Xsocket specific version of select\&. See the select man page for more detailed information\&. This function is compatible with Xsockets as well as regular sockets and fds\&. Xsockets are handled with the Xpoll APIs via click, and regular sockets and fds are handled through the normal select API\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fInfds\fP The highest socket number contained in the fd_sets plus 1 
+.br
+\fIreadfds\fP fd_set containing sockets to check for readability 
+.br
+\fIwritefds\fP fd_set containing sockets to check for writability 
+.br
+\fIerrorfds\fP fd_set containing sockets to check for errors 
+.br
+\fItimeout\fP amount of time to wait for a socket to change state 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+greater than 0, number of sockets ready 
+.PP
+0 if the timeout expired 
+.PP
+less than 0 if an error occurs 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+this function is only valid for stream and datagram sockets\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

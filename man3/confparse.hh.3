@@ -1,0 +1,2599 @@
+.TH "include/click/confparse.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/confparse.hh \- Support for parsing configuration strings\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.PP
+.RI "\fBArgument Manipulation\fP"
+.br
+
+.in +1c
+.in +1c
+.ti -1c
+.RI "const char * \fBcp_skip_space\fP (const char *begin, const char *end)"
+.br
+.RI "\fIFind the first nonspace character in the string [\fIbegin\fP, \fIend\fP)\&. \fP"
+.ti -1c
+.RI "const char * \fBcp_skip_comment_space\fP (const char *begin, const char *end)"
+.br
+.RI "\fIFind the first nonspace, noncomment character in the string [\fIbegin\fP, \fIend\fP)\&. \fP"
+.ti -1c
+.RI "const char * \fBcp_skip_double_quote\fP (const char *begin, const char *end)"
+.br
+.RI "\fIReturn the first character after a double-quoted string starting at \fIbegin\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_eat_space\fP (\fBString\fP &str)"
+.br
+.RI "\fIRemove spaces from the beginning of \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_is_space\fP (const \fBString\fP &str)"
+.br
+.RI "\fITest if \fIstr\fP is all spaces\&. \fP"
+.ti -1c
+.RI "bool \fBcp_is_word\fP (const \fBString\fP &str)"
+.br
+.RI "\fITest whether \fIstr\fP is a valid 'word'\&. \fP"
+.ti -1c
+.RI "bool \fBcp_is_click_id\fP (const \fBString\fP &str)"
+.br
+.RI "\fITest if \fIstr\fP is a valid Click identifier\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBcp_uncomment\fP (const \fBString\fP &str)"
+.br
+.RI "\fISimplify \fIstr's\fP whitespace and replace comments by spaces, returning the result\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBcp_unquote\fP (const \fBString\fP &str)"
+.br
+.RI "\fIRemove one level of quoting from \fIstr\fP, returning the result\&. \fP"
+.ti -1c
+.RI "const char * \fBcp_process_backslash\fP (const char *begin, const char *end, \fBStringAccum\fP &sa)"
+.br
+.RI "\fIProcess a backslash escape, appending results to \fIsa\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBcp_quote\fP (const \fBString\fP &str, bool allow_newlines=false)"
+.br
+.RI "\fIReturn a quoted version of \fIstr\fP\&. \fP"
+.ti -1c
+.RI "void \fBcp_argvec\fP (const \fBString\fP &str, \fBVector\fP< \fBString\fP > &conf)"
+.br
+.RI "\fISeparate a configuration string into arguments at commas\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBcp_unargvec\fP (const \fBVector\fP< \fBString\fP > &conf)"
+.br
+.RI "\fIJoin the strings of \fIconf\fP with commas and return the result\&. \fP"
+.ti -1c
+.RI "void \fBcp_spacevec\fP (const \fBString\fP &str, \fBVector\fP< \fBString\fP > &conf)"
+.br
+.RI "\fISeparate a configuration string into arguments at unquoted spaces\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBcp_shift_spacevec\fP (\fBString\fP &str)"
+.br
+.RI "\fIRemove and return the first space-separated argument from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBcp_unspacevec\fP (const \fBString\fP *begin, const \fBString\fP *end)"
+.br
+.RI "\fIJoin the strings in [\fIbegin\fP, \fIend\fP) with spaces and return the result\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBcp_unspacevec\fP (const \fBVector\fP< \fBString\fP > &conf)"
+.br
+.RI "\fIJoin the strings in \fIconf\fP with spaces and return the result\&. \fP"
+.in -1c
+.in -1c
+.PP
+.RI "\fBUnparsing\fP"
+.br
+
+.in +1c
+.in +1c
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_bool\fP (bool value)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_real2\fP (int32_t value, int frac_bits)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_real2\fP (uint32_t value, int frac_bits)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_real2\fP (int64_t value, int frac_bits)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_real2\fP (uint64_t value, int frac_bits)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_real10\fP (int32_t value, int frac_digits)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_real10\fP (uint32_t value, int frac_digits)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_milliseconds\fP (uint32_t value)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_microseconds\fP (uint32_t value)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_interval\fP (const \fBTimestamp\fP &value)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_interval\fP (const struct timeval &value)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBcp_unparse_bandwidth\fP (uint32_t value)"
+.br
+.in -1c
+.in -1c
+.PP
+.RI "\fBLegacy Functions\fP"
+.br
+
+.in +1c
+.in +1c
+.ti -1c
+.RI "int \fBcp_va_parse\fP (const \fBVector\fP< \fBString\fP > &conf, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)"
+.br
+.RI "\fILegacy function for parsing a list of arguments\&. \fP"
+.ti -1c
+.RI "int \fBcp_va_parse\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)"
+.br
+.RI "\fILegacy function for parsing a comma-separated argument string\&. \fP"
+.ti -1c
+.RI "int \fBcp_va_space_parse\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)"
+.br
+.RI "\fILegacy function for parsing a space-separated argument string\&. \fP"
+.ti -1c
+.RI "int \fBcp_va_parse_keyword\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)"
+.br
+.RI "\fILegacy function for parsing a single argument\&. \fP"
+.ti -1c
+.RI "int \fBcp_va_parse_remove_keywords\fP (\fBVector\fP< \fBString\fP > &conf, int first, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)"
+.br
+.RI "\fILegacy function for parsing and removing matching arguments from \fIconf\fP\&. \fP"
+.in -1c
+.in -1c
+.SS "Direct Parsing Functions"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCP_REAL2_MAX_FRAC_BITS\fP   28"
+.br
+.ti -1c
+.RI "enum \fBCpErrors\fP { \fBCPE_OK\fP = 0, \fBCPE_FORMAT\fP, \fBCPE_NEGATIVE\fP, \fBCPE_OVERFLOW\fP, \fBCPE_INVALID\fP, \fBCPE_MEMORY\fP, \fBCPE_NOUNITS\fP }"
+.br
+.ti -1c
+.RI "enum { \fBcp_basic_integer_whole\fP = 64 }"
+.br
+.ti -1c
+.RI "int \fBcp_errno\fP"
+.br
+.ti -1c
+.RI "bool \fBcp_string\fP (const \fBString\fP &str, \fBString\fP *result, \fBString\fP *rest=0)"
+.br
+.RI "\fIParse a string from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_word\fP (const \fBString\fP &str, \fBString\fP *result, \fBString\fP *rest=0)"
+.br
+.RI "\fIParse a word from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_keyword\fP (const \fBString\fP &str, \fBString\fP *result, \fBString\fP *rest=0)"
+.br
+.RI "\fIParse a keyword from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_bool\fP (const \fBString\fP &str, bool *result)"
+.br
+.RI "\fIParse a boolean from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "const char * \fBcp_basic_integer\fP (const char *begin, const char *end, int flags, int size, void *result)"
+.br
+.ti -1c
+.RI "const char * \fBcp_integer\fP (const char *begin, const char *end, int base, int *result)"
+.br
+.RI "\fIParse an integer from [\fIbegin\fP, \fIend\fP) in base \fIbase\fP\&. \fP"
+.ti -1c
+.RI "const char * \fBcp_integer\fP (const char *begin, const char *end, int base, unsigned *result)"
+.br
+.ti -1c
+.RI "const char * \fBcp_integer\fP (const char *begin, const char *end, int base, long *result)"
+.br
+.ti -1c
+.RI "const char * \fBcp_integer\fP (const char *begin, const char *end, int base, unsigned long *result)"
+.br
+.ti -1c
+.RI "const char * \fBcp_integer\fP (const char *begin, const char *end, int base, int64_t *result)"
+.br
+.ti -1c
+.RI "const char * \fBcp_integer\fP (const char *begin, const char *end, int base, uint64_t *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, int base, int *result)"
+.br
+.RI "\fIParse an integer from \fIstr\fP in base \fIbase\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, int base, unsigned int *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, int base, long *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, int base, unsigned long *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, int base, int64_t *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, int base, uint64_t *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, int *result)"
+.br
+.RI "\fIParse an integer from \fIstr\fP in base 0\&. \fP"
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, unsigned int *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, long *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, unsigned long *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, int64_t *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_integer\fP (const \fBString\fP &str, uint64_t *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_real2\fP (const \fBString\fP &str, int frac_bits, int32_t *result)"
+.br
+.RI "\fIParse a fixed-point number from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_real2\fP (const \fBString\fP &str, int frac_bits, uint32_t *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_real10\fP (const \fBString\fP &str, int frac_digits, int32_t *result)"
+.br
+.RI "\fIParse a real number from \fIstr\fP, representing the result as an integer with \fIfrac_digits\fP decimal digits of fraction\&. \fP"
+.ti -1c
+.RI "bool \fBcp_real10\fP (const \fBString\fP &str, int frac_digits, uint32_t *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_real10\fP (const \fBString\fP &str, int frac_digits, uint32_t *result_int, uint32_t *result_frac)"
+.br
+.RI "\fIParse a real number from \fIstr\fP, representing the result as an integer with \fIfrac_digits\fP decimal digits of fraction\&. \fP"
+.ti -1c
+.RI "bool \fBcp_double\fP (const \fBString\fP &str, double *result)"
+.br
+.RI "\fIParse a real number from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_seconds_as\fP (const \fBString\fP &str, int frac_digits, uint32_t *result)"
+.br
+.RI "\fIParse an amount of time from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_seconds_as_milli\fP (const \fBString\fP &str, uint32_t *result)"
+.br
+.RI "\fIParse an amount of time in milliseconds from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_seconds_as_micro\fP (const \fBString\fP &str, uint32_t *result)"
+.br
+.RI "\fIParse an amount of time in microseconds from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_seconds\fP (const \fBString\fP &str, double *result)"
+.br
+.RI "\fIParse an amount of time from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_time\fP (const \fBString\fP &str, \fBTimestamp\fP *result, bool allow_negative=false)"
+.br
+.RI "\fIParse a timestamp from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_time\fP (const \fBString\fP &str, struct timeval *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_bandwidth\fP (const \fBString\fP &str, uint32_t *result)"
+.br
+.RI "\fIParse a bandwidth value from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_ip_address\fP (const \fBString\fP &str, \fBIPAddress\fP *result, const \fBElement\fP *context=0)"
+.br
+.RI "\fIParse an IP address from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_ip_address\fP (const \fBString\fP &str, struct in_addr *result, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip_address\fP (const \fBString\fP &str, unsigned char *result, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip_prefix\fP (const \fBString\fP &str, \fBIPAddress\fP *result_addr, \fBIPAddress\fP *result_mask, bool allow_bare_address, const \fBElement\fP *context=0)"
+.br
+.RI "\fIParse an IP address or prefix from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_ip_prefix\fP (const \fBString\fP &str, unsigned char *result_addr, unsigned char *result_mask, bool allow_bare_address, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip_prefix\fP (const \fBString\fP &str, \fBIPAddress\fP *result_addr, \fBIPAddress\fP *result_mask, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip_prefix\fP (const \fBString\fP &str, unsigned char *result_addr, unsigned char *result_mask, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip_address_list\fP (const \fBString\fP &str, \fBVector\fP< \fBIPAddress\fP > *result, const \fBElement\fP *context=0)"
+.br
+.RI "\fIParse a space-separated list of IP addresses from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_xid_type\fP (const \fBString\fP &str, uint32_t *result)"
+.br
+.ti -1c
+.RI "bool \fBcp_xid\fP (const \fBString\fP &str, struct click_xia_xid *xid, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_xid\fP (const \fBString\fP &str, \fBXID\fP *xid, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_xia_path\fP (const \fBString\fP &str, XIAPath *xia_path, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_xia_path_dag\fP (const \fBString\fP &str, XIAPath *xia_path, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_xia_path_re\fP (const \fBString\fP &str, XIAPath *xia_path, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip6_address\fP (const \fBString\fP &str, IP6Address *result, const \fBElement\fP *context=0)"
+.br
+.RI "\fIParse an IPv6 address from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_ip6_address\fP (const \fBString\fP &str, struct in6_addr *result, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip6_address\fP (const \fBString\fP &str, unsigned char *result, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip6_prefix\fP (const \fBString\fP &str, IP6Address *result_addr, int *result_prefix, bool allow_bare_address, const \fBElement\fP *context=0)"
+.br
+.RI "\fIParse an IPv6 address or prefix from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_ip6_prefix\fP (const \fBString\fP &str, unsigned char *result_addr, int *result_prefix, bool allow_bare_address, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip6_prefix\fP (const \fBString\fP &str, unsigned char *result_addr, unsigned char *result_mask, bool allow_bare_address, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ip6_prefix\fP (const \fBString\fP &str, IP6Address *result_addr, IP6Address *result_mask, bool allow_bare_address, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_ethernet_address\fP (const \fBString\fP &str, \fBEtherAddress\fP *result, const \fBElement\fP *context=0)"
+.br
+.RI "\fIParse an Ethernet address from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_ethernet_address\fP (const \fBString\fP &str, unsigned char *result, const \fBElement\fP *context=0)"
+.br
+.ti -1c
+.RI "bool \fBcp_tcpudp_port\fP (const \fBString\fP &str, int proto, uint16_t *result, const \fBElement\fP *context=0)"
+.br
+.RI "\fIParse a TCP, UDP, etc\&. port number from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBcp_element\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0, const char *argname=0)"
+.br
+.RI "\fIParse an element reference from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBcp_element\fP (const \fBString\fP &str, \fBRouter\fP *router, \fBErrorHandler\fP *errh=0, const char *argname=0)"
+.br
+.RI "\fIParse an element reference from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_handler_name\fP (const \fBString\fP &str, \fBElement\fP **result_element, \fBString\fP *result_hname, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fIParse a handler name from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_handler\fP (const \fBString\fP &str, int flags, \fBElement\fP **result_element, const \fBHandler\fP **result_handler, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fIParse a handler reference from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_filename\fP (const \fBString\fP &str, \fBString\fP *result)"
+.br
+.RI "\fIParse a filename string from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_file_offset\fP (const \fBString\fP &str, off_t *result)"
+.br
+.RI "\fIParse a file offset from \fIstr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBcp_anno\fP (const \fBString\fP &str, int size, int *result, const \fBElement\fP *context=0)"
+.br
+.RI "\fIParse a packet annotation value from \fIstr\fP\&. \fP"
+.in -1c
+.SS "cp_va_kparse"
+
+.in +1c
+.ti -1c
+.RI "enum \fBCpKparseFlags\fP { \fBcpkN\fP = 0, \fBcpkM\fP = 1, \fBcpkP\fP = 2, \fBcpkC\fP = 4, \fBcpkD\fP = 8, \fBcpkNormal\fP = cpkN, \fBcpkMandatory\fP = cpkM, \fBcpkPositional\fP = cpkP, \fBcpkConfirm\fP = cpkC, \fBcpkDeprecated\fP = cpkD }
+.RI "\fIType of flags for \fBcp_va_kparse()\fP items\&. \fP""
+.br
+.ti -1c
+.RI "typedef const char * \fBCpVaParseCmd\fP"
+.br
+.RI "\fIType of argument type names for \fBcp_va_kparse()\fP items\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpEnd\fP"
+.br
+.RI "\fIUse as argument name\&. Ends cp_va argument list\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIgnoreRest\fP"
+.br
+.RI "\fIUse as argument name\&. No result storage; causes \fBcp_va_kparse()\fP to ignore unparsed arguments and any remaining items\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIgnore\fP"
+.br
+.RI "\fINo result storage, ignores this argument\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpArgument\fP"
+.br
+.RI "\fIResult storage String*, accepts any argument\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpArguments\fP"
+.br
+.RI "\fIResult storage \fBVector<String>\fP*, accepts any number of arguments with the same keyword\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpString\fP"
+.br
+.RI "\fIResult storage String*, parsed by \fBcp_string()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpWord\fP"
+.br
+.RI "\fIResult storage String*, parsed by \fBcp_word()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpKeyword\fP"
+.br
+.RI "\fIResult storage String*, parsed by \fBcp_keyword()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpBool\fP"
+.br
+.RI "\fIResult storage bool*, parsed by \fBcp_bool()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpByte\fP"
+.br
+.RI "\fIResult storage unsigned char*, parsed by \fBcp_integer()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpShort\fP"
+.br
+.RI "\fIResult storage short*, parsed by \fBcp_integer()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpUnsignedShort\fP"
+.br
+.RI "\fIResult storage unsigned short*, parsed by \fBcp_integer()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpInteger\fP"
+.br
+.RI "\fIResult storage int32_t*, parsed by \fBcp_integer()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpUnsigned\fP"
+.br
+.RI "\fIResult storage uint32_t*, parsed by \fBcp_integer()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpSize\fP"
+.br
+.RI "\fIResult storage size_t*, parsed by \fBcp_integer()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpNamedInteger\fP"
+.br
+.RI "\fIParse parameter uint32_t nameinfo_type, result storage int32_t*, parsed by \fBNameInfo::query_int\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpInteger64\fP"
+.br
+.RI "\fIResult storage int64_t*, parsed by \fBcp_integer()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpUnsigned64\fP"
+.br
+.RI "\fIResult storage uint64_t*, parsed by \fBcp_integer()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpUnsignedReal2\fP"
+.br
+.RI "\fIParse parameter int frac_bits, result storage uint32_t*, parsed by \fBcp_real2()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpReal10\fP"
+.br
+.RI "\fIParse parameter int frac_digits, result storage int32_t*, parsed by \fBcp_real10()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpUnsignedReal10\fP"
+.br
+.RI "\fIParse parameter int frac_digits, result storage uint32_t*, parsed by \fBcp_real10()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpDouble\fP"
+.br
+.RI "\fIResult storage double*, parsed by \fBcp_double()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpSeconds\fP"
+.br
+.RI "\fIResult storage uint32_t*, parsed by \fBcp_seconds_as()\fP with frac_digits 0\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpSecondsAsMilli\fP"
+.br
+.RI "\fIResult storage uint32_t*, parsed by \fBcp_seconds_as_milli()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpSecondsAsMicro\fP"
+.br
+.RI "\fIResult storage uint32_t*, parsed by \fBcp_seconds_as_micro()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpTimestamp\fP"
+.br
+.RI "\fIResult storage Timestamp*, parsed by \fBcp_time()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpTimestampSigned\fP"
+.br
+.RI "\fIResult storage Timestamp*, parsed by \fBcp_time()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpTimeval\fP"
+.br
+.RI "\fIResult storage struct timeval*, parsed by \fBcp_time()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpBandwidth\fP"
+.br
+.RI "\fIResult storage uint32_t*, parsed by \fBcp_bandwidth()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIPAddress\fP"
+.br
+.RI "\fIResult storage IPAddress* or equivalent, parsed by \fBcp_ip_address()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpXIDType\fP"
+.br
+.RI "\fIResult storage int, parsed by cp_xid_type()\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpXID\fP"
+.br
+.RI "\fIResult storage struct click_xia_xid or equivalent, parsed by cp_xid()\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpXIAPath\fP"
+.br
+.RI "\fIResult storage XIAPath, parsed by XIAPath::parse()\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpXIAPathDAG\fP"
+.br
+.RI "\fIResult storage XIAPath, parsed by XIAPath::parse_dag()\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpXIAPathRE\fP"
+.br
+.RI "\fIResult storage XIAPath, parsed by XIAPath::parse_re()\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIPPrefix\fP"
+.br
+.RI "\fIResult storage IPAddress* addr and \fBIPAddress\fP *mask, parsed by \fBcp_ip_prefix()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIPAddressOrPrefix\fP"
+.br
+.RI "\fIResult storage IPAddress* addr and \fBIPAddress\fP *mask, parsed by \fBcp_ip_prefix()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIPAddressList\fP"
+.br
+.RI "\fIResult storage Vector<IPAddress>*, parsed by \fBcp_ip_address_list()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpEtherAddress\fP"
+.br
+.RI "\fIResult storage EtherAddress*, parsed by \fBcp_ethernet_address()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpEthernetAddress\fP"
+.br
+.RI "\fIResult storage EtherAddress*, parsed by \fBcp_ethernet_address()\fP\&. Synonym for cpEtherAddress\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpTCPPort\fP"
+.br
+.RI "\fIResult storage uint16_t*, parsed by \fBcp_tcpudp_port()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpUDPPort\fP"
+.br
+.RI "\fIResult storage uint16_t*, parsed by \fBcp_tcpudp_port()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpElement\fP"
+.br
+.RI "\fIResult storage Element**, parsed by \fBcp_element()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpElementCast\fP"
+.br
+.RI "\fIParse parameter const char*, result storage void**, parsed by \fBcp_element()\fP and \fBElement::cast()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpHandlerName\fP"
+.br
+.RI "\fIResult storage Element** and String*, parsed by \fBcp_handler_name()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpHandlerCallRead\fP"
+.br
+.RI "\fIResult storage HandlerCall*, parsed by \fBHandlerCall\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpHandlerCallWrite\fP"
+.br
+.RI "\fIResult storage HandlerCall*, parsed by \fBHandlerCall\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpHandlerCallPtrRead\fP"
+.br
+.RI "\fIResult storage HandlerCall**, parsed by \fBHandlerCall::reset_read\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpHandlerCallPtrWrite\fP"
+.br
+.RI "\fIResult storage HandlerCall**, parsed by \fBHandlerCall::reset_write\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIP6Address\fP"
+.br
+.RI "\fIResult storage IP6Address* or equivalent, parsed by \fBcp_ip6_address()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIP6Prefix\fP"
+.br
+.RI "\fIResult storage IP6Address* addr and IP6Address* mask, parsed by \fBcp_ip6_prefix()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIP6PrefixLen\fP"
+.br
+.RI "\fIResult storage IP6Address* addr and int* prefix_len, parsed by \fBcp_ip6_prefix()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpIP6AddressOrPrefix\fP"
+.br
+.RI "\fIResult storage IP6Address* addr and IP6Address* mask, parsed by \fBcp_ip6_prefix()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpFilename\fP"
+.br
+.RI "\fIResult storage String*, parsed by \fBcp_filename()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpFileOffset\fP"
+.br
+.RI "\fIResult storage off_t*, parsed by \fBcp_integer()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpAnno\fP"
+.br
+.RI "\fIParse parameter int annotation_size, result storage int*, parsed by \fBcp_anno()\fP\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpOptional\fP"
+.br
+.RI "\fIcp_va_parse only: Following arguments are optional\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpKeywords\fP"
+.br
+.RI "\fIcp_va_parse only: Following arguments are keywords\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpConfirmKeywords\fP"
+.br
+.RI "\fIcp_va_parse only: Following arguments are confirmed keywords\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP \fBcpMandatoryKeywords\fP"
+.br
+.RI "\fIcp_va_parse only: Following arguments are mandatory keywords\&. \fP"
+.ti -1c
+.RI "const \fBCpVaParseCmd\fP cpInterval \fBCLICK_CONFPARSE_DEPRECATED\fP"
+.br
+.ti -1c
+.RI "int \fBcp_va_kparse\fP (const \fBVector\fP< \fBString\fP > &conf, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.) CP_SENTINEL"
+.br
+.RI "\fIParse a list of arguments\&. \fP"
+.ti -1c
+.RI "int \fBcp_va_kparse\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.) CP_SENTINEL"
+.br
+.RI "\fIParse a comma-separated argument string\&. \fP"
+.ti -1c
+.RI "int \fBcp_va_space_kparse\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.) CP_SENTINEL"
+.br
+.RI "\fIParse a space-separated argument string\&. \fP"
+.ti -1c
+.RI "int \fBcp_va_kparse_keyword\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.) CP_SENTINEL"
+.br
+.RI "\fIParse a single argument\&. \fP"
+.ti -1c
+.RI "int \fBcp_va_kparse_remove_keywords\fP (\fBVector\fP< \fBString\fP > &conf, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.) CP_SENTINEL"
+.br
+.RI "\fIParse and remove matching arguments from \fIconf\fP\&. \fP"
+.ti -1c
+.RI "int \fBcp_assign_arguments\fP (const \fBVector\fP< \fBString\fP > &argv, const \fBString\fP *param_begin, const \fBString\fP *param_end, \fBVector\fP< \fBString\fP > *values=0)"
+.br
+.RI "\fIAssign arguments from \fIargv\fP to \fIvalues\fP\&. \fP"
+.ti -1c
+.RI "void \fBcp_va_static_initialize\fP ()"
+.br
+.RI "\fIInitialize the \fBcp_va_kparse()\fP implementation\&. \fP"
+.ti -1c
+.RI "void \fBcp_va_static_cleanup\fP ()"
+.br
+.RI "\fIClean up the \fBcp_va_kparse()\fP implementation\&. \fP"
+.in -1c
+.SS "Argument Types for cp_va_kparse()"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBcpArgNormal\fP = 0, \fBcpArgStore2\fP = 1, \fBcpArgExtraInt\fP = 2, \fBcpArgExtraCStr\fP = 4, \fBcpArgAllowNumbers\fP = 8 }"
+.br
+.ti -1c
+.RI "typedef void(* \fBcp_parsefunc\fP) (cp_value *value, const \fBString\fP &arg, \fBErrorHandler\fP *errh, const char *argdesc, const \fBElement\fP *context)"
+.br
+.ti -1c
+.RI "typedef void(* \fBcp_storefunc\fP) (cp_value *value, const \fBElement\fP *context)"
+.br
+.ti -1c
+.RI "int \fBcp_register_argtype\fP (const char *name, const char *description, int flags, cp_parsefunc parsefunc, cp_storefunc storefunc, void *user_data=0)"
+.br
+.ti -1c
+.RI "void \fBcp_unregister_argtype\fP (const char *name)"
+.br
+.ti -1c
+.RI "int \fBcp_register_stringlist_argtype\fP (const char *name, const char *description, int flags)"
+.br
+.ti -1c
+.RI "int \fBcp_extend_stringlist_argtype\fP (const char *name,\&.\&.\&.)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Support for parsing configuration strings\&. 
+
+Defines functions and helpers for parsing configuration strings into numbers, IP addresses, and other useful types\&.
+.PP
+.SS "cp_va_kparse Introduction"
+.PP
+Most elements that take configuration strings parse them using the \fBcp_va_kparse()\fP function and friends\&. These functions take a variable argument list describing the desired arguments and result slots\&. They parse the configuration, store the results in the slots, report any errors, and return the number of arguments successfully assigned on success or a negative value on failure\&.
+.PP
+\fBNote:\fP
+.RS 4
+Previous versions of Click used \fBcp_va_parse()\fP and friends instead of \fBcp_va_kparse()\fP\&. A guide for transitioning from \fBcp_va_parse()\fP to \fBcp_va_kparse()\fP is given in the documentation for \fBcp_va_parse()\fP\&.
+.RE
+.PP
+Here are some \fBcp_va_kparse()\fP examples\&.
+.PP
+.PP
+.nf
+int MyElement::configure(Vector<String> &conf, ErrorHandler *errh) {
+    String data; uint32_t limit = 0; bool stop = false;
+    if (cp_va_kparse(conf, this, errh,
+                     "DATA", cpkP+cpkM, cpString, &data,
+                     "LIMIT", cpkP, cpUnsigned, &limit,
+                     "STOP", 0, cpBool, &stop,
+                     cpEnd) < 0)   // argument list always terminated by cpEnd
+        return -1;
+    \&.\&.\&. }
+.fi
+.PP
+.PP
+This element supports three arguments, \fCDATA\fP (a string), \fCLIMIT\fP (an unsigned integer), and \fCSTOP\fP (a boolean)\&. Here are some example element definitions:
+.PP
+.PP
+.nf
+MyElement(DATA "blah blah blah", LIMIT 10);
+            /* OK, sets data = "blah blah blah", limit = 10; leaves stop unchanged */
+MyElement(LIMIT 10, DATA "blah blah blah");
+            /* OK, has the same effect */
+MyElement(LIMIT 10);
+            /* error "missing mandatory DATA argument" */
+            /* (the cpkM flag marks an argument as mandatory) */
+MyElement(DATA "blah blah blah");
+            /* OK, sets data = "blah blah blah" and leaves limit unchanged */
+            /* (LIMIT lacks the cpkM flag, so it can be left off) */
+MyElement(DATA "blah blah blah", STOP true);
+            /* OK, sets data = "blah blah blah" and stop = true */
+            /* (LIMIT lacks the cpkM flag, so it can be left off) */
+MyElement(DATA "blah blah blah", LIMIT 10, DATA "blah");
+            /* OK, sets data = "blah" (later arguments take precedence) */
+MyElement(DATA "blah blah blah", LIMIT 10, BOGUS "bogus");
+            /* error "too many arguments" */
+MyElement("blah blah blah", 10);
+            /* OK, same as MyElement(DATA "blah blah blah", LIMIT 10) */
+            /* (the cpkP flag allows positional arguments) */
+MyElement("blah blah blah", 10, true);
+            /* error "too many arguments" */
+            /* (STOP lacks the cpkP flag and must be given by name) */
+.fi
+.PP
+.PP
+.SS "cp_va_kparse Items"
+.PP
+An item in a \fBcp_va_kparse()\fP argument list consists of:
+.PP
+.PD 0
+.IP "1." 4
+\fBArgument name\fP (type: const char *)\&. Example: \fC'DATA'\fP\&. 
+.IP "2." 4
+\fBParse flags\fP (type: int)\&. Zero or more of \fBcpkP\fP, \fBcpkM\fP, and \fBcpkC\fP\&. 
+.IP "3." 4
+If the parse flags contain \fBcpkC\fP, then a \fBconfirmation flag\fP comes next (type: bool *)\&. This flag is set to true if an argument successfully matched the item and false if not\&. 
+.IP "4." 4
+\fBArgument type\fP (type: \fBCpVaParseCmd\fP)\&. Defines the type of argument read from the configuration string\&. Example: \fBcpString\fP\&. 
+.IP "5." 4
+Optional \fBparse parameters\fP (determined by the argument type)\&. For example, \fBcpUnsignedReal2\fP takes a parse parameter that defines how many bits of fraction are needed\&. 
+.IP "6." 4
+\fBResult storage\fP (determined by the argument type)\&. 
+.PP
+.PP
+This example uses more of these features\&.
+.PP
+.PP
+.nf
+int MyElement2::configure(Vector<String> &conf, ErrorHandler *errh) {
+    bool p_given; uint32_t p = 0x10000; IPAddress addr, mask;
+    if (cp_va_kparse(conf, this, errh,
+                     "P", cpkC, &p_given, cpUnsignedReal2, 16, &p,
+                     "NETWORK", 0, cpIPPrefix, &addr, &mask,
+                     cpEnd) < 0)
+        return -1;
+    \&.\&.\&. }
+.fi
+.PP
+.PP
+This element supports two arguments, \fCP\fP (a fixed-point number with 16 bits of fraction) and \fCNETWORK\fP (an IP prefix, defined by address and mask)\&. Here are some example element definitions:
+.PP
+.PP
+.nf
+MyElement2();
+            /* OK, since neither argument is mandatory; sets p_given = false */
+MyElement2(P 0\&.5, PREFIX 10/8);
+            /* OK, sets p_given = true, p = 0x8000, addr = 10\&.0\&.0\&.0, and mask = 255\&.0\&.0\&.0 */
+.fi
+.PP
+.PP
+.SS "cp_va_kparse Argument Types"
+.PP
+\fBcp_va_kparse()\fP argument types are defined by \fBCpVaParseCmd\fP constants\&. For example, the \fBcpInteger\fP argument type parses a 32-bit signed integer\&. See \fBCpVaParseCmd\fP for more\&. Elements may also define their own argument types with cp_register_argtype()\&.
+.PP
+.SS "Direct Parsing Functions"
+.PP
+You may also call parsing functions directly if \fBcp_va_kparse()\fP doesn't match your needs\&. These functions have names like \fBcp_bool()\fP, \fBcp_string()\fP, \fBcp_integer()\fP, \fBcp_ip_address()\fP, and so forth, and share a basic interface:
+.PP
+.PD 0
+.IP "\(bu" 2
+The first argument, const \fBString\fP &\fIstr\fP, contains the string to be parsed\&. 
+.IP "\(bu" 2
+The last argument(s) specify locations where the parsed results should be stored\&. These \fIresult\fP arguments have pointer type\&. 
+.IP "\(bu" 2
+The return type is bool\&. True is returned if and only if parsing succeeds, and the \fIresult\fP slots are modified if and only if parsing succeeds\&. 
+.IP "\(bu" 2
+Most parsing functions expect to parse the entire supplied string\&. Any extraneous characters, such as trailing whitespace, cause parsing to fail\&. 
+.IP "\(bu" 2
+Most parsing functions never report errors to any source; they simply return false when parsing fails\&.
+.PP
+.SS "Argument Manipulation"
+.PP
+Finally, functions like \fBcp_uncomment()\fP, \fBcp_unquote()\fP, \fBcp_quote()\fP, \fBcp_argvec()\fP, and \fBcp_is_space()\fP manipulate arguments as strings\&. \fBcp_uncomment()\fP removes comments and simplifies white space; \fBcp_unquote()\fP removes quotation marks and expands backslash escapes; \fBcp_argvec()\fP splits a configuration string at commas; and so forth\&. 
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef const char* \fBCpVaParseCmd\fP"
+
+.PP
+Type of argument type names for \fBcp_va_kparse()\fP items\&. 
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBCpKparseFlags\fP"
+
+.PP
+Type of flags for \fBcp_va_kparse()\fP items\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIcpkN \fP\fP
+Default flags\&. 
+.TP
+\fB\fIcpkM \fP\fP
+Argument is mandatory\&. 
+.TP
+\fB\fIcpkP \fP\fP
+Argument may be specified positionally\&. 
+.TP
+\fB\fIcpkC \fP\fP
+Argument presence should be confirmed\&. 
+.TP
+\fB\fIcpkD \fP\fP
+Argument is deprecated\&. 
+.SH "Function Documentation"
+.PP 
+.SS "const char* cp_skip_space (const char * begin, const char * end)"
+
+.PP
+Find the first nonspace character in the string [\fIbegin\fP, \fIend\fP)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbegin\fP beginning of string 
+.br
+\fIend\fP one past end of string 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Pointer to first non-space character in [\fIbegin\fP, \fIend\fP), or \fIend\fP if the string is all spaces\&.
+.RE
+.PP
+Space characters are defined as by isspace() in the 'C' locale, and consist of the characters in \fC[ \\f\\n\\r\\t\\v]\fP\&. 
+.SS "const char* cp_skip_comment_space (const char * begin, const char * end)"
+
+.PP
+Find the first nonspace, noncomment character in the string [\fIbegin\fP, \fIend\fP)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbegin\fP beginning of string 
+.br
+\fIend\fP one past end of string 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Pointer to first nonspace and noncomment character in [\fIbegin\fP, \fIend\fP), or \fIend\fP if the string is all spaces and comments\&.
+.RE
+.PP
+This function recognizes C-style and C++-style comments: 
+.PP
+.nf
+1 /* C style */  // C++ style (runs until newline)
+
+.fi
+.PP
+ In C++-style comments, the character sequences \fC'\\n'\fP, \fC'\\r'\fP, and \fC'\\r\\n'\fP are recognized as newlines\&. The newline is considered part of the comment\&. 
+.SS "const char* cp_skip_double_quote (const char * begin, const char * end)"
+
+.PP
+Return the first character after a double-quoted string starting at \fIbegin\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbegin\fP beginning of double-quoted string 
+.br
+\fIend\fP one past end of string 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Pointer to first character in [\fIbegin\fP, \fIend\fP) after the double-quoted string, or \fIend\fP if the double-quoted portion is not correctly terminated\&. 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIbegin\fP < \fIend\fP and *\fIbegin\fP == '"'
+.RE
+.PP
+\fBcp_skip_double_quote()\fP understands all the backslash escapes processed by \fBcp_process_backslash()\fP\&. 
+.SS "bool cp_eat_space (\fBString\fP & str)"
+
+.PP
+Remove spaces from the beginning of \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if the resulting string is nonempty, false otherwise\&. 
+.RE
+.PP
+
+.SS "bool cp_is_space (const \fBString\fP & str)\fC [inline]\fP"
+
+.PP
+Test if \fIstr\fP is all spaces\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+True when every character in \fIstr\fP is a space\&. 
+.RE
+.PP
+
+.SS "bool cp_is_word (const \fBString\fP & str)"
+
+.PP
+Test whether \fIstr\fP is a valid 'word'\&. A 'word' in Click consists of one or more characters in the ASCII range '!' through '~', inclusive, except for the quote characters ''' and ''', the backslash '\\', and the comma ','\&. 
+.SS "bool cp_is_click_id (const \fBString\fP & str)"
+
+.PP
+Test if \fIstr\fP is a valid Click identifier\&. A Click identifier consists of one or more characters in the set \fC[A-Za-z0-9/_@]\fP, with restrictions on where \fC/\fP may appear (it cannot be the first character or the last character, and two adjacent slashes aren't allowed either)\&. 
+.SS "\fBString\fP cp_uncomment (const \fBString\fP & str)"
+
+.PP
+Simplify \fIstr's\fP whitespace and replace comments by spaces, returning the result\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+A version of \fIstr\fP with all initial space removed, all final space removed, and all comments and space-comment sequences replaced by a single space character\&.
+.RE
+.PP
+Adjacent space characters are preserved in the output \fIunless\fP they appear next to a comment\&. For example: 
+.PP
+.nf
+1 cp_uncomment("  a   b  ") == "a   b", but:
+2 cp_uncomment("  a /* Comment */       b  ") == "a b"
+
+.fi
+.PP
+ Comment characters inside double or single quotes are ignored: 
+.PP
+.nf
+1 cp_uncomment("  \" /*???  */ \"  ") == "\" /*???  */ \""
+
+.fi
+.PP
+ 
+.SS "\fBString\fP cp_unquote (const \fBString\fP & str)"
+
+.PP
+Remove one level of quoting from \fIstr\fP, returning the result\&. This function acts as cp_uncomment, plus removing one level of quoting\&. \fC'\&.\&.\&.'\fP and \fC'\&.\&.\&.'\fP sequences are replaced by their contents\&. Backslash escapes are expanded inside double quotes (see cp_process_backslash)\&. Additionally, \fC'\\<\&.\&.\&.>'\fP sequences are expanded outside of any quotes\&. For example: 
+.PP
+.nf
+1 cp_unquote("\"\\n\" abc /* 123 */ '/* def */'") == "\n abc /* def */"
+
+.fi
+.PP
+ 
+.SS "const char* cp_process_backslash (const char * begin, const char * end, \fBStringAccum\fP & sa)"
+
+.PP
+Process a backslash escape, appending results to \fIsa\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbegin\fP beginning of string 
+.br
+\fIend\fP end of string 
+.br
+\fIsa\fP string accumulator 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIbegin\fP < \fIend\fP, and \fIbegin\fP points to a backslash character\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the first character in [\fIbegin\fP, \fIend\fP) following the backslash escape\&.
+.RE
+.PP
+This function understands the following backslash escapes\&. 
+.PD 0
+
+.IP "\(bu" 2
+\fC'\\[newline]'\fP is ignored (it adds no characters to \fIsa\fP), where \fC[newline]\fP is one of the sequences \fC'\\n'\fP, \fC'\\r'\fP, or \fC'\\r\\n'\fP\&. 
+.IP "\(bu" 2
+\fC'\\[C escape]'\fP is processed as in C, where \fC[C escape]\fP is one of the characters in \fC[abfnrtv]\fP\&. 
+.IP "\(bu" 2
+\fC'\\\\'\fP expands to a single backslash\&. Similarly, \fC'\\$'\fP, \fC'\\''\fP, \fC'\\\\''</tt>, and <tt>'\\,"\fP expand to the escaped character\&. 
+.IP "\(bu" 2
+\fC'\\[1-3 octal digits]'\fP expands to the given character\&. 
+.IP "\(bu" 2
+\fC'\\x[hex digits]'\fP expands to the given character\&. 
+.IP "\(bu" 2
+\fC'\\<[hex digits, spaces, and comments]>'\fP expands to the binary string indicated by the \fChex digits\fP\&. Spaces and comments are removed\&. For example, 
+.PP
+.nf
+1 "\<48656c6C 6f 2 /* And finally */ 1>" expands to "Hello!"
+
+.fi
+.PP
+ (This example should begin with \fC'\\<'\fP; it may not because of Doxygen problems\&.) 
+.IP "\(bu" 2
+A backslash at the end of the string expands to a backslash\&. 
+.PP
+
+.SS "\fBString\fP cp_quote (const \fBString\fP & str, bool allow_newlines)"
+
+.PP
+Return a quoted version of \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIallow_newlines\fP If true, then newline sequences are allowed in in the result\&. If false, then newline sequences should be translated to their backslash escape equivalents\&. Default is false\&.
+.RE
+.PP
+Returns a double-quoted string that, when unquoted by \fBcp_unquote()\fP, will equal \fIstr\fP\&. The returned string consists of a single double-quoted string, and in particular is never empty\&.
+.PP
+\fBInvariant:\fP
+.RS 4
+cp_quote(\fIstr\fP) != '' && cp_unquote(cp_quote(\fIstr\fP)) == \fIstr\fP 
+.RE
+.PP
+
+.SS "void cp_argvec (const \fBString\fP & str, \fBVector\fP< \fBString\fP > & conf)"
+
+.PP
+Separate a configuration string into arguments at commas\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP configuration string 
+.br
+\fIconf\fP arguments
+.RE
+.PP
+The configuration string is broken into arguments at unquoted commas\&. Each argument is passed through \fBcp_uncomment()\fP, then appended to \fIconf\fP\&. If the final argument is empty, it is ignored\&. For example: 
+.PP
+.nf
+1 cp_argvec("a, b, c", v)            appends  "a", "b", "c"
+2 cp_argvec("  a /*?*/ b,  c, ", v)  appends  "a b", "c"
+3 cp_argvec("\"x, y\" // ?", v)      appends  "\"x, y\""
+
+.fi
+.PP
+ 
+.SS "\fBString\fP cp_unargvec (const \fBVector\fP< \fBString\fP > & conf)"
+
+.PP
+Join the strings of \fIconf\fP with commas and return the result\&. This function does not quote or otherwise protect the strings in \fIconf\fP\&. The caller should do that if necessary\&. 
+.SS "void cp_spacevec (const \fBString\fP & str, \fBVector\fP< \fBString\fP > & conf)"
+
+.PP
+Separate a configuration string into arguments at unquoted spaces\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP configuration string 
+.br
+\fIconf\fP arguments
+.RE
+.PP
+The configuration string is broken into arguments at unquoted spaces\&. Each argument is passed through \fBcp_uncomment()\fP, then appended to \fIconf\fP\&. If the final argument is empty, it is ignored\&. For example: 
+.PP
+.nf
+1 cp_spacevec("a  b, c", v)            appends  "a", "b,", "c"
+2 cp_spacevec("  'a /*?*/ b'c", v)     appends  "'a /*?*/ b'c"
+
+.fi
+.PP
+ 
+.SS "\fBString\fP cp_shift_spacevec (\fBString\fP & str)"
+
+.PP
+Remove and return the first space-separated argument from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP space-separated configuration string
+.RE
+.PP
+The first space-separated argument in the configuration string is removed and returned\&. The returned argument is passed through \fBcp_uncomment()\fP\&. \fIstr\fP is set to the remaining portion of the string, with any preceding spaces and comments removed\&. If the input string is all spaces and comments, then both the returned string and \fIstr\fP will be empty\&. 
+.SS "\fBString\fP cp_unspacevec (const \fBString\fP * begin, const \fBString\fP * end)"
+
+.PP
+Join the strings in [\fIbegin\fP, \fIend\fP) with spaces and return the result\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbegin\fP first string in range 
+.br
+\fIend\fP one past last string in range
+.RE
+.PP
+This function does not quote or otherwise protect the strings in [\fIbegin\fP, \fIend\fP)\&. The caller should do that if necessary\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBcp_unspacevec(const Vector<String> &)\fP 
+.RE
+.PP
+
+.SS "\fBString\fP cp_unspacevec (const \fBVector\fP< \fBString\fP > & conf)\fC [inline]\fP"
+
+.PP
+Join the strings in \fIconf\fP with spaces and return the result\&. This function does not quote or otherwise protect the strings in \fIconf\fP\&. The caller should do that if necessary\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBcp_unspacevec(const String *, const String *)\fP 
+.RE
+.PP
+
+.SS "bool cp_string (const \fBString\fP & str, \fBString\fP * result, \fBString\fP * rest)"
+
+.PP
+Parse a string from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIrest\fP (optional) stores unparsed portion of \fIstr\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a string from \fIstr\fP\&. The first unquoted space encountered ends the string, but spaces are allowed within single or double quotes\&. Unquoted empty strings are not accepted\&. If the string fully parses, then the result is unquoted by \fBcp_unquote()\fP and stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+If \fIrest\fP is nonnull, then the string doesn't need to fully parse; the part of the string starting with the first unquoted space is stored in *\fIrest\fP and the function returns true\&. 
+.SS "bool cp_word (const \fBString\fP & str, \fBString\fP * result, \fBString\fP * rest)"
+
+.PP
+Parse a word from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIrest\fP (optional) stores unparsed portion of \fIstr\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a word from \fIstr\fP\&. The first unquoted space encountered ends the word\&. Single and double quotes are removed as by cp_unquote, but the unquoted string must satisfy cp_is_word\&. If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+If \fIrest\fP is nonnull, then the string doesn't need to fully parse; the part of the string starting with the first unquoted space is stored in *\fIrest\fP and the function returns true (assuming cp_is_word succeeds on the initial portion)\&. 
+.SS "bool cp_keyword (const \fBString\fP & str, \fBString\fP * result, \fBString\fP * rest)"
+
+.PP
+Parse a keyword from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIrest\fP (optional) stores unparsed portion of \fIstr\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a keyword from \fIstr\fP\&. Keywords consist of characters in \fC[A-Za-z0-9_\&.:?!]\fP\&. Quotes and spaces are not allowed; neither is the empty string\&. If the string fully parses as a keyword, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+If \fIrest\fP is nonnull, then the string doesn't need to fully parse; the part of the string starting with the first unquoted space is stored in *\fIrest\fP and the function returns true (assuming the initial portion is a valid keyword)\&. 
+.SS "bool cp_bool (const \fBString\fP & str, bool * result)"
+
+.PP
+Parse a boolean from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a boolean from \fIstr\fP\&. The following strings are the valid representations for booleans:
+.PP
+.IP "\fB0, false, no, f, n\fP" 1c
+.IP "\fB\fP" 1c
+Means false 
+.IP "\fB1, true, yes, t, y\fP" 1c
+Means true 
+.PP
+.PP
+If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&. 
+.SS "const char * cp_integer (const char * begin, const char * end, int base, int * result)\fC [inline]\fP"
+
+.PP
+Parse an integer from [\fIbegin\fP, \fIend\fP) in base \fIbase\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbegin\fP first character in string 
+.br
+\fIend\fP one past last character in string 
+.br
+\fIbase\fP base of integer: 0 or 2-36 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to first unparsed character in string; equals \fIbegin\fP if the string didn't start with a valid integer
+.RE
+.PP
+This function parses an integer from the initial characters of a string\&. The resulting integer is stored in *\fIresult\fP\&.
+.PP
+The integer format consists of an optional initial sign \fC+/-\fP, followed by one or more digits\&. A negative sign is only accepted if \fIresult\fP has a signed type\&. Digits may be separated by underscores (to make numbers easier to read), but the first and last characters in the integer cannot be underscores, and two underscores can't appear in a row\&. Some examples:
+.PP
+.PP
+.nf
+1 0
+2 0x100
+3 -1_000_023
+.fi
+.PP
+.PP
+Digits are numbered from 0-9, then A-Z/a-z\&. \fIbase\fP determines which digits are legal\&. If \fIbase\fP is 0, then a leading \fC0x\fP or \fC0X\fP may precede the digits, indicating base 16; a leading \fC0\fP indicates base 8; anything else is base 10\&.
+.PP
+Returns the first character that can't be parsed as part of the integer\&. If there is no valid integer at the beginning of the string, then returns \fIbegin\fP; *\fIresult\fP is unchanged\&.
+.PP
+This function checks for overflow\&. If an integer is too large for \fIresult\fP, then the maximum possible value is stored in \fIresult\fP and the cp_errno variable is set to CPE_OVERFLOW\&. Otherwise, cp_errno is set to CPE_FORMAT (for no valid integer) or CPE_OK (if all was well)\&.
+.PP
+Overloaded versions of this function are available for int, unsigned int, long, unsigned long, and (depending on configuration) long long and unsigned long long \fIresult\fP values\&. 
+.SS "bool cp_integer (const \fBString\fP & str, int base, int * result)\fC [inline]\fP"
+
+.PP
+Parse an integer from \fIstr\fP in base \fIbase\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIbase\fP base of integer: 0 or 2-36 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an integer from an input string\&. If the string correctly parses as an integer, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+Overloaded versions are available for int, unsigned int, long, unsigned long, and (depending on configuration) long long and unsigned long long \fIresult\fP values\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBcp_integer(const char *, const char *, int, int *)\fP for the rules on parsing integers\&. 
+.RE
+.PP
+
+.SS "bool cp_integer (const \fBString\fP & str, int * result)\fC [inline]\fP"
+
+.PP
+Parse an integer from \fIstr\fP in base 0\&. Same as cp_integer(str, 0, result)\&. 
+.SS "bool cp_real2 (const \fBString\fP & str, int frac_bits, int32_t * result)"
+
+.PP
+Parse a fixed-point number from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIfrac_bits\fP number of bits of fraction, 0-CP_REAL2_MAX_FRAC_BITS 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a real number from an input string\&. The result is represented as a fixed-point number with \fIfrac_bits\fP bits of fraction\&. For example, the number 0\&.5 would be represented as 0x1 if \fIfrac_bits\fP == 1, or 0x8000 if \fIfrac_bits\fP == 16\&. If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+The real number format is the familiar decimal format parsed by, for example, C's strtod() function\&. It consists of, in order:
+.PP
+.PD 0
+.IP "\(bu" 2
+An optional \fC+\fP or \fC-\fP sign\&. 
+.IP "\(bu" 2
+An optional sequence of decimal digits representing the integer part\&. 
+.IP "\(bu" 2
+An optional fraction point, followed by an optional sequence of decimal digits representing the fraction part\&. 
+.IP "\(bu" 2
+An optional exponent (either \fCE<digits>\fP, \fCE+<digits>\fP, or \fCE-<digits>\fP)\&.
+.PP
+There must be at least one digit in either the integer part or the fraction part\&. As with cp_integer, digits can be separated by underscores to make large numbers easier to read\&. Some examples:
+.PP
+.PP
+.nf
+1 0
+2 -100_000_000
+3 1e8
+4 +10\&.
+5 \&.1
+6 0\&.000_000_01e10
+.fi
+.PP
+.PP
+This function checks for overflow\&. If a number is too large for \fIresult\fP, then the maximum possible value is stored in \fIresult\fP and the cp_errno variable is set to CPE_OVERFLOW\&. Otherwise, cp_errno is set to CPE_FORMAT (unparsable input) or CPE_OK (if all was well)\&. Underflow is handled by rounding the result to the nearest representable number\&.
+.PP
+The following invariant always holds for all values \fIx\fP and fraction bits \fIfrac_bits:\fP 
+.PP
+.nf
+1 check_invariant(int32_t x, int frac_bits) {
+2     int32_t y;
+3     assert(cp_real2(cp_unparse_real2(x, frac_bits), frac_bits, &y) == true
+4            && y == x);
+5 }
+
+.fi
+.PP
+.PP
+An overloaded version of this function is available for uint32_t \fIresult\fP values; it doesn't accept negative numbers\&.
+.PP
+\fBSee also:\fP
+.RS 4
+The \fBcp_real10()\fP functions behave like \fBcp_real2()\fP, but the fractional part is expressed in decimal digits rather than bits\&. 
+.RE
+.PP
+
+.SS "bool cp_real10 (const \fBString\fP & str, int frac_digits, int32_t * result)"
+
+.PP
+Parse a real number from \fIstr\fP, representing the result as an integer with \fIfrac_digits\fP decimal digits of fraction\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIfrac_digits\fP number of decimal digits of fraction, 0-9 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a real number from an input string\&. The result is represented as an integer with \fIfrac_digits\fP decimal digits of fraction\&. For example, the number 0\&.5 would be represented as 5 if \fIfrac_digits\fP == 1, or 5000 if \fIfrac_digits\fP == 4\&. If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+The real number format and error conditions are the same as for \fBcp_real2()\fP\&.
+.PP
+An overloaded version of this function is available for uint32_t \fIresult\fP values; it doesn't accept negative numbers\&. 
+.SS "bool cp_real10 (const \fBString\fP & str, int frac_digits, uint32_t * result_int_part, uint32_t * result_frac_part)"
+
+.PP
+Parse a real number from \fIstr\fP, representing the result as an integer with \fIfrac_digits\fP decimal digits of fraction\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIfrac_digits\fP number of decimal digits of fraction, 0-9 
+.br
+\fIresult_int_part\fP stores integer portion of parsed result 
+.br
+\fIresult_frac_part\fP stores fractional portion of parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an unsigned real number from an input string\&. The result is represented with \fIfrac_digits\fP decimal digits of fraction\&. The integer and fraction parts of the result are stored in two separate integers, \fIresult_int_part\fP and \fIresult_frac_part\fP\&. For example, the number 10\&.5 would be represented as 10 and 5 if \fIfrac_digits\fP == 1, or 10 and 5000 if \fIfrac_digits\fP == 4\&. If the string fully parses, then the resulting value is stored in the result variables and the function returns true\&. Otherwise, the result variables remains unchanged and the function returns false\&.
+.PP
+The real number format and error conditions are the same as for \fBcp_real2()\fP\&. (Negative numbers are not allowed\&.) 
+.SS "bool cp_double (const \fBString\fP & str, double * result)"
+
+.PP
+Parse a real number from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a real number from an input string in double format\&. It is basically equivalent to C's strtod(), but follows Click's configuration parsing conventions: If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&. If a number is too large for \fIresult\fP, then the maximum possible value is stored in \fIresult\fP and the cp_errno variable is set to CPE_OVERFLOW; otherwise, cp_errno is set to CPE_FORMAT (unparsable) or CPE_OK (if all was well)\&.
+.PP
+This function is not available in the kernel, since double objects cannot be used there\&. 
+.SS "bool cp_seconds_as (const \fBString\fP & str, int frac_digits, uint32_t * result)"
+
+.PP
+Parse an amount of time from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIfrac_digits\fP number of decimal digits of fraction, 0-9 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an amount of time, measured in seconds, from \fIstr\fP\&. \fIfrac_digits\fP is the number of decimal digits of fraction returned in the result\&. For example, to measure the result in milliseconds, set \fIfrac_digits\fP == 3; for microseconds, set \fIfrac_digits\fP == 6\&. Does not handle negative amounts of time\&.
+.PP
+The input string is a real number (as in cp_real2) followed by an optional unit suffix\&. Units are:
+.PP
+.IP "\fBns, nsec\fP" 1c
+nanoseconds 
+.IP "\fBus, usec\fP" 1c
+microseconds 
+.IP "\fBms, msec\fP" 1c
+milliseconds 
+.IP "\fBs, sec\fP" 1c
+seconds 
+.IP "\fBm, min\fP" 1c
+minutes 
+.IP "\fBh, hr\fP" 1c
+hours 
+.IP "\fBd, day\fP" 1c
+days 
+.PP
+.PP
+The default unit suffix is seconds\&. Thus, '3600', '3600s', '3\&.6e6 msec', '60m', and '1 hr' all parse to the same result, 3600 seconds\&.
+.PP
+If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+If a number is too large for \fIresult\fP, then the maximum possible value is stored in \fIresult\fP and the cp_errno variable is set to CPE_OVERFLOW; otherwise, cp_errno is set to CPE_FORMAT (unparsable) or CPE_OK (if all was well)\&. 
+.SS "bool cp_seconds_as_milli (const \fBString\fP & str, uint32_t * result)"
+
+.PP
+Parse an amount of time in milliseconds from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an amount of time, measured in milliseconds, from \fIstr\fP\&. Equivalent to cp_seconds_as(\fIstr\fP, 3, \fIresult\fP)\&. 
+.SS "bool cp_seconds_as_micro (const \fBString\fP & str, uint32_t * result)"
+
+.PP
+Parse an amount of time in microseconds from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an amount of time, measured in microseconds, from \fIstr\fP\&. Equivalent to cp_seconds_as(\fIstr\fP, 6, \fIresult\fP)\&. 
+.SS "bool cp_seconds (const \fBString\fP & str, double * result)"
+
+.PP
+Parse an amount of time from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an amount of time, measured in seconds, from \fIstr\fP\&. As in \fBcp_seconds_as()\fP, the input string is a real number followed by an optional unit suffix which defaults to seconds\&.
+.PP
+If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&. 
+.SS "bool cp_time (const \fBString\fP & str, \fBTimestamp\fP * result, bool allow_negative)"
+
+.PP
+Parse a timestamp from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIallow_negative\fP allow negative timestamps if true 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a timestamp from \fIstr\fP\&. Timestamps are expressed as fractional amounts of seconds, usually measured in Unix time, such as \fC'1189383079\&.180265331'\fP\&. The input format accepts the unit suffixes described at cp_seconds_as\&. If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+If a number is too large for \fIresult\fP, then the maximum possible value is stored in \fIresult\fP and the cp_errno variable is set to CPE_OVERFLOW; otherwise, cp_errno is set to CPE_FORMAT (unparsable) or CPE_OK (if all was well)\&.
+.PP
+An overloaded version of this function is available for struct timeval \fIresult\fP values\&. 
+.SS "bool cp_bandwidth (const \fBString\fP & str, uint32_t * result)"
+
+.PP
+Parse a bandwidth value from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a bandwidth value from \fIstr\fP\&. The input format is a real number followed by an optional unit suffix\&. Units are:
+.PP
+.IP "\fBbaud, bps, b/s\fP" 1c
+bits per second 
+.IP "\fBBps, B/s\fP" 1c
+bytes per second 
+.IP "\fBe\&.g\&. kbaud, Mbps, GBps\fP" 1c
+kilo, mega, giga are supported (they mean 10^3, 10^6, and 10^9) 
+.PP
+.PP
+The default unit suffix is bytes per second\&.
+.PP
+If a number is too large for \fIresult\fP, then the maximum possible value is stored in \fIresult\fP and the cp_errno variable is set to CPE_OVERFLOW; otherwise, cp_errno is set to CPE_FORMAT (unparsable) or CPE_OK (if all was well)\&. 
+.SS "bool cp_ip_address (const \fBString\fP & str, \fBIPAddress\fP * result, const \fBElement\fP * context)"
+
+.PP
+Parse an IP address from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIcontext\fP optional context for \fIAddressInfo\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an IP address from \fIstr\fP\&. The input format is the usual dotted-quad format, as in \fC'18\&.26\&.4\&.9'\fP, where each number is a decimal number from 0-255\&. The \fIAddressInfo\fP element can be used to register shorthand names for other IP addresses\&. If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+Overloaded versions of this function are available for unsigned char[4] and struct in_addr * result types\&. 
+.SS "bool cp_ip_prefix (const \fBString\fP & str, \fBIPAddress\fP * result_addr, \fBIPAddress\fP * result_mask, bool allow_bare_address, const \fBElement\fP * context)"
+
+.PP
+Parse an IP address or prefix from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult_addr\fP stores parsed address result 
+.br
+\fIresult_mask\fP stores parsed address mask result 
+.br
+\fIallow_bare_address\fP optional: if true, allow raw IP addresses; defaults to false 
+.br
+\fIcontext\fP optional context for \fIAddressInfo\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an IP prefix description from \fIstr\fP\&. The input format is the usual CIDR format with some additions\&. Allowed examples:
+.PP
+.PD 0
+.IP "\(bu" 2
+\fC'18\&.26\&.4\&.0/24'\fP: the default CIDR format\&. The prefix length, here 24, is a number between 0 and 32\&. This stores the equivalents of 18\&.26\&.4\&.0 in *\fIresult_addr\fP and 255\&.255\&.255\&.0 in *\fIresult_mask\fP\&. 
+.IP "\(bu" 2
+\fC'18\&.26\&.4/24'\fP: it is OK to leave off irrelevant parts of the address\&. However, \fC'18\&.26/24'\fP will not parse\&. 
+.IP "\(bu" 2
+\fC'18\&.26\&.4\&.0/255\&.255\&.255\&.0'\fP: the mask may be specified directly\&. This is the only way to define a non-prefix mask\&. 
+.IP "\(bu" 2
+Additionally, \fIAddressInfo\fP names may be used to specify the address part or the whole prefix: given AddressInfo(a 18\&.26\&.4\&.9), \fC'a/24'\fP is parseable as an IP prefix\&. 
+.PP
+.PP
+The address part need not fit entirely within the prefix\&. \fC'18\&.26\&.4\&.9/24'\fP will parse into address 18\&.26\&.4\&.9 and mask 255\&.255\&.255\&.0\&.
+.PP
+If \fIallow_bare_address\fP is true, then a raw IP address is also acceptable input\&. The resulting mask will equal 255\&.255\&.255\&.255\&. Raw IP addresses take precedence over networks, so given AddressInfo(a 18\&.26\&.4\&.9/24), 'a' will parse as 18\&.26\&.4\&.9/32, not 18\&.26\&.4/24\&. \fIallow_bare_address\fP defaults to false\&.
+.PP
+If the string fully parses, then the resulting address is stored in *\fIresult_addr\fP, the resulting mask is stored in *\fIresult_mask\fP, and the function returns true\&. Otherwise, the results remain unchanged and the function returns false\&.
+.PP
+Overloaded versions of this function are available for unsigned char[4] result types\&. 
+.SS "bool cp_ip_address_list (const \fBString\fP & str, \fBVector\fP< \fBIPAddress\fP > * result, const \fBElement\fP * context)"
+
+.PP
+Parse a space-separated list of IP addresses from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIcontext\fP optional context for \fIAddressInfo\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a space-separated list of IP addresses from \fIstr\fP\&. Each individual IP address is parsed as by \fBcp_ip_address()\fP\&. If the string fully parses, then *\fIresult\fP is set to the resulting values in order\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+In addition to errors from \fBcp_ip_address()\fP, this function might run out of memory for *\fIresult\fP, which produces a CPE_MEMORY error\&. 
+.SS "bool cp_ip6_address (const \fBString\fP & str, IP6Address * result, const \fBElement\fP * context)"
+
+.PP
+Parse an IPv6 address from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIcontext\fP optional context for \fIAddressInfo\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an IPv6 address from \fIstr\fP\&. The input format may be any of the forms allowed by \fCRFC2373\fP:
+.PP
+.IP "\(bu" 2
+A nonabbreviated address consists of eight colon-separated 16-bit hexadecimal numbers, as in \fC'1080:0:0:0:8:800:200C:417a'\fP\&.
+.IP "\(bu" 2
+Groups of zeros may be abbrivated with two colons, as in the equivalent \fC'1080::8:800:200C:417A'\fP\&.
+.IP "\(bu" 2
+An address may end with an embedded IPv4 address, as in \fC'::13\&.1\&.68\&.3'\fP, \fC'::FFFF:129\&.144\&.52\&.38'\fP, and (assuming the appropriate \fIAddressInfo\fP information) \fC'0::ip4_addr'\fP\&.
+.PP
+.PP
+The \fIAddressInfo\fP element can be used to register shorthand names for other IPv6 addresses\&. If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+An overloaded version of this function is available for unsigned char[16] result type\&. 
+.SS "bool cp_ip6_prefix (const \fBString\fP & str, IP6Address * result_addr, int * result_prefix, bool allow_bare_address, const \fBElement\fP * context)"
+
+.PP
+Parse an IPv6 address or prefix from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult_addr\fP stores parsed address result 
+.br
+\fIresult_prefix\fP stores parsed prefix length result 
+.br
+\fIallow_bare_address\fP if true, allow raw IPv6 addresses 
+.br
+\fIcontext\fP optional context for \fIAddressInfo\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an IPv6 prefix description from \fIstr\fP\&. The input format is the usual CIDR format: an IPv6 address, followed by \fC'/prefixlen'\fP, where \fCprefixlen\fP is a number between 0 and 128\&. As an extension, the format \fC'addr/mask'\fP is supported, where both \fCaddr\fP and \fCmask\fP are valid IPv6 addresses\&. However, unlike \fBcp_ip_prefix()\fP, \fCmask\fP must correspond to a valid prefix length -- some number of one bits, followed by all zero bits\&. For example, '::/::1' will not parse\&. Finally, \fIAddressInfo\fP names may be used to specify the address part or the whole prefix\&.
+.PP
+The address part need not fit entirely within the prefix\&. \fC'::1/32'\fP will parse into address ::1 and prefix length 32\&.
+.PP
+If \fIallow_bare_address\fP is true, then a raw IPv6 address is also acceptable input\&. The resulting prefix will equal 128\&.
+.PP
+If the string fully parses, then the resulting address is stored in *\fIresult_addr\fP, the resulting prefix length is stored in *\fIresult_prefix\fP, and the function returns true\&. Otherwise, the results remain unchanged and the function returns false\&.
+.PP
+Overloaded versions of this function are available for unsigned char[16] result address type, and for IP6Address or unsigned char[16] result masks (instead of result prefix lengths)\&. 
+.SS "bool cp_ethernet_address (const \fBString\fP & str, \fBEtherAddress\fP * result, const \fBElement\fP * context)"
+
+.PP
+Parse an Ethernet address from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIcontext\fP optional context for AddressInfo 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an Ethernet address from \fIstr\fP\&. The input format is the IEEE standard format, as in \fC'00-15-58-2D-FB-8F'\fP: six dash-separated 8-bit hexadecimal numbers in transmission order\&. Colons are also accepted as separators\&. The AddressInfo element can be used to register shorthand names for other Ethernet addresses\&. If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+An overloaded version of this function is available for unsigned char[6] result type\&. 
+.SS "bool cp_tcpudp_port (const \fBString\fP & str, int proto, uint16_t * result, const \fBElement\fP * context)"
+
+.PP
+Parse a TCP, UDP, etc\&. port number from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIproto\fP protocol number, e\&.g\&. IP_PROTO_TCP == 6 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIcontext\fP optional context for IPNameInfo 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a port number for IP protocol \fIproto\fP from \fIstr\fP\&. The input may be a 16-bit number parsable by \fBcp_integer()\fP, as in \fC'80'\fP\&. It may also be a port name, such as \fC'www'\fP\&. Several port names are defined by default, including \fCauth\fP, \fCchargen\fP, \fCecho\fP, \fCfinger\fP, \fCftp\fP, \fChttps\fP, \fCntp\fP, and \fCwww\fP\&. The \fIPortInfo\fP element can be used to define additional names, and at user level, \fBcp_tcpudp_port()\fP will consult the /etc/services database using getservbyname() as a last resort\&. If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&. 
+.SS "\fBElement\fP* cp_element (const \fBString\fP & str, const \fBElement\fP * context, \fBErrorHandler\fP * errh, const char * argname)"
+
+.PP
+Parse an element reference from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP optional error handler 
+.br
+\fIargname\fP optional argument name (used for error messages) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fBElement\fP pointer, or null if no such element is found\&.
+.RE
+.PP
+Parses an element reference from \fIstr\fP\&. The input must be a single (possibly quoted) string acceptable to \fBcp_string()\fP\&. The unquoted value should be an element name\&. The name may be relative to a compound element; for instance, if \fIcontext\fP is an element named \fCa/b/c/xxx\fP, and \fIstr\fP was \fC'yyy'\fP, then \fBcp_element()\fP would search for elements named \fCa/b/c/yyy\fP, \fCa/b/yyy\fP, \fCa/yyy\fP, and finally \fCyyy\fP, returning the first one found\&. (See \fBRouter::find()\fP\&.) If no element is found, reports an error to \fIerrh\fP and returns null\&. If \fIerrh\fP is null, no error is reported\&.
+.PP
+\fBSee also:\fP
+.RS 4
+This function differs from \fBRouter::find()\fP in that it unquotes its argument\&. 
+.RE
+.PP
+
+.SS "\fBElement\fP* cp_element (const \fBString\fP & str, \fBRouter\fP * router, \fBErrorHandler\fP * errh, const char * argname)"
+
+.PP
+Parse an element reference from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIrouter\fP router 
+.br
+\fIerrh\fP optional error handler 
+.br
+\fIargname\fP optional argument name (used for error messages) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fBElement\fP pointer, or null if no such element is found\&.
+.RE
+.PP
+Parses an element reference from \fIstr\fP\&. The input must be a single (possibly quoted) string acceptable to \fBcp_string()\fP\&. The unquoted value should be a fully qualified element name corresponding to an element in \fIrouter\fP\&. If no element is found, reports an error to \fIerrh\fP and returns null\&. If \fIerrh\fP is null, no error is reported\&.
+.PP
+\fBSee also:\fP
+.RS 4
+This function differs from \fBRouter::find()\fP in that it unquotes its argument\&. 
+.RE
+.PP
+
+.SS "bool cp_handler_name (const \fBString\fP & str, \fBElement\fP ** result_element, \fBString\fP * result_hname, const \fBElement\fP * context, \fBErrorHandler\fP * errh)"
+
+.PP
+Parse a handler name from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult_element\fP stores parsed element result 
+.br
+\fIresult_hname\fP stores parsed handler name result 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a handler name from \fIstr\fP\&. Three formats are supported:
+.PP
+.IP "\(bu" 2
+\fC'elementname\&.handlername'\fP, for a handler on a named element\&. The named element must exist; it is looked up as by \fBcp_element()\fP in the compound element context specified by \fIcontext\fP\&.
+.IP "\(bu" 2
+\fC'\&.handlername'\fP, for a global handler on \fIcontext's\fP router\&.
+.IP "\(bu" 2
+\fC'handlername'\fP, for a handler on the \fIcontext\fP element (if such a handler exists), or a global handler on \fIcontext's\fP router\&.
+.PP
+.PP
+The handler name must contain at least one character\&. Although the named element must exist, this function does not check whether the named handler exists\&. The input string may contain quotes; it is unquoted by \fBcp_string()\fP\&.
+.PP
+If the string fully parses, then the resulting element is stored in *\fIresult_element\fP, the resulting handler name is stored in *\fIresult_hname\fP, and the function returns true\&. For global handlers, *\fIresult_element\fP is set to \fBRouter::root_element()\fP\&. If the string does not fully parse, the results remain unchanged and the function returns false\&. 
+.SS "bool cp_handler (const \fBString\fP & str, int flags, \fBElement\fP ** result_element, const \fBHandler\fP ** result_handler, const \fBElement\fP * context, \fBErrorHandler\fP * errh)"
+
+.PP
+Parse a handler reference from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIflags\fP zero or more of \fBHandler::f_read\fP, \fBHandler::f_write\fP, and HandlerCall::f_preinitialize 
+.br
+\fIresult_element\fP stores parsed element result 
+.br
+\fIresult_handler\fP stores parsed handler result 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a handler reference from \fIstr\fP\&. The input format is as in \fBcp_handler_name()\fP, but the named handler must actually exist\&. The \fIflags\fP argument lets the caller check for read and/or write handlers; its values are as for \fBHandlerCall::initialize()\fP\&. If the string fully parses, then the resulting element is stored in *\fIresult_element\fP, the resulting handler is stored in *\fIresult_handler\fP, and the function returns true\&. For global handlers, *\fIresult_element\fP is set to \fBRouter::root_element()\fP\&. If the string does not fully parse, the results remain unchanged and the function returns false\&. 
+.SS "bool cp_filename (const \fBString\fP & str, \fBString\fP * result)"
+
+.PP
+Parse a filename string from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a filename from \fIstr\fP\&. This behaves like \fBcp_string()\fP plus shell-style tilde expansion\&. Thus, \fC~/\fP at the beginning of a string is replaced with the value of the \fCHOME\fP environment variable (if it exists), and \fC~username/\fP is replaced with the given user's home directory as returned by getpwnam() (if the given user exists)\&. Additionally, double slashes are replaced by single slashes\&. Thus, \fC'~//myfile\&.txt~'\fP might parse to \fC'/home/kohler/myfile\&.txt~'\fP\&. Empty strings are not accepted\&. If the string fully parses, then the result is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+This function is only available at user level\&. 
+.SS "bool cp_file_offset (const \fBString\fP & str, off_t * result)"
+
+.PP
+Parse a file offset from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses an unsigned integer from \fIstr\fP, similarly to cp_integer(str, result)\&. 
+.SS "bool cp_anno (const \fBString\fP & str, int size, int * result, const \fBElement\fP * context)"
+
+.PP
+Parse a packet annotation value from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIsize\fP annotation size, or <= 0 to not check size 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIcontext\fP element context 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a packet annotation value from \fIstr\fP\&. This is either a predefined annotation name, such as PAINT or ICMP_PARAM_PROB (all names from <\fBclick/packet_anno\&.hh\fP> are defined by default); a user-defined name (see the AnnotationInfo element); or an integer indicating the byte offset into the annotation area\&.
+.PP
+If \fIsize\fP <= 0, then the annotation value is returned as is\&. Use the #ANNOTATIONINFO_OFFSET and #ANNOTATIONINFO_SIZE macros to extract the offset and size portions\&. If \fIsize\fP > 0, then the annotation value is checked to ensure that the sizes are compatible\&. For instance, if \fIsize\fP == 1, then the 'DST_IP' annotation is rejected since it has the wrong size\&. In this case, the value stored in *\fIresult\fP equals the annotation offset -- the size is masked off\&.
+.PP
+Values that extend past the end of the annotation area are rejected\&.
+.PP
+If the string fully parses, then the result is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&. 
+.SS "int cp_va_kparse (const \fBVector\fP< \fBString\fP > & conf, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Parse a list of arguments\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconf\fP argument list 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter items, terminated by \fBcpEnd\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The number of parameters successfully assigned, or negative on error\&.
+.RE
+.PP
+The arguments in \fIconf\fP are parsed according to the items\&. Each supplied argument must match one of the items, and at least one argument must match each mandatory item\&. Any errors are reported to \fIerrh\fP\&. If no error occurs, then the item results are assigned appropriately, and the function returns the number of assigned items, which might be 0\&. If any error occurs, then the item results are left unchanged and the function returns a negative error code\&.
+.PP
+The \fIcontext\fP argument is passed to any parsing functions that require element context\&. See above for more information on \fBcp_va_kparse()\fP items\&.
+.PP
+The item list must be terminated with cpEnd\&. An error message such as 'warning: missing sentinel in function call' indicates that you terminated the list with 0 instead\&. Fix it by replacing the 0 with cpEnd\&. 
+.SS "int cp_va_kparse (const \fBString\fP & str, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Parse a comma-separated argument string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP comma-separated argument string 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter items, terminated by \fBcpEnd\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The number of parameters successfully assigned, or negative on error\&.
+.RE
+.PP
+The argument string is separated into an argument list by \fBcp_argvec()\fP, after which the function behaves like cp_va_kparse(const \fBVector<String>\fP&, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.)\&. 
+.SS "int cp_va_space_kparse (const \fBString\fP & str, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Parse a space-separated argument string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP space-separated argument string 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter items, terminated by \fBcpEnd\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The number of parameters successfully assigned, or negative on error\&.
+.RE
+.PP
+The argument string is separated into an argument list by \fBcp_spacevec()\fP, after which the function behaves like cp_va_kparse(const \fBVector<String>\fP&, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.)\&. 
+.SS "int cp_va_kparse_keyword (const \fBString\fP & str, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Parse a single argument\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP argument 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter items, terminated by \fBcpEnd\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The number of parameters successfully assigned (0 or 1), or negative on error\&.
+.RE
+.PP
+An argument list consisting of the single argument \fIstr\fP is formed, after which this function behaves like cp_va_kparse(const \fBVector<String>\fP&, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.)\&. 
+.SS "int cp_va_kparse_remove_keywords (\fBVector\fP< \fBString\fP > & conf, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Parse and remove matching arguments from \fIconf\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconf\fP argument list 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter items, terminated by \fBcpEnd\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The number of parameters successfully assigned, or negative on error\&.
+.RE
+.PP
+The arguments in \fIconf\fP are parsed according to the items\&. At least one argument must correspond to each mandatory item, but extra arguments are not errors\&. If no error occurs, then the item results are assigned appropriately; any arguments that successfully matched are removed from \fIconf\fP; and the function returns the number of assigned items, which might be 0\&. If any error occurs, then \fIconf\fP and the item results are left unchanged and the function returns a negative error code\&. Errors are reported to \fIerrh\fP\&.
+.PP
+The \fIcontext\fP argument is passed to any parsing functions that require element context\&. 
+.SS "int cp_assign_arguments (const \fBVector\fP< \fBString\fP > & argv, const \fBString\fP * param_begin, const \fBString\fP * param_end, \fBVector\fP< \fBString\fP > * values)"
+
+.PP
+Assign arguments from \fIargv\fP to \fIvalues\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargv\fP argument array 
+.br
+\fIparam_begin\fP start iterator for parameter list 
+.br
+\fIparam_end\fP end iterator for parameter list 
+.br
+\fIvalues\fP value storage (may equal null or &\fIargv\fP) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+>= 0 on success, negative on failure
+.RE
+.PP
+This function is used to resolve an argument array\&. The range [\fIparam_begin\fP, \fIparam_end\fP) defines the parameter names\&. This range begins with zero or more empty strings, which define mandatory positional arguments\&. It continues with zero or more nonempty strings, which define optional keyword arguments with the corresponding names\&. It may optionally conclude with '__REST__', which says that the last value should collect all unassigned arguments\&.
+.PP
+cp_assign_arguments attempts to assign the arguments in \fIargv\fP to the corresponding parameters\&. This succeeds if all mandatory positional arguments are present and all other arguments are accounted for, either by keywords or by '__REST__'\&. On success, returns >= 0\&. On failure because the argument list is invalid, returns -EINVAL\&. On other failure cases, such as out of memory, returns another negative error code\&.
+.PP
+On success, cp_assign_arguments also optionally assigns *\fIvalues\fP to the resulting value list\&. *\fIvalues\fP is resized to size (\fIparam_end\fP - \fIparam_begin\fP), and *\fIvalues\fP[\fIi\fP] is set to the argument corresponding to \fIparam_begin\fP[\fIi\fP]\&. If \fIvalues\fP is null this step is skipped and the function has no side effects\&. It is safe to set \fIvalues\fP to &\fIargv\fP\&. 
+.SS "void cp_va_static_initialize ()"
+
+.PP
+Initialize the \fBcp_va_kparse()\fP implementation\&. This function must be called before any cp_va function is called\&. It is safe to call it multiple times\&.
+.PP
+\fBNote:\fP
+.RS 4
+Elements don't need to worry about \fBcp_va_static_initialize()\fP; Click drivers have already called it for you\&. 
+.RE
+.PP
+
+.SS "void cp_va_static_cleanup ()"
+
+.PP
+Clean up the \fBcp_va_kparse()\fP implementation\&. Call this function to release any memory allocated by the cp_va implementation\&. As a side effect, this function unregisters all argument types registered by cp_register_argtype()\&. 
+.SS "int cp_va_parse (const \fBVector\fP< \fBString\fP > & conf, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Legacy function for parsing a list of arguments\&. never
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconf\fP argument list 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter descriptions, terminated by cpEnd 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+Use \fBcp_va_kparse()\fP instead\&.
+.RE
+.PP
+.PP
+Older versions of Click used \fBcp_va_parse()\fP instead of the current \fBcp_va_kparse()\fP\&. This guide shows how to transition \fBcp_va_parse()\fP calls into \fBcp_va_kparse()\fP\&.
+.PP
+There are two major differences between the variants\&. First, \fIevery\fP argument to \fBcp_va_kparse()\fP must have a keyword name, including arguments that are normally specified by position\&. Second, each \fBcp_va_parse()\fP argument includes an 'argument description string' used to improve error messages\&. \fBcp_va_kparse()\fP arguments do not take such a string; the keyword generates better, more concise messages\&.
+.PP
+The following examples, taken from Click elements, show how to change concrete \fBcp_va_parse()\fP calls into \fBcp_va_kparse()\fP calls\&.
+.PP
+.PP
+.nf
+1 // 1\&. Paint: Mandatory arguments are marked with cpkP+cpkM\&.
+2 //    Element documentation and other analogous elements are
+3 //    good places to look for keywords\&.
+4 \&.\&.\&. cp_va_parse(conf, this, errh,
+5                 cpByte, "color", &_color,    // "color" is the description string
+6                 cpEnd) \&.\&.\&.
+7    /* => */
+8 \&.\&.\&. cp_va_kparse(conf, this, errh,
+9                  "COLOR", cpkP+cpkM, cpByte, &_color,
+10                  cpEnd) \&.\&.\&.
+11 
+12 // 2\&. Switch: Optional arguments are marked with cpkP (no cpkM)\&.
+13 \&.\&.\&. cp_va_parse(conf, this, errh,
+14                 cpOptional,
+15                 cpInteger, "active output", &_output,
+16                 cpEnd) \&.\&.\&.
+17    /* => */
+18 \&.\&.\&. cp_va_kparse(conf, this, errh,
+19                  "OUTPUT", cpkP, cpInteger, &_output,
+20                  cpEnd) \&.\&.\&.
+21 
+22 // 3\&. Counter: Keywords are marked with cpkN (or, equivalently, 0)\&.
+23 \&.\&.\&. cp_va_parse(conf, this, errh,
+24                 cpKeywords,
+25                 "COUNT_CALL", cpArgument, "handler to call after a count", &count_call,
+26                 "BYTE_COUNT_CALL", cpArgument, "handler to call after a byte count", &byte_count_call,
+27                 cpEnd) \&.\&.\&.
+28    /* => */
+29 \&.\&.\&. cp_va_kparse(conf, this, errh,
+30                  "COUNT_CALL", cpkN, cpArgument, &count_call,
+31                  "BYTE_COUNT_CALL", cpkN, cpArgument, &byte_count_call,
+32                  cpEnd) \&.\&.\&.
+33 
+34 // 4\&. IPFragmenter: Combining all of the above\&.
+35 \&.\&.\&. cp_va_parse(conf, this, errh,
+36                 cpUnsigned, "MTU", &_mtu,
+37                 cpOptional,
+38                 cpBool, "HONOR_DF", &_honor_df,
+39                 cpKeywords,
+40                 "HONOR_DF", cpBool, "honor DF bit?", &_honor_df,
+41                 "VERBOSE", cpBool, "be verbose?", &_verbose,
+42                 cpEnd) \&.\&.\&.
+43    /* => */
+44 \&.\&.\&. cp_va_kparse(conf, this, errh,
+45                  "MTU", cpkP+cpkM, cpUnsigned, &_mtu,
+46                  "HONOR_DF", cpkP, cpBool, &_honor_df,   // NB only one HONOR_DF
+47                  "VERBOSE", cpkN, cpBool, &_verbose,
+48                  cpEnd) \&.\&.\&.
+49 
+50 // 5\&. AggregateIPFlows: Confirmed keywords are marked with cpkC\&.
+51 \&.\&.\&. cp_va_parse(conf, this, errh,
+52                 "TCP_TIMEOUT", cpSeconds, "timeout for active TCP connections", &_tcp_timeout, \&.\&.\&.,
+53                 cpConfirmKeywords,
+54                 "FRAGMENTS", cpBool, "handle fragmented packets?", &gave_fragments, &fragments,
+55                 cpEnd) \&.\&.\&.
+56    /* => */
+57 \&.\&.\&. cp_va_kparse(conf, this, errh,
+58                  "TCP_TIMEOUT", cpkN, cpSeconds, &_tcp_timeout, \&.\&.\&.,
+59                  "FRAGMENTS", cpkC, &gave_fragments, cpBool, &fragments,  // Note different order
+60                  cpEnd) \&.\&.\&.
+.fi
+.PP
+ 
+.SS "int cp_va_parse (const \fBString\fP & str, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Legacy function for parsing a comma-separated argument string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP comma-separated argument string 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter descriptions, terminated by cpEnd 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+Use \fBcp_va_kparse()\fP instead\&. See cp_va_parse(const \fBVector<String>\fP &, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.) for a transition guide\&. 
+.RE
+.PP
+
+.SS "int cp_va_space_parse (const \fBString\fP & str, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Legacy function for parsing a space-separated argument string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP space-separated argument string 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter descriptions, terminated by cpEnd 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+Use \fBcp_va_space_kparse()\fP instead\&. See cp_va_parse(const \fBVector<String>\fP &, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.) for a transition guide\&. 
+.RE
+.PP
+
+.SS "int cp_va_parse_keyword (const \fBString\fP & str, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Legacy function for parsing a single argument\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP argument 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter descriptions, terminated by cpEnd 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+Use \fBcp_va_kparse_keyword()\fP instead\&. See cp_va_parse(const \fBVector<String>\fP &, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.) for a transition guide\&. 
+.RE
+.PP
+
+.SS "int cp_va_parse_remove_keywords (\fBVector\fP< \fBString\fP > & conf, int first, const \fBElement\fP * context, \fBErrorHandler\fP * errh,  \&.\&.\&.)"
+
+.PP
+Legacy function for parsing and removing matching arguments from \fIconf\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconf\fP argument list 
+.br
+\fIfirst\fP index of first non-mandatory argument 
+.br
+\fIcontext\fP element context 
+.br
+\fIerrh\fP error handler 
+.br
+\fI\&.\&.\&.\fP zero or more parameter descriptions, terminated by cpEnd 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+Use \fBcp_va_kparse_remove_keywords()\fP instead\&. See cp_va_parse(const \fBVector<String>\fP &, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.) for a transition guide\&. Note that \fBcp_va_kparse_remove_keywords()\fP does not take the \fIfirst\fP argument; simply leave it off\&. 
+.RE
+.PP
+
+.SH "Variable Documentation"
+.PP 
+.SS "const \fBCpVaParseCmd\fP cpEnd"
+
+.PP
+Use as argument name\&. Ends cp_va argument list\&. 
+.SS "const \fBCpVaParseCmd\fP cpIgnoreRest"
+
+.PP
+Use as argument name\&. No result storage; causes \fBcp_va_kparse()\fP to ignore unparsed arguments and any remaining items\&. 
+.SS "const \fBCpVaParseCmd\fP cpIgnore"
+
+.PP
+No result storage, ignores this argument\&. 
+.SS "const \fBCpVaParseCmd\fP cpArgument"
+
+.PP
+Result storage String*, accepts any argument\&. 
+.SS "const \fBCpVaParseCmd\fP cpArguments"
+
+.PP
+Result storage \fBVector<String>\fP*, accepts any number of arguments with the same keyword\&. 
+.SS "const \fBCpVaParseCmd\fP cpString"
+
+.PP
+Result storage String*, parsed by \fBcp_string()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpWord"
+
+.PP
+Result storage String*, parsed by \fBcp_word()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpKeyword"
+
+.PP
+Result storage String*, parsed by \fBcp_keyword()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpBool"
+
+.PP
+Result storage bool*, parsed by \fBcp_bool()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpByte"
+
+.PP
+Result storage unsigned char*, parsed by \fBcp_integer()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpShort"
+
+.PP
+Result storage short*, parsed by \fBcp_integer()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpUnsignedShort"
+
+.PP
+Result storage unsigned short*, parsed by \fBcp_integer()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpInteger"
+
+.PP
+Result storage int32_t*, parsed by \fBcp_integer()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpUnsigned"
+
+.PP
+Result storage uint32_t*, parsed by \fBcp_integer()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpSize"
+
+.PP
+Result storage size_t*, parsed by \fBcp_integer()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpNamedInteger"
+
+.PP
+Parse parameter uint32_t nameinfo_type, result storage int32_t*, parsed by \fBNameInfo::query_int\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpInteger64"
+
+.PP
+Result storage int64_t*, parsed by \fBcp_integer()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpUnsigned64"
+
+.PP
+Result storage uint64_t*, parsed by \fBcp_integer()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpUnsignedReal2"
+
+.PP
+Parse parameter int frac_bits, result storage uint32_t*, parsed by \fBcp_real2()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpReal10"
+
+.PP
+Parse parameter int frac_digits, result storage int32_t*, parsed by \fBcp_real10()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpUnsignedReal10"
+
+.PP
+Parse parameter int frac_digits, result storage uint32_t*, parsed by \fBcp_real10()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpDouble"
+
+.PP
+Result storage double*, parsed by \fBcp_double()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpSeconds"
+
+.PP
+Result storage uint32_t*, parsed by \fBcp_seconds_as()\fP with frac_digits 0\&. 
+.SS "const \fBCpVaParseCmd\fP cpSecondsAsMilli"
+
+.PP
+Result storage uint32_t*, parsed by \fBcp_seconds_as_milli()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpSecondsAsMicro"
+
+.PP
+Result storage uint32_t*, parsed by \fBcp_seconds_as_micro()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpTimestamp"
+
+.PP
+Result storage Timestamp*, parsed by \fBcp_time()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpTimestampSigned"
+
+.PP
+Result storage Timestamp*, parsed by \fBcp_time()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpTimeval"
+
+.PP
+Result storage struct timeval*, parsed by \fBcp_time()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpBandwidth"
+
+.PP
+Result storage uint32_t*, parsed by \fBcp_bandwidth()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpIPAddress"
+
+.PP
+Result storage IPAddress* or equivalent, parsed by \fBcp_ip_address()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpXIDType"
+
+.PP
+Result storage int, parsed by cp_xid_type()\&. 
+.SS "const \fBCpVaParseCmd\fP cpXID"
+
+.PP
+Result storage struct click_xia_xid or equivalent, parsed by cp_xid()\&. 
+.SS "const \fBCpVaParseCmd\fP cpXIAPath"
+
+.PP
+Result storage XIAPath, parsed by XIAPath::parse()\&. 
+.SS "const \fBCpVaParseCmd\fP cpXIAPathDAG"
+
+.PP
+Result storage XIAPath, parsed by XIAPath::parse_dag()\&. 
+.SS "const \fBCpVaParseCmd\fP cpXIAPathRE"
+
+.PP
+Result storage XIAPath, parsed by XIAPath::parse_re()\&. 
+.SS "const \fBCpVaParseCmd\fP cpIPPrefix"
+
+.PP
+Result storage IPAddress* addr and \fBIPAddress\fP *mask, parsed by \fBcp_ip_prefix()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpIPAddressOrPrefix"
+
+.PP
+Result storage IPAddress* addr and \fBIPAddress\fP *mask, parsed by \fBcp_ip_prefix()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpIPAddressList"
+
+.PP
+Result storage Vector<IPAddress>*, parsed by \fBcp_ip_address_list()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpEtherAddress"
+
+.PP
+Result storage EtherAddress*, parsed by \fBcp_ethernet_address()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpEthernetAddress"
+
+.PP
+Result storage EtherAddress*, parsed by \fBcp_ethernet_address()\fP\&. Synonym for cpEtherAddress\&. 
+.SS "const \fBCpVaParseCmd\fP cpTCPPort"
+
+.PP
+Result storage uint16_t*, parsed by \fBcp_tcpudp_port()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpUDPPort"
+
+.PP
+Result storage uint16_t*, parsed by \fBcp_tcpudp_port()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpElement"
+
+.PP
+Result storage Element**, parsed by \fBcp_element()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpElementCast"
+
+.PP
+Parse parameter const char*, result storage void**, parsed by \fBcp_element()\fP and \fBElement::cast()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpHandlerName"
+
+.PP
+Result storage Element** and String*, parsed by \fBcp_handler_name()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpHandlerCallRead"
+
+.PP
+Result storage HandlerCall*, parsed by \fBHandlerCall\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpHandlerCallWrite"
+
+.PP
+Result storage HandlerCall*, parsed by \fBHandlerCall\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpHandlerCallPtrRead"
+
+.PP
+Result storage HandlerCall**, parsed by \fBHandlerCall::reset_read\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpHandlerCallPtrWrite"
+
+.PP
+Result storage HandlerCall**, parsed by \fBHandlerCall::reset_write\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpIP6Address"
+
+.PP
+Result storage IP6Address* or equivalent, parsed by \fBcp_ip6_address()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpIP6Prefix"
+
+.PP
+Result storage IP6Address* addr and IP6Address* mask, parsed by \fBcp_ip6_prefix()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpIP6PrefixLen"
+
+.PP
+Result storage IP6Address* addr and int* prefix_len, parsed by \fBcp_ip6_prefix()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpIP6AddressOrPrefix"
+
+.PP
+Result storage IP6Address* addr and IP6Address* mask, parsed by \fBcp_ip6_prefix()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpFilename"
+
+.PP
+Result storage String*, parsed by \fBcp_filename()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpFileOffset"
+
+.PP
+Result storage off_t*, parsed by \fBcp_integer()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpAnno"
+
+.PP
+Parse parameter int annotation_size, result storage int*, parsed by \fBcp_anno()\fP\&. 
+.SS "const \fBCpVaParseCmd\fP cpOptional"
+
+.PP
+cp_va_parse only: Following arguments are optional\&. 
+.SS "const \fBCpVaParseCmd\fP cpKeywords"
+
+.PP
+cp_va_parse only: Following arguments are keywords\&. 
+.SS "const \fBCpVaParseCmd\fP cpConfirmKeywords"
+
+.PP
+cp_va_parse only: Following arguments are confirmed keywords\&. 
+.SS "const \fBCpVaParseCmd\fP cpMandatoryKeywords"
+
+.PP
+cp_va_parse only: Following arguments are mandatory keywords\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

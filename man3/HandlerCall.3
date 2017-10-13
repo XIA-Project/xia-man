@@ -1,0 +1,769 @@
+.TH "HandlerCall" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HandlerCall \- Convenience class for calling handlers\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <handlercall\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBFlags\fP { \fBreadable\fP = Handler::f_read, \fBf_read\fP = Handler::f_read, \fBwritable\fP = Handler::f_write, \fBf_write\fP = Handler::f_write, \fBf_preinitialize\fP = 4, \fBf_unquote_param\fP = 8 }"
+.br
+.ti -1c
+.RI "typedef bool(HandlerCall::* \fBunspecified_bool_type\fP) () const "
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHandlerCall\fP ()"
+.br
+.RI "\fIConstruct an empty \fBHandlerCall\fP\&. \fP"
+.ti -1c
+.RI "\fBHandlerCall\fP (const \fBString\fP &hdesc)"
+.br
+.RI "\fIConstruct a \fBHandlerCall\fP described by \fIhdesc\fP\&. \fP"
+.ti -1c
+.RI "int \fBinitialize\fP (int flags, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fIInitialize the \fBHandlerCall\fP\&. \fP"
+.ti -1c
+.RI "int \fBinitialize_read\fP (const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fIInitialize the \fBHandlerCall\fP for reading\&. \fP"
+.ti -1c
+.RI "int \fBinitialize_write\fP (const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fIInitialize the \fBHandlerCall\fP for writing\&. \fP"
+.ti -1c
+.RI "\fBoperator unspecified_bool_type\fP () const "
+.br
+.RI "\fITest if \fBHandlerCall\fP is empty\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fITest if \fBHandlerCall\fP is empty\&. \fP"
+.ti -1c
+.RI "bool \fBinitialized\fP () const "
+.br
+.RI "\fITest if \fBHandlerCall\fP is initialized\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBcall_read\fP (\fBErrorHandler\fP *errh=0) const "
+.br
+.RI "\fICall a read handler\&. \fP"
+.ti -1c
+.RI "int \fBcall_write\fP (\fBErrorHandler\fP *errh=0) const "
+.br
+.RI "\fICall a write handler\&. \fP"
+.ti -1c
+.RI "int \fBcall_write\fP (const VariableExpander &scope, \fBErrorHandler\fP *errh=0) const "
+.br
+.RI "\fICall a write handler, expanding its argument\&. \fP"
+.ti -1c
+.RI "int \fBcall_write\fP (const \fBString\fP &value_ext, \fBErrorHandler\fP *errh=0) const "
+.br
+.RI "\fICall a write handler with an additional value\&. \fP"
+.ti -1c
+.RI "\fBElement\fP * \fBelement\fP () const "
+.br
+.RI "\fIReturn the \fBElement\fP corresponding to this \fBHandlerCall\fP\&. \fP"
+.ti -1c
+.RI "const \fBHandler\fP * \fBhandler\fP () const "
+.br
+.RI "\fIReturn the \fBHandler\fP corresponding to this \fBHandlerCall\fP\&. \fP"
+.ti -1c
+.RI "const \fBString\fP & \fBvalue\fP () const "
+.br
+.RI "\fIReturn the write handler value and/or read handler parameters\&. \fP"
+.ti -1c
+.RI "void \fBset_value\fP (const \fBString\fP &\fBvalue\fP)"
+.br
+.RI "\fISets the write handler value and/or read handler parameters\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse\fP () const "
+.br
+.RI "\fIReturn a \fBString\fP that will parse into an equivalent \fBHandlerCall\fP\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIMake this \fBHandlerCall\fP empty\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static int \fBreset\fP (\fBHandlerCall\fP *&hcall, const \fBString\fP &hdesc, int flags, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICreate and initialize a \fBHandlerCall\fP from \fIhdesc\fP\&. \fP"
+.ti -1c
+.RI "static int \fBreset\fP (\fBHandlerCall\fP *&hcall, \fBElement\fP *e, const \fBString\fP &hname, const \fBString\fP &\fBvalue\fP, int flags, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICreate and initialize a \fBHandlerCall\fP on element \fIe\fP\&. \fP"
+.ti -1c
+.RI "static int \fBreset_read\fP (\fBHandlerCall\fP *&hcall, const \fBString\fP &hdesc, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICreate and initialize a read \fBHandlerCall\fP from \fIhdesc\fP\&. \fP"
+.ti -1c
+.RI "static int \fBreset_read\fP (\fBHandlerCall\fP *&hcall, \fBElement\fP *e, const \fBString\fP &hname, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICreate and initialize a read \fBHandlerCall\fP from \fIhdesc\fP\&. \fP"
+.ti -1c
+.RI "static int \fBreset_write\fP (\fBHandlerCall\fP *&hcall, const \fBString\fP &hdesc, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICreate and initialize a write \fBHandlerCall\fP from \fIhdesc\fP\&. \fP"
+.ti -1c
+.RI "static int \fBreset_write\fP (\fBHandlerCall\fP *&hcall, \fBElement\fP *e, const \fBString\fP &hname, const \fBString\fP &\fBvalue\fP=\fBString\fP(), \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICreate and initialize a read \fBHandlerCall\fP from \fIhdesc\fP\&. \fP"
+.in -1c
+.PP
+.RI "\fBImmediate Handler Calls\fP"
+.br
+
+.in +1c
+.in +1c
+.ti -1c
+.RI "static \fBString\fP \fBcall_read\fP (\fBElement\fP *e, const \fBString\fP &hname, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICall a read handler specified by element and handler name\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBcall_read\fP (const \fBString\fP &hdesc, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICall a read handler\&. \fP"
+.ti -1c
+.RI "static int \fBcall_write\fP (\fBElement\fP *e, const \fBString\fP &hname, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICall a write handler specified by element and handler name\&. \fP"
+.ti -1c
+.RI "static int \fBcall_write\fP (\fBElement\fP *e, const \fBString\fP &hname, const \fBString\fP &\fBvalue\fP, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICall a write handler specified by element and handler name\&. \fP"
+.ti -1c
+.RI "static int \fBcall_write\fP (const \fBString\fP &hdesc, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICall a write handler\&. \fP"
+.ti -1c
+.RI "static int \fBcall_write\fP (const \fBString\fP &hdesc, const \fBString\fP &\fBvalue\fP, const \fBElement\fP *context, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fICall a write handler with a specified value\&. \fP"
+.in -1c
+.in -1c
+.SH "Detailed Description"
+.PP 
+Convenience class for calling handlers\&. 
+
+The \fBHandlerCall\fP class simplifies the process of calling Click handlers\&. (The lower-level interface is the \fBHandler\fP class\&.) \fBHandlerCall\fP is used in two ways: (1) to call handlers immediately via static member functions, and (2) to set up future handler calls via \fBHandlerCall\fP objects\&. The immediate handler call functions take handler names as arguments and perform all necessary error checks before calling handlers, if any\&. A \fBHandlerCall\fP object encapsulates a handler reference (possibly including parameters), again automating all necessary error checks\&.
+.PP
+.SS "Immediate \fBHandler\fP Calls"
+.PP
+This example code shows how to use the \fBHandlerCall\fP functions for calling handlers immediately\&.
+.PP
+.PP
+.nf
+class YourElement { \&.\&.\&.
+    Element *_other;
+}
+
+void YourElement::function() {
+    // Call _other's "config" read handler\&.
+    String result = HandlerCall::call_read(_other, "config");
+
+    // The same, providing an error handler to print errors\&.
+    ErrorHandler *errh = ErrorHandler::default_handler();
+    result = HandlerCall::call_read(_other, "config", errh);
+    // (Each function takes an optional last argument of "errh"\&.)
+
+    // Call the "foo\&.config" read handler\&.  Search for element "foo" in
+    // the current compound element context\&.
+    result = HandlerCall::call_read("foo\&.config", this);
+
+    // Call the global "config" read handler for the current router\&.
+    result = HandlerCall::call_read("config", this);
+
+    // Call _other's "stop" write handler with empty value\&.
+    int success = HandlerCall::call_write(_other, "stop");
+
+    // Call _other's "config" write handler with value "blah"\&.
+    success = HandlerCall::call_write(_other, "config", "blah");
+
+    // Call the "foo\&.config" write handler with value "blah"\&.
+    success = HandlerCall::call_write("foo\&.config blah", this);
+    // Or, alternately:
+    success = HandlerCall::call_write("foo\&.config", "blah", this);
+}
+.fi
+.PP
+.PP
+.SS "\fBHandlerCall\fP Objects"
+.PP
+This example code shows how to use the \fBHandlerCall\fP objects to call handlers with simplified error checking\&.
+.PP
+.PP
+.nf
+class YourElement { \&.\&.\&.
+    HandlerCall _read_call;
+    HandlerCall _write_call;
+}
+
+YourElement::YourElement()
+    : _read_call(), _write_call() {
+}
+
+int YourElement::configure(Vector<String> &conf, ErrorHandler *errh) {
+    return cp_va_kparse(conf, this, errh,
+                   "READ_CALL", cpkP, cpHandlerCallRead, &_read_call,
+                   "WRITE_CALL", cpkP, cpHandlerCallWrite, &_write_call,
+                   cpEnd);
+}
+
+int YourElement::initialize(ErrorHandler *errh) {
+    if ((_read_call && _read_call\&.initialize_read(this, errh) < 0)
+        || (_write_call && _write_call\&.initialize_write(this, errh) < 0))
+        return -1;
+    return 0;
+}
+
+void YourElement::function() {
+    // call _read_call, print result
+    if (_read_call)
+        click_chatter("%s", _read_call\&.call_read());
+
+    // call _write_call with error handler
+    if (_write_call)
+        _write_call\&.call_write(ErrorHandler::default_handler());
+}
+.fi
+.PP
+.PP
+If usually your element's handler calls aren't used, you can save a small amount of space by using pointers to \fBHandlerCall\fP objects, as in this example\&. The cpHandlerCallPtrRead and cpHandlerCallPtrWrite types allow the _read_call and _write_call members to start out as null pointers\&.
+.PP
+.PP
+.nf
+class YourElement { \&.\&.\&.
+    HandlerCall *_read_call;
+    HandlerCall *_write_call;
+}
+
+YourElement::YourElement()
+    : _read_call(0), _write_call(0) {
+}
+
+int YourElement::configure(Vector<String> &conf, ErrorHandler *errh) {
+    return cp_va_kparse(conf, this, errh,
+                   "READ_CALL", cpkP, cpHandlerCallPtrRead, &_read_call,
+                   "WRITE_CALL", cpkP, cpHandlerCallPtrWrite, &_write_call,
+                   cpEnd);
+}
+
+int YourElement::initialize(ErrorHandler *errh) {
+    if ((_read_call && _read_call->initialize_read(this, errh) < 0)
+        || (_write_call && _write_call->initialize_write(this, errh) < 0))
+        return -1;
+    return 0;
+}
+
+void YourElement::cleanup(CleanupStage) {
+    delete _read_call;
+    delete _write_call;
+}
+
+void YourElement::function() {
+    // call _read_call, print result
+    if (_read_call)
+        click_chatter("%s", _read_call->call_read());
+
+    // call _write_call with error handler
+    if (_write_call)
+        _write_call->call_write(ErrorHandler::default_handler());
+}
+.fi
+.PP
+ 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "HandlerCall::HandlerCall ()\fC [inline]\fP"
+
+.PP
+Construct an empty \fBHandlerCall\fP\&. Any attempt to read, write, or initialize the \fBHandlerCall\fP will fail\&. 
+.SS "HandlerCall::HandlerCall (const \fBString\fP & hdesc)\fC [inline]\fP"
+
+.PP
+Construct a \fBHandlerCall\fP described by \fIhdesc\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhdesc\fP handler description \fC'[ename\&.]hname[ value]'\fP
+.RE
+.PP
+Although the resulting \fBHandlerCall\fP isn't empty, it must be initialized before it can be used\&. It returns false for \fBinitialized()\fP\&. The handler description is not checked for syntax errors, though; \fBinitialize()\fP does that\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBString\fP HandlerCall::call_read (\fBElement\fP * e, const \fBString\fP & hname, \fBErrorHandler\fP * errh = \fC0\fP)\fC [static]\fP"
+
+.PP
+Call a read handler specified by element and handler name\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP relevant element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+handler result, or empty string on error
+.RE
+.PP
+Searches for a read handler named \fIhname\fP on element \fIe\fP\&. If the handler exists, calls it (with no parameters) and returns the result\&. If \fIerrh\fP is nonnull, then errors, such as a missing handler or a write-only handler, are reported there\&. If \fIe\fP is some router's \fBroot element\fP, calls the global handler named \fIhname\fP on that router\&. 
+.SS "\fBString\fP HandlerCall::call_read (const \fBString\fP & hdesc, const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)\fC [static]\fP"
+
+.PP
+Call a read handler\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhdesc\fP handler description \fC'[ename\&.]hname[ params]'\fP 
+.br
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+handler result, or empty string on error
+.RE
+.PP
+Searches for a read handler matching \fIhdesc\fP\&. Any element name in \fIhdesc\fP is looked up relative to \fIcontext\fP\&. (For example, if \fIhdesc\fP is 'x\&.config' and \fIcontext's\fP name is 'aaa/bbb/ccc', will search for elements named aaa/bbb/x, aaa/x, and finally x\&.) If the handler exists, calls it (with specified parameters, if any) and returns the result\&. If \fIerrh\fP is nonnull, then errors, such as a missing handler or a write-only handler, are reported there\&. If \fIhdesc\fP has no \fCename\fP, then calls the global handler named \fChname\fP on \fIcontext's\fP router\&. 
+.SS "int HandlerCall::call_write (\fBElement\fP * e, const \fBString\fP & hname, \fBErrorHandler\fP * errh = \fC0\fP)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Call a write handler specified by element and handler name\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP relevant element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+handler result, or -EINVAL on error
+.RE
+.PP
+Searches for a write handler named \fIhname\fP on element \fIe\fP\&. If the handler exists, calls it (with empty write value) and returns the result\&. If \fIerrh\fP is nonnull, then errors, such as a missing handler or a read-only handler, are reported there\&. If \fIe\fP is some router's \fBroot element\fP, calls the global write handler named \fIhname\fP on that router\&. 
+.SS "int HandlerCall::call_write (\fBElement\fP * e, const \fBString\fP & hname, const \fBString\fP & value, \fBErrorHandler\fP * errh = \fC0\fP)\fC [static]\fP"
+
+.PP
+Call a write handler specified by element and handler name\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP relevant element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIvalue\fP write value 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+handler result, or -EINVAL on error
+.RE
+.PP
+Searches for a write handler named \fIhname\fP on element \fIe\fP\&. If the handler exists, calls it with \fIvalue\fP and returns the result\&. If \fIerrh\fP is nonnull, then errors, such as a missing handler or a read-only handler, are reported there\&. If \fIe\fP is some router's \fBroot element\fP, calls the global write handler named \fIhname\fP on that router\&. 
+.SS "int HandlerCall::call_write (const \fBString\fP & hdesc, const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)\fC [static]\fP"
+
+.PP
+Call a write handler\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhdesc\fP handler description \fC'[ename\&.]hname[ value]'\fP 
+.br
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+handler result, or -EINVAL on error
+.RE
+.PP
+Searches for a write handler matching \fIhdesc\fP\&. Any element name in \fIhdesc\fP is looked up relative to \fIcontext\fP (see \fBabove\fP)\&. If the handler exists, calls it with the value specified by \fIhdesc\fP and returns the result\&. If \fIerrh\fP is nonnull, then errors, such as a missing handler or a read-only handler, are reported there\&. If \fIe\fP is some router's \fBroot element\fP, calls the global write handler named \fIhname\fP on that router\&. 
+.SS "int HandlerCall::call_write (const \fBString\fP & hdesc, const \fBString\fP & value, const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)\fC [static]\fP"
+
+.PP
+Call a write handler with a specified value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhdesc\fP handler description \fC'[ename\&.]hname[ value]'\fP 
+.br
+\fIvalue\fP handler value 
+.br
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+handler result, or -EINVAL on error
+.RE
+.PP
+Searches for a write handler matching \fIhdesc\fP\&. Any element name in \fIhdesc\fP is looked up relative to \fIcontext\fP (see \fBabove\fP)\&. If the handler exists, calls it with \fIvalue\fP and returns the result\&. (Any value specified by \fIhdesc\fP is ignored\&.) If \fIerrh\fP is nonnull, then errors, such as a missing handler or a read-only handler, are reported there\&. If \fIe\fP is some router's \fBroot element\fP, calls the global write handler named \fIhname\fP on that router\&. 
+.SS "int HandlerCall::initialize (int flags, const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)"
+
+.PP
+Initialize the \fBHandlerCall\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIflags\fP zero or more of f_read, f_write, f_preinitialize, f_unquote_param 
+.br
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, negative on failure
+.RE
+.PP
+Initializes the \fBHandlerCall\fP object\&. The handler description supplied to the constructor is parsed and checked for syntax errors\&. Any element reference is looked up relative to \fIcontext\fP, if any\&. (For example, if \fIhdesc\fP was 'x\&.config' and \fIcontext's\fP name is 'aaa/bbb/ccc', this will search for elements named aaa/bbb/x, aaa/x, and finally x\&. If \fIcontext\fP is null, then the description must refer to a global handler\&.) If f_read is set in \fIflags\fP, then there must be a read handler named appropriately; if f_write is set, then there must be a write handler\&. If f_unquote_param is set, then any parameters are unquoted\&.
+.PP
+Initialization fails if the handler description was bogus (for example, an empty string, or something like '*#!$&!(#&$\&.'), if the named handler does not exist, if a read handler description has parameters but the read handler doesn't actually take parameters, and so forth\&. If \fIerrh\fP is nonnull, errors are reported there\&. The \fBHandlerCall\fP becomes empty on failure: \fBempty()\fP will return true, and (bool) *this will return false\&. Future \fBcall_read()\fP and \fBcall_write()\fP attempts will correctly fail\&.
+.PP
+If the f_preinitialize flag is set, the initialize function will check whether the router's handlers are ready (\fBRouter::handlers_ready()\fP)\&. If handlers are not ready, then \fBinitialize()\fP will check for syntax errors, but not actually look up the handler (since we don't know yet whether or not the handler exists)\&. Absent a syntax error, \fBinitialize()\fP will return 0 for success even though the \fBHandlerCall\fP remains uninitialized\&. 
+.SS "int HandlerCall::initialize_read (const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Initialize the \fBHandlerCall\fP for reading\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler
+.RE
+.PP
+Equivalent to \fBinitialize\fP(f_read, \fIcontext\fP, \fIerrh\fP)\&. 
+.SS "int HandlerCall::initialize_write (const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)\fC [inline]\fP"
+
+.PP
+Initialize the \fBHandlerCall\fP for writing\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler
+.RE
+.PP
+Equivalent to \fBinitialize\fP(f_write, \fIcontext\fP, \fIerrh\fP)\&. 
+.SS "HandlerCall::operator unspecified_bool_type () const\fC [inline]\fP"
+
+.PP
+Test if \fBHandlerCall\fP is empty\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fBHandlerCall\fP is not empty, false otherwise\&.
+.RE
+.PP
+Valid \fBHandlerCall\fP objects have been successfully initialized\&. 
+.SS "bool HandlerCall::empty () const\fC [inline]\fP"
+
+.PP
+Test if \fBHandlerCall\fP is empty\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fBHandlerCall\fP is empty, false otherwise\&. 
+.RE
+.PP
+
+.SS "bool HandlerCall::initialized () const\fC [inline]\fP"
+
+.PP
+Test if \fBHandlerCall\fP is initialized\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fBHandlerCall\fP is initialized, false otherwise\&. 
+.RE
+.PP
+
+.SS "\fBString\fP HandlerCall::call_read (\fBErrorHandler\fP * errh = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Call a read handler\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Read handler result\&.
+.RE
+.PP
+Fails and returns the empty string if this \fBHandlerCall\fP is invalid or not a read handler\&. If \fIerrh\fP is nonnull, then any errors are reported there, whether from \fBHandlerCall\fP or the handler itself\&. 
+.SS "int HandlerCall::call_write (\fBErrorHandler\fP * errh = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Call a write handler\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Write handler result\&.
+.RE
+.PP
+Fails and returns -EINVAL if this \fBHandlerCall\fP is invalid or not a write handler\&. If \fIerrh\fP is nonnull, then any errors are reported there, whether from \fBHandlerCall\fP or the handler itself\&. 
+.SS "int HandlerCall::call_write (const VariableExpander & scope, \fBErrorHandler\fP * errh = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Call a write handler, expanding its argument\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIscope\fP variable scope 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Write handler result\&.
+.RE
+.PP
+The write value is expanded in \fIscope\fP before the handler is called\&. Fails and returns -EINVAL if this \fBHandlerCall\fP is invalid or not a write handler\&. If \fIerrh\fP is nonnull, then any errors are reported there, whether from \fBHandlerCall\fP or the handler itself\&. 
+.SS "int HandlerCall::call_write (const \fBString\fP & value_ext, \fBErrorHandler\fP * errh = \fC0\fP) const\fC [inline]\fP"
+
+.PP
+Call a write handler with an additional value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue_ext\fP write value extension 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Write handler result\&.
+.RE
+.PP
+The \fIvalue_ext\fP is appended to the write value before the handler is called\&. (For example, consider a handler with description 'a\&.set
+value'\&. call_write('foo') will call 'a\&.set value foo'\&.) Fails and returns -EINVAL if this \fBHandlerCall\fP is invalid or not a write handler\&. If \fIerrh\fP is nonnull, then any errors are reported there, whether from \fBHandlerCall\fP or the handler itself\&. 
+.SS "int HandlerCall::reset (\fBHandlerCall\fP *& hcall, const \fBString\fP & hdesc, int flags, const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)\fC [static]\fP"
+
+.PP
+Create and initialize a \fBHandlerCall\fP from \fIhdesc\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhcall\fP stores the \fBHandlerCall\fP result 
+.br
+\fIhdesc\fP handler description '[ename\&.]hname[ value]' 
+.br
+\fIflags\fP initialization flags (f_read, f_write, f_preinitialize) 
+.br
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -EINVAL on failure
+.RE
+.PP
+Creates a \fBHandlerCall\fP and initializes it\&. Behaves somewhat like:
+.PP
+.PP
+.nf
+hcall = new HandlerCall(hdesc);
+return hcall->initialize(flags, context, errh);
+.fi
+.PP
+.PP
+However, (1) if initialization fails, then \fIhcall\fP is untouched; and (2) if initialization succeeds and \fIhcall\fP is not null, then the existing \fBHandlerCall\fP is assigned so that it corresponds to the new one (no new memory allocations)\&.
+.PP
+If \fIerrh\fP is nonnull, then any errors are reported there\&. 
+.SS "int HandlerCall::reset (\fBHandlerCall\fP *& hcall, \fBElement\fP * e, const \fBString\fP & hname, const \fBString\fP & value, int flags, \fBErrorHandler\fP * errh = \fC0\fP)\fC [static]\fP"
+
+.PP
+Create and initialize a \fBHandlerCall\fP on element \fIe\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhcall\fP stores the \fBHandlerCall\fP result 
+.br
+\fIe\fP relevant element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIvalue\fP handler value 
+.br
+\fIflags\fP initialization flags (f_read, f_write, f_preinitialize) 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -EINVAL on failure
+.RE
+.PP
+Creates a \fBHandlerCall\fP and initializes it\&. Behaves analogously to \fBreset(HandlerCall*&, const String&, int, const Element*, ErrorHandler*)\fP\&. 
+.SS "int HandlerCall::reset_read (\fBHandlerCall\fP *& hcall, const \fBString\fP & hdesc, const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Create and initialize a read \fBHandlerCall\fP from \fIhdesc\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhcall\fP stores the \fBHandlerCall\fP result 
+.br
+\fIhdesc\fP handler description '[ename\&.]hdesc[ param]' 
+.br
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -EINVAL on failure
+.RE
+.PP
+Equivalent to \fBreset\fP(\fIhcall\fP, \fIhdesc\fP, f_read, \fIcontext\fP, \fIerrh\fP)\&. 
+.SS "int HandlerCall::reset_read (\fBHandlerCall\fP *& hcall, \fBElement\fP * e, const \fBString\fP & hname, \fBErrorHandler\fP * errh = \fC0\fP)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Create and initialize a read \fBHandlerCall\fP from \fIhdesc\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhcall\fP stores the \fBHandlerCall\fP result 
+.br
+\fIe\fP relevant element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -EINVAL on failure
+.RE
+.PP
+Equivalent to \fBreset\fP(\fIhcall\fP, \fIe\fP, \fIhname\fP, \fBString()\fP, f_read, \fIcontext\fP, \fIerrh\fP)\&. 
+.SS "int HandlerCall::reset_write (\fBHandlerCall\fP *& hcall, const \fBString\fP & hdesc, const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Create and initialize a write \fBHandlerCall\fP from \fIhdesc\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhcall\fP stores the \fBHandlerCall\fP result 
+.br
+\fIhdesc\fP handler description '[ename\&.]hdesc[ value]' 
+.br
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -EINVAL on failure
+.RE
+.PP
+Equivalent to \fBreset\fP(\fIhcall\fP, \fIhdesc\fP, f_write, \fIcontext\fP, \fIerrh\fP)\&. 
+.SS "int HandlerCall::reset_write (\fBHandlerCall\fP *& hcall, \fBElement\fP * e, const \fBString\fP & hname, const \fBString\fP & value = \fC\fBString\fP()\fP, \fBErrorHandler\fP * errh = \fC0\fP)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Create and initialize a read \fBHandlerCall\fP from \fIhdesc\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhcall\fP stores the \fBHandlerCall\fP result 
+.br
+\fIe\fP relevant element, if any 
+.br
+\fIhname\fP handler name 
+.br
+\fIvalue\fP write handler value 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -EINVAL on failure
+.RE
+.PP
+Equivalent to \fBreset\fP(\fIhcall\fP, \fIe\fP, \fIhname\fP, @ value, f_write, \fIcontext\fP, \fIerrh\fP)\&. 
+.SS "\fBElement\fP* HandlerCall::element () const\fC [inline]\fP"
+
+.PP
+Return the \fBElement\fP corresponding to this \fBHandlerCall\fP\&. Returns null if invalid\&. A global handler may return some \fBRouter::root_element()\fP or null\&. 
+.SS "const \fBHandler\fP* HandlerCall::handler () const\fC [inline]\fP"
+
+.PP
+Return the \fBHandler\fP corresponding to this \fBHandlerCall\fP\&. Returns \fBHandler::blank_handler()\fP if invalid\&. 
+.SS "const \fBString\fP& HandlerCall::value () const\fC [inline]\fP"
+
+.PP
+Return the write handler value and/or read handler parameters\&. Returns the empty string if invalid\&. 
+.SS "void HandlerCall::set_value (const \fBString\fP & value)\fC [inline]\fP"
+
+.PP
+Sets the write handler value and/or read handler parameters\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP new value and/or parameters
+.RE
+.PP
+Does nothing if invalid\&. 
+.SS "\fBString\fP HandlerCall::unparse () const"
+
+.PP
+Return a \fBString\fP that will parse into an equivalent \fBHandlerCall\fP\&. Will work even if the \fBHandlerCall\fP has not been initialized\&. 
+.SS "void HandlerCall::clear ()\fC [inline]\fP"
+
+.PP
+Make this \fBHandlerCall\fP empty\&. Subsequent attempts to read, write, or initialize the \fBHandlerCall\fP will fail\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

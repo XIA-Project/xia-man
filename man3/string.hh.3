@@ -1,0 +1,55 @@
+.TH "include/click/string.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/string.hh \- Click's \fBString\fP class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/algorithm\&.hh>\fP
+.br
+\fC#include <click/atomic\&.hh>\fP
+.br
+\fC#include <click/glue\&.hh>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBString\fP"
+.br
+.RI "\fIA string of characters\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCLICK_CONSTANT_CSTR\fP(cstr)   ((cstr) && __builtin_constant_p(strlen((cstr))))"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBrfind\fP (const char *first, const char *last, char c)"
+.br
+.ti -1c
+.RI "const char * \fBfind\fP (const \fBString\fP &s, char c)"
+.br
+.ti -1c
+.RI "template<typename T > int \fBclick_compare\fP (const void *, const void *)"
+.br
+.ti -1c
+.RI "template<> int \fBclick_compare< String >\fP (const void *a, const void *b)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Click's \fBString\fP class\&. 
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

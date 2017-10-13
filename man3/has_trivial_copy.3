@@ -1,0 +1,26 @@
+.TH "has_trivial_copy< T >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+has_trivial_copy< T > \- Template determining whether T may be copied by memcpy\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <type_traits\&.hh>\fP
+.PP
+Inherits \fBfalse_type\fP\&.
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T>
+.br
+class has_trivial_copy< T >"
+Template determining whether T may be copied by memcpy\&. 
+
+has_trivial_copy<T> is equivalent to \fBtrue_type\fP if T has a trivial copy constructor, \fBfalse_type\fP if it does not\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

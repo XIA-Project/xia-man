@@ -1,0 +1,81 @@
+.TH "include/click/tokenbucket.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/tokenbucket.hh \- Token bucket rate limiter templates\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/timestamp\&.hh>\fP
+.br
+\fC#include <click/bigint\&.hh>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBTokenRateX< P >\fP"
+.br
+.RI "\fIToken bucket rate template\&. \fP"
+.ti -1c
+.RI "class \fBTokenRateX< P >\fP"
+.br
+.RI "\fIToken bucket rate template\&. \fP"
+.ti -1c
+.RI "class \fBTokenCounterX< R >\fP"
+.br
+.RI "\fIToken bucket counter template\&. \fP"
+.ti -1c
+.RI "class \fBTokenBucketJiffyParameters< T >\fP"
+.br
+.RI "\fIHelper class for token bucket rate limiter\&. \fP"
+.ti -1c
+.RI "class \fBTokenBucketX< P >\fP"
+.br
+.RI "\fIToken bucket rate limiter\&. \fP"
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBTokenRateX\fP< \fBTokenBucketJiffyParameters\fP< unsigned > > \fBTokenRate\fP"
+.br
+.ti -1c
+.RI "typedef \fBTokenCounterX\fP< \fBTokenRate\fP > \fBTokenCounter\fP"
+.br
+.ti -1c
+.RI "typedef \fBTokenBucketX\fP< \fBTokenBucketJiffyParameters\fP< unsigned > > \fBTokenBucket\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Token bucket rate limiter templates\&. 
+
+
+.PP
+.RS 4
+
+.PP
+.RE
+.PP
+Related template classes that support token bucket rate limiters\&.
+.PP
+The \fBTokenRateX\fP template class represents a token bucket rate: a refill I<rate> in tokens per period, plus a I<capacity>, the maximum number of tokens allowed to accumulate\&.
+.PP
+The \fBTokenCounterX\fP template class represents an active count of tokens\&. Member functions are provided to update the count according to a particular \fBTokenRateX\fP argument\&. The counter will fill up with tokens according to the given rate, to a maximum of the capacity\&.
+.PP
+A \fBTokenRateX\fP object's state depends only on the rate and capacity, and thus may be shared by several distinct \fBTokenCounterX\fP objects\&. But for the common case that a single counter is paired with a unique rate, the \fBTokenBucketX\fP template class combines a \fBTokenRateX\fP and a \fBTokenCounterX\fP\&.
+.PP
+The token bucket templates divide time into discrete units called I<ticks>\&. Token counters are refilled up to once per tick\&. A tick may be less than a full period\&. For example, if periods and ticks are 1 second and 1 millisecond, respectively, then a \fBTokenCounterX\fP with associated rate 1000 tokens per second would be refilled at 1 token per millisecond\&. The \fBTokenRateX\fP template parameter P defines the time tick unit and frequency\&. The provided \fBTokenBucketJiffyParameters\fP class is designed to be used as \fBTokenRateX\fP's parameter; it measures ticks in units of jiffies\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBGapRate\fP 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

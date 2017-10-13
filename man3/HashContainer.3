@@ -1,0 +1,449 @@
+.TH "HashContainer< T, A >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HashContainer< T, A > \- Intrusive hash table template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <hashcontainer\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBmax_bucket_count\fP = 4194303, \fBinitial_bucket_count\fP = 63 }"
+.br
+.ti -1c
+.RI "typedef A::key_type \fBkey_type\fP"
+.br
+.RI "\fIKey type\&. \fP"
+.ti -1c
+.RI "typedef T \fBvalue_type\fP"
+.br
+.RI "\fIValue type\&. \fP"
+.ti -1c
+.RI "typedef size_t \fBsize_type\fP"
+.br
+.RI "\fIType of sizes\&. \fP"
+.ti -1c
+.RI "typedef \fBHashContainer_const_iterator\fP< T, A > \fBconst_iterator\fP"
+.br
+.ti -1c
+.RI "typedef \fBHashContainer_iterator\fP< T, A > \fBiterator\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHashContainer\fP ()"
+.br
+.RI "\fIConstruct an empty \fBHashContainer\fP\&. \fP"
+.ti -1c
+.RI "\fBHashContainer\fP (\fBsize_type\fP n)"
+.br
+.RI "\fIConstruct an empty \fBHashContainer\fP with at least \fIn\fP buckets\&. \fP"
+.ti -1c
+.RI "\fB~HashContainer\fP ()"
+.br
+.RI "\fIDestroy the \fBHashContainer\fP\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBsize\fP () const "
+.br
+.RI "\fIReturn the number of elements stored\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fIReturn true iff \fBsize()\fP == 0\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBbucket_count\fP () const "
+.br
+.RI "\fIReturn the number of buckets\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBbucket_size\fP (\fBsize_type\fP n) const "
+.br
+.RI "\fIReturn the number of elements in bucket \fIn\fP\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBbucket\fP (const \fBkey_type\fP &key) const "
+.br
+.RI "\fIReturn the bucket number containing elements with \fIkey\fP\&. \fP"
+.ti -1c
+.RI "bool \fBunbalanced\fP () const "
+.br
+.RI "\fIReturn true if this \fBHashContainer\fP should be rebalanced\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBbegin\fP ()"
+.br
+.RI "\fIReturn an iterator for the first element in the container\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBbegin\fP () const "
+.br
+.ti -1c
+.RI "\fBiterator\fP \fBend\fP ()"
+.br
+.RI "\fIReturn an iterator for the end of the container\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBend\fP () const "
+.br
+.ti -1c
+.RI "\fBiterator\fP \fBbegin\fP (\fBsize_type\fP n)"
+.br
+.RI "\fIReturn an iterator for the first element in bucket \fIn\fP\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBbegin\fP (\fBsize_type\fP n) const "
+.br
+.ti -1c
+.RI "bool \fBcontains\fP (const \fBkey_type\fP &key) const "
+.br
+.RI "\fITest if an element with key \fIkey\fP exists in the table\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBcount\fP (const \fBkey_type\fP &key) const "
+.br
+.RI "\fIReturn the number of elements with key \fIkey\fP in the table\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBfind\fP (const \fBkey_type\fP &key)"
+.br
+.RI "\fIReturn an iterator for an element with \fIkey\fP, if any\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBfind\fP (const \fBkey_type\fP &key) const "
+.br
+.ti -1c
+.RI "\fBiterator\fP \fBfind_prefer\fP (const \fBkey_type\fP &key)"
+.br
+.RI "\fIReturn an iterator for an element with key \fIkey\fP, if any\&. \fP"
+.ti -1c
+.RI "T * \fBget\fP (const \fBkey_type\fP &key) const "
+.br
+.RI "\fIReturn an element for \fIkey\fP, if any\&. \fP"
+.ti -1c
+.RI "void \fBinsert_at\fP (\fBiterator\fP &it, T *element)"
+.br
+.RI "\fIInsert an element at position \fIit\fP\&. \fP"
+.ti -1c
+.RI "T * \fBset\fP (\fBiterator\fP &it, T *element, bool \fBbalance\fP=false)"
+.br
+.RI "\fIReplace the element at position \fIit\fP with \fIelement\fP\&. \fP"
+.ti -1c
+.RI "T * \fBset\fP (T *element)"
+.br
+.RI "\fIReplace the element with \fIelement->hashkey()\fP with \fIelement\fP\&. \fP"
+.ti -1c
+.RI "T * \fBerase\fP (\fBiterator\fP &it)"
+.br
+.RI "\fIRemove the element at position \fIit\fP\&. \fP"
+.ti -1c
+.RI "T * \fBerase\fP (const \fBkey_type\fP &key)"
+.br
+.RI "\fIRemove an element with hashkey \fIkey\fP\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIRemoves all elements from the container\&. \fP"
+.ti -1c
+.RI "void \fBswap\fP (\fBHashContainer\fP< T, A > &x)"
+.br
+.RI "\fISwaps the contents of *this and \fIx\fP\&. \fP"
+.ti -1c
+.RI "void \fBrehash\fP (\fBsize_type\fP n)"
+.br
+.RI "\fIRehash the table, ensuring it contains at least \fIn\fP buckets\&. \fP"
+.ti -1c
+.RI "void \fBbalance\fP ()"
+.br
+.RI "\fIRehash the table if it is unbalanced\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T, typename A>
+.br
+class HashContainer< T, A >"
+Intrusive hash table template\&. 
+
+The \fBHashContainer\fP template implements a hash table or associative array suitable for use in the kernel or at user level\&.
+.PP
+\fBHashContainer\fP is \fIintrusive\&.\fP This means it does not manage its contents' memory\&. While non-intrusive containers are more common in the STL, intrusive containers make it simple to store objects in more than one container at a time\&.
+.PP
+Unlike many hash tables \fBHashContainer\fP does not automatically grow itself to maintain good lookup performance\&. Its users are expected to call \fBrehash()\fP when appropriate\&. See \fBunbalanced()\fP\&.
+.PP
+With the default adapter type (A), the template type T must:
+.PP
+.PD 0
+.IP "\(bu" 2
+Define a 'key_type' type that supports equality\&. 
+.IP "\(bu" 2
+Define a 'key_const_reference' type, usually the same as 'key_type\&.' 
+.IP "\(bu" 2
+Contain a member 'T *_hashnext' accessible to HashContainer_adapter<T>\&. 
+.IP "\(bu" 2
+Define a 'hashkey()' member function that returns the relevant hash key\&. This function must have return type 'key_const_reference\&.' 
+.PP
+.PP
+These requirements can be changed by supplying a different A, or adapter, type\&.
+.PP
+\fBHashContainer\fP can store multiple elements with the same key, although this is not the normal use\&. An element stored in a \fBHashContainer\fP should not modify its key\&.
+.PP
+\fBHashContainer\fP is used to implement Click's \fBHashTable\fP template\&. 
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<typename T, typename A> typedef A::key_type \fBHashContainer\fP< T, A >::\fBkey_type\fP"
+
+.PP
+Key type\&. 
+.SS "template<typename T, typename A> typedef T \fBHashContainer\fP< T, A >::\fBvalue_type\fP"
+
+.PP
+Value type\&. Must meet the \fBHashContainer\fP requirements defined by type A\&. 
+.SS "template<typename T, typename A> typedef size_t \fBHashContainer\fP< T, A >::\fBsize_type\fP"
+
+.PP
+Type of sizes\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBHashContainer\fP ()"
+
+.PP
+Construct an empty \fBHashContainer\fP\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBHashContainer\fP (\fBsize_type\fP n)\fC [explicit]\fP"
+
+.PP
+Construct an empty \fBHashContainer\fP with at least \fIn\fP buckets\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::~\fBHashContainer\fP ()"
+
+.PP
+Destroy the \fBHashContainer\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T, typename A> \fBsize_type\fP \fBHashContainer\fP< T, A >::size () const\fC [inline]\fP"
+
+.PP
+Return the number of elements stored\&. 
+.SS "template<typename T, typename A> bool \fBHashContainer\fP< T, A >::empty () const\fC [inline]\fP"
+
+.PP
+Return true iff \fBsize()\fP == 0\&. 
+.SS "template<typename T, typename A> \fBsize_type\fP \fBHashContainer\fP< T, A >::bucket_count () const\fC [inline]\fP"
+
+.PP
+Return the number of buckets\&. 
+.SS "template<typename T, typename A> \fBsize_type\fP \fBHashContainer\fP< T, A >::bucket_size (\fBsize_type\fP n) const\fC [inline]\fP"
+
+.PP
+Return the number of elements in bucket \fIn\fP\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBsize_type\fP \fBHashContainer\fP< T, A >::bucket (const \fBkey_type\fP & key) const\fC [inline]\fP"
+
+.PP
+Return the bucket number containing elements with \fIkey\fP\&. 
+.SS "template<typename T, typename A> bool \fBHashContainer\fP< T, A >::unbalanced () const\fC [inline]\fP"
+
+.PP
+Return true if this \fBHashContainer\fP should be rebalanced\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBiterator\fP \fBHashContainer\fP< T, A >::begin ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the first element in the container\&. 
+.PP
+\fBNote:\fP
+.RS 4
+\fBHashContainer\fP iterators return elements in random order\&. 
+.RE
+.PP
+
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBconst_iterator\fP \fBHashContainer\fP< T, A >::begin () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBiterator\fP \fBHashContainer\fP< T, A >::end ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the end of the container\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBend()\fP\&.live() == false 
+.RE
+.PP
+
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBconst_iterator\fP \fBHashContainer\fP< T, A >::end () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBiterator\fP \fBHashContainer\fP< T, A >::begin (\fBsize_type\fP n)\fC [inline]\fP"
+
+.PP
+Return an iterator for the first element in bucket \fIn\fP\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBconst_iterator\fP \fBHashContainer\fP< T, A >::begin (\fBsize_type\fP n) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T , typename A > bool \fBHashContainer\fP< T, A >::contains (const \fBkey_type\fP & key) const\fC [inline]\fP"
+
+.PP
+Test if an element with key \fIkey\fP exists in the table\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBsize_type\fP \fBHashContainer\fP< T, A >::count (const \fBkey_type\fP & key) const\fC [inline]\fP"
+
+.PP
+Return the number of elements with key \fIkey\fP in the table\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBiterator\fP \fBHashContainer\fP< T, A >::find (const \fBkey_type\fP & key)\fC [inline]\fP"
+
+.PP
+Return an iterator for an element with \fIkey\fP, if any\&. If no element with \fIkey\fP exists in the table, \fBfind()\fP returns an iterator that compares equal to \fBend()\fP\&. However, this iterator is special, and can also be used to efficiently insert an element with key \fIkey\fP\&. In particular, the return value of \fBfind()\fP always has can_insert(), and can thus be passed to \fBinsert_at()\fP or \fBset()\fP\&. (It will insert elements at the head of the relevant bucket\&.) 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBconst_iterator\fP \fBHashContainer\fP< T, A >::find (const \fBkey_type\fP & key) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T , typename A > \fBHashContainer\fP< T, A >::\fBiterator\fP \fBHashContainer\fP< T, A >::find_prefer (const \fBkey_type\fP & key)\fC [inline]\fP"
+
+.PP
+Return an iterator for an element with key \fIkey\fP, if any\&. Like \fBfind()\fP, but additionally moves any found element to the head of its bucket, possibly speeding up future lookups\&. 
+.SS "template<typename T , typename A > T * \fBHashContainer\fP< T, A >::get (const \fBkey_type\fP & key) const\fC [inline]\fP"
+
+.PP
+Return an element for \fIkey\fP, if any\&. Returns null if no element for \fIkey\fP currently exists\&. Equivalent to find(key)\&.\fBget()\fP\&. 
+.SS "template<typename T, typename A > void \fBHashContainer\fP< T, A >::insert_at (\fBiterator\fP & it, T * element)\fC [inline]\fP"
+
+.PP
+Insert an element at position \fIit\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIit\fP iterator 
+.br
+\fIelement\fP element 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIit\&.can_insert()\fP 
+.PP
+\fIit\&.bucket()\fP == bucket(\fIelement->hashkey()\fP) 
+.PP
+\fIelement\fP != NULL 
+.PP
+\fIelement\fP is not already in the \fBHashContainer\fP
+.RE
+.PP
+Inserts \fIelement\fP at the position in the hash table indicated by \fIit\fP\&. For instance, if \fIit\fP == begin(\fIn\fP) for some bucket number \fIn\fP, then \fIelement\fP becomes the first element in bucket \fIn\fP\&. Other elements in the bucket, if any, are chained along\&.
+.PP
+On return, \fIit\fP is updated to point immediately after \fIelement\fP\&. If \fIit\fP was not live before, then it will not be live after\&.
+.PP
+\fBNote:\fP
+.RS 4
+\fBHashContainer\fP never automatically rehashes itself, so element insertion leaves any existing iterators valid\&. For best performance, however, users must call \fBbalance()\fP to resize the container when it becomes \fBunbalanced()\fP\&. 
+.RE
+.PP
+
+.SS "template<typename T, typename A > T * \fBHashContainer\fP< T, A >::set (\fBiterator\fP & it, T * element, bool balance = \fCfalse\fP)"
+
+.PP
+Replace the element at position \fIit\fP with \fIelement\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIit\fP iterator 
+.br
+\fIelement\fP element (can be null) 
+.br
+\fIbalance\fP whether to balance the hash table 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the previous value of it\&.get() 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIit\&.can_insert()\fP 
+.PP
+\fIit\&.bucket()\fP == bucket(\fIelement->hashkey()\fP) 
+.PP
+\fIelement\fP is not already in the \fBHashContainer\fP
+.RE
+.PP
+Replaces the element pointed to by \fIit\fP with \fIelement\fP, and returns the former element\&. If \fIelement\fP is null the former element is removed\&. If there is no former element then \fIelement\fP is inserted\&. When inserting an element with \fIbalance\fP true, \fBset()\fP may rebalance the hash table\&.
+.PP
+As a side effect, \fIit\fP is advanced to point at the newly inserted \fIelement\fP\&. If \fIelement\fP is null, then \fIit\fP is advanced to point at the next element as by ++\fIit\fP\&. 
+.SS "template<typename T, typename A > T * \fBHashContainer\fP< T, A >::set (T * element)\fC [inline]\fP"
+
+.PP
+Replace the element with \fIelement->hashkey()\fP with \fIelement\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIelement\fP element 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the previous value of find(\fIelement->hashkey()\fP)\&.\fBget()\fP 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIelement\fP is not already in the \fBHashContainer\fP
+.RE
+.PP
+Finds an element with the same hashkey as \fIelement\fP, removes it from the \fBHashContainer\fP, and replaces it with \fIelement\fP\&. If there is no former element then \fIelement\fP is inserted\&. 
+.SS "template<typename T , typename A > T * \fBHashContainer\fP< T, A >::erase (\fBiterator\fP & it)\fC [inline]\fP"
+
+.PP
+Remove the element at position \fIit\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIit\fP iterator 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the previous value of it\&.get()
+.RE
+.PP
+As a side effect, \fIit\fP is advanced to the next element as by ++\fIit\fP\&. 
+.SS "template<typename T , typename A > T * \fBHashContainer\fP< T, A >::erase (const \fBkey_type\fP & key)\fC [inline]\fP"
+
+.PP
+Remove an element with hashkey \fIkey\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+the element removed, if any
+.RE
+.PP
+Roughly equivalent to erase(find(key))\&. 
+.SS "template<typename T , typename A > void \fBHashContainer\fP< T, A >::clear ()\fC [inline]\fP"
+
+.PP
+Removes all elements from the container\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBsize()\fP == 0 
+.RE
+.PP
+
+.SS "template<typename T, typename A> void \fBHashContainer\fP< T, A >::swap (\fBHashContainer\fP< T, A > & x)\fC [inline]\fP"
+
+.PP
+Swaps the contents of *this and \fIx\fP\&. 
+.SS "template<typename T , typename A > void \fBHashContainer\fP< T, A >::rehash (\fBsize_type\fP n)"
+
+.PP
+Rehash the table, ensuring it contains at least \fIn\fP buckets\&. If \fIn\fP < \fBbucket_count()\fP, this function may make the hash table slower\&.
+.PP
+\fBNote:\fP
+.RS 4
+Rehashing invalidates all existing iterators\&. 
+.RE
+.PP
+
+.SS "template<typename T, typename A> void \fBHashContainer\fP< T, A >::balance ()\fC [inline]\fP"
+
+.PP
+Rehash the table if it is unbalanced\&. 
+.PP
+\fBNote:\fP
+.RS 4
+Rehashing invalidates all existing iterators\&. 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

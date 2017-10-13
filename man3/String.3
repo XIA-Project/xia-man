@@ -1,0 +1,1222 @@
+.TH "String" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+String \- A string of characters\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef const char * \fBconst_iterator\fP"
+.br
+.ti -1c
+.RI "typedef const_iterator \fBiterator\fP"
+.br
+.ti -1c
+.RI "typedef int(String::* \fBunspecified_bool_type\fP) () const "
+.br
+.ti -1c
+.RI "typedef int64_t \fBintmax_t\fP"
+.br
+.ti -1c
+.RI "typedef uint64_t \fBuintmax_t\fP"
+.br
+.ti -1c
+.RI "typedef intmax_t \fBint_large_t\fP"
+.br
+.ti -1c
+.RI "typedef uintmax_t \fBuint_large_t\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBString\fP ()"
+.br
+.RI "\fIConstruct an empty \fBString\fP (with length 0)\&. \fP"
+.ti -1c
+.RI "\fBString\fP (const \fBString\fP &x)"
+.br
+.RI "\fIConstruct a copy of the \fBString\fP \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP (const char *cstr)"
+.br
+.RI "\fIConstruct a \fBString\fP containing the C string \fIcstr\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP (const char *s, int len)"
+.br
+.RI "\fIConstruct a \fBString\fP containing the first \fIlen\fP characters of string \fIs\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP (const unsigned char *s, int len)"
+.br
+.ti -1c
+.RI "\fBString\fP (const char *first, const char *last)"
+.br
+.RI "\fIConstruct a \fBString\fP containing the characters from \fIfirst\fP to \fIlast\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP (const unsigned char *first, const unsigned char *last)"
+.br
+.ti -1c
+.RI "\fBString\fP (bool x)"
+.br
+.RI "\fIConstruct a \fBString\fP equal to 'true' or 'false' depending on the value of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP (char c)"
+.br
+.RI "\fIConstruct a \fBString\fP containing the single character \fIc\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP (unsigned char c)"
+.br
+.ti -1c
+.RI "\fBString\fP (int x)"
+.br
+.RI "\fIConstruct a base-10 string representation of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP (unsigned x)"
+.br
+.ti -1c
+.RI "\fBString\fP (long x)"
+.br
+.ti -1c
+.RI "\fBString\fP (unsigned long x)"
+.br
+.ti -1c
+.RI "\fBString\fP (int64_t x)"
+.br
+.ti -1c
+.RI "\fBString\fP (uint64_t x)"
+.br
+.ti -1c
+.RI "\fBString\fP (double x)"
+.br
+.RI "\fIConstruct a base-10 string representation of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fB~String\fP ()"
+.br
+.RI "\fIDestroy a \fBString\fP, freeing memory if necessary\&. \fP"
+.ti -1c
+.RI "const char * \fBdata\fP () const "
+.br
+.RI "\fIReturn a pointer to the string's data\&. \fP"
+.ti -1c
+.RI "int \fBlength\fP () const "
+.br
+.RI "\fIReturn the string's length\&. \fP"
+.ti -1c
+.RI "const char * \fBc_str\fP () const "
+.br
+.RI "\fINull-terminate the string\&. \fP"
+.ti -1c
+.RI "\fBoperator unspecified_bool_type\fP () const "
+.br
+.RI "\fITest if the string is nonempty\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fITest if the string is empty\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!\fP () const "
+.br
+.RI "\fITest if the string is empty\&. \fP"
+.ti -1c
+.RI "const_iterator \fBbegin\fP () const "
+.br
+.RI "\fIReturn an iterator for the first character in the string\&. \fP"
+.ti -1c
+.RI "const_iterator \fBend\fP () const "
+.br
+.RI "\fIReturn an iterator for the end of the string\&. \fP"
+.ti -1c
+.RI "char \fBoperator[]\fP (int i) const "
+.br
+.RI "\fIReturn the \fIi\fP th character in the string\&. \fP"
+.ti -1c
+.RI "char \fBat\fP (int i) const "
+.br
+.RI "\fIReturn the \fIi\fP th character in the string\&. \fP"
+.ti -1c
+.RI "char \fBfront\fP () const "
+.br
+.RI "\fIReturn the first character in the string\&. \fP"
+.ti -1c
+.RI "char \fBback\fP () const "
+.br
+.RI "\fIReturn the last character in the string\&. \fP"
+.ti -1c
+.RI "uint32_t \fBhashcode\fP () const "
+.br
+.RI "\fIReturns a 32-bit hash function of this string's characters\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBsubstring\fP (const char *\fBbegin\fP, const char *\fBend\fP) const "
+.br
+.RI "\fIReturn a substring of the current string starting at \fIfirst\fP and ending before \fIlast\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBsubstring\fP (int pos, int len) const "
+.br
+.RI "\fIReturn a substring of this string, consisting of the \fIlen\fP characters starting at index \fIpos\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBsubstring\fP (int pos) const "
+.br
+.RI "\fIReturn the suffix of the current string starting at index \fIpos\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBtrim_space\fP () const "
+.br
+.RI "\fIReturn a substring with spaces trimmed from the end\&. \fP"
+.ti -1c
+.RI "bool \fBequals\fP (const \fBString\fP &x) const "
+.br
+.RI "\fITest if this string equals \fIx\fP\&. \fP"
+.ti -1c
+.RI "bool \fBequals\fP (const char *s, int len) const "
+.br
+.RI "\fITest if this string is equal to the data in \fIs\fP\&. \fP"
+.ti -1c
+.RI "int \fBcompare\fP (const \fBString\fP &x) const "
+.br
+.RI "\fICompare this string with string \fIx\fP\&. \fP"
+.ti -1c
+.RI "int \fBcompare\fP (const char *s, int len) const "
+.br
+.RI "\fICompare this string with the data in \fIs\fP\&. \fP"
+.ti -1c
+.RI "bool \fBstarts_with\fP (const \fBString\fP &x) const "
+.br
+.RI "\fITest if this string begins with prefix \fIx\fP\&. \fP"
+.ti -1c
+.RI "bool \fBstarts_with\fP (const char *s, int len) const "
+.br
+.RI "\fIReturn true iff this string begins with the data in \fIs\fP\&. \fP"
+.ti -1c
+.RI "bool \fBglob_match\fP (const \fBString\fP &pattern) const "
+.br
+.RI "\fITest whether this string matches the glob \fIpattern\fP\&. \fP"
+.ti -1c
+.RI "int \fBfind_left\fP (char c, int start=0) const "
+.br
+.RI "\fISearch for a character in a string\&. \fP"
+.ti -1c
+.RI "int \fBfind_left\fP (const \fBString\fP &x, int start=0) const "
+.br
+.RI "\fISearch for a substring in a string\&. \fP"
+.ti -1c
+.RI "int \fBfind_right\fP (char c, int start=0x7FFFFFFF) const "
+.br
+.RI "\fISearch for a character in a string\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBlower\fP () const "
+.br
+.RI "\fIReturn a lowercased version of this string\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBupper\fP () const "
+.br
+.RI "\fIReturn an uppercased version of this string\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBprintable\fP () const "
+.br
+.RI "\fIReturn a 'printable' version of this string\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBquoted_hex\fP () const "
+.br
+.RI "\fIReturn a hex-quoted version of the string\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBencode_json\fP () const "
+.br
+.RI "\fIReturn this string's contents encoded for JSON\&. \fP"
+.ti -1c
+.RI "\fBString\fP & \fBoperator=\fP (const \fBString\fP &x)"
+.br
+.RI "\fIAssign this string to \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP & \fBoperator=\fP (const char *cstr)"
+.br
+.RI "\fIAssign this string to the C string \fIcstr\fP\&. \fP"
+.ti -1c
+.RI "void \fBswap\fP (\fBString\fP &x)"
+.br
+.RI "\fISwap the values of this string and \fIx\fP\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (const \fBString\fP &x)"
+.br
+.RI "\fIAppend \fIx\fP to this string\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (const char *cstr)"
+.br
+.RI "\fIAppend the null-terminated C string \fIcstr\fP to this string\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (const char *s, int len)"
+.br
+.RI "\fIAppend the first \fIlen\fP characters of \fIs\fP to this string\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (const char *first, const char *last)"
+.br
+.RI "\fIAppends the data from \fIfirst\fP to \fIlast\fP to this string\&. \fP"
+.ti -1c
+.RI "void \fBappend\fP (char c)"
+.br
+.RI "\fIAppend the character \fIc\fP to this string\&. \fP"
+.ti -1c
+.RI "void \fBappend_fill\fP (int c, int len)"
+.br
+.RI "\fIAppend \fIlen\fP copies of character \fIc\fP to this string\&. \fP"
+.ti -1c
+.RI "char * \fBappend_uninitialized\fP (int len)"
+.br
+.RI "\fIAppend \fIlen\fP unknown characters to this string\&. \fP"
+.ti -1c
+.RI "char * \fBappend_garbage\fP (int len)"
+.br
+.ti -1c
+.RI "\fBString\fP & \fBoperator+=\fP (const \fBString\fP &x)"
+.br
+.RI "\fIAppend \fIx\fP to this string\&. \fP"
+.ti -1c
+.RI "\fBString\fP & \fBoperator+=\fP (const char *cstr)"
+.br
+.RI "\fIAppend the null-terminated C string \fIcstr\fP to this string\&. \fP"
+.ti -1c
+.RI "\fBString\fP & \fBoperator+=\fP (char c)"
+.br
+.RI "\fIAppend the character \fIc\fP to this string\&. \fP"
+.ti -1c
+.RI "bool \fBis_shared\fP () const "
+.br
+.RI "\fITest if the \fBString\fP's data is shared or immutable\&. \fP"
+.ti -1c
+.RI "bool \fBis_stable\fP () const "
+.br
+.RI "\fITest if the \fBString\fP's data is immutable\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunique\fP () const "
+.br
+.RI "\fIReturn an unshared version of this \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunshared\fP () const "
+.br
+.RI "\fIReturn an unshared version of this \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBcompact\fP () const "
+.br
+.RI "\fIReturn a compact version of this \fBString\fP\&. \fP"
+.ti -1c
+.RI "char * \fBmutable_data\fP ()"
+.br
+.RI "\fIEnsure the string's data is unshared and return a mutable pointer to it\&. \fP"
+.ti -1c
+.RI "char * \fBmutable_c_str\fP ()"
+.br
+.RI "\fINull-terminate the string and return a mutable pointer to its data\&. \fP"
+.ti -1c
+.RI "bool \fBout_of_memory\fP () const "
+.br
+.RI "\fITest if this is an out-of-memory string\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static const \fBString\fP & \fBmake_empty\fP ()"
+.br
+.RI "\fIReturn a const reference to an empty \fBString\fP\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBmake_uninitialized\fP (int len)"
+.br
+.RI "\fIReturn a \fBString\fP containing \fIlen\fP unknown characters\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBmake_garbage\fP (int len)"
+.br
+.ti -1c
+.RI "static \fBString\fP \fBmake_stable\fP (const char *cstr)"
+.br
+.RI "\fIReturn a \fBString\fP that directly references the C string \fIcstr\fP\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBmake_stable\fP (const char *s, int len)"
+.br
+.RI "\fIReturn a \fBString\fP that directly references the first \fIlen\fP characters of \fIs\fP\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBmake_stable\fP (const char *first, const char *last)"
+.br
+.RI "\fIReturn a \fBString\fP that directly references the character data in [\fIfirst\fP, \fIlast\fP)\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBmake_numeric\fP (intmax_t x, int base=10, bool uppercase=true)"
+.br
+.RI "\fICreate and return a string representation of \fIx\fP\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBmake_numeric\fP (uintmax_t x, int base=10, bool uppercase=true)"
+.br
+.ti -1c
+.RI "static uint32_t \fBhashcode\fP (const char *\fBbegin\fP, const char *\fBend\fP)"
+.br
+.RI "\fIReturn a 32-bit hash function of the characters in [first, last)\&. \fP"
+.ti -1c
+.RI "static uint32_t \fBhashcode\fP (const unsigned char *\fBbegin\fP, const unsigned char *\fBend\fP)"
+.br
+.ti -1c
+.RI "static int \fBcompare\fP (const \fBString\fP &a, const \fBString\fP &b)"
+.br
+.RI "\fICompare two strings\&. \fP"
+.ti -1c
+.RI "static const \fBString\fP & \fBmake_out_of_memory\fP ()"
+.br
+.RI "\fIReturn a const reference to a canonical out-of-memory \fBString\fP\&. \fP"
+.ti -1c
+.RI "static const char * \fBout_of_memory_data\fP ()"
+.br
+.RI "\fIReturn the data pointer used for out-of-memory strings\&. \fP"
+.ti -1c
+.RI "static int \fBout_of_memory_length\fP ()"
+.br
+.RI "\fIReturn the length of canonical out-of-memory strings\&. \fP"
+.ti -1c
+.RI "static const char * \fBempty_data\fP ()"
+.br
+.RI "\fIReturn the data pointer used for canonical empty strings\&. \fP"
+.ti -1c
+.RI "static const char * \fBskip_utf8_char\fP (const char *first, const char *last)"
+.br
+.RI "\fIReturn a pointer to the next character in UTF-8 encoding\&. \fP"
+.ti -1c
+.RI "static const unsigned char * \fBskip_utf8_char\fP (const unsigned char *first, const unsigned char *last)"
+.br
+.RI "\fIReturn a pointer to the next character in UTF-8 encoding\&. \fP"
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static const char \fBbool_data\fP [11] = 'false\\0true'"
+.br
+.in -1c
+.SS "Related Functions"
+(Note that these are not member functions\&.) 
+.in +1c
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBString\fP &a, const \fBString\fP &b)"
+.br
+.RI "\fICompares two strings for equality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const char *a, const \fBString\fP &b)"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBString\fP &a, const char *b)"
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBString\fP &a, const \fBString\fP &b)"
+.br
+.RI "\fICompare two Strings for inequality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const char *a, const \fBString\fP &b)"
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBString\fP &a, const char *b)"
+.br
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBString\fP &a, const \fBString\fP &b)"
+.br
+.RI "\fICompare two Strings\&. \fP"
+.ti -1c
+.RI "bool \fBoperator<=\fP (const \fBString\fP &a, const \fBString\fP &b)"
+.br
+.RI "\fICompare two Strings\&. \fP"
+.ti -1c
+.RI "bool \fBoperator>\fP (const \fBString\fP &a, const \fBString\fP &b)"
+.br
+.RI "\fICompare two Strings\&. \fP"
+.ti -1c
+.RI "bool \fBoperator>=\fP (const \fBString\fP &a, const \fBString\fP &b)"
+.br
+.RI "\fICompare two Strings\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBoperator+\fP (\fBString\fP a, const \fBString\fP &b)"
+.br
+.RI "\fIConcatenate the operands and return the result\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBoperator+\fP (\fBString\fP a, const char *b)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBoperator+\fP (const char *a, const \fBString\fP &b)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBoperator+\fP (\fBString\fP a, char b)"
+.br
+.RI "\fIConcatenate the operands and return the result\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A string of characters\&. 
+
+The \fBString\fP class represents a string of characters\&. Strings may be constructed from C strings, characters, numbers, and so forth\&. They may also be added together\&. The underlying character arrays are dynamically allocated; \fBString\fP operations allocate and free memory as needed\&. A \fBString\fP and its substrings generally share memory\&. Accessing a character by index takes O(1) time; so does creating a substring\&.
+.PP
+.SS "Out-of-memory strings"
+.PP
+When there is not enough memory to create a particular string, a special 'out-of-memory' string is returned instead\&. Out-of-memory strings are contagious: the result of any concatenation operation involving an out-of-memory string is another out-of-memory string\&. Thus, the final result of a series of \fBString\fP operations will be an out-of-memory string, even if the out-of-memory condition occurs in the middle\&.
+.PP
+The canonical out-of-memory string is 14 bytes long, and equals the UTF-8 encoding of '\\U0001F4A3ENOMEM\\U0001F4A3' (that is, U+1F4A3 BOMB + 'ENOMEM' + U+1F4A3 BOMB)\&. This sequence is unlikely to show up in normal text, compares high relative to most other textual strings, and is valid UTF-8\&.
+.PP
+All canonical out-of-memory strings are equal and share the same \fBdata()\fP, which is different from the \fBdata()\fP of any other string\&. See \fBString::out_of_memory_data()\fP\&. The \fBString::make_out_of_memory()\fP function returns a canonical out-of-memory string\&.
+.PP
+Other strings may also be out-of-memory strings\&. For example, String::make_stable(String::out_of_memory_data()) == \fBString::make_out_of_memory()\fP, and some (but not all) substrings of out-of-memory strings are also out-of-memory strings\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "String::String ()\fC [inline]\fP"
+
+.PP
+Construct an empty \fBString\fP (with length 0)\&. 
+.SS "String::String (const \fBString\fP & x)\fC [inline]\fP"
+
+.PP
+Construct a copy of the \fBString\fP \fIx\fP\&. 
+.SS "String::String (const char * cstr)\fC [inline]\fP"
+
+.PP
+Construct a \fBString\fP containing the C string \fIcstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcstr\fP a null-terminated C string 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fBString\fP containing the characters of \fIcstr\fP, up to but not including the terminating null character\&. 
+.RE
+.PP
+
+.SS "String::String (const char * s, int len)\fC [inline]\fP"
+
+.PP
+Construct a \fBString\fP containing the first \fIlen\fP characters of string \fIs\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIs\fP a string 
+.br
+\fIlen\fP number of characters to take from \fIs\fP\&. If \fIlen\fP < 0, then takes \fCstrlen\fP(\fIs\fP) characters\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fBString\fP containing \fIlen\fP characters of \fIs\fP\&. 
+.RE
+.PP
+
+.SS "String::String (const unsigned char * s, int len)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "String::String (const char * first, const char * last)\fC [inline]\fP"
+
+.PP
+Construct a \fBString\fP containing the characters from \fIfirst\fP to \fIlast\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfirst\fP first character in string (begin iterator) 
+.br
+\fIlast\fP pointer one past last character in string (end iterator) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A \fBString\fP containing the characters from \fIfirst\fP to \fIlast\fP\&.
+.RE
+.PP
+Constructs an empty string if \fIfirst\fP >= \fIlast\fP\&. 
+.SS "String::String (const unsigned char * first, const unsigned char * last)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "String::String (bool x)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct a \fBString\fP equal to 'true' or 'false' depending on the value of \fIx\fP\&. 
+.SS "String::String (char c)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct a \fBString\fP containing the single character \fIc\fP\&. 
+.SS "String::String (unsigned char c)\fC [inline]\fP, \fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "String::String (int x)\fC [explicit]\fP"
+
+.PP
+Construct a base-10 string representation of \fIx\fP\&. never 
+.SS "String::String (unsigned x)\fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "String::String (long x)\fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "String::String (unsigned long x)\fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "String::String (int64_t x)\fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "String::String (uint64_t x)\fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "String::String (double x)\fC [explicit]\fP"
+
+.PP
+Construct a base-10 string representation of \fIx\fP\&. 
+.PP
+\fBNote:\fP
+.RS 4
+This function is only available at user level\&. 
+.RE
+.PP
+
+.SS "String::~String ()\fC [inline]\fP"
+
+.PP
+Destroy a \fBString\fP, freeing memory if necessary\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "const \fBString\fP & String::make_empty ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a const reference to an empty \fBString\fP\&. May be quicker than \fBString::String()\fP\&. 
+.SS "\fBString\fP String::make_uninitialized (int len)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a \fBString\fP containing \fIlen\fP unknown characters\&. 
+.SS "\fBString\fP String::make_stable (const char * cstr)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a \fBString\fP that directly references the C string \fIcstr\fP\&. neverThe \fBmake_stable()\fP functions are suitable for static constant strings whose data is known to stay around forever, such as C string constants\&.
+.PP
+\fBWarning:\fP
+.RS 4
+The \fBString\fP implementation may access \fIcstr's\fP terminating null character\&. 
+.RE
+.PP
+
+.SS "\fBString\fP String::make_stable (const char * s, int len)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a \fBString\fP that directly references the first \fIlen\fP characters of \fIs\fP\&. If \fIlen\fP < 0, treats \fIs\fP as a null-terminated C string\&.
+.PP
+\fBWarning:\fP
+.RS 4
+The \fBString\fP implementation may access \fIs\fP[\fIlen\fP], which should remain constant even though it's not part of the \fBString\fP\&. 
+.RE
+.PP
+
+.SS "\fBString\fP String::make_stable (const char * first, const char * last)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a \fBString\fP that directly references the character data in [\fIfirst\fP, \fIlast\fP)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfirst\fP pointer to the first character in the character data 
+.br
+\fIlast\fP pointer one beyond the last character in the character data (but see the warning)
+.RE
+.PP
+This function is suitable for static constant strings whose data is known to stay around forever, such as C string constants\&. Returns an empty string if \fIfirst\fP >= \fIlast\fP\&.
+.PP
+\fBWarning:\fP
+.RS 4
+The \fBString\fP implementation may access *\fIlast\fP, which should remain constant even though it's not part of the \fBString\fP\&. 
+.RE
+.PP
+
+.SS "\fBString\fP String::make_numeric (intmax_t num, int base = \fC10\fP, bool uppercase = \fCtrue\fP)\fC [static]\fP"
+
+.PP
+Create and return a string representation of \fIx\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP number 
+.br
+\fIbase\fP base; must be 8, 10, or 16, defaults to 10 
+.br
+\fIuppercase\fP if true, then use uppercase letters in base 16 
+.RE
+.PP
+
+.SS "\fBString\fP String::make_numeric (uintmax_t num, int base = \fC10\fP, bool uppercase = \fCtrue\fP)\fC [static]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "const char * String::data () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the string's data\&. Only the first \fBlength()\fP characters are valid, and the string might not be null-terminated\&. 
+.SS "int String::length () const\fC [inline]\fP"
+
+.PP
+Return the string's length\&. 
+.SS "const char * String::c_str () const\fC [inline]\fP"
+
+.PP
+Null-terminate the string\&. The terminating null character isn't considered part of the string, so this->\fBlength()\fP doesn't change\&. Returns a corresponding C string pointer\&. The returned pointer is semi-temporary; it will persist until the string is destroyed or appended to\&. 
+.SS "String::operator unspecified_bool_type () const\fC [inline]\fP"
+
+.PP
+Test if the string is nonempty\&. 
+.SS "bool String::empty () const\fC [inline]\fP"
+
+.PP
+Test if the string is empty\&. 
+.SS "bool String::operator! () const\fC [inline]\fP"
+
+.PP
+Test if the string is empty\&. 
+.SS "String::const_iterator String::begin () const\fC [inline]\fP"
+
+.PP
+Return an iterator for the first character in the string\&. \fBString\fP iterators are simply pointers into string data, so they are quite efficient\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::data\fP 
+.RE
+.PP
+
+.SS "String::const_iterator String::end () const\fC [inline]\fP"
+
+.PP
+Return an iterator for the end of the string\&. The return value points one character beyond the last character in the string\&. 
+.SS "char String::operator[] (int i) const\fC [inline]\fP"
+
+.PP
+Return the \fIi\fP th character in the string\&. Does not check bounds\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::at\fP 
+.RE
+.PP
+
+.SS "char String::at (int i) const\fC [inline]\fP"
+
+.PP
+Return the \fIi\fP th character in the string\&. Checks bounds: an assertion will fail if \fIi\fP is less than 0 or not less than \fBlength()\fP\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::operator[]\fP 
+.RE
+.PP
+
+.SS "char String::front () const\fC [inline]\fP"
+
+.PP
+Return the first character in the string\&. Does not check bounds\&. Same as (*this)[0]\&. 
+.SS "char String::back () const\fC [inline]\fP"
+
+.PP
+Return the last character in the string\&. Does not check bounds\&. Same as (*this)[\fBlength()\fP - 1]\&. 
+.SS "uint32_t String::hashcode (const char * first, const char * last)\fC [static]\fP"
+
+.PP
+Return a 32-bit hash function of the characters in [first, last)\&. Uses Paul Hsieh's 'SuperFastHash' algorithm, described at http://www.azillionmonkeys.com/qed/hash.html This hash function uses all characters in the string\&.
+.PP
+\fBInvariant:\fP
+.RS 4
+If last1 - first1 == last2 - first2 and memcmp(first1, first2, last1 - first1) == 0, then hashcode(first1, last1) == hashcode(first2, last2)\&. 
+.RE
+.PP
+
+.SS "uint32_t String::hashcode (const unsigned char * first, const unsigned char * last)\fC [inline]\fP, \fC [static]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "uint32_t String::hashcode () const\fC [inline]\fP"
+
+.PP
+Returns a 32-bit hash function of this string's characters\&. Equivalent to \fBString::hashcode\fP(\fBbegin()\fP, \fBend()\fP)\&. Uses Paul Hsieh's 'SuperFastHash\&.'
+.PP
+\fBInvariant:\fP
+.RS 4
+If s1 == s2, then s1\&.hashcode() == s2\&.hashcode()\&. 
+.RE
+.PP
+
+.SS "\fBString\fP String::substring (const char * first, const char * last) const\fC [inline]\fP"
+
+.PP
+Return a substring of the current string starting at \fIfirst\fP and ending before \fIlast\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfirst\fP pointer to the first substring character 
+.br
+\fIlast\fP pointer one beyond the last substring character
+.RE
+.PP
+Returns an empty string if \fIfirst\fP >= \fIlast\fP\&. Also returns an empty string if \fIfirst\fP or \fIlast\fP is out of range (i\&.e\&., either less than this->\fBbegin()\fP or greater than this->\fBend()\fP), but this should be considered a programming error; a future version may generate a warning for this case\&. 
+.SS "\fBString\fP String::substring (int pos, int len) const"
+
+.PP
+Return a substring of this string, consisting of the \fIlen\fP characters starting at index \fIpos\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIpos\fP substring's first position relative to the string 
+.br
+\fIlen\fP length of substring
+.RE
+.PP
+If \fIpos\fP is negative, starts that far from the end of the string\&. If \fIlen\fP is negative, leaves that many characters off the end of the string\&. If \fIpos\fP and \fIlen\fP specify a substring that is partly outside the string, only the part within the string is returned\&. If the substring is beyond either end of the string, returns an empty string (but this should be considered a programming error; a future version may generate a warning for this case)\&.
+.PP
+\fBNote:\fP
+.RS 4
+\fBString::substring()\fP is intended to behave like Perl's substr()\&. 
+.RE
+.PP
+
+.SS "\fBString\fP String::substring (int pos) const\fC [inline]\fP"
+
+.PP
+Return the suffix of the current string starting at index \fIpos\fP\&. If \fIpos\fP is negative, starts that far from the end of the string\&. If \fIpos\fP is so negative that the suffix starts outside the string, then the entire string is returned\&. If the substring is beyond the end of the string (\fIpos\fP > \fBlength()\fP), returns an empty string (but this should be considered a programming error; a future version may generate a warning for this case)\&.
+.PP
+\fBNote:\fP
+.RS 4
+\fBString::substring()\fP is intended to behave like Perl's substr()\&. 
+.RE
+.PP
+
+.SS "\fBString\fP String::trim_space () const"
+
+.PP
+Return a substring with spaces trimmed from the end\&. 
+.SS "bool String::equals (const \fBString\fP & x) const\fC [inline]\fP"
+
+.PP
+Test if this string equals \fIx\fP\&. 
+.SS "bool String::equals (const char * s, int len) const\fC [inline]\fP"
+
+.PP
+Test if this string is equal to the data in \fIs\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIs\fP string data to compare to 
+.br
+\fIlen\fP length of \fIs\fP 
+.RE
+.PP
+Same as String::compare(*this, String(s, len)) == 0\&. If \fIlen\fP < 0, then treats \fIs\fP as a null-terminated C string\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::compare(const String &a, const String &b)\fP 
+.RE
+.PP
+
+.SS "int String::compare (const \fBString\fP & a, const \fBString\fP & b)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Compare two strings\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP first string to compare 
+.br
+\fIb\fP second string to compare
+.RE
+.PP
+Returns 0 if \fIa\fP == \fIb\fP, negative if \fIa\fP < \fIb\fP in lexicographic order, and positive if \fIa\fP > \fIb\fP in lexicographic order\&. The lexicographic order treats all characters as unsigned\&. 
+.SS "int String::compare (const \fBString\fP & x) const\fC [inline]\fP"
+
+.PP
+Compare this string with string \fIx\fP\&. Same as \fBString::compare\fP(*this, \fIx\fP)\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::compare(const String &a, const String &b)\fP 
+.RE
+.PP
+
+.SS "int String::compare (const char * s, int len) const"
+
+.PP
+Compare this string with the data in \fIs\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIs\fP string data to compare to 
+.br
+\fIlen\fP length of \fIs\fP 
+.RE
+.PP
+Same as String::compare(*this, String(s, len))\&. If \fIlen\fP < 0, then treats \fIs\fP as a null-terminated C string\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::compare(const String &a, const String &b)\fP 
+.RE
+.PP
+
+.SS "bool String::starts_with (const \fBString\fP & x) const\fC [inline]\fP"
+
+.PP
+Test if this string begins with prefix \fIx\fP\&. Same as \fBString::starts_with\fP(\fIx\&.data()\fP, \fIx\&.length()\fP)\&. 
+.SS "bool String::starts_with (const char * s, int len) const"
+
+.PP
+Return true iff this string begins with the data in \fIs\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIs\fP string data to compare to 
+.br
+\fIlen\fP length of \fIs\fP 
+.RE
+.PP
+If \fIlen\fP < 0, then treats \fIs\fP as a null-terminated C string\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::compare(const String &a, const String &b)\fP 
+.RE
+.PP
+
+.SS "bool String::glob_match (const \fBString\fP & pattern) const"
+
+.PP
+Test whether this string matches the glob \fIpattern\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIpattern\fP glob pattern 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True iff this string matches \fIpattern\fP\&.
+.RE
+.PP
+A glob pattern is a pattern that may contain wildcard characters\&. \fC*\fP in the pattern matches zero or more arbitrary characters in \fIstr\fP; \fC?\fP matches exactly one arbitrary character in \fIstr\fP; \fC[\&.\&.\&.]\fP matches any of the characters in brackets; and \fC[^\&.\&.\&.]\fP matches any character not in the brackets\&. A backslash \fC\\\fP escapes a wildcard character so that it matches only itself\&. 
+.SS "int String::find_left (char c, int start = \fC0\fP) const"
+
+.PP
+Search for a character in a string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIc\fP character to search for 
+.br
+\fIstart\fP initial search position
+.RE
+.PP
+Return the index of the leftmost occurence of \fIc\fP, starting at index \fIstart\fP and working up to the end of the string\&. Returns -1 if \fIc\fP is not found\&. 
+.SS "int String::find_left (const \fBString\fP & x, int start = \fC0\fP) const"
+
+.PP
+Search for a substring in a string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP substring to search for 
+.br
+\fIstart\fP initial search position
+.RE
+.PP
+Return the index of the leftmost occurence of the substring \fIstr\fP, starting at index \fIstart\fP and working up to the end of the string\&. Returns -1 if \fIstr\fP is not found\&. 
+.SS "int String::find_right (char c, int start = \fC0x7FFFFFFF\fP) const"
+
+.PP
+Search for a character in a string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIc\fP character to search for 
+.br
+\fIstart\fP initial search position
+.RE
+.PP
+Return the index of the rightmost occurence of the character \fIc\fP, starting at index \fIstart\fP and working back to the beginning of the string\&. Returns -1 if \fIc\fP is not found\&. \fIstart\fP may start beyond the end of the string\&. 
+.SS "\fBString\fP String::lower () const"
+
+.PP
+Return a lowercased version of this string\&. Translates the ASCII characters 'A' through 'Z' into their lowercase equivalents\&. 
+.SS "\fBString\fP String::upper () const"
+
+.PP
+Return an uppercased version of this string\&. Translates the ASCII characters 'a' through 'z' into their uppercase equivalents\&. 
+.SS "\fBString\fP String::printable () const"
+
+.PP
+Return a 'printable' version of this string\&. Translates control characters 0-31 into 'control' sequences, such as '^@' for the null character, and characters 127-255 into octal escape sequences, such as '\\377' for 255\&. 
+.SS "\fBString\fP String::quoted_hex () const"
+
+.PP
+Return a hex-quoted version of the string\&. For example, the string 'Abcd' would convert to '\\<41626364>'\&. 
+.SS "\fBString\fP String::encode_json () const"
+
+.PP
+Return this string's contents encoded for JSON\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+*this is encoded in UTF-8\&.
+.RE
+.PP
+For instance, \fBString\fP('a\\'')\&.encode_json() == 'a\\""\&. Note that the double-quote characters that usually surround a JSON string are not included\&. 
+.SS "\fBString\fP & String::operator= (const \fBString\fP & x)\fC [inline]\fP"
+
+.PP
+Assign this string to \fIx\fP\&. 
+.SS "\fBString\fP & String::operator= (const char * cstr)\fC [inline]\fP"
+
+.PP
+Assign this string to the C string \fIcstr\fP\&. 
+.SS "void String::swap (\fBString\fP & x)\fC [inline]\fP"
+
+.PP
+Swap the values of this string and \fIx\fP\&. 
+.SS "void String::append (const \fBString\fP & x)\fC [inline]\fP"
+
+.PP
+Append \fIx\fP to this string\&. 
+.SS "void String::append (const char * cstr)\fC [inline]\fP"
+
+.PP
+Append the null-terminated C string \fIcstr\fP to this string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcstr\fP data to append 
+.RE
+.PP
+
+.SS "void String::append (const char * s, int len)\fC [inline]\fP"
+
+.PP
+Append the first \fIlen\fP characters of \fIs\fP to this string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIs\fP data to append 
+.br
+\fIlen\fP length of data 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIlen\fP >= 0 
+.RE
+.PP
+
+.SS "void String::append (const char * first, const char * last)\fC [inline]\fP"
+
+.PP
+Appends the data from \fIfirst\fP to \fIlast\fP to this string\&. Does nothing if \fIfirst\fP >= \fIlast\fP\&. 
+.SS "void String::append (char c)\fC [inline]\fP"
+
+.PP
+Append the character \fIc\fP to this string\&. 
+.SS "void String::append_fill (int c, int len)"
+
+.PP
+Append \fIlen\fP copies of character \fIc\fP to this string\&. 
+.SS "char * String::append_uninitialized (int len)"
+
+.PP
+Append \fIlen\fP unknown characters to this string\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Modifiable pointer to the appended characters\&.
+.RE
+.PP
+The caller may safely modify the returned memory\&. Null is returned if the string becomes out-of-memory\&. 
+.SS "\fBString\fP & String::operator+= (const \fBString\fP & x)\fC [inline]\fP"
+
+.PP
+Append \fIx\fP to this string\&. never
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBString\fP & String::operator+= (const char * cstr)\fC [inline]\fP"
+
+.PP
+Append the null-terminated C string \fIcstr\fP to this string\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBString\fP & String::operator+= (char c)\fC [inline]\fP"
+
+.PP
+Append the character \fIc\fP to this string\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "bool String::is_shared () const\fC [inline]\fP"
+
+.PP
+Test if the \fBString\fP's data is shared or immutable\&. 
+.SS "bool String::is_stable () const\fC [inline]\fP"
+
+.PP
+Test if the \fBString\fP's data is immutable\&. 
+.SS "\fBString\fP String::unique () const\fC [inline]\fP"
+
+.PP
+Return an unshared version of this \fBString\fP\&. 
+.PP
+\fBDeprecated\fP
+.RS 4
+Use \fBString::unshared()\fP instead\&.
+.RE
+.PP
+.PP
+The return value shares no data with any other non-stable \fBString\fP\&. 
+.SS "\fBString\fP String::unshared () const\fC [inline]\fP"
+
+.PP
+Return an unshared version of this \fBString\fP\&. The return value shares no data with any other non-stable \fBString\fP\&. 
+.SS "\fBString\fP String::compact () const\fC [inline]\fP"
+
+.PP
+Return a compact version of this \fBString\fP\&. The return value shares no more than 256 bytes of data with any other non-stable \fBString\fP\&. 
+.SS "char * String::mutable_data ()"
+
+.PP
+Ensure the string's data is unshared and return a mutable pointer to it\&. 
+.SS "char * String::mutable_c_str ()"
+
+.PP
+Null-terminate the string and return a mutable pointer to its data\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::c_str\fP 
+.RE
+.PP
+
+.SS "const \fBString\fP & String::make_out_of_memory ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a const reference to a canonical out-of-memory \fBString\fP\&. 
+.SS "bool String::out_of_memory () const\fC [inline]\fP"
+
+.PP
+Test if this is an out-of-memory string\&. 
+.SS "const char * String::out_of_memory_data ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the data pointer used for out-of-memory strings\&. 
+.SS "int String::out_of_memory_length ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the length of canonical out-of-memory strings\&. 
+.SS "const char * String::empty_data ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the data pointer used for canonical empty strings\&. The returned value may be dereferenced; it points to a null character\&. 
+.SS "const char * String::skip_utf8_char (const char * first, const char * last)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a pointer to the next character in UTF-8 encoding\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIfirst\fP < \fIlast\fP 
+.RE
+.PP
+If \fIfirst\fP doesn't point at a valid UTF-8 character, returns \fIfirst\fP\&. 
+.SS "const unsigned char * String::skip_utf8_char (const unsigned char * first, const unsigned char * last)\fC [static]\fP"
+
+.PP
+Return a pointer to the next character in UTF-8 encoding\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIfirst\fP < \fIlast\fP 
+.RE
+.PP
+If \fIfirst\fP doesn't point at a valid UTF-8 character, returns \fIfirst\fP\&. 
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "bool operator== (const \fBString\fP & a, const \fBString\fP & b)\fC [related]\fP"
+
+.PP
+Compares two strings for equality\&. Returns true iff the two operands have the same lengths and the same characters in the same order\&. At most one of the operands can be a null-terminated C string\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::compare\fP 
+.RE
+.PP
+
+.SS "bool operator== (const char * a, const \fBString\fP & b)\fC [related]\fP"
+
+.SS "bool operator== (const \fBString\fP & a, const char * b)\fC [related]\fP"
+
+.SS "bool \fBoperator!\fP= (const \fBString\fP & a, const \fBString\fP & b)\fC [related]\fP"
+
+.PP
+Compare two Strings for inequality\&. Returns true iff !(\fIa\fP == \fIb\fP)\&. At most one of the operands can be a null-terminated C string\&. 
+.SS "bool \fBoperator!\fP= (const char * a, const \fBString\fP & b)\fC [related]\fP"
+
+.SS "bool \fBoperator!\fP= (const \fBString\fP & a, const char * b)\fC [related]\fP"
+
+.SS "bool operator< (const \fBString\fP & a, const \fBString\fP & b)\fC [related]\fP"
+
+.PP
+Compare two Strings\&. Returns true iff \fIa\fP < \fIb\fP in lexicographic order\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::compare\fP 
+.RE
+.PP
+
+.SS "bool operator<= (const \fBString\fP & a, const \fBString\fP & b)\fC [related]\fP"
+
+.PP
+Compare two Strings\&. Returns true iff \fIa\fP <= \fIb\fP in lexicographic order\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::compare\fP 
+.RE
+.PP
+
+.SS "bool operator> (const \fBString\fP & a, const \fBString\fP & b)\fC [related]\fP"
+
+.PP
+Compare two Strings\&. Returns true iff \fIa\fP > \fIb\fP in lexicographic order\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::compare\fP 
+.RE
+.PP
+
+.SS "bool operator>= (const \fBString\fP & a, const \fBString\fP & b)\fC [related]\fP"
+
+.PP
+Compare two Strings\&. Returns true iff \fIa\fP >= \fIb\fP in lexicographic order\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBString::compare\fP 
+.RE
+.PP
+
+.SS "\fBString\fP operator+ (\fBString\fP a, const \fBString\fP & b)\fC [related]\fP"
+
+.PP
+Concatenate the operands and return the result\&. At most one of the two operands can be a null-terminated C string\&. 
+.SS "\fBString\fP operator+ (\fBString\fP a, const char * b)\fC [related]\fP"
+
+.SS "\fBString\fP operator+ (const char * a, const \fBString\fP & b)\fC [related]\fP"
+
+.SS "\fBString\fP operator+ (\fBString\fP a, char b)\fC [related]\fP"
+
+.PP
+Concatenate the operands and return the result\&. The second operand is a single character\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,173 @@
+.TH "ArchiveElement" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ArchiveElement \- Member of an 'ar' archive\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <archive\&.hh>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBlive\fP () const "
+.br
+.RI "\fIReturn true iff the member should be included in an archive\&. \fP"
+.ti -1c
+.RI "void \fBkill\fP ()"
+.br
+.RI "\fIKill a member, preventing it from being archived\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static int \fBparse\fP (const \fBString\fP &str, \fBVector\fP< \fBArchiveElement\fP > &ar, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fIParse a string into a vector of \fBArchiveElement\fP objects\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBunparse\fP (const \fBVector\fP< \fBArchiveElement\fP > &ar, \fBErrorHandler\fP *errh=0)"
+.br
+.RI "\fIUnparse a vector of \fBArchiveElement\fP objects into a string\&. \fP"
+.ti -1c
+.RI "static \fBArchiveElement\fP * \fBfind\fP (\fBVector\fP< \fBArchiveElement\fP > &ar, const \fBString\fP &\fBname\fP)"
+.br
+.RI "\fILocate an \fBArchiveElement\fP in an archive by name\&. \fP"
+.ti -1c
+.RI "static const \fBArchiveElement\fP * \fBfind\fP (const \fBVector\fP< \fBArchiveElement\fP > &ar, const \fBString\fP &\fBname\fP)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBString\fP \fBname\fP"
+.br
+.RI "\fIMember name (no slashes allowed) \fP"
+.ti -1c
+.RI "int \fBdate\fP"
+.br
+.RI "\fIDecimal seconds since the epoch (1/1/1970) \fP"
+.ti -1c
+.RI "int \fBuid\fP"
+.br
+.RI "\fIUser ID of member\&. \fP"
+.ti -1c
+.RI "int \fBgid\fP"
+.br
+.RI "\fIGroup ID of member\&. \fP"
+.ti -1c
+.RI "int \fBmode\fP"
+.br
+.RI "\fIFile mode\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBdata\fP"
+.br
+.RI "\fIMember contents\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Member of an 'ar' archive\&. 
+
+The \fBArchiveElement\fP class represents members of ar(1) archives\&. Click uses the simple ar(1) format for passing configurations with additional information, such as compiled packages and element maps\&. An archive member consists of a name, data, and additional metadata\&. Complete archives are represented as vectors of \fBArchiveElement\fP objects\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool ArchiveElement::live () const\fC [inline]\fP"
+
+.PP
+Return true iff the member should be included in an archive\&. 
+.SS "void ArchiveElement::kill ()\fC [inline]\fP"
+
+.PP
+Kill a member, preventing it from being archived\&. 
+.SS "int ArchiveElement::parse (const \fBString\fP & str, \fBVector\fP< \fBArchiveElement\fP > & ar, \fBErrorHandler\fP * errh = \fC0\fP)\fC [static]\fP"
+
+.PP
+Parse a string into a vector of \fBArchiveElement\fP objects\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP input string 
+.br
+\fIar\fP archive elements 
+.br
+\fIerrh\fP error message receiver 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, < 0 on failure 
+.RE
+.PP
+
+.SS "\fBString\fP ArchiveElement::unparse (const \fBVector\fP< \fBArchiveElement\fP > & ar, \fBErrorHandler\fP * errh = \fC0\fP)\fC [static]\fP"
+
+.PP
+Unparse a vector of \fBArchiveElement\fP objects into a string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIar\fP archive elements 
+.br
+\fIerrh\fP error message receiver 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+archive string, suitable for \fBparse()\fP 
+.RE
+.PP
+
+.SS "static \fBArchiveElement\fP* ArchiveElement::find (\fBVector\fP< \fBArchiveElement\fP > & ar, const \fBString\fP & name)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Locate an \fBArchiveElement\fP in an archive by name\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIar\fP archive elements 
+.br
+\fIname\fP element name 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to matching archive element, or 0 if none exists 
+.RE
+.PP
+
+.SS "static const \fBArchiveElement\fP* ArchiveElement::find (const \fBVector\fP< \fBArchiveElement\fP > & ar, const \fBString\fP & name)\fC [inline]\fP, \fC [static]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBString\fP ArchiveElement::name"
+
+.PP
+Member name (no slashes allowed) 
+.SS "int ArchiveElement::date"
+
+.PP
+Decimal seconds since the epoch (1/1/1970) 
+.SS "int ArchiveElement::uid"
+
+.PP
+User ID of member\&. 
+.SS "int ArchiveElement::gid"
+
+.PP
+Group ID of member\&. 
+.SS "int ArchiveElement::mode"
+
+.PP
+File mode\&. 
+.SS "\fBString\fP ArchiveElement::data"
+
+.PP
+Member contents\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

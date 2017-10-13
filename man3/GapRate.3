@@ -1,0 +1,189 @@
+.TH "GapRate" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+GapRate \- A helper class for implementing a uniform rate\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <click/gaprate\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBUGAP_SHIFT\fP = 12 }"
+.br
+.ti -1c
+.RI "enum { \fBMAX_RATE\fP = 1000000U << UGAP_SHIFT }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBGapRate\fP ()"
+.br
+.RI "\fIConstruct a \fBGapRate\fP object with initial rate 0\&. \fP"
+.ti -1c
+.RI "\fBGapRate\fP (unsigned r)"
+.br
+.RI "\fIConstruct a \fBGapRate\fP object with initial rate \fIr\fP\&. \fP"
+.ti -1c
+.RI "unsigned \fBrate\fP () const "
+.br
+.RI "\fIReturn the current rate\&. \fP"
+.ti -1c
+.RI "void \fBset_rate\fP (unsigned r)"
+.br
+.RI "\fISet the current rate to \fIr\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_rate\fP (unsigned r, \fBErrorHandler\fP *errh)"
+.br
+.RI "\fISet the current rate to \fIr\fP\&. \fP"
+.ti -1c
+.RI "bool \fBneed_update\fP (const \fBTimestamp\fP &ts)"
+.br
+.RI "\fIReturns whether the user's rate is behind the true rate\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBexpiry\fP () const "
+.br
+.RI "\fIReturns a time when the user's rate will be behind the true rate\&. \fP"
+.ti -1c
+.RI "void \fBupdate\fP ()"
+.br
+.RI "\fIIncrement the user event counter\&. \fP"
+.ti -1c
+.RI "void \fBupdate_with\fP (int delta)"
+.br
+.RI "\fIIncrement the user event counter by \fIdelta\fP\&. \fP"
+.ti -1c
+.RI "void \fBreset\fP ()"
+.br
+.RI "\fIResets the true rate counter\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A helper class for implementing a uniform rate\&. 
+
+The \fBGapRate\fP class helps its user implement a process with a uniform rate: a process in which one user event happens every T seconds\&. \fBGapRate\fP is designed to efficiently model high rates\&. (Contrast this with \fBTimer\fP, which can serve a similar function at low rates\&.)
+.PP
+\fBGapRate\fP is not a great choice for limiting the rates of external processes\&. See \fBTokenBucketX\fP, a token bucket rate limiter\&.
+.PP
+\fBGapRate\fP models an underlying 'true' rated process with the correct rate\&. It also keeps a counter, maintained by its user via the \fBupdate()\fP method, that measures the progress of the user's rated process\&. The needs_update() method compares this counter with its expected value, which is determined by the true rated process\&. If the user's rated process is running behind, then needs_update() returns true; the user should trigger an event and call the \fBupdate()\fP method\&. If the user's rated process is just right or is running faster than the true process, then needs_update() returns false; the user should \fInot\fP trigger an event\&.
+.PP
+Creating a non-bursty rate can be expensive and difficult\&. \fBGapRate\fP attempts to create a non-bursty rate using timestamps and some interesting microsecond-based arithmetic\&. External factors can cause scheduling hiccups where \fBGapRate\fP is not called as much as expected\&. \fBGapRate\fP compensates for hiccups: the user's rated process may fall up to a full second behind the true rated process, then catch up in a burst\&. More than one second's worth of lag is ignored\&.
+.PP
+The maximum rate \fBGapRate\fP can implement is MAX_RATE events per second\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBTokenBucketX\fP, \fBTimer\fP 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "GapRate::GapRate ()\fC [inline]\fP"
+
+.PP
+Construct a \fBGapRate\fP object with initial rate 0\&. 
+.SS "GapRate::GapRate (unsigned r)\fC [inline]\fP"
+
+.PP
+Construct a \fBGapRate\fP object with initial rate \fIr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP initial rate (events per second) 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "unsigned GapRate::rate () const\fC [inline]\fP"
+
+.PP
+Return the current rate\&. 
+.SS "void GapRate::set_rate (unsigned r)\fC [inline]\fP"
+
+.PP
+Set the current rate to \fIr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP desired rate (events per second)
+.RE
+.PP
+Rates larger than MAX_RATE are reduced to MAX_RATE\&. Also performs the equivalent of a \fBreset()\fP to flush old state\&. 
+.SS "void GapRate::set_rate (unsigned r, \fBErrorHandler\fP * errh)"
+
+.PP
+Set the current rate to \fIr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIr\fP desired rate (events per second) 
+.br
+\fIerrh\fP error handler
+.RE
+.PP
+Acts like set_rate(\fIr\fP), except that an warning is reported to \fIerrh\fP if \fIr\fP is larger than MAX_RATE\&. 
+.SS "bool GapRate::need_update (const \fBTimestamp\fP & ts)\fC [inline]\fP"
+
+.PP
+Returns whether the user's rate is behind the true rate\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIts\fP current timestamp
+.RE
+.PP
+Returns true iff the user's rate is currently behind the true rate, meaning the user should cause an event and call \fBupdate()\fP\&. 
+.SS "\fBTimestamp\fP GapRate::expiry () const\fC [inline]\fP"
+
+.PP
+Returns a time when the user's rate will be behind the true rate\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fBneed_update()\fP has been called at least once\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+If the rate is 0, or \fBneed_update()\fP has not been called, returns \fBTimestamp()\fP\&. If the user's rate is already behind the true rate, returns a time no greater than the argument passed to the last \fBneed_update()\fP\&. Otherwise, returns a time in the future when \fBneed_update()\fP will return true\&. 
+.RE
+.PP
+
+.SS "void GapRate::update ()\fC [inline]\fP"
+
+.PP
+Increment the user event counter\&. Call this function when causing a user event\&. 
+.SS "void GapRate::update_with (int delta)\fC [inline]\fP"
+
+.PP
+Increment the user event counter by \fIdelta\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdelta\fP number of user events
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+This may be faster than calling \fBupdate()\fP \fIdelta\fP times\&. Furthermore, \fIdelta\fP can be negative\&. 
+.RE
+.PP
+
+.SS "void GapRate::reset ()\fC [inline]\fP"
+
+.PP
+Resets the true rate counter\&. Reset the underlying rated process\&.
+.PP
+This function flushes any old information about the true rate counter and its relationship to the user's rate counter\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

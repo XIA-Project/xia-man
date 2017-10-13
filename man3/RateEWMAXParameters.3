@@ -1,0 +1,64 @@
+.TH "RateEWMAXParameters< STABILITY, SCALE, T, U >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+RateEWMAXParameters< STABILITY, SCALE, T, U > \- Parameters for a RateEWMA with constant scaling factor and alpha, one rate count, and epochs of jiffies\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <click/ewma\&.hh>\fP
+.PP
+Inherits \fBFixedEWMAXParameters< STABILITY, SCALE, T, U >\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBrate_count\fP = 1 }"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static unsigned \fBepoch\fP ()"
+.br
+.RI "\fIReturn the current epoch number\&. \fP"
+.ti -1c
+.RI "static unsigned \fBepoch_frequency\fP ()"
+.br
+.RI "\fIReturn the number of epochs (jiffies) per second\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<unsigned STABILITY, unsigned SCALE, typename T = unsigned, typename U = int>
+.br
+class RateEWMAXParameters< STABILITY, SCALE, T, U >"
+Parameters for a RateEWMA with constant scaling factor and alpha, one rate count, and epochs of jiffies\&. 
+
+The \fBRateEWMAXParameters\fP template class is used as a template argument to \fBRateEWMAX\fP\&. It defines a EWMA with fixed constant scaling factor and alpha and one rate count\&. The EWMA uses jiffies as epochs\&. Template parameters are as for DirectEWMAXParameters\&.
+.PP
+Example: \fC\fBRateEWMAX\fP<\fBRateEWMAXParameters\fP<4, 10, unsigned, int> >\fP defines a rate EWMA with user-settable alpha (stability shift) initially equal to 1/16, scaling factor 10, and value type unsigned\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<unsigned STABILITY, unsigned SCALE, typename T  = unsigned, typename U  = int> static unsigned \fBRateEWMAXParameters\fP< STABILITY, SCALE, T, U >::epoch ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the current epoch number\&. 
+.PP
+\fBNote:\fP
+.RS 4
+\fBRateEWMAXParameters\fP measures epochs in jiffies\&. 
+.RE
+.PP
+
+.SS "template<unsigned STABILITY, unsigned SCALE, typename T  = unsigned, typename U  = int> static unsigned \fBRateEWMAXParameters\fP< STABILITY, SCALE, T, U >::epoch_frequency ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the number of epochs (jiffies) per second\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

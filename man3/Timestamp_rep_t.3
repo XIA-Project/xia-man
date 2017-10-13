@@ -1,0 +1,39 @@
+.TH "Timestamp::rep_t" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Timestamp::rep_t \- Type of a \fBTimestamp\fP representation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <timestamp\&.hh>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "struct {"
+.br
+.ti -1c
+.RI "   int32_t \fBsubsec\fP"
+.br
+.ti -1c
+.RI "   int32_t \fBsec\fP"
+.br
+.ti -1c
+.RI "}; "
+.br
+.ti -1c
+.RI "ktime_t \fBktime\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Type of a \fBTimestamp\fP representation\&. 
+
+This type is rarely useful for \fBTimestamp\fP users; we export it to avoid strict-aliasing warnings in unions\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

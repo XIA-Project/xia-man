@@ -1,0 +1,119 @@
+.TH "StabilityEWMAXParameters< SCALE, T, U >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+StabilityEWMAXParameters< SCALE, T, U > \- Parameters for a EWMA with constant scaling factor and user-settable alpha\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <click/ewma\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef T \fBvalue_type\fP"
+.br
+.ti -1c
+.RI "typedef U \fBsigned_value_type\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBStabilityEWMAXParameters\fP ()"
+.br
+.RI "\fIConstruct a \fBStabilityEWMAXParameters\fP with initial alpha 1/16\&. \fP"
+.ti -1c
+.RI "unsigned \fBstability_shift\fP () const "
+.br
+.RI "\fIReturn the current stability shift\&. \fP"
+.ti -1c
+.RI "void \fBset_stability_shift\fP (unsigned \fBstability_shift\fP)"
+.br
+.RI "\fISet the current stability shift\&. \fP"
+.ti -1c
+.RI "unsigned \fBcompensation\fP () const "
+.br
+.RI "\fIReturn this EWMA's compensation\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static unsigned \fBscale\fP ()"
+.br
+.RI "\fIReturn this EWMA's scaling factor (bits of fraction)\&. \fP"
+.ti -1c
+.RI "static value_type \fBscaled_one\fP ()"
+.br
+.RI "\fIReturn this EWMA's scaled value for one\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<unsigned SCALE, typename T = unsigned, typename U = int>
+.br
+class StabilityEWMAXParameters< SCALE, T, U >"
+Parameters for a EWMA with constant scaling factor and user-settable alpha\&. 
+
+The \fBStabilityEWMAXParameters\fP template class is used as a template argument to \fBDirectEWMAX\fP\&. It defines a EWMA with fixed constant scaling factor\&. \fBStabilityEWMAXParameters\fP's first template argument is the EWMA's scaling factor, its second template argument is the EWMA's value type, and the third template argument is the EWMA's signed value type\&.
+.PP
+Example: \fC\fBDirectEWMAX\fP<\fBStabilityEWMAXParameters\fP<10, unsigned, int> >\fP defines a EWMA with user-settable alpha (stability shift) initially equal to 1/16, scaling factor 10, and value type unsigned\&.
+.PP
+A \fC\fBDirectEWMAX\fP<\fBStabilityEWMAXParameters\fP<\&.\&.\&.> >\fP object has \fBstability_shift()\fP and \fBset_stability_shift()\fP methods\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<unsigned SCALE, typename T  = unsigned, typename U  = int> \fBStabilityEWMAXParameters\fP< SCALE, T, U >::\fBStabilityEWMAXParameters\fP ()\fC [inline]\fP"
+
+.PP
+Construct a \fBStabilityEWMAXParameters\fP with initial alpha 1/16\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<unsigned SCALE, typename T  = unsigned, typename U  = int> unsigned \fBStabilityEWMAXParameters\fP< SCALE, T, U >::stability_shift () const\fC [inline]\fP"
+
+.PP
+Return the current stability shift\&. The current alpha equals 1\&. / (2 ** \fBstability_shift()\fP)\&. 
+.SS "template<unsigned SCALE, typename T  = unsigned, typename U  = int> void \fBStabilityEWMAXParameters\fP< SCALE, T, U >::set_stability_shift (unsigned stability_shift)\fC [inline]\fP"
+
+.PP
+Set the current stability shift\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstability_shift\fP new value 
+.RE
+.PP
+
+.SS "template<unsigned SCALE, typename T  = unsigned, typename U  = int> static unsigned \fBStabilityEWMAXParameters\fP< SCALE, T, U >::scale ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return this EWMA's scaling factor (bits of fraction)\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+the 1st template parameter 
+.RE
+.PP
+
+.SS "template<unsigned SCALE, typename T  = unsigned, typename U  = int> static value_type \fBStabilityEWMAXParameters\fP< SCALE, T, U >::scaled_one ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return this EWMA's scaled value for one\&. 
+.SS "template<unsigned SCALE, typename T  = unsigned, typename U  = int> unsigned \fBStabilityEWMAXParameters\fP< SCALE, T, U >::compensation () const\fC [inline]\fP"
+
+.PP
+Return this EWMA's compensation\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+1 << (\fBstability_shift()\fP - 1) 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

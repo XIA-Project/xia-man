@@ -1,0 +1,898 @@
+.TH "Args" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Args \- Argument parser class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <args\&.hh>\fP
+.PP
+Inherits \fBArgContext\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBArgs\fP (\fBErrorHandler\fP *\fBerrh\fP=0)"
+.br
+.RI "\fIConstruct an argument parser\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP (const \fBVector\fP< \fBString\fP > &conf, \fBErrorHandler\fP *\fBerrh\fP=0)"
+.br
+.RI "\fIConstruct an argument parser parsing a copy of \fIconf\fP\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP (const \fBElement\fP *\fBcontext\fP, \fBErrorHandler\fP *\fBerrh\fP=0)"
+.br
+.RI "\fIConstruct an argument parser\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP (const \fBVector\fP< \fBString\fP > &conf, const \fBElement\fP *\fBcontext\fP, \fBErrorHandler\fP *\fBerrh\fP=0)"
+.br
+.RI "\fIConstruct an argument parser parsing a copy of \fIconf\fP\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP (const \fBArgs\fP &x)"
+.br
+.RI "\fICopy construct an argument parser\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP & \fBoperator=\fP (const \fBArgs\fP &x)"
+.br
+.RI "\fIAssign to a copy of \fIx\fP\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fIReturn true iff this parser has no arguments or results\&. \fP"
+.ti -1c
+.RI "bool \fBresults_empty\fP () const "
+.br
+.RI "\fIReturn true iff this parser has no results\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP & \fBclear\fP ()"
+.br
+.RI "\fIRemove all arguments\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP & \fBbind\fP (\fBVector\fP< \fBString\fP > &conf)"
+.br
+.RI "\fIBind this parser's arguments to \fIconf\fP\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP & \fBpush_back\fP (const \fBString\fP &arg)"
+.br
+.RI "\fIAppend argument \fIarg\fP to this parser\&. \fP"
+.ti -1c
+.RI "template<typename Iter > \fBArgs\fP & \fBpush_back\fP (Iter begin, Iter end)"
+.br
+.RI "\fIAppend arguments in the range [\fIbegin\fP, \fIend\fP) to this parser\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP & \fBpush_back_words\fP (const \fBString\fP &str)"
+.br
+.RI "\fIAppend the space-separated words in \fIstr\fP to this parser\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP & \fBpush_back_args\fP (const \fBString\fP &str)"
+.br
+.RI "\fIAppend the comma-separated arguments in \fIstr\fP to this parser\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP & \fBreset\fP ()"
+.br
+.RI "\fIReset the parse status for every argument\&. \fP"
+.ti -1c
+.RI "template<typename T > \fBArgs\fP & \fBread\fP (const char *keyword, T &x)"
+.br
+.RI "\fIRead an argument using its type's default parser\&. \fP"
+.ti -1c
+.RI "template<typename T > \fBArgs\fP & \fBread_m\fP (const char *keyword, T &x)"
+.br
+.ti -1c
+.RI "template<typename T > \fBArgs\fP & \fBread_p\fP (const char *keyword, T &x)"
+.br
+.ti -1c
+.RI "template<typename T > \fBArgs\fP & \fBread_mp\fP (const char *keyword, T &x)"
+.br
+.ti -1c
+.RI "template<typename T > \fBArgs\fP & \fBread\fP (const char *keyword, int flags, T &x)"
+.br
+.ti -1c
+.RI "template<typename T , typename V > \fBArgs\fP & \fBread_or_set\fP (const char *keyword, T &x, const V &default_value)"
+.br
+.RI "\fIRead an argument using the default parser, or set it to a default value if the argument is was not supplied\&. \fP"
+.ti -1c
+.RI "template<typename T , typename V > \fBArgs\fP & \fBread_or_set_p\fP (const char *keyword, T &x, const V &default_value)"
+.br
+.ti -1c
+.RI "template<typename T , typename V > \fBArgs\fP & \fBread_or_set\fP (const char *keyword, int flags, T &x, const V &default_value)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread\fP (const char *keyword, P parser, T &x)"
+.br
+.RI "\fIRead an argument using a specified parser\&. \fP"
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_m\fP (const char *keyword, P parser, T &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_p\fP (const char *keyword, P parser, T &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_mp\fP (const char *keyword, P parser, T &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread\fP (const char *keyword, int flags, P parser, T &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T , typename V > \fBArgs\fP & \fBread_or_set\fP (const char *keyword, P parser, T &x, const V &default_value)"
+.br
+.RI "\fIRead an argument using a specified parser, or set it to a default value if the argument is was not supplied\&. \fP"
+.ti -1c
+.RI "template<typename P , typename T , typename V > \fBArgs\fP & \fBread_or_set_p\fP (const char *keyword, P parser, T &x, const V &default_value)"
+.br
+.ti -1c
+.RI "template<typename P , typename T , typename V > \fBArgs\fP & \fBread_or_set\fP (const char *keyword, int flags, P parser, T &x, const V &default_value)"
+.br
+.ti -1c
+.RI "template<typename P , typename T1 , typename T2 > \fBArgs\fP & \fBread\fP (const char *keyword, P parser, T1 &x1, T2 &x2)"
+.br
+.RI "\fIRead an argument using a specified parser with two results\&. \fP"
+.ti -1c
+.RI "template<typename P , typename T1 , typename T2 > \fBArgs\fP & \fBread_m\fP (const char *keyword, P parser, T1 &x1, T2 &x2)"
+.br
+.ti -1c
+.RI "template<typename P , typename T1 , typename T2 > \fBArgs\fP & \fBread_p\fP (const char *keyword, P parser, T1 &x1, T2 &x2)"
+.br
+.ti -1c
+.RI "template<typename P , typename T1 , typename T2 > \fBArgs\fP & \fBread_mp\fP (const char *keyword, P parser, T1 &x1, T2 &x2)"
+.br
+.ti -1c
+.RI "template<typename P , typename T1 , typename T2 > \fBArgs\fP & \fBread\fP (const char *keyword, int flags, P parser, T1 &x1, T2 &x2)"
+.br
+.ti -1c
+.RI "template<typename P > \fBArgs\fP & \fBread_with\fP (const char *keyword, P parser)"
+.br
+.RI "\fIPass an argument to a specified parser\&. \fP"
+.ti -1c
+.RI "template<typename P > \fBArgs\fP & \fBread_m_with\fP (const char *keyword, P parser)"
+.br
+.ti -1c
+.RI "template<typename P > \fBArgs\fP & \fBread_p_with\fP (const char *keyword, P parser)"
+.br
+.ti -1c
+.RI "template<typename P > \fBArgs\fP & \fBread_mp_with\fP (const char *keyword, P parser)"
+.br
+.ti -1c
+.RI "template<typename P > \fBArgs\fP & \fBread_with\fP (const char *keyword, int flags, P parser)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_with\fP (const char *keyword, P parser, T &x)"
+.br
+.RI "\fIPass an argument to a specified parser\&. \fP"
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_m_with\fP (const char *keyword, P parser, T &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_p_with\fP (const char *keyword, P parser, T &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_mp_with\fP (const char *keyword, P parser, T &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_with\fP (const char *keyword, int flags, P parser, T &x)"
+.br
+.ti -1c
+.RI "template<typename P > \fBArgs\fP & \fBread_all_with\fP (const char *keyword, P parser)"
+.br
+.RI "\fIPass all matching arguments to a specified parser\&. \fP"
+.ti -1c
+.RI "template<typename P > \fBArgs\fP & \fBread_all_with\fP (const char *keyword, int flags, P parser)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_all_with\fP (const char *keyword, P parser, T &x)"
+.br
+.RI "\fIPass all matching arguments to a specified parser\&. \fP"
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_all_with\fP (const char *keyword, int flags, P parser, T &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_all\fP (const char *keyword, P parser, \fBVector\fP< T > &x)"
+.br
+.RI "\fIPass all matching arguments to a specified parser\&. \fP"
+.ti -1c
+.RI "template<typename T > \fBArgs\fP & \fBread_all\fP (const char *keyword, \fBVector\fP< T > &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_all\fP (const char *keyword, int flags, P parser, \fBVector\fP< T > &x)"
+.br
+.ti -1c
+.RI "template<typename P , typename T > \fBArgs\fP & \fBread_all\fP (const char *keyword, int flags, \fBVector\fP< T > &x)"
+.br
+.ti -1c
+.RI "bool \fBstatus\fP () const "
+.br
+.RI "\fIReturn the current parse status\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP & \fBstatus\fP (bool &x)"
+.br
+.RI "\fISet \fIx\fP to the current parse status\&. \fP"
+.ti -1c
+.RI "const \fBArgs\fP & \fBstatus\fP (bool &x) const "
+.br
+.ti -1c
+.RI "bool \fBread_status\fP () const "
+.br
+.RI "\fIReturn true iff the last read request succeeded\&. \fP"
+.ti -1c
+.RI "\fBArgs\fP & \fBread_status\fP (bool &x)"
+.br
+.RI "\fISet \fIx\fP to the success status of the last read request\&. \fP"
+.ti -1c
+.RI "const \fBArgs\fP & \fBread_status\fP (bool &x) const "
+.br
+.ti -1c
+.RI "\fBArgs\fP & \fBstrip\fP ()"
+.br
+.RI "\fIRemove all arguments matched so far\&. \fP"
+.ti -1c
+.RI "int \fBexecute\fP ()"
+.br
+.RI "\fIAssign results\&. \fP"
+.ti -1c
+.RI "int \fBconsume\fP ()"
+.br
+.RI "\fIAssign results and remove matched arguments\&. \fP"
+.ti -1c
+.RI "int \fBcomplete\fP ()"
+.br
+.RI "\fIAssign results if all arguments matched\&. \fP"
+.ti -1c
+.RI "template<typename T > T * \fBslot\fP (T &x)"
+.br
+.RI "\fICreate and return a result slot for \fIx\fP\&. \fP"
+.ti -1c
+.RI "template<typename T > T * \fBinitialized_slot\fP (T &x)"
+.br
+.RI "\fICreate and return a result slot for \fIx\fP\&. \fP"
+.ti -1c
+.RI "template<typename T , typename V > \fBArgs\fP & \fBset\fP (T &x, const V &value)"
+.br
+.RI "\fIAdd a result that assigns \fIx\fP to \fIvalue\fP\&. \fP"
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static constexpr int \fBmandatory\fP = 1"
+.br
+.RI "\fIread flag for mandatory arguments \fP"
+.ti -1c
+.RI "static constexpr int \fBpositional\fP = 2"
+.br
+.RI "\fIread flag for positional arguments \fP"
+.ti -1c
+.RI "static constexpr int \fBdeprecated\fP = 4"
+.br
+.RI "\fIread flag for deprecated arguments \fP"
+.ti -1c
+.RI "static constexpr int \fBfirstmatch\fP = 8"
+.br
+.RI "\fIread flag to take first matching argument \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Argument parser class\&. 
+
+never \fBArgs\fP parses Click configuration strings in a type-safe manner\&.
+.PP
+\fBArgs\fP manages \fIarguments\fP and \fIresult slots\fP\&. Arguments are strings to be parsed and result slots are parsed values\&.
+.PP
+The \fBread()\fP functions parse arguments into result slots\&.
+.PP
+.PP
+.nf
+Args args;
+args\&.push_back("A 1"); // add argument
+
+int a_result;
+args\&.read("A", a_result); // parse "A" into a result slot
+.fi
+.PP
+.PP
+As arguments are parsed, \fBArgs\fP marks them off and adds new result slots\&. Each result slot is paired with a variable belonging to the caller\&. However, the caller's variables aren't modified until the parse \fIexecutes\fP via \fBcomplete()\fP, \fBconsume()\fP, or \fBexecute()\fP\&.
+.PP
+.PP
+.nf
+Args args; args\&.push_back("A 1");
+
+int a_result = 0;
+args\&.read("A", a_result);
+assert(a_result == 0);  // parsed value not yet assigned
+args\&.execute();         // this call assigns results
+assert(a_result == 1);
+.fi
+.PP
+.PP
+If \fBArgs\fP encounters a parse error, then execution doesn't modify \fIany\fP of the caller's variables\&.
+.PP
+.PP
+.nf
+Args args; args\&.push_back("A 1, B NOT_AN_INTEGER");
+
+int a_result = 0, b_result = 0;
+args\&.read("A", a_result)   // succeeds
+    \&.read("B", b_result)   // fails, since B is not an integer
+    \&.execute();
+assert(a_result == 0 && b_result == 0);
+.fi
+.PP
+.PP
+Each \fBread()\fP function comes in five variants\&. \fBread()\fP reads an optional keyword argument\&. read_m() reads a mandatory keyword argument: if the argument was not supplied, \fBArgs\fP will report a parse error\&. read_p() reads an optional positional argument\&. If the keyword was not supplied, but a positional argument was, that is used\&. read_mp() reads a mandatory positional argument\&. Positional arguments are parsed in order\&. The fifth variant of \fBread()\fP takes an integer \fIflags\fP argument; flags include \fBArgs::positional\fP, \fBArgs::mandatory\fP, and others, such as \fBArgs::deprecated\fP\&.
+.PP
+The \fBcomplete()\fP execution method checks that every argument has been successfully parsed and reports an error if not\&. \fBconsume()\fP doesn't check for completion, but removes parsed arguments from the argument set\&. Execution methods return 0 on success and <0 on failure\&. You can check the parse status before execution using \fBstatus()\fP\&.
+.PP
+\fBArgs\fP methods are designed to chain\&. All \fBread()\fP methods (and some others) return a reference to the \fBArgs\fP itself\&. It is often possible to parse a whole set of arguments using a single temporary \fBArgs\fP\&. For example:
+.PP
+.PP
+.nf
+Vector<String> conf;
+conf\&.push_back("A 1");
+conf\&.push_back("B 2");
+
+int a, b;
+if (Args(conf)\&.read("A", a)
+    \&.read("B", b)
+    \&.complete() >= 0)
+    click_chatter("Success! a=%d, b=%d", a, b);
+.fi
+.PP
+.PP
+The actual work of parsing is handled by \fIparser objects\fP\&. Many common variable types have default parsers defined by the DefaultArg<T> template\&. For example, the default parser for an integer value understands the common textual representations of integers\&. You can also pass a parser explicitly\&. For example:
+.PP
+.PP
+.nf
+int a, b, c;
+args\&.read("A", a)      // parse A using DefaultArg<int> = IntArg()
+    \&.read("B", IntArg(2), b);   // parse B using IntArg(2): base-2
+.fi
+.PP
+.PP
+\fBArgs\fP generally calls a parser object's parse() method with three arguments:
+.PP
+.PD 0
+.IP "1." 4
+const \fBString\fP &\fBstr\fP: The string to be parsed\&. 
+.IP "2." 4
+T &\fBresult\fP: A reference to the result\&. The parsed value, if any, should be stored here\&. (This points to storage local to \fBArgs\fP, not to the caller's variable\&.) 
+.IP "3." 4
+\fBArgs\fP &\fBargs\fP: A reference to the calling \fBArgs\fP object, for error reporting\&. 
+.PP
+.PP
+The parse() method should return true if the parse succeeds and false if it fails\&. Type-specific error messages should be reported using methods like \fBargs\fP\&.\fBerror()\fP\&. For generic errors, the parse() method can simply return false; \fBArgs\fP will generate a 'KEYWORD: parse error' message\&.
+.PP
+Most parsers are \fIdisciplined\fP, meaning that they modify \fBresult\fP only if the parse succeeds\&. This doesn't matter in the context of \fBArgs\fP, but can matter to users who call a parse function directly\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Args::Args (\fBErrorHandler\fP * errh = \fC0\fP)"
+
+.PP
+Construct an argument parser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP optional error handler 
+.RE
+.PP
+
+.SS "Args::Args (const \fBVector\fP< \fBString\fP > & conf, \fBErrorHandler\fP * errh = \fC0\fP)"
+
+.PP
+Construct an argument parser parsing a copy of \fIconf\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconf\fP list of configuration arguments 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+
+.SS "Args::Args (const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)"
+
+.PP
+Construct an argument parser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+
+.SS "Args::Args (const \fBVector\fP< \fBString\fP > & conf, const \fBElement\fP * context, \fBErrorHandler\fP * errh = \fC0\fP)"
+
+.PP
+Construct an argument parser parsing a copy of \fIconf\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconf\fP list of configuration arguments 
+.br
+\fIcontext\fP optional element context 
+.br
+\fIerrh\fP optional error handler 
+.RE
+.PP
+
+.SS "Args::Args (const \fBArgs\fP & x)"
+
+.PP
+Copy construct an argument parser\&. 
+.PP
+\fBNote:\fP
+.RS 4
+\fIx's\fP results are not copied\&. 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBArgs\fP & Args::operator= (const \fBArgs\fP & x)"
+
+.PP
+Assign to a copy of \fIx\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fBresults_empty()\fP && \fIx\&.results_empty()\fP 
+.RE
+.PP
+
+.SS "bool Args::empty () const\fC [inline]\fP"
+
+.PP
+Return true iff this parser has no arguments or results\&. 
+.SS "bool Args::results_empty () const\fC [inline]\fP"
+
+.PP
+Return true iff this parser has no results\&. 
+.SS "\fBArgs\fP& Args::clear ()\fC [inline]\fP"
+
+.PP
+Remove all arguments\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBArgs\fP & Args::bind (\fBVector\fP< \fBString\fP > & conf)"
+
+.PP
+Bind this parser's arguments to \fIconf\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconf\fP reference to new arguments 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+This \fBArgs\fP shares \fIconf\fP with the caller\&. For instance, \fBconsume()\fP will modify \fIconf\fP\&. 
+.RE
+.PP
+
+.SS "\fBArgs\fP & Args::push_back (const \fBString\fP & arg)"
+
+.PP
+Append argument \fIarg\fP to this parser\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "template<typename Iter > \fBArgs\fP& Args::push_back (Iter begin, Iter end)\fC [inline]\fP"
+
+.PP
+Append arguments in the range [\fIbegin\fP, \fIend\fP) to this parser\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBArgs\fP & Args::push_back_words (const \fBString\fP & str)"
+
+.PP
+Append the space-separated words in \fIstr\fP to this parser\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBArgs\fP & Args::push_back_args (const \fBString\fP & str)"
+
+.PP
+Append the comma-separated arguments in \fIstr\fP to this parser\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "\fBArgs\fP& Args::reset ()\fC [inline]\fP"
+
+.PP
+Reset the parse status for every argument\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+For example: 
+.PP
+.nf
+Vector<String> conf; conf\&.push_back("1"); conf\&.push_back("2");
+int a, b;
+Args(conf)\&.read_p("A", a)\&.read_p("B", b)\&.execute();
+assert(a == 1 && b == 2);
+Args(conf)\&.read_p("A", a)\&.reset()\&.read_p("B", b)\&.execute();
+assert(a == 1 && b == 1);
+
+.fi
+.PP
+ Results are not affected\&. 
+.SS "template<typename T > \fBArgs\fP& Args::read (const char * keyword, T & x)\fC [inline]\fP"
+
+.PP
+Read an argument using its type's default parser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIx\fP reference to result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Creates a result slot for \fIx\fP and calls DefaultArg<T>()\&.parse(string, result, *this)\&. 
+.SS "template<typename T , typename V > \fBArgs\fP& Args::read_or_set (const char * keyword, T & x, const V & default_value)\fC [inline]\fP"
+
+.PP
+Read an argument using the default parser, or set it to a default value if the argument is was not supplied\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIx\fP reference to result 
+.br
+\fIdefault_value\fP default value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Creates a result slot for \fIx\fP\&. If \fIkeyword\fP was supplied, calls DefaultArg<T>()\&.parse(string, result, this)\&. Otherwise, assigns the result to \fIvalue\fP\&. 
+.SS "template<typename P , typename T > \fBArgs\fP& Args::read (const char * keyword, P parser, T & x)\fC [inline]\fP"
+
+.PP
+Read an argument using a specified parser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIparser\fP parser object 
+.br
+\fIx\fP reference to result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Creates a result slot for \fIx\fP and calls \fIparser\&.parse\fP(string, result, *this)\&. 
+.SS "template<typename P , typename T , typename V > \fBArgs\fP& Args::read_or_set (const char * keyword, P parser, T & x, const V & default_value)\fC [inline]\fP"
+
+.PP
+Read an argument using a specified parser, or set it to a default value if the argument is was not supplied\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIparser\fP parser object 
+.br
+\fIx\fP reference to result variable 
+.br
+\fIdefault_value\fP default value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Creates a result slot for \fIx\fP\&. If argument \fIkeyword\fP was supplied, calls \fIparser\&.parse(string, result, *this)\fP\&. Otherwise, assigns the result to \fIdefault_value\fP\&. 
+.SS "template<typename P , typename T1 , typename T2 > \fBArgs\fP& Args::read (const char * keyword, P parser, T1 & x1, T2 & x2)\fC [inline]\fP"
+
+.PP
+Read an argument using a specified parser with two results\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIparser\fP parser object 
+.br
+\fIx1\fP reference to first result 
+.br
+\fIx2\fP reference to second result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Creates results for \fIx1\fP and \fIx2\fP and calls \fIparser\&.parse\fP(string, result1, result2, *this)\&. 
+.SS "template<typename P > \fBArgs\fP& Args::read_with (const char * keyword, P parser)\fC [inline]\fP"
+
+.PP
+Pass an argument to a specified parser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIparser\fP parser object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Calls \fIparser\&.parse(string, *this)\fP\&. 
+.SS "template<typename P , typename T > \fBArgs\fP& Args::read_with (const char * keyword, P parser, T & x)\fC [inline]\fP"
+
+.PP
+Pass an argument to a specified parser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIparser\fP parser object 
+.br
+\fIx\fP reference to result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Creates a result slot for \fIx\fP and calls \fIparser\&.parse\fP(string, result, *this)\&.
+.PP
+\fBDeprecated\fP
+.RS 4
+Use read(keyword, parser, variable) instead\&. 
+.RE
+.PP
+
+.SS "template<typename P > \fBArgs\fP& Args::read_all_with (const char * keyword, P parser)\fC [inline]\fP"
+
+.PP
+Pass all matching arguments to a specified parser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIparser\fP parser object 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Calls \fIparser\&.parse(string, *this)\fP zero or more times\&.
+.PP
+\fBNote:\fP
+.RS 4
+The value of \fBread_status()\fP is true iff at least one argument matched and all matching arguments successfully parsed\&. 
+.RE
+.PP
+
+.SS "template<typename P , typename T > \fBArgs\fP& Args::read_all_with (const char * keyword, P parser, T & x)\fC [inline]\fP"
+
+.PP
+Pass all matching arguments to a specified parser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIparser\fP parser object 
+.br
+\fIx\fP reference to result 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+Creates a result for \fIx\fP and calls \fIparser\&.parse\fP(string, result, *this) zero or more times, once per matching argument\&.
+.PP
+\fBNote:\fP
+.RS 4
+The value of \fBread_status()\fP is true iff at least one argument matched and all matching arguments successfully parsed\&. 
+.RE
+.PP
+
+.SS "template<typename P , typename T > \fBArgs\fP& Args::read_all (const char * keyword, P parser, \fBVector\fP< T > & x)\fC [inline]\fP"
+
+.PP
+Pass all matching arguments to a specified parser\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIkeyword\fP argument name 
+.br
+\fIparser\fP parser object 
+.br
+\fIx\fP reference to vector of results 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+*this
+.RE
+.PP
+For each \fIkeyword\fP argument, calls \fIparser\&.parse\fP(string, value, *this)\&. The resulting values are collected into a vector result slot for \fIx\fP\&.
+.PP
+\fBNote:\fP
+.RS 4
+The value of \fBread_status()\fP is true iff at least one argument matched and all matching arguments successfully parsed\&. 
+.RE
+.PP
+
+.SS "bool Args::status () const\fC [inline]\fP"
+
+.PP
+Return the current parse status\&. 
+.SS "\fBArgs\fP& Args::status (bool & x)\fC [inline]\fP"
+
+.PP
+Set \fIx\fP to the current parse status\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SS "const \fBArgs\fP& Args::status (bool & x) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "bool Args::read_status () const\fC [inline]\fP"
+
+.PP
+Return true iff the last read request succeeded\&. This function should only be called after a read\&. 
+.SS "\fBArgs\fP& Args::read_status (bool & x)\fC [inline]\fP"
+
+.PP
+Set \fIx\fP to the success status of the last read request\&. This function should only be called after a read\&. 
+.SS "const \fBArgs\fP& Args::read_status (bool & x) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBArgs\fP & Args::strip ()"
+
+.PP
+Remove all arguments matched so far\&. 
+.SS "int Args::execute ()"
+
+.PP
+Assign results\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+0 if the parse succeeded, <0 otherwise 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBresults_empty()\fP
+.RE
+.PP
+Results are only assigned if \fBstatus()\fP is true (the parse is successful so far)\&. Clears results as a side effect\&. 
+.SS "int Args::consume ()"
+
+.PP
+Assign results and remove matched arguments\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+0 if the parse succeeded, <0 otherwise 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBresults_empty()\fP
+.RE
+.PP
+Matched arguments are always removed\&. Results are only assigned if \fBstatus()\fP is true (the parse is successful so far)\&. Clears results as a side effect\&. 
+.SS "int Args::complete ()"
+
+.PP
+Assign results if all arguments matched\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+0 if the parse succeeded, <0 otherwise 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBresults_empty()\fP
+.RE
+.PP
+Results are only assigned if \fBstatus()\fP is true (the parse is successful so far) and all arguments have been parsed\&. Clears results as a side effect\&. 
+.SS "template<typename T > T* Args::slot (T & x)\fC [inline]\fP"
+
+.PP
+Create and return a result slot for \fIx\fP\&. If T is a trivially copyable type, such as int, then the resulting slot might not be initialized\&. 
+.SS "template<typename T > T* Args::initialized_slot (T & x)\fC [inline]\fP"
+
+.PP
+Create and return a result slot for \fIx\fP\&. The resulting slot is always default-initialized\&. 
+.SS "template<typename T , typename V > \fBArgs\fP& Args::set (T & x, const V & value)\fC [inline]\fP"
+
+.PP
+Add a result that assigns \fIx\fP to \fIvalue\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+*this 
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "constexpr int Args::mandatory = 1\fC [static]\fP"
+
+.PP
+read flag for mandatory arguments 
+.SS "constexpr int Args::positional = 2\fC [static]\fP"
+
+.PP
+read flag for positional arguments 
+.SS "constexpr int Args::deprecated = 4\fC [static]\fP"
+
+.PP
+read flag for deprecated arguments 
+.SS "constexpr int Args::firstmatch = 8\fC [static]\fP"
+
+.PP
+read flag to take first matching argument 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

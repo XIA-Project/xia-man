@@ -1,0 +1,33 @@
+.TH "IP6AddressArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+IP6AddressArg \- Parser class for IPv6 addresses\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ip6address\&.hh>\fP
+.PP
+Inherited by DefaultArg< IP6Address >, and DefaultArg< struct in6_addr >\&.
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static const char * \fBbasic_parse\fP (const \fBString\fP &str, IP6Address &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "static bool \fBparse\fP (const \fBString\fP &str, IP6Address &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "static bool \fBparse\fP (const \fBString\fP &str, struct in6_addr &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Parser class for IPv6 addresses\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

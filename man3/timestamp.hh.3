@@ -1,0 +1,211 @@
+.TH "include/click/timestamp.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/timestamp.hh \- The \fBTimestamp\fP class represents a moment or interval in time\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/glue\&.hh>\fP
+.br
+\fC#include <click/type_traits\&.hh>\fP
+.br
+\fC#include <click/integers\&.hh>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBTimestamp\fP"
+.br
+.RI "\fIRepresents a moment or interval in time\&. \fP"
+.ti -1c
+.RI "union \fBTimestamp::rep_t\fP"
+.br
+.RI "\fIType of a \fBTimestamp\fP representation\&. \fP"
+.ti -1c
+.RI "class \fBTimestampArg\fP"
+.br
+.RI "\fIParser class for timestamps\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTIMESTAMP_REP_LITTLE_ENDIAN\fP   1"
+.br
+.ti -1c
+.RI "#define \fBPRITIMESTAMP\fP   '%d\&.%09d'"
+.br
+.ti -1c
+.RI "#define \fBTIMESTAMP_DECLARE_TSP\fP   struct timespec ts, &tsp = ts"
+.br
+.ti -1c
+.RI "#define \fBTIMESTAMP_RESOLVE_TSP\fP   assign(tsp\&.tv_sec, nsec_to_subsec(tsp\&.tv_nsec))"
+.br
+.ti -1c
+.RI "#define \fBTIMESTAMP_DECLARE_TVP\fP   struct timeval tv, &tvp = tv"
+.br
+.ti -1c
+.RI "#define \fBTIMESTAMP_RESOLVE_TVP\fP   assign(tvp\&.tv_sec, usec_to_subsec(tvp\&.tv_usec))"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator+\fP (\fBTimestamp\fP a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fIAdd the two operands and return the result\&. \fP"
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBTimestamp\fP &a, int b)"
+.br
+.ti -1c
+.RI "bool \fBoperator<=\fP (const \fBTimestamp\fP &a, int b)"
+.br
+.ti -1c
+.RI "bool \fBoperator>=\fP (const \fBTimestamp\fP &a, int b)"
+.br
+.ti -1c
+.RI "bool \fBoperator>\fP (const \fBTimestamp\fP &a, int b)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP & \fBoperator+=\fP (\fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fIAdd \fIb\fP to \fIa\fP\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP & \fBoperator\-=\fP (\fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fISubtract \fIb\fP from \fIa\fP\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator\-\fP (\fBTimestamp\fP a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fISubtract \fIb\fP from \fIa\fP and return the result\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator\-\fP (const \fBTimestamp\fP &a)"
+.br
+.RI "\fINegate \fIa\fP and return the result\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator*\fP (const \fBTimestamp\fP &a, double b)"
+.br
+.RI "\fIScale \fIa\fP by a factor of \fIb\fP and return the result\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator*\fP (const \fBTimestamp\fP &a, int b)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator*\fP (const \fBTimestamp\fP &a, unsigned b)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator*\fP (double a, const \fBTimestamp\fP &b)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator*\fP (int a, const \fBTimestamp\fP &b)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator*\fP (unsigned a, const \fBTimestamp\fP &b)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator/\fP (const \fBTimestamp\fP &a, double b)"
+.br
+.RI "\fIScale \fIa\fP down by a factor of \fIb\fP and return the result\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator/\fP (const \fBTimestamp\fP &a, int b)"
+.br
+.ti -1c
+.RI "\fBTimestamp\fP \fBoperator/\fP (const \fBTimestamp\fP &a, unsigned b)"
+.br
+.ti -1c
+.RI "double \fBoperator/\fP (const \fBTimestamp\fP &a, const \fBTimestamp\fP &b)"
+.br
+.RI "\fIDivide \fIa\fP by \fIb\fP and return the result\&. \fP"
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &, const \fBTimestamp\fP &)"
+.br
+.ti -1c
+.RI "bool \fBcp_time\fP (const \fBString\fP &str, \fBTimestamp\fP *result, bool allow_negative)"
+.br
+.RI "\fIParse a timestamp from \fIstr\fP\&. \fP"
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const \fBArgContext\fP \fBblank_args\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+The \fBTimestamp\fP class represents a moment or interval in time\&. 
+
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBTimestamp\fP operator+ (\fBTimestamp\fP a, const \fBTimestamp\fP & b)\fC [inline]\fP"
+
+.PP
+Add the two operands and return the result\&. 
+.SS "bool operator< (const \fBTimestamp\fP & a, int b)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "bool operator<= (const \fBTimestamp\fP & a, int b)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "bool operator>= (const \fBTimestamp\fP & a, int b)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "bool operator> (const \fBTimestamp\fP & a, int b)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBTimestamp\fP& operator+= (\fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [inline]\fP"
+
+.PP
+Add \fIb\fP to \fIa\fP\&. Returns the result (the new value of \fIa\fP)\&. 
+.SS "\fBTimestamp\fP& operator\-= (\fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [inline]\fP"
+
+.PP
+Subtract \fIb\fP from \fIa\fP\&. Returns the result (the new value of \fIa\fP)\&. 
+.SS "\fBTimestamp\fP operator\- (\fBTimestamp\fP a, const \fBTimestamp\fP & b)\fC [inline]\fP"
+
+.PP
+Subtract \fIb\fP from \fIa\fP and return the result\&. 
+.SS "\fBTimestamp\fP operator\- (const \fBTimestamp\fP & a)\fC [inline]\fP"
+
+.PP
+Negate \fIa\fP and return the result\&. 
+.SS "\fBTimestamp\fP operator* (const \fBTimestamp\fP & a, double b)\fC [inline]\fP"
+
+.PP
+Scale \fIa\fP by a factor of \fIb\fP and return the result\&. 
+.SS "\fBTimestamp\fP operator/ (const \fBTimestamp\fP & a, double b)\fC [inline]\fP"
+
+.PP
+Scale \fIa\fP down by a factor of \fIb\fP and return the result\&. 
+.SS "double operator/ (const \fBTimestamp\fP & a, const \fBTimestamp\fP & b)\fC [inline]\fP"
+
+.PP
+Divide \fIa\fP by \fIb\fP and return the result\&. 
+.SS "bool cp_time (const \fBString\fP & str, \fBTimestamp\fP * result, bool allow_negative)"
+
+.PP
+Parse a timestamp from \fIstr\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP string 
+.br
+\fIresult\fP stores parsed result 
+.br
+\fIallow_negative\fP allow negative timestamps if true 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if \fIstr\fP parsed correctly, false otherwise\&.
+.RE
+.PP
+Parses a timestamp from \fIstr\fP\&. Timestamps are expressed as fractional amounts of seconds, usually measured in Unix time, such as \fC'1189383079\&.180265331'\fP\&. The input format accepts the unit suffixes described at cp_seconds_as\&. If the string fully parses, then the resulting value is stored in *\fIresult\fP and the function returns true\&. Otherwise, *\fIresult\fP remains unchanged and the function returns false\&.
+.PP
+If a number is too large for \fIresult\fP, then the maximum possible value is stored in \fIresult\fP and the cp_errno variable is set to CPE_OVERFLOW; otherwise, cp_errno is set to CPE_FORMAT (unparsable) or CPE_OK (if all was well)\&.
+.PP
+An overloaded version of this function is available for struct timeval \fIresult\fP values\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

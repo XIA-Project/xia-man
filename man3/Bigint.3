@@ -1,0 +1,327 @@
+.TH "Bigint< L, Lhalf >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Bigint< L, Lhalf > \- Template for multiple-precision integer arithmetic\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <bigint\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBlimb_bits\fP = sizeof(limb_type) * 8, \fBhalf_limb_bits\fP = sizeof(limb_type) * 4 }"
+.br
+.ti -1c
+.RI "enum { \fBlimb_high_bit\fP = limb_type(1) << (limb_bits - 1), \fBlimb_half\fP = limb_type(1) << half_limb_bits, \fBlimb_low_mask\fP = limb_half - 1, \fBlimb_zero\fP = limb_type(0) }"
+.br
+.ti -1c
+.RI "typedef L \fBlimb_type\fP"
+.br
+.RI "\fIType of a limb, the unit of single arithmetic\&. \fP"
+.ti -1c
+.RI "typedef Lhalf \fBhalf_limb_type\fP"
+.br
+.RI "\fIType of an arithmetic unit no smaller than one-half limb_type\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBhalf_limb_type\fP \fBlow\fP (\fBlimb_type\fP x)"
+.br
+.RI "\fIReturn the less significant half of \fIx\fP\&. \fP"
+.ti -1c
+.RI "static \fBhalf_limb_type\fP \fBhigh\fP (\fBlimb_type\fP x)"
+.br
+.RI "\fIReturn the more significant half of \fIx\fP\&. \fP"
+.ti -1c
+.RI "static void \fBadd\fP (\fBlimb_type\fP &x1, \fBlimb_type\fP &x0, \fBlimb_type\fP a1, \fBlimb_type\fP a0, \fBlimb_type\fP b1, \fBlimb_type\fP b0)"
+.br
+.RI "\fIAdd two-limb integers [\fIa1\fP,\fIa0\fP] and [\fIb1\fP,\fIb0\fP], storing the result in [\fIx1\fP,\fIx0\fP]\&. \fP"
+.ti -1c
+.RI "static void \fBmultiply\fP (\fBlimb_type\fP &x1, \fBlimb_type\fP &x0, \fBlimb_type\fP a, \fBlimb_type\fP b)"
+.br
+.RI "\fIMultiply one-limb integers \fIa\fP and \fIb\fP, storing the result in [\fIx1\fP,\fIx0\fP]\&. \fP"
+.ti -1c
+.RI "static void \fBmultiply_half\fP (\fBlimb_type\fP &x1, \fBlimb_type\fP &x0, \fBlimb_type\fP a, \fBhalf_limb_type\fP b)"
+.br
+.RI "\fIMultiply one-limb integer \fIa\fP by half-limb integer \fIb\fP, storing the result in [\fIx1\fP,\fIx0\fP]\&. \fP"
+.ti -1c
+.RI "static \fBlimb_type\fP \fBinverse\fP (\fBlimb_type\fP x)"
+.br
+.RI "\fIReturn the inverse of limb \fIx\fP\&. \fP"
+.ti -1c
+.RI "static click_uintmax_t \fBset\fP (\fBlimb_type\fP *a, int n, click_uintmax_t b)"
+.br
+.RI "\fISet \fIn-limb\fP integer \fIa\fP to the value \fIb\fP\&. \fP"
+.ti -1c
+.RI "static \fBlimb_type\fP \fBmultiply_add\fP (\fBlimb_type\fP *x, const \fBlimb_type\fP *a, int n, \fBlimb_type\fP b)"
+.br
+.RI "\fIMultiply \fIn-limb\fP integer \fIa\fP by 1-limb integer \fIb\fP and add the result to \fIn-limb\fP integer \fIx\fP\&. \fP"
+.ti -1c
+.RI "static \fBlimb_type\fP \fBmultiply\fP (\fBlimb_type\fP *x, const \fBlimb_type\fP *a, int n, \fBlimb_type\fP b, \fBlimb_type\fP carry=0)"
+.br
+.RI "\fIMultiply \fIn-limb\fP integer \fIa\fP by 1-limb integer \fIb\fP, add 1-limb integer \fIcarry\fP, and store the result in \fIn-limb\fP integer \fIx\fP\&. \fP"
+.ti -1c
+.RI "static \fBlimb_type\fP \fBmultiply_half\fP (\fBlimb_type\fP *x, const \fBlimb_type\fP *a, int n, \fBhalf_limb_type\fP b, \fBlimb_type\fP carry=0)"
+.br
+.RI "\fIMultiply \fIn-limb\fP integer \fIa\fP by 1/2-limb integer \fIb\fP, add 1-limb integer \fIcarry\fP, and store the result in \fIn-limb\fP integer \fIx\fP\&. \fP"
+.ti -1c
+.RI "static \fBlimb_type\fP \fBdivide\fP (\fBlimb_type\fP *x, const \fBlimb_type\fP *a, int n, \fBlimb_type\fP b)"
+.br
+.RI "\fIDivide \fIn-limb\fP integer \fIa\fP by 1-limb integer \fIb\fP and store the result in \fIn-limb\fP integer \fIx\fP\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBunparse_clear\fP (\fBlimb_type\fP *x, int n, int base=10, bool uppercase=false)"
+.br
+.RI "\fIReturn a string representation of \fIn-limb\fP integer \fIx\fP and set \fIx\fP to 0\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename L, typename Lhalf = L>
+.br
+class Bigint< L, Lhalf >"
+Template for multiple-precision integer arithmetic\&. 
+
+The \fBBigint\fP template provides a couple simple, but useful, functions for multiple-precision integer arithmetic\&. It is a port of a very limited subset of the GNU Multiple Precision Arithmetic library's mpn functionality (architecture-generic functions that work on unsigned integers of known size)\&.
+.PP
+A multiple-precision integer is an array of 'limbs,' or machine integers\&. The \fBmultiply_add()\fP and \fBdivide()\fP functions take arrays of limbs as arguments\&. In such arrays, the least significant limb is stored at array index 0\&.
+.PP
+For example, here's \fBBigint\fP speak for 'x = 0x123_4567_89AB_CDEF * 0x45': 
+.PP
+.nf
+// Initialize result
+uint32_t x[2] = { 0, 0 };
+// Define multiplicand; note that least significant comes first
+uint32_t a[2] = { 0x89ABCDEF, 0x1234567 };
+Bigint<uint32_t>::multiply_add(x, a, 2, 0x45);
+
+.fi
+.PP
+.PP
+\fBBigint\fP is not optimized for speed\&.
+.PP
+\fBBigint\fP's template parameter is the type of a limb\&. Most users will use bigint, which is equivalent to Bigint<uint32_t>\&. 
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<typename L , typename Lhalf  = L> typedef L \fBBigint\fP< L, Lhalf >::\fBlimb_type\fP"
+
+.PP
+Type of a limb, the unit of single arithmetic\&. 
+.SS "template<typename L , typename Lhalf  = L> typedef Lhalf \fBBigint\fP< L, Lhalf >::\fBhalf_limb_type\fP"
+
+.PP
+Type of an arithmetic unit no smaller than one-half limb_type\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename L , typename Lhalf  = L> static \fBhalf_limb_type\fP \fBBigint\fP< L, Lhalf >::low (\fBlimb_type\fP x)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the less significant half of \fIx\fP\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+low(\fIx\fP) + ((limb_type) high(\fIx\fP) << half_limb_bits) == \fIx\fP 
+.RE
+.PP
+
+.SS "template<typename L , typename Lhalf  = L> static \fBhalf_limb_type\fP \fBBigint\fP< L, Lhalf >::high (\fBlimb_type\fP x)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the more significant half of \fIx\fP\&. 
+.SS "template<typename L , typename Lhalf  = L> static void \fBBigint\fP< L, Lhalf >::add (\fBlimb_type\fP & x1, \fBlimb_type\fP & x0, \fBlimb_type\fP a1, \fBlimb_type\fP a0, \fBlimb_type\fP b1, \fBlimb_type\fP b0)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Add two-limb integers [\fIa1\fP,\fIa0\fP] and [\fIb1\fP,\fIb0\fP], storing the result in [\fIx1\fP,\fIx0\fP]\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx1\fP most significant limb of result 
+.br
+\fIx0\fP least significant limb of result 
+.br
+\fIa1\fP most significant limb of addend 
+.br
+\fIa0\fP least significant limb of addend 
+.br
+\fIb1\fP most significant limb of addend 
+.br
+\fIb0\fP least significant limb of addend
+.RE
+.PP
+Handles carry in the low order limbs\&. 
+.SS "template<typename L , typename Lhalf  = L> static void \fBBigint\fP< L, Lhalf >::multiply (\fBlimb_type\fP & x1, \fBlimb_type\fP & x0, \fBlimb_type\fP a, \fBlimb_type\fP b)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Multiply one-limb integers \fIa\fP and \fIb\fP, storing the result in [\fIx1\fP,\fIx0\fP]\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx1\fP most significant limb of result 
+.br
+\fIx0\fP least significant limb of result 
+.br
+\fIa\fP multiplicand 
+.br
+\fIb\fP multiplicand 
+.RE
+.PP
+
+.SS "template<typename L , typename Lhalf  = L> static void \fBBigint\fP< L, Lhalf >::multiply_half (\fBlimb_type\fP & x1, \fBlimb_type\fP & x0, \fBlimb_type\fP a, \fBhalf_limb_type\fP b)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Multiply one-limb integer \fIa\fP by half-limb integer \fIb\fP, storing the result in [\fIx1\fP,\fIx0\fP]\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx1\fP most significant limb of result 
+.br
+\fIx0\fP least significant limb of result 
+.br
+\fIa\fP multiplicand 
+.br
+\fIb\fP multiplicand 
+.RE
+.PP
+
+.SS "template<typename L , typename Lhalf  = L> static \fBlimb_type\fP \fBBigint\fP< L, Lhalf >::inverse (\fBlimb_type\fP x)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the inverse of limb \fIx\fP\&. Returns the limb \fIy\fP that is the largest limb not larger than (2**(2*limb_bits))/\fIx\fP - (2**limb_bits)\&. If this would yield overflow, \fIy\fP is the largest possible number (i\&.e\&., only ones)\&. 
+.SS "template<typename L , typename Lhalf  = L> static click_uintmax_t \fBBigint\fP< L, Lhalf >::set (\fBlimb_type\fP * a, int n, click_uintmax_t b)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Set \fIn-limb\fP integer \fIa\fP to the value \fIb\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP points to \fIn-limb\fP result 
+.br
+\fIn\fP number of limbs in \fIa\fP 
+.br
+\fIb\fP input value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+carry 
+.RE
+.PP
+
+.SS "template<typename L , typename Lhalf  = L> static \fBlimb_type\fP \fBBigint\fP< L, Lhalf >::multiply_add (\fBlimb_type\fP * x, const \fBlimb_type\fP * a, int n, \fBlimb_type\fP b)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Multiply \fIn-limb\fP integer \fIa\fP by 1-limb integer \fIb\fP and add the result to \fIn-limb\fP integer \fIx\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP points to \fIn-limb\fP addend and result 
+.br
+\fIa\fP points to \fIn-limb\fP multiplicand 
+.br
+\fIn\fP number of limbs in \fIx\fP and \fIa\fP 
+.br
+\fIb\fP 1-limb multiplicand 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+overflow
+.RE
+.PP
+Like \fIx\fP += \fIa\fP * \fIb\fP\&. Both \fIx\fP and \fIa\fP must have \fIn\fP limbs\&. It is safe for \fIx\fP and \fIa\fP to point to exactly the same memory, but they must not otherwise overlap\&. 
+.SS "template<typename L , typename Lhalf  = L> static \fBlimb_type\fP \fBBigint\fP< L, Lhalf >::multiply (\fBlimb_type\fP * x, const \fBlimb_type\fP * a, int n, \fBlimb_type\fP b, \fBlimb_type\fP carry = \fC0\fP)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Multiply \fIn-limb\fP integer \fIa\fP by 1-limb integer \fIb\fP, add 1-limb integer \fIcarry\fP, and store the result in \fIn-limb\fP integer \fIx\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP points to \fIn-limb\fP result 
+.br
+\fIa\fP points to \fIn-limb\fP multiplicand 
+.br
+\fIn\fP number of limbs in \fIx\fP and \fIa\fP 
+.br
+\fIb\fP 1-limb multiplicand 
+.br
+\fIcarry\fP 1-limb initial carry 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+overflow
+.RE
+.PP
+Like \fIx\fP = (\fIa\fP * \fIb\fP) + \fIcarry\fP\&. Both \fIx\fP and \fIa\fP must have \fIn\fP limbs\&. It is safe for \fIx\fP and \fIa\fP to point to exactly the same memory, but they must not otherwise overlap\&. 
+.SS "template<typename L , typename Lhalf  = L> static \fBlimb_type\fP \fBBigint\fP< L, Lhalf >::multiply_half (\fBlimb_type\fP * x, const \fBlimb_type\fP * a, int n, \fBhalf_limb_type\fP b, \fBlimb_type\fP carry = \fC0\fP)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Multiply \fIn-limb\fP integer \fIa\fP by 1/2-limb integer \fIb\fP, add 1-limb integer \fIcarry\fP, and store the result in \fIn-limb\fP integer \fIx\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP points to \fIn-limb\fP result 
+.br
+\fIa\fP points to \fIn-limb\fP multiplicand 
+.br
+\fIn\fP number of limbs in \fIx\fP and \fIa\fP 
+.br
+\fIb\fP 1/2-limb multiplicand 
+.br
+\fIcarry\fP 1-limb initial carry 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+overflow
+.RE
+.PP
+Like \fIx\fP = (\fIa\fP * \fIb\fP) + \fIcarry\fP\&. Both \fIx\fP and \fIa\fP must have \fIn\fP limbs\&. It is safe for \fIx\fP and \fIa\fP to point to exactly the same memory, but they must not otherwise overlap\&. 
+.SS "template<typename L , typename Lhalf  = L> static \fBlimb_type\fP \fBBigint\fP< L, Lhalf >::divide (\fBlimb_type\fP * x, const \fBlimb_type\fP * a, int n, \fBlimb_type\fP b)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Divide \fIn-limb\fP integer \fIa\fP by 1-limb integer \fIb\fP and store the result in \fIn-limb\fP integer \fIx\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP points to \fIn-limb\fP result 
+.br
+\fIa\fP points to \fIn-limb\fP dividend 
+.br
+\fIn\fP number of limbs in \fIx\fP and \fIa\fP 
+.br
+\fIb\fP 1-limb divisor 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the remainder
+.RE
+.PP
+Like \fIx\fP = \fIa\fP / \fIb\fP\&. Both \fIx\fP and \fIa\fP must have \fIn\fP limbs\&. It is safe for \fIx\fP and \fIa\fP to point to exactly the same memory, but they must not otherwise overlap\&. 
+.SS "template<typename L , typename Lhalf  = L> static \fBString\fP \fBBigint\fP< L, Lhalf >::unparse_clear (\fBlimb_type\fP * x, int n, int base = \fC10\fP, bool uppercase = \fCfalse\fP)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return a string representation of \fIn-limb\fP integer \fIx\fP and set \fIx\fP to 0\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP \fIn-limb\fP input, set to zero on output 
+.br
+\fIn\fP number of limbs in \fIx\fP 
+.br
+\fIbase\fP base (between 2 and 36) 
+.br
+\fIuppercase\fP if true, use uppercase letters for digits >= 10 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

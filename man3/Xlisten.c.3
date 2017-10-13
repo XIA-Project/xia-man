@@ -1,0 +1,50 @@
+.TH "xsocket/Xlisten.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xlisten.c \- \fBXlisten()\fP - listen for connections on a socket\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXlisten\fP (int sockfd, int backlog)"
+.br
+.RI "\fIlisten for connections on a socket \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xlisten (int sockfd, int backlog)"
+\fBXlisten()\fP marks the socket referred to by sockfd as a passive socket, that is, as a socket that will be used to accept incoming connection requests using \fBXaccept()\fP\&.
+.PP
+The backlog argument defines the maximum length to which the queue of pending connections for sockfd may grow\&. If a connection request arrives when the queue is full, the client will receive an error with an indication of ECONNREFUSED\&.
+.PP
+\fBNote:\fP
+.RS 4
+See the man page for the standard listen() call for more details\&.
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP an Xsocket previously created with the SOCK_STREAM type, and bound to a local DAG with \fBXbind()\fP 
+.br
+\fIbacklog\fP the number of outstanding connections allowed in the listen queue
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on error with errno set appropriately 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

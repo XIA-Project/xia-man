@@ -1,0 +1,81 @@
+.TH "SimpleSpinlock" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SimpleSpinlock \- A non-recursive spinlock for SMP Click threads\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <sync\&.hh>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSimpleSpinlock\fP ()"
+.br
+.RI "\fICreate a \fBSimpleSpinlock\fP\&. \fP"
+.ti -1c
+.RI "void \fBacquire\fP ()"
+.br
+.RI "\fIAcquires the \fBSimpleSpinlock\fP\&. \fP"
+.ti -1c
+.RI "void \fBrelease\fP ()"
+.br
+.RI "\fIReleases the \fBSimpleSpinlock\fP\&. \fP"
+.ti -1c
+.RI "bool \fBattempt\fP ()"
+.br
+.RI "\fIAttempts to acquire the \fBSimpleSpinlock\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A non-recursive spinlock for SMP Click threads\&. 
+
+The \fBSpinlock\fP class abstracts a non-recursive spinlock, or polling mutex, in SMP Click\&. This is a type of mutual-exclusion lock in which acquiring the lock is a polling operation (basically a 'while (lock\&.acquired()) do
+nothing;' loop)\&. Spinlocks can be used to synchronize access to shared data among multiple Click SMP threads\&. Spinlocks should not be held for long periods of time: use them for quick updates and such\&.
+.PP
+\fBSpinlock\fP operations do nothing unless Click was compiled with SMP support (with --enable-multithread)\&. Therefore, \fBSpinlock\fP should not be used to, for example, synchronize handlers with main element threads\&. See also \fBSpinlockIRQ\fP\&.
+.PP
+The main \fBSpinlock\fP operations are \fBacquire()\fP, which acquires the lock, and \fBrelease()\fP, which releases the lock\&. \fBattempt()\fP acquires the lock only if it can be acquired instantaneously\&.
+.PP
+It is NOT OK for a thread to acquire a lock it has already acquired\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBSpinlock\fP, \fBSpinlockIRQ\fP 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "SimpleSpinlock::SimpleSpinlock ()\fC [inline]\fP"
+
+.PP
+Create a \fBSimpleSpinlock\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "void SimpleSpinlock::acquire ()\fC [inline]\fP"
+
+.PP
+Acquires the \fBSimpleSpinlock\fP\&. On return, this thread has acquired the lock\&. The function will spin indefinitely until the lock is acquired\&. 
+.SS "void SimpleSpinlock::release ()\fC [inline]\fP"
+
+.PP
+Releases the \fBSimpleSpinlock\fP\&. The \fBSimpleSpinlock\fP must have been previously acquired by either \fBSimpleSpinlock::acquire\fP or \fBSimpleSpinlock::attempt\fP\&. 
+.SS "bool SimpleSpinlock::attempt ()\fC [inline]\fP"
+
+.PP
+Attempts to acquire the \fBSimpleSpinlock\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+True iff the \fBSimpleSpinlock\fP was acquired\&.
+.RE
+.PP
+This function will acquire the lock and return true only if the \fBSimpleSpinlock\fP can be acquired right away, without retries\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

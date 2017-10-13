@@ -1,0 +1,73 @@
+.TH "List_member< T >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+List_member< T > \- Member of classes to be placed on a \fBList\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <list\&.hh>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBList_member\fP ()"
+.br
+.RI "\fIConstruct an isolated \fBList_member\fP\&. \fP"
+.ti -1c
+.RI "T * \fBnext\fP ()"
+.br
+.RI "\fIReturn the next element in the list\&. \fP"
+.ti -1c
+.RI "const T * \fBnext\fP () const "
+.br
+.ti -1c
+.RI "T * \fBprev\fP ()"
+.br
+.RI "\fIReturn the previous element in the list\&. \fP"
+.ti -1c
+.RI "const T * \fBprev\fP () const "
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T>
+.br
+class List_member< T >"
+Member of classes to be placed on a \fBList\fP\&. 
+
+Any class type that will be placed on a \fBList\fP must have a publicly accessible \fBList_member\fP member\&. This member is supplied as the second template argument to \fBList\fP\&. \fBList_member\fP allows users to fetch the next-element and previous-element pointers, but all modifications must take place via \fBList\fP functions like \fBList::push_back()\fP and \fBList::insert()\fP\&. \fBList_member\fP has private copy constructor and default assignment operators\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBList\fP 
+.RE
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T> \fBList_member\fP< T >::\fBList_member\fP ()\fC [inline]\fP"
+
+.PP
+Construct an isolated \fBList_member\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T> T* \fBList_member\fP< T >::next ()\fC [inline]\fP"
+
+.PP
+Return the next element in the list\&. 
+.SS "template<typename T> const T* \fBList_member\fP< T >::next () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T> T* \fBList_member\fP< T >::prev ()\fC [inline]\fP"
+
+.PP
+Return the previous element in the list\&. 
+.SS "template<typename T> const T* \fBList_member\fP< T >::prev () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

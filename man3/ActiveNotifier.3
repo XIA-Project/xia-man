@@ -1,0 +1,184 @@
+.TH "ActiveNotifier" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ActiveNotifier \- A basic activity signal and notification provider that can reschedule any dependent \fBTask\fP objects\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBNotifier\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBActiveNotifier\fP (SearchOp op=SEARCH_STOP)"
+.br
+.RI "\fIConstruct an \fBActiveNotifier\fP\&. \fP"
+.ti -1c
+.RI "\fB~ActiveNotifier\fP ()"
+.br
+.RI "\fIDestroy an \fBActiveNotifier\fP\&. \fP"
+.ti -1c
+.RI "int \fBadd_activate_callback\fP (callback_type f, void *v)"
+.br
+.RI "\fIRegister an activate callback with this \fBNotifier\fP\&. \fP"
+.ti -1c
+.RI "void \fBremove_activate_callback\fP (callback_type f, void *v)"
+.br
+.RI "\fIUnregister an activate callback with this \fBNotifier\fP\&. \fP"
+.ti -1c
+.RI "void \fBlisteners\fP (\fBVector\fP< \fBTask\fP * > &v) const "
+.br
+.RI "\fIReturn the listener list\&. \fP"
+.ti -1c
+.RI "void \fBset_active\fP (bool \fBactive\fP, bool schedule=true)"
+.br
+.RI "\fISet the associated signal's activity, possibly scheduling any listener tasks\&. \fP"
+.ti -1c
+.RI "void \fBwake\fP ()"
+.br
+.RI "\fISet the associated signal to active and schedule any listener tasks\&. \fP"
+.ti -1c
+.RI "void \fBsleep\fP ()"
+.br
+.RI "\fISet the associated signal to inactive\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+A basic activity signal and notification provider that can reschedule any dependent \fBTask\fP objects\&. 
+
+\fBActiveNotifier\fP, whose base class is \fBNotifier\fP, combines a basic activity signal with the ability to wake up any dependent \fBTask\fP objects when that signal becomes active\&. \fBNotifier\fP clients are called \fIlisteners\fP\&. Each listener corresponds to a \fBTask\fP object\&. The listener generally goes to sleep -- i\&.e\&., becomes unscheduled -- when it runs out of work and the corresponding activity signal is inactive\&. The \fBActiveNotifier\fP class will wake up the listener when it becomes active by rescheduling the relevant \fBTask\fP\&.
+.PP
+Elements that contain \fBActiveNotifier\fP objects will generally override \fBElement::cast()\fP or \fBElement::port_cast()\fP, allowing other parts of the configuration to find the Notifiers\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ActiveNotifier::ActiveNotifier (SearchOp op = \fCSEARCH_STOP\fP)"
+
+.PP
+Construct an \fBActiveNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIop\fP controls notifier path search
+.RE
+.PP
+Constructs an \fBActiveNotifier\fP object, analogous to the \fBNotifier::Notifier(SearchOp)\fP constructor\&. (See that constructor for more information on \fIop\fP\&.) 
+.SS "ActiveNotifier::~ActiveNotifier ()"
+
+.PP
+Destroy an \fBActiveNotifier\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "int ActiveNotifier::add_activate_callback (callback_type f, void * user_data)\fC [virtual]\fP"
+
+.PP
+Register an activate callback with this \fBNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIf\fP callback function 
+.br
+\fIuser_data\fP callback data for \fIf\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if notifier was added, 0 on other success, negative on error
+.RE
+.PP
+When this \fBNotifier\fP's associated signal is activated, this \fBNotifier\fP should call \fIf\fP(\fIuser_data\fP, this)\&. Not all types of \fBNotifier\fP provide this functionality\&. The default implementation does nothing\&.
+.PP
+If \fIf\fP is null, then \fIuser_data\fP is a \fBTask\fP pointer passed to add_listener\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBremove_activate_callback\fP, \fBadd_listener\fP, \fBadd_dependent_signal\fP 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBNotifier\fP\&.
+.SS "void ActiveNotifier::remove_activate_callback (callback_type f, void * user_data)\fC [virtual]\fP"
+
+.PP
+Unregister an activate callback with this \fBNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIf\fP callback function 
+.br
+\fIuser_data\fP callback data for \fIf\fP 
+.RE
+.PP
+Undoes the effect of all prior add_activate_callback(\fIf\fP, \fIuser_data\fP) calls\&. Does nothing if (\fIf\fP,\fIuser_data\fP) was never added\&. The default implementation does nothing\&.
+.PP
+If \fIf\fP is null, then \fIuser_data\fP is a \fBTask\fP pointer passed to remove_listener\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_activate_callback\fP 
+.RE
+.PP
+
+.PP
+Reimplemented from \fBNotifier\fP\&.
+.SS "void ActiveNotifier::listeners (\fBVector\fP< \fBTask\fP * > & v) const"
+
+.PP
+Return the listener list\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIv\fP collects listener tasks
+.RE
+.PP
+Pushes all listener \fBTask\fP objects onto the end of \fIv\fP\&. 
+.SS "void ActiveNotifier::set_active (bool active, bool schedule = \fCtrue\fP)\fC [inline]\fP"
+
+.PP
+Set the associated signal's activity, possibly scheduling any listener tasks\&. never
+.PP
+\fBParameters:\fP
+.RS 4
+\fIactive\fP true iff the signal should be active 
+.br
+\fIschedule\fP if true, wake up listener tasks
+.RE
+.PP
+If \fIactive\fP and \fIschedule\fP are both true, and the signal was previously inactive, then any listener Tasks are scheduled with \fBTask::reschedule()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBwake\fP, \fBsleep\fP, \fBadd_listener\fP 
+.RE
+.PP
+
+.SS "void ActiveNotifier::wake ()\fC [inline]\fP"
+
+.PP
+Set the associated signal to active and schedule any listener tasks\&. If the signal was previously inactive, then any listener Tasks are scheduled with \fBTask::reschedule()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_active\fP, \fBadd_listener\fP 
+.RE
+.PP
+
+.SS "void ActiveNotifier::sleep ()\fC [inline]\fP"
+
+.PP
+Set the associated signal to inactive\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_active\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

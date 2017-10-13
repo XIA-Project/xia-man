@@ -1,0 +1,44 @@
+.TH "BandwidthArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+BandwidthArg \- Parser class for bandwidth specifications\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <args\&.hh>\fP
+.PP
+Inherits \fBNumArg\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, uint32_t &result, const \fBArgContext\fP &=blank_args)"
+.br
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBString\fP \fBunparse\fP (uint32_t x)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBstatus\fP"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Parser class for bandwidth specifications\&. 
+
+Handles suffixes such as 'Gbps', 'k', etc\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

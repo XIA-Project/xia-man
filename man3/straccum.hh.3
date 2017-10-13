@@ -1,0 +1,113 @@
+.TH "include/click/straccum.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/straccum.hh \- Click's \fBStringAccum\fP class, used to construct Strings efficiently from pieces\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/glue\&.hh>\fP
+.br
+\fC#include <click/string\&.hh>\fP
+.br
+\fC#include <click/cxxprotect\&.h>\fP
+.br
+\fC#include <asm/string\&.h>\fP
+.br
+\fC#include <click/cxxunprotect\&.h>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBStringAccum\fP"
+.br
+.RI "\fIEfficiently build up Strings from pieces\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCLICK_SNPRINTF_ATTR\fP   /* nothing */"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, char c)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, unsigned char c)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, const char *cstr)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, const \fBString\fP &s)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, const \fBStringAccum\fP &x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, bool x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, short x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, unsigned short x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, int x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, unsigned x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, long x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, unsigned long x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, int64_t x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, uint64_t x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, double x)"
+.br
+.ti -1c
+.RI "\fBStringAccum\fP & \fBoperator<<\fP (\fBStringAccum\fP &sa, void *ptr)"
+.br
+.ti -1c
+.RI "void \fBclick_swap\fP (\fBStringAccum\fP &a, \fBStringAccum\fP &b)"
+.br
+.ti -1c
+.RI "void \fBassign_consume\fP (\fBStringAccum\fP &a, \fBStringAccum\fP &b)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Click's \fBStringAccum\fP class, used to construct Strings efficiently from pieces\&. 
+
+> 
+.SH "Function Documentation"
+.PP 
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, unsigned short x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, int x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, unsigned x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, int64_t x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBStringAccum\fP & operator<< (\fBStringAccum\fP & sa, uint64_t x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

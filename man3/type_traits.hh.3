@@ -1,0 +1,148 @@
+.TH "include/click/type_traits.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/type_traits.hh \- Type traits structures\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBintegral_constant< T, V >\fP"
+.br
+.RI "\fIType wrapper for an integral constant V\&. \fP"
+.ti -1c
+.RI "class \fBconditional< B, T, F >\fP"
+.br
+.RI "\fIConditional type transformation\&. \fP"
+.ti -1c
+.RI "class \fBhas_trivial_copy< T >\fP"
+.br
+.RI "\fITemplate determining whether T may be copied by memcpy\&. \fP"
+.ti -1c
+.RI "class \fBis_reference< T >\fP"
+.br
+.RI "\fITemplate determining whether T is a reference type\&. \fP"
+.ti -1c
+.RI "class \fBremove_reference< T >\fP"
+.br
+.RI "\fITemplate removing any reference layer from T\&. \fP"
+.ti -1c
+.RI "class \fBfast_argument< T, use_reference >\fP"
+.br
+.RI "\fITemplate defining a fast argument type for objects of type T\&. \fP"
+.ti -1c
+.RI "class \fBchar_array< S >\fP"
+.br
+.RI "\fITemplate defining a fixed-size character array\&. \fP"
+.ti -1c
+.RI "class \fBinteger_traits< T >\fP"
+.br
+.RI "\fINumeric traits template\&. \fP"
+.ti -1c
+.RI "class \fBmake_signed< T >\fP"
+.br
+.RI "\fISigned integer type transformation\&. \fP"
+.ti -1c
+.RI "class \fBmake_unsigned< T >\fP"
+.br
+.RI "\fIUnsigned integer type transformation\&. \fP"
+.ti -1c
+.RI "class \fBfast_half_integer< T >\fP"
+.br
+.RI "\fIType transformation for big integers\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSIZEOF_CLICK_INTMAX_T\fP   8"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHdMAX\fP   '^64d'"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHuMAX\fP   '^64u'"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHoMAX\fP   '^64o'"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHxMAX\fP   '^64x'"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHXMAX\fP   '^64X'"
+.br
+.ti -1c
+.RI "#define \fBSIZEOF_CLICK_INT_LARGE_T\fP   SIZEOF_CLICK_INTMAX_T"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHdLARGE\fP   CLICK_ERRHdMAX"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHuLARGE\fP   CLICK_ERRHuMAX"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHoLARGE\fP   CLICK_ERRHoMAX"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHxLARGE\fP   CLICK_ERRHxMAX"
+.br
+.ti -1c
+.RI "#define \fBCLICK_ERRHXLARGE\fP   CLICK_ERRHXMAX"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBintegral_constant\fP< bool, true > \fBtrue_type\fP"
+.br
+.ti -1c
+.RI "typedef \fBintegral_constant\fP< bool, false > \fBfalse_type\fP"
+.br
+.ti -1c
+.RI "typedef int64_t \fBclick_intmax_t\fP"
+.br
+.ti -1c
+.RI "typedef uint64_t \fBclick_uintmax_t\fP"
+.br
+.ti -1c
+.RI "typedef click_intmax_t \fBclick_int_large_t\fP"
+.br
+.ti -1c
+.RI "typedef click_uintmax_t \fBclick_uint_large_t\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "template<typename Limb , typename V > void \fBextract_integer\fP (const Limb *x, V &value)"
+.br
+.RI "\fIExtract an integral type from a multi-limb integer\&. \fP"
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "struct \fBchar_array\fP \fBCLICK_SIZE_PACKED_ATTRIBUTE\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Type traits structures\&. 
+
+> 
+.SH "Function Documentation"
+.PP 
+.SS "template<typename Limb , typename V > void extract_integer (const Limb * x, V & value)\fC [inline]\fP"
+
+.PP
+Extract an integral type from a multi-limb integer\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

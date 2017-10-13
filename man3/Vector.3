@@ -1,0 +1,533 @@
+.TH "Vector< T >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vector< T > \- \fBVector\fP template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <vector\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBRESERVE_GROW\fP = (size_type) -1 }
+.RI "\fIConstant passed to \fBreserve()\fP to grow the \fBVector\fP\&. \fP""
+.br
+.ti -1c
+.RI "typedef T \fBvalue_type\fP"
+.br
+.RI "\fIValue type\&. \fP"
+.ti -1c
+.RI "typedef T & \fBreference\fP"
+.br
+.RI "\fIReference to value type\&. \fP"
+.ti -1c
+.RI "typedef const T & \fBconst_reference\fP"
+.br
+.RI "\fIConst reference to value type\&. \fP"
+.ti -1c
+.RI "typedef T * \fBpointer\fP"
+.br
+.RI "\fIPointer to value type\&. \fP"
+.ti -1c
+.RI "typedef const T * \fBconst_pointer\fP"
+.br
+.RI "\fIPointer to const value type\&. \fP"
+.ti -1c
+.RI "typedef \fBfast_argument\fP< T >::type \fBvalue_argument_type\fP"
+.br
+.RI "\fIType used for value arguments (either T or const T &)\&. \fP"
+.ti -1c
+.RI "typedef const T & \fBconst_access_type\fP"
+.br
+.ti -1c
+.RI "typedef int \fBsize_type\fP"
+.br
+.RI "\fIType of sizes (\fBsize()\fP)\&. \fP"
+.ti -1c
+.RI "typedef T * \fBiterator\fP"
+.br
+.RI "\fIIterator type\&. \fP"
+.ti -1c
+.RI "typedef const T * \fBconst_iterator\fP"
+.br
+.RI "\fIConst iterator type\&. \fP"
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBVector\fP ()"
+.br
+.RI "\fIConstruct an empty vector\&. \fP"
+.ti -1c
+.RI "\fBVector\fP (\fBsize_type\fP n, \fBvalue_argument_type\fP v)"
+.br
+.RI "\fIConstruct a vector containing \fIn\fP copies of \fIv\fP\&. \fP"
+.ti -1c
+.RI "\fBVector\fP (const \fBVector\fP< T > &x)"
+.br
+.RI "\fIConstruct a vector as a copy of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBVector\fP< T > & \fBoperator=\fP (const \fBVector\fP< T > &x)"
+.br
+.RI "\fIReplace this vector's contents with a copy of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBVector\fP< T > & \fBassign\fP (\fBsize_type\fP n, \fBvalue_argument_type\fP v=T())"
+.br
+.RI "\fIReplace this vector's contents with \fIn\fP copies of \fIv\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBbegin\fP ()"
+.br
+.RI "\fIReturn an iterator for the first element in the vector\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBend\fP ()"
+.br
+.RI "\fIReturn an iterator for the end of the vector\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBbegin\fP () const "
+.br
+.ti -1c
+.RI "\fBconst_iterator\fP \fBend\fP () const "
+.br
+.ti -1c
+.RI "\fBconst_iterator\fP \fBcbegin\fP () const "
+.br
+.RI "\fIReturn a const_iterator for the beginning of the vector\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBcend\fP () const "
+.br
+.RI "\fIReturn a const_iterator for the end of the vector\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBsize\fP () const "
+.br
+.RI "\fIReturn the number of elements\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBcapacity\fP () const "
+.br
+.RI "\fIReturn the vector's capacity\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fITest if the vector is empty (\fBsize()\fP == 0)\&. \fP"
+.ti -1c
+.RI "void \fBresize\fP (\fBsize_type\fP n, \fBvalue_argument_type\fP v=T())"
+.br
+.RI "\fIResize the vector to contain \fIn\fP elements\&. \fP"
+.ti -1c
+.RI "bool \fBreserve\fP (\fBsize_type\fP n)"
+.br
+.RI "\fIReserve space for at least \fIn\fP more elements\&. \fP"
+.ti -1c
+.RI "T & \fBoperator[]\fP (\fBsize_type\fP i)"
+.br
+.RI "\fIReturn a reference to the \fIi\fPth element\&. \fP"
+.ti -1c
+.RI "const T & \fBoperator[]\fP (\fBsize_type\fP i) const "
+.br
+.ti -1c
+.RI "T & \fBat\fP (\fBsize_type\fP i)"
+.br
+.RI "\fIReturn a reference to the \fIi\fPth element\&. \fP"
+.ti -1c
+.RI "const T & \fBat\fP (\fBsize_type\fP i) const "
+.br
+.ti -1c
+.RI "T & \fBfront\fP ()"
+.br
+.RI "\fIReturn a reference to the first element\&. \fP"
+.ti -1c
+.RI "const T & \fBfront\fP () const "
+.br
+.ti -1c
+.RI "T & \fBback\fP ()"
+.br
+.RI "\fIReturn a reference to the last element (number \fBsize()\fP-1)\&. \fP"
+.ti -1c
+.RI "const T & \fBback\fP () const "
+.br
+.ti -1c
+.RI "T & \fBunchecked_at\fP (\fBsize_type\fP i)"
+.br
+.RI "\fIReturn a reference to the \fIi\fPth element\&. \fP"
+.ti -1c
+.RI "const T & \fBunchecked_at\fP (\fBsize_type\fP i) const "
+.br
+.ti -1c
+.RI "T & \fBat_u\fP (\fBsize_type\fP i)"
+.br
+.ti -1c
+.RI "const T & \fBat_u\fP (\fBsize_type\fP i) const "
+.br
+.ti -1c
+.RI "T * \fBdata\fP ()"
+.br
+.RI "\fIReturn a pointer to the vector's data\&. \fP"
+.ti -1c
+.RI "const T * \fBdata\fP () const "
+.br
+.ti -1c
+.RI "void \fBpush_back\fP (\fBvalue_argument_type\fP v)"
+.br
+.RI "\fIAppend element \fIv\fP\&. \fP"
+.ti -1c
+.RI "void \fBpop_back\fP ()"
+.br
+.RI "\fIRemove the last element\&. \fP"
+.ti -1c
+.RI "void \fBpush_front\fP (\fBvalue_argument_type\fP v)"
+.br
+.RI "\fIPrepend element \fIv\fP\&. \fP"
+.ti -1c
+.RI "void \fBpop_front\fP ()"
+.br
+.RI "\fIRemove the first element\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBinsert\fP (\fBiterator\fP it, \fBvalue_argument_type\fP v)"
+.br
+.RI "\fIInsert \fIv\fP before position \fIit\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBerase\fP (\fBiterator\fP it)"
+.br
+.RI "\fIRemove the element at position \fIit\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBerase\fP (\fBiterator\fP a, \fBiterator\fP b)"
+.br
+.RI "\fIRemove the elements in [\fIa\fP, \fIb\fP)\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIRemove all elements\&. \fP"
+.ti -1c
+.RI "void \fBswap\fP (\fBVector\fP< T > &x)"
+.br
+.RI "\fISwap the contents of this vector and \fIx\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T>
+.br
+class Vector< T >"
+\fBVector\fP template\&. 
+
+never \fBVector\fP implements a vector, or growable array, suitable for use in the kernel or at user level\&. Its interface should be compatible with C++'s std::vector, although that type has more methods\&. \fBVector\fP elements are accessed with operator[] like arrays, and can be resized and expanded through append operations (see \fBpush_back()\fP and \fBresize()\fP)\&. A common (and efficient) usage pattern grows a \fBVector\fP through repeated \fBpush_back()\fP calls\&.
+.PP
+\fBVector\fP iterators are pointers into the underlying array\&. This can simplify interactions between \fBVector\fP and code that expects conventional C arrays\&.
+.PP
+\fBVector\fP's \fBpush_front()\fP and \fBpop_front()\fP operations are quite expensive (O(size()) complexity)\&. For fast \fBpush_front()\fP and \fBpop_front()\fP operations, use \fBDeque\fP\&.
+.PP
+Example code: 
+.PP
+.nf
+Vector<int> v;
+printf("%d\n", v\&.size());         // prints "0"
+
+v\&.push_back(1);
+v\&.push_back(2);
+printf("%d\n", v\&.size());         // prints "2"
+printf("%d %d\n", v[0], v[1]);    // prints "1 2"
+
+Vector<int>::iterator it = v\&.begin();
+int *ip = it;                     // Vector iterators are pointers
+assert(it == v\&.end() - 2);
+
+v\&.erase(v\&.begin());
+printf("%d\n", v\&.size());         // prints "1"
+printf("%d\n", v[0]);             // prints "2"
+
+.fi
+.PP
+ 
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<typename T> typedef T \fBVector\fP< T >::\fBvalue_type\fP"
+
+.PP
+Value type\&. 
+.SS "template<typename T> typedef T& \fBVector\fP< T >::\fBreference\fP"
+
+.PP
+Reference to value type\&. 
+.SS "template<typename T> typedef const T& \fBVector\fP< T >::\fBconst_reference\fP"
+
+.PP
+Const reference to value type\&. 
+.SS "template<typename T> typedef T* \fBVector\fP< T >::\fBpointer\fP"
+
+.PP
+Pointer to value type\&. 
+.SS "template<typename T> typedef const T* \fBVector\fP< T >::\fBconst_pointer\fP"
+
+.PP
+Pointer to const value type\&. 
+.SS "template<typename T> typedef \fBfast_argument\fP<T>::type \fBVector\fP< T >::\fBvalue_argument_type\fP"
+
+.PP
+Type used for value arguments (either T or const T &)\&. 
+.SS "template<typename T> typedef int \fBVector\fP< T >::\fBsize_type\fP"
+
+.PP
+Type of sizes (\fBsize()\fP)\&. 
+.SS "template<typename T> typedef T* \fBVector\fP< T >::\fBiterator\fP"
+
+.PP
+Iterator type\&. 
+.SS "template<typename T> typedef const T* \fBVector\fP< T >::\fBconst_iterator\fP"
+
+.PP
+Const iterator type\&. 
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "template<typename T> anonymous enum"
+
+.PP
+Constant passed to \fBreserve()\fP to grow the \fBVector\fP\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T > \fBVector\fP< T >::\fBVector\fP ()\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct an empty vector\&. 
+.SS "template<typename T > \fBVector\fP< T >::\fBVector\fP (\fBsize_type\fP n, \fBvalue_argument_type\fP v)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct a vector containing \fIn\fP copies of \fIv\fP\&. 
+.SS "template<typename T> \fBVector\fP< T >::\fBVector\fP (const \fBVector\fP< T > & x)\fC [inline]\fP"
+
+.PP
+Construct a vector as a copy of \fIx\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T> \fBVector\fP< T > & \fBVector\fP< T >::operator= (const \fBVector\fP< T > & x)\fC [inline]\fP"
+
+.PP
+Replace this vector's contents with a copy of \fIx\fP\&. 
+.SS "template<typename T > \fBVector\fP< T > & \fBVector\fP< T >::assign (\fBsize_type\fP n, \fBvalue_argument_type\fP v = \fCT()\fP)\fC [inline]\fP"
+
+.PP
+Replace this vector's contents with \fIn\fP copies of \fIv\fP\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBsize()\fP == \fIn\fP 
+.RE
+.PP
+
+.SS "template<typename T > \fBVector\fP< T >::\fBiterator\fP \fBVector\fP< T >::begin ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the first element in the vector\&. 
+.SS "template<typename T > \fBVector\fP< T >::\fBiterator\fP \fBVector\fP< T >::end ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the end of the vector\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBend()\fP == \fBbegin()\fP + \fBsize()\fP 
+.RE
+.PP
+
+.SS "template<typename T > \fBVector\fP< T >::\fBconst_iterator\fP \fBVector\fP< T >::begin () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > \fBVector\fP< T >::\fBconst_iterator\fP \fBVector\fP< T >::end () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > \fBVector\fP< T >::\fBconst_iterator\fP \fBVector\fP< T >::cbegin () const\fC [inline]\fP"
+
+.PP
+Return a const_iterator for the beginning of the vector\&. 
+.SS "template<typename T > \fBVector\fP< T >::\fBconst_iterator\fP \fBVector\fP< T >::cend () const\fC [inline]\fP"
+
+.PP
+Return a const_iterator for the end of the vector\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBcend()\fP == \fBcbegin()\fP + \fBsize()\fP 
+.RE
+.PP
+
+.SS "template<typename T > \fBVector\fP< T >::\fBsize_type\fP \fBVector\fP< T >::size () const\fC [inline]\fP"
+
+.PP
+Return the number of elements\&. 
+.SS "template<typename T > \fBVector\fP< T >::\fBsize_type\fP \fBVector\fP< T >::capacity () const\fC [inline]\fP"
+
+.PP
+Return the vector's capacity\&. The capacity is greater than or equal to the \fBsize()\fP\&. Functions such as resize(n) will not allocate new memory for the vector if n <= \fBcapacity()\fP\&. 
+.SS "template<typename T > bool \fBVector\fP< T >::empty () const\fC [inline]\fP"
+
+.PP
+Test if the vector is empty (\fBsize()\fP == 0)\&. 
+.SS "template<typename T > void \fBVector\fP< T >::resize (\fBsize_type\fP n, \fBvalue_argument_type\fP v = \fCT()\fP)\fC [inline]\fP"
+
+.PP
+Resize the vector to contain \fIn\fP elements\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIn\fP new size 
+.br
+\fIv\fP value used to fill new elements 
+.RE
+.PP
+
+.SS "template<typename T > bool \fBVector\fP< T >::reserve (\fBsize_type\fP n)\fC [inline]\fP"
+
+.PP
+Reserve space for at least \fIn\fP more elements\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+true iff reserve succeeded\&.
+.RE
+.PP
+This function changes the vector's \fBcapacity()\fP, not its \fBsize()\fP\&. If reserve(\fIn\fP) succeeds, then any succeeding call to resize(\fIm\fP) with \fIm\fP < \fIn\fP will succeed without allocating vector memory\&. 
+.SS "template<typename T > T & \fBVector\fP< T >::operator[] (\fBsize_type\fP i)\fC [inline]\fP"
+
+.PP
+Return a reference to the \fIi\fPth element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBsize()\fP 
+.RE
+.PP
+
+.SS "template<typename T > const T & \fBVector\fP< T >::operator[] (\fBsize_type\fP i) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > T & \fBVector\fP< T >::at (\fBsize_type\fP i)\fC [inline]\fP"
+
+.PP
+Return a reference to the \fIi\fPth element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBsize()\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[]()\fP 
+.RE
+.PP
+
+.SS "template<typename T > const T & \fBVector\fP< T >::at (\fBsize_type\fP i) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > T & \fBVector\fP< T >::front ()\fC [inline]\fP"
+
+.PP
+Return a reference to the first element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+!empty() 
+.RE
+.PP
+
+.SS "template<typename T > const T & \fBVector\fP< T >::front () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > T & \fBVector\fP< T >::back ()\fC [inline]\fP"
+
+.PP
+Return a reference to the last element (number \fBsize()\fP-1)\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+!empty() 
+.RE
+.PP
+
+.SS "template<typename T > const T & \fBVector\fP< T >::back () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > T & \fBVector\fP< T >::unchecked_at (\fBsize_type\fP i)\fC [inline]\fP"
+
+.PP
+Return a reference to the \fIi\fPth element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBsize()\fP
+.RE
+.PP
+Unlike \fBoperator[]()\fP and \fBat()\fP, this function does not check bounds, even if assertions are enabled\&. Use with caution\&. 
+.SS "template<typename T > const T & \fBVector\fP< T >::unchecked_at (\fBsize_type\fP i) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > T * \fBVector\fP< T >::data ()\fC [inline]\fP"
+
+.PP
+Return a pointer to the vector's data\&. neverMay be null if \fBempty()\fP\&. 
+.SS "template<typename T > const T * \fBVector\fP< T >::data () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > void \fBVector\fP< T >::push_back (\fBvalue_argument_type\fP v)\fC [inline]\fP"
+
+.PP
+Append element \fIv\fP\&. A copy of \fIv\fP is inserted at position \fBsize()\fP\&. Takes amortized O(1) time\&. 
+.SS "template<typename T > void \fBVector\fP< T >::pop_back ()\fC [inline]\fP"
+
+.PP
+Remove the last element\&. Takes O(1) time\&. 
+.SS "template<typename T > void \fBVector\fP< T >::push_front (\fBvalue_argument_type\fP v)\fC [inline]\fP"
+
+.PP
+Prepend element \fIv\fP\&. A copy of \fIv\fP is added to position 0\&. Other elements are shifted one position forward\&. Takes O(size()) time\&. 
+.SS "template<typename T > void \fBVector\fP< T >::pop_front ()\fC [inline]\fP"
+
+.PP
+Remove the first element\&. Other elements are shifted one position backward\&. Takes O(size()) time\&. 
+.SS "template<typename T > \fBVector\fP< T >::\fBiterator\fP \fBVector\fP< T >::insert (\fBiterator\fP it, \fBvalue_argument_type\fP v)\fC [inline]\fP"
+
+.PP
+Insert \fIv\fP before position \fIit\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+An iterator pointing at the new element\&. 
+.RE
+.PP
+
+.SS "template<typename T > \fBVector\fP< T >::\fBiterator\fP \fBVector\fP< T >::erase (\fBiterator\fP it)\fC [inline]\fP"
+
+.PP
+Remove the element at position \fIit\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+An iterator pointing at the element following \fIit\fP\&. 
+.RE
+.PP
+
+.SS "template<typename T > \fBVector\fP< T >::\fBiterator\fP \fBVector\fP< T >::erase (\fBiterator\fP a, \fBiterator\fP b)\fC [inline]\fP"
+
+.PP
+Remove the elements in [\fIa\fP, \fIb\fP)\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+An iterator corresponding to \fIb\fP\&. 
+.RE
+.PP
+
+.SS "template<typename T > void \fBVector\fP< T >::clear ()\fC [inline]\fP"
+
+.PP
+Remove all elements\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBsize()\fP == 0 
+.RE
+.PP
+
+.SS "template<typename T> void \fBVector\fP< T >::swap (\fBVector\fP< T > & x)\fC [inline]\fP"
+
+.PP
+Swap the contents of this vector and \fIx\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

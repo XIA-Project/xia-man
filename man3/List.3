@@ -1,0 +1,462 @@
+.TH "List< T, member >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+List< T, member > \- Doubly-linked list template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <list\&.hh>\fP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBconst_iterator\fP"
+.br
+.RI "\fIConst iterator type for \fBList\fP\&. \fP"
+.ti -1c
+.RI "class \fBiterator\fP"
+.br
+.RI "\fIIterator type for \fBList\fP\&. \fP"
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef T * \fBpointer\fP"
+.br
+.ti -1c
+.RI "typedef const T * \fBconst_pointer\fP"
+.br
+.ti -1c
+.RI "typedef size_t \fBsize_type\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBList\fP ()"
+.br
+.RI "\fIConstruct an empty list\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBbegin\fP ()"
+.br
+.RI "\fIReturn an iterator for the first element in the list\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBbegin\fP () const "
+.br
+.ti -1c
+.RI "\fBiterator\fP \fBend\fP ()"
+.br
+.RI "\fIReturn an iterator for the end of the list\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBend\fP () const "
+.br
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fIReturn true iff \fBsize()\fP == 0\&. \fP"
+.ti -1c
+.RI "size_type \fBsize\fP () const "
+.br
+.RI "\fIReturn the number of elements in the list\&. \fP"
+.ti -1c
+.RI "pointer \fBfront\fP ()"
+.br
+.RI "\fIReturn the first element in the list\&. \fP"
+.ti -1c
+.RI "const_pointer \fBfront\fP () const "
+.br
+.ti -1c
+.RI "pointer \fBback\fP ()"
+.br
+.RI "\fIReturn the last element in the list\&. \fP"
+.ti -1c
+.RI "const_pointer \fBback\fP () const "
+.br
+.ti -1c
+.RI "void \fBpush_front\fP (pointer x)"
+.br
+.RI "\fIInsert a new element at the beginning of the list\&. \fP"
+.ti -1c
+.RI "void \fBpush_back\fP (pointer x)"
+.br
+.RI "\fIInsert a new element at the end of the list\&. \fP"
+.ti -1c
+.RI "void \fBpop_front\fP ()"
+.br
+.RI "\fIRemove the element at the beginning of the list\&. \fP"
+.ti -1c
+.RI "void \fBpop_back\fP ()"
+.br
+.RI "\fIRemove the element at the end of the list\&. \fP"
+.ti -1c
+.RI "void \fBinsert\fP (pointer pos, pointer x)"
+.br
+.RI "\fIInsert an element before \fIpos\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBinsert\fP (\fBiterator\fP it, pointer x)"
+.br
+.RI "\fIInsert an element before \fIit\fP\&. \fP"
+.ti -1c
+.RI "template<typename InputIterator > void \fBinsert\fP (\fBiterator\fP it, InputIterator first, InputIterator last)"
+.br
+.RI "\fIInsert the elements in [\fIfirst\fP, \fIlast\fP) before \fIit\fP\&. \fP"
+.ti -1c
+.RI "void \fBerase\fP (pointer x)"
+.br
+.RI "\fIRemove \fIx\fP from the list\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBerase\fP (\fBiterator\fP it)"
+.br
+.RI "\fIRemove the element pointed to by \fIit\fP from the list\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBerase\fP (\fBiterator\fP first, \fBiterator\fP last)"
+.br
+.RI "\fIRemove the elements in [\fIfirst\fP, \fIlast\fP) from the list\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIRemove all elements from the list\&. \fP"
+.ti -1c
+.RI "void \fB__clear\fP ()"
+.br
+.RI "\fIRemove all elements from the list\&. \fP"
+.ti -1c
+.RI "void \fBswap\fP (\fBList\fP< T, member > &x)"
+.br
+.RI "\fIExchange list contents with list \fIx\fP\&. \fP"
+.ti -1c
+.RI "bool \fBisolated\fP (const_pointer x)"
+.br
+.RI "\fICheck if \fIx\fP is isolated\&. \fP"
+.ti -1c
+.RI "bool \fBcontains\fP (const_pointer x) const "
+.br
+.RI "\fICheck if \fIx\fP is a member of this list\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T, List_member< T > T::* member>
+.br
+class List< T, member >"
+Doubly-linked list template\&. 
+
+The \fBList\fP template, and its helper template \fBList_member\fP, implement a generic doubly-linked list\&. The list is \fIintrusive\fP in that the container does not manage space for its contents\&. The user provides space for contained elements, and must delete elements when they are no longer needed\&. (This is unlike \fBVector\fP or \fBHashTable\fP, which manage space for their contents\&.) The main advantage of intrusive containers is that a single element can be on multiple lists\&.
+.PP
+Here's an example linked list of integers built using \fBList\fP and \fBList_member\fP\&.
+.PP
+.PP
+.nf
+#include <click/list\&.hh>
+
+struct intlist_node {
+    int value;
+    List_member<intlist_node> link;
+    intlist_node(int v)
+        : value(v) {
+    }
+};
+
+typedef List<intlist_node, &intlist_node::link> intlist;
+
+void make_intlist(intlist &l, int begin, int end, int step) {
+    for (int i = begin; i < end; i += step)
+        l\&.push_back(new intlist_node(i));
+    // Note that l does not manage its contents' memory!
+    // Whoever destroys l should first delete its contents,
+    // for example by calling trash_intlist(l)\&.
+}
+
+void print_intlist(const intlist &l) {
+    size_t n = 0;
+    for (intlist::const_iterator it = l\&.begin(); it != l\&.end(); ++it, ++n)
+        click_chatter("#%ld: %d\n", (long) n, it->value);
+}
+
+void trash_intlist(intlist &l) {
+    while (!l\&.empty()) {
+        intlist_node *n = l\&.front();
+        l\&.pop_front();
+        delete n;
+    }
+}
+
+template <typename T>
+void remove_every_other(T &list) {
+    typename T::iterator it = list\&.begin();
+    while (it != l\&.end()) {
+        ++it;
+        if (it != l\&.end())
+            it = list\&.erase(it);
+    }
+}
+.fi
+.PP
+ 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T, List_member< T > T::* member> \fBList\fP< T, member >::\fBList\fP ()\fC [inline]\fP"
+
+.PP
+Construct an empty list\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T, List_member< T > T::* member> \fBiterator\fP \fBList\fP< T, member >::begin ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the first element in the list\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBconst_iterator\fP \fBList\fP< T, member >::begin () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T, List_member< T > T::* member> \fBiterator\fP \fBList\fP< T, member >::end ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the end of the list\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBend()\fP\&.live() == false 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> \fBconst_iterator\fP \fBList\fP< T, member >::end () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T, List_member< T > T::* member> bool \fBList\fP< T, member >::empty () const\fC [inline]\fP"
+
+.PP
+Return true iff \fBsize()\fP == 0\&. 
+.PP
+\fBNote:\fP
+.RS 4
+Always O(1) time, whereas \fBsize()\fP takes O(N) time\&. 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> size_type \fBList\fP< T, member >::size () const\fC [inline]\fP"
+
+.PP
+Return the number of elements in the list\&. 
+.PP
+\fBNote:\fP
+.RS 4
+Takes O(N) time, where N is the number of elements\&. 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> pointer \fBList\fP< T, member >::front ()\fC [inline]\fP"
+
+.PP
+Return the first element in the list\&. Returns a null pointer if the list is empty\&. 
+.SS "template<typename T, List_member< T > T::* member> const_pointer \fBList\fP< T, member >::front () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T, List_member< T > T::* member> pointer \fBList\fP< T, member >::back ()\fC [inline]\fP"
+
+.PP
+Return the last element in the list\&. Returns a null pointer if the list is empty\&. 
+.SS "template<typename T, List_member< T > T::* member> const_pointer \fBList\fP< T, member >::back () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::push_front (pointer x)\fC [inline]\fP"
+
+.PP
+Insert a new element at the beginning of the list\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP new element 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+isolated(\fIx\fP) 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::push_back (pointer x)\fC [inline]\fP"
+
+.PP
+Insert a new element at the end of the list\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP new element 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+isolated(\fIx\fP) 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::pop_front ()\fC [inline]\fP"
+
+.PP
+Remove the element at the beginning of the list\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+!empty() 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::pop_back ()\fC [inline]\fP"
+
+.PP
+Remove the element at the end of the list\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+!empty() 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::insert (pointer pos, pointer x)\fC [inline]\fP"
+
+.PP
+Insert an element before \fIpos\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIpos\fP position to insert (if null, insert at end of list) 
+.br
+\fIx\fP new element 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+(!\fIpos\fP || contains(\fIpos\fP)) && isolated(\fIx\fP) 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> \fBiterator\fP \fBList\fP< T, member >::insert (\fBiterator\fP it, pointer x)\fC [inline]\fP"
+
+.PP
+Insert an element before \fIit\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIit\fP position to insert 
+.br
+\fIx\fP new element 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+an iterator pointing to \fIx\fP 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+isolated(\fIx\fP) 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> template<typename InputIterator > void \fBList\fP< T, member >::insert (\fBiterator\fP it, InputIterator first, InputIterator last)\fC [inline]\fP"
+
+.PP
+Insert the elements in [\fIfirst\fP, \fIlast\fP) before \fIit\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIit\fP position to insert 
+.br
+\fIfirst\fP iterator to beginning of insertion sequence 
+.br
+\fIlast\fP iterator to end of insertion sequence 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+isolated(\fIx\fP) for each \fIx\fP in [\fIfirst\fP, \fIlast\fP) 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::erase (pointer x)\fC [inline]\fP"
+
+.PP
+Remove \fIx\fP from the list\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP element to remove 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+contains(\fIx\fP) 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> \fBiterator\fP \fBList\fP< T, member >::erase (\fBiterator\fP it)\fC [inline]\fP"
+
+.PP
+Remove the element pointed to by \fIit\fP from the list\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIit\fP element to remove 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+iterator pointing to the element after the removed element 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIit\&.live()\fP 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> \fBiterator\fP \fBList\fP< T, member >::erase (\fBiterator\fP first, \fBiterator\fP last)\fC [inline]\fP"
+
+.PP
+Remove the elements in [\fIfirst\fP, \fIlast\fP) from the list\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfirst\fP iterator to beginning of removal subsequence 
+.br
+\fIlast\fP iterator to end of removal subsequence 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+iterator pointing to the element after the removed subsequence 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::clear ()\fC [inline]\fP"
+
+.PP
+Remove all elements from the list\&. 
+.PP
+\fBNote:\fP
+.RS 4
+Equivalent to erase(\fBbegin()\fP, \fBend()\fP)\&. 
+.RE
+.PP
+
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::__clear ()\fC [inline]\fP"
+
+.PP
+Remove all elements from the list\&. Unlike \fBclear()\fP, this function does not \fBerase()\fP any of the elements of this list: those elements' next() and prev() members remain unchanged\&. 
+.SS "template<typename T, List_member< T > T::* member> void \fBList\fP< T, member >::swap (\fBList\fP< T, member > & x)\fC [inline]\fP"
+
+.PP
+Exchange list contents with list \fIx\fP\&. 
+.SS "template<typename T, List_member< T > T::* member> bool \fBList\fP< T, member >::isolated (const_pointer x)\fC [inline]\fP"
+
+.PP
+Check if \fIx\fP is isolated\&. An isolated element is not a member of any list\&. 
+.SS "template<typename T, List_member< T > T::* member> bool \fBList\fP< T, member >::contains (const_pointer x) const\fC [inline]\fP"
+
+.PP
+Check if \fIx\fP is a member of this list\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

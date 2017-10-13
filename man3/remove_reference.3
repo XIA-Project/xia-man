@@ -1,0 +1,31 @@
+.TH "remove_reference< T >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+remove_reference< T > \- Template removing any reference layer from T\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <type_traits\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef T \fBtype\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T>
+.br
+class remove_reference< T >"
+Template removing any reference layer from T\&. 
+
+Assuming T is a non-reference type, then all of remove_reference<T>::type, remove_reference<T&>::type, and remove_reference<T&&>::type are equivalent to T\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

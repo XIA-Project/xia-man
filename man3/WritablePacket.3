@@ -1,0 +1,91 @@
+.TH "WritablePacket" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+WritablePacket \- A network packet believed not to be shared\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBPacket\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "unsigned char * \fBdata\fP () const "
+.br
+.ti -1c
+.RI "unsigned char * \fBend_data\fP () const "
+.br
+.ti -1c
+.RI "unsigned char * \fBbuffer\fP () const "
+.br
+.ti -1c
+.RI "unsigned char * \fBend_buffer\fP () const "
+.br
+.ti -1c
+.RI "unsigned char * \fBmac_header\fP () const "
+.br
+.ti -1c
+.RI "click_ether * \fBether_header\fP () const "
+.br
+.ti -1c
+.RI "unsigned char * \fBnetwork_header\fP () const "
+.br
+.ti -1c
+.RI "click_ip * \fBip_header\fP () const "
+.br
+.ti -1c
+.RI "click_ip6 * \fBip6_header\fP () const "
+.br
+.ti -1c
+.RI "unsigned char * \fBtransport_header\fP () const "
+.br
+.ti -1c
+.RI "click_icmp * \fBicmp_header\fP () const "
+.br
+.ti -1c
+.RI "click_tcp * \fBtcp_header\fP () const "
+.br
+.ti -1c
+.RI "click_udp * \fBudp_header\fP () const "
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+A network packet believed not to be shared\&. 
+
+The \fBWritablePacket\fP type represents \fBPacket\fP objects whose data buffers are not shared\&. As a result, \fBWritablePacket\fP's versions of functions that access the packet data buffer, such as \fBdata()\fP, end_buffer(), and ip_header(), return mutable pointers (\fCchar *\fP rather than \fCconst char *\fP)\&.
+.PP
+\fBWritablePacket\fP objects are created by \fBPacket::make()\fP, \fBPacket::uniqueify()\fP, \fBPacket::push()\fP, and \fBPacket::put()\fP, which ensure that the returned packet does not share its data buffer\&.
+.PP
+\fBWritablePacket\fP's interface is the same as \fBPacket\fP's except for these type differences\&. For documentation, see \fBPacket\fP\&.
+.PP
+\fBWarning:\fP
+.RS 4
+The \fBWritablePacket\fP convention reduces the likelihood of error when modifying packet data, but does not eliminate it\&. For instance, by calling \fBWritablePacket::clone()\fP, it is possible to create a \fBWritablePacket\fP whose data is shared: 
+.PP
+.nf
+Packet *p = \&.\&.\&.;
+if (WritablePacket *q = p->uniqueify()) {
+    Packet *p2 = q->clone();
+    assert(p2);
+    q->ip_header()->ip_v = 6;   // modifies p2's data as well
+}
+
+.fi
+.PP
+ Avoid writing buggy code like this! Use \fBWritablePacket\fP selectively, and try to avoid calling \fBWritablePacket::clone()\fP when possible\&. 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "unsigned char * WritablePacket::data () const\fC [inline]\fP"
+never 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

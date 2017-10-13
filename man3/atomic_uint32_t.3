@@ -1,0 +1,363 @@
+.TH "atomic_uint32_t" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+atomic_uint32_t \- A 32-bit integer with support for atomic operations\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <atomic\&.hh>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "uint32_t \fBvalue\fP () const "
+.br
+.RI "\fIReturn the value\&. \fP"
+.ti -1c
+.RI "\fBoperator uint32_t\fP () const "
+.br
+.RI "\fIReturn the value\&. \fP"
+.ti -1c
+.RI "\fBatomic_uint32_t\fP & \fBoperator=\fP (uint32_t x)"
+.br
+.RI "\fISet the value to \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBatomic_uint32_t\fP & \fBoperator+=\fP (int32_t delta)"
+.br
+.RI "\fIAtomically add \fIdelta\fP to the value\&. \fP"
+.ti -1c
+.RI "\fBatomic_uint32_t\fP & \fBoperator\-=\fP (int32_t delta)"
+.br
+.RI "\fIAtomically subtract \fIdelta\fP from the value\&. \fP"
+.ti -1c
+.RI "\fBatomic_uint32_t\fP & \fBoperator|=\fP (uint32_t mask)"
+.br
+.RI "\fIAtomically bitwise-or the value with \fImask\fP\&. \fP"
+.ti -1c
+.RI "\fBatomic_uint32_t\fP & \fBoperator&=\fP (uint32_t mask)"
+.br
+.RI "\fIAtomically bitwise-and the value with \fImask\fP\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP ()"
+.br
+.RI "\fIAtomically increment the value\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP (int)"
+.br
+.RI "\fIAtomically increment the value\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-\-\fP ()"
+.br
+.RI "\fIAtomically decrement the value\&. \fP"
+.ti -1c
+.RI "void \fBoperator\-\-\fP (int)"
+.br
+.RI "\fIAtomically decrement the value\&. \fP"
+.ti -1c
+.RI "uint32_t \fBswap\fP (uint32_t desired)"
+.br
+.RI "\fIAtomically assign the value to \fIdesired\fP, returning the old value\&. \fP"
+.ti -1c
+.RI "uint32_t \fBfetch_and_add\fP (uint32_t delta)"
+.br
+.RI "\fIAtomically add \fIdelta\fP to the value, returning the old value\&. \fP"
+.ti -1c
+.RI "bool \fBdec_and_test\fP ()"
+.br
+.RI "\fIAtomically decrement the value, returning true if the new value is 0\&. \fP"
+.ti -1c
+.RI "uint32_t \fBcompare_swap\fP (uint32_t expected, uint32_t desired)"
+.br
+.RI "\fIPerform a compare-and-swap operation\&. \fP"
+.ti -1c
+.RI "bool \fBcompare_and_swap\fP (uint32_t expected, uint32_t desired)"
+.br
+.RI "\fIPerform a compare-and-swap operation\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static uint32_t \fBswap\fP (volatile uint32_t &x, uint32_t desired)"
+.br
+.RI "\fIAtomically assign the value to \fIdesired\fP, returning the old value\&. \fP"
+.ti -1c
+.RI "static void \fBinc\fP (volatile uint32_t &x)"
+.br
+.RI "\fIAtomically increment value \fIx\fP\&. \fP"
+.ti -1c
+.RI "static bool \fBdec_and_test\fP (volatile uint32_t &x)"
+.br
+.RI "\fIAtomically decrement \fIx\fP, returning true if the new \fIx\fP is 0\&. \fP"
+.ti -1c
+.RI "static uint32_t \fBcompare_swap\fP (volatile uint32_t &x, uint32_t expected, uint32_t desired)"
+.br
+.RI "\fIPerform a compare-and-swap operation\&. \fP"
+.ti -1c
+.RI "static bool \fBcompare_and_swap\fP (volatile uint32_t &x, uint32_t expected, uint32_t desired)"
+.br
+.RI "\fIPerform a compare-and-swap operation\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A 32-bit integer with support for atomic operations\&. 
+
+The \fBatomic_uint32_t\fP class represents a 32-bit integer, with support for atomic operations\&. The +=, -=, &=, |=, ++, and -- operations are implemented using atomic instructions\&. There are also atomic \fBswap()\fP, \fBfetch_and_add()\fP, \fBdec_and_test()\fP, and \fBcompare_swap()\fP operations\&.
+.PP
+Because of some issues with compiler implementations, \fBatomic_uint32_t\fP has no explicit constructor; to set an \fBatomic_uint32_t\fP to a value, use operator=\&.
+.PP
+The \fBatomic_uint32_t\fP only provides true atomic semantics when that has been implemented\&. It has been implemented in the Linux kernel, and at userlevel (when --enable-multithread has been defined) for x86 machines\&. In other situations, it's not truly atomic (because it doesn't need to be)\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "uint32_t atomic_uint32_t::value () const\fC [inline]\fP"
+
+.PP
+Return the value\&. 
+.SS "atomic_uint32_t::operator uint32_t () const\fC [inline]\fP"
+
+.PP
+Return the value\&. 
+.SS "\fBatomic_uint32_t\fP & atomic_uint32_t::operator= (uint32_t x)\fC [inline]\fP"
+
+.PP
+Set the value to \fIx\fP\&. 
+.SS "\fBatomic_uint32_t\fP & atomic_uint32_t::operator+= (int32_t delta)\fC [inline]\fP"
+
+.PP
+Atomically add \fIdelta\fP to the value\&. 
+.SS "\fBatomic_uint32_t\fP & atomic_uint32_t::operator\-= (int32_t delta)\fC [inline]\fP"
+
+.PP
+Atomically subtract \fIdelta\fP from the value\&. 
+.SS "\fBatomic_uint32_t\fP & atomic_uint32_t::operator|= (uint32_t mask)\fC [inline]\fP"
+
+.PP
+Atomically bitwise-or the value with \fImask\fP\&. 
+.SS "\fBatomic_uint32_t\fP & atomic_uint32_t::operator&= (uint32_t mask)\fC [inline]\fP"
+
+.PP
+Atomically bitwise-and the value with \fImask\fP\&. 
+.SS "void atomic_uint32_t::operator++ ()\fC [inline]\fP"
+
+.PP
+Atomically increment the value\&. 
+.SS "void atomic_uint32_t::operator++ (int)\fC [inline]\fP"
+
+.PP
+Atomically increment the value\&. 
+.SS "void atomic_uint32_t::operator\-\- ()\fC [inline]\fP"
+
+.PP
+Atomically decrement the value\&. 
+.SS "void atomic_uint32_t::operator\-\- (int)\fC [inline]\fP"
+
+.PP
+Atomically decrement the value\&. 
+.SS "uint32_t atomic_uint32_t::swap (uint32_t desired)\fC [inline]\fP"
+
+.PP
+Atomically assign the value to \fIdesired\fP, returning the old value\&. Behaves like this, but in one atomic step: 
+.PP
+.nf
+uint32_t old_value = value();
+*this = desired;
+return old_value;
+
+.fi
+.PP
+.PP
+Also acts as a memory barrier\&. 
+.SS "uint32_t atomic_uint32_t::fetch_and_add (uint32_t delta)\fC [inline]\fP"
+
+.PP
+Atomically add \fIdelta\fP to the value, returning the old value\&. Behaves like this, but in one atomic step: 
+.PP
+.nf
+uint32_t old_value = value();
+*this += delta;
+return old_value;
+
+.fi
+.PP
+ 
+.SS "bool atomic_uint32_t::dec_and_test ()\fC [inline]\fP"
+
+.PP
+Atomically decrement the value, returning true if the new value is 0\&. Behaves like this, but in one atomic step: 
+.PP
+.nf
+--*this;
+return value() == 0;
+
+.fi
+.PP
+ 
+.SS "uint32_t atomic_uint32_t::compare_swap (uint32_t expected, uint32_t desired)\fC [inline]\fP"
+
+.PP
+Perform a compare-and-swap operation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIexpected\fP test value 
+.br
+\fIdesired\fP new value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The actual old value\&. If \fIexpected\fP is returned, the value has been set to \fIdesired\fP\&.
+.RE
+.PP
+Behaves like this, but in one atomic step: 
+.PP
+.nf
+uint32_t actual = value();
+if (actual == expected)
+    *this = desired;
+return actual;
+
+.fi
+.PP
+.PP
+Also acts as a memory barrier\&. 
+.SS "bool atomic_uint32_t::compare_and_swap (uint32_t expected, uint32_t desired)\fC [inline]\fP"
+
+.PP
+Perform a compare-and-swap operation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIexpected\fP test value 
+.br
+\fIdesired\fP new value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if the old value equaled \fIexpected\fP (in which case the value was set to \fIdesired\fP), false otherwise\&. 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+Use compare_swap instead\&.
+.RE
+.PP
+.PP
+Behaves like this, but in one atomic step: 
+.PP
+.nf
+uint32_t old_value = value();
+if (old_value == expected)
+    *this = desired;
+return old_value == expected;
+
+.fi
+.PP
+.PP
+Also acts as a memory barrier\&. 
+.SS "uint32_t atomic_uint32_t::swap (volatile uint32_t & x, uint32_t desired)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Atomically assign the value to \fIdesired\fP, returning the old value\&. Behaves like this, but in one atomic step: 
+.PP
+.nf
+uint32_t actual = x;
+x = desired;
+return actual;
+
+.fi
+.PP
+.PP
+Also acts as a memory barrier\&. 
+.SS "void atomic_uint32_t::inc (volatile uint32_t & x)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Atomically increment value \fIx\fP\&. 
+.SS "bool atomic_uint32_t::dec_and_test (volatile uint32_t & x)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Atomically decrement \fIx\fP, returning true if the new \fIx\fP is 0\&. Behaves like this, but in one atomic step: 
+.PP
+.nf
+--x;
+return x == 0;
+
+.fi
+.PP
+ 
+.SS "uint32_t atomic_uint32_t::compare_swap (volatile uint32_t & x, uint32_t expected, uint32_t desired)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Perform a compare-and-swap operation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP value 
+.br
+\fIexpected\fP test value 
+.br
+\fIdesired\fP new value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The actual old value\&. If it equaled \fIexpected\fP, \fIx\fP has been set to \fIdesired\fP\&.
+.RE
+.PP
+Behaves like this, but in one atomic step: 
+.PP
+.nf
+uint32_t actual = x;
+if (x == expected)
+    x = desired;
+return actual;
+
+.fi
+.PP
+.PP
+Also acts as a memory barrier\&. 
+.SS "bool atomic_uint32_t::compare_and_swap (volatile uint32_t & x, uint32_t expected, uint32_t desired)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Perform a compare-and-swap operation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP value 
+.br
+\fIexpected\fP test value 
+.br
+\fIdesired\fP new value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+True if the old \fIx\fP equaled \fIexpected\fP (in which case \fIx\fP was set to \fIdesired\fP), false otherwise\&. 
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+Use compare_swap instead\&.
+.RE
+.PP
+.PP
+Behaves like this, but in one atomic step: 
+.PP
+.nf
+uint32_t old_value = x;
+if (x == expected)
+    x = desired;
+return old_value == expected;
+
+.fi
+.PP
+.PP
+Also acts as a memory barrier\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

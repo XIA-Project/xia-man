@@ -1,0 +1,94 @@
+.TH "ElementCastTracker" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ElementCastTracker \- \fBRouter\fP configuration visitor that collects elements that match a certain cast\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <routervisitor\&.hh>\fP
+.PP
+Inherits \fBElementTracker\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBElementCastTracker\fP (\fBRouter\fP *router, const \fBString\fP &name)"
+.br
+.RI "\fIConstruct an \fBElementCastTracker\fP\&. \fP"
+.ti -1c
+.RI "bool \fBvisit\fP (\fBElement\fP *e, bool isoutput, int port, \fBElement\fP *from_e, int from_port, int distance)"
+.br
+.RI "\fIVisit an element\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+\fBRouter\fP configuration visitor that collects elements that match a certain cast\&. 
+
+When passed to \fBRouter::visit_upstream()\fP or \fBRouter::visit_downstream()\fP, \fBElementCastTracker\fP collects the closest elements that successfully cast to \fIname\fP\&. For instance, this code will find the closest Storage elements upstream of [0]\fIe:\fP 
+.PP
+.nf
+ElementCastTracker tracker(e->router(), "Storage");
+e->router()->visit_upstream(e, 0, &tracker);
+tracker\&.elements();  // a Vector<Element *> containing the Storage elements
+
+.fi
+.PP
+.PP
+\fBGraph\fP traversal stops at each matching element, so in the above example, a Storage element that is 'behind' another Storage element won't be returned\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ElementCastTracker::ElementCastTracker (\fBRouter\fP * router, const \fBString\fP & name)\fC [inline]\fP"
+
+.PP
+Construct an \fBElementCastTracker\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrouter\fP the router to be traversed 
+.br
+\fIname\fP the cast of interest 
+.RE
+.PP
+
+.SH "Member Function Documentation"
+.PP 
+.SS "bool ElementCastTracker::visit (\fBElement\fP * e, bool isoutput, int port, \fBElement\fP * from_e, int from_port, int distance)\fC [virtual]\fP"
+
+.PP
+Visit an element\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP element being visited 
+.br
+\fIisoutput\fP true for output ports, false for input ports 
+.br
+\fIport\fP port number being visited 
+.br
+\fIfrom_e\fP element by which \fIe\fP was reached 
+.br
+\fIfrom_port\fP port by which \fIe/\fIport\fP was\fP reached 
+.br
+\fIdistance\fP connection distance in breadth-first search 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true to continue traversing, false to stop
+.RE
+.PP
+A \fBRouter\fP configuration traversal calls this function once on each reached port\&. Configuration traversal is breadth-first; \fIdistance\fP is the minimum connection distance from the traversal's start point to \fIe/\fIport\fP\&.\fP A traversal will call a port's \fBvisit()\fP function at most once\&. \fIfrom_e\fP and \fIfrom_port\fP specify one port that is connected to \fIe\fP and \fIport\fP (there may be more than one)\&. If \fIisoutput\fP is true, then \fIe/\fIport\fP is\fP an output port and \fIfrom_e/\fIfrom_port\fP is\fP an input port; if \fIisoutput\fP is false, the opposite holds\&.
+.PP
+The return value specifies whether traversal should continue through the \fIe\fP element\&. If it is true, then the traversal will continue based on \fIe's\fP packet flow specifier, via ports that connect to \fIe/\fIport\fP \fP(see \fBElement::flow_code()\fP for more)\&.
+.PP
+The default implementation always returns true\&. 
+.PP
+Reimplemented from \fBRouterVisitor\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

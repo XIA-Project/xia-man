@@ -1,0 +1,56 @@
+.TH "deprecated" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+deprecated \- Deprecated \fBList\fP 
+
+.IP "\fBMember \fBArgs::read_with\fP (const char *keyword, P parser, T &x)\fP" 1c
+Use read(keyword, parser, variable) instead\&.  
+.IP "\fBMember \fBatomic_uint32_t::compare_and_swap\fP (uint32_t expected, uint32_t desired)\fP" 1c
+Use compare_swap instead\&. 
+.IP "\fBMember \fBatomic_uint32_t::compare_and_swap\fP (volatile uint32_t &x, uint32_t expected, uint32_t desired)\fP" 1c
+Use compare_swap instead\&. 
+.IP "\fBClass \fBCastElementFilter\fP \fP" 1c
+This class is deprecated\&. Use \fBElementCastTracker\fP instead\&. 
+.IP "\fBMember \fBcp_va_parse\fP (const \fBVector< String >\fP &conf, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)\fP" 1c
+Use \fBcp_va_kparse()\fP instead\&. 
+.IP "\fBMember \fBcp_va_parse\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)\fP" 1c
+Use \fBcp_va_kparse()\fP instead\&. See cp_va_parse(const \fBVector<String>\fP &, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.) for a transition guide\&.  
+.IP "\fBMember \fBcp_va_parse_keyword\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)\fP" 1c
+Use \fBcp_va_kparse_keyword()\fP instead\&. See cp_va_parse(const \fBVector<String>\fP &, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.) for a transition guide\&.  
+.IP "\fBMember \fBcp_va_parse_remove_keywords\fP (\fBVector< String >\fP &conf, int first, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)\fP" 1c
+Use \fBcp_va_kparse_remove_keywords()\fP instead\&. See cp_va_parse(const \fBVector<String>\fP &, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.) for a transition guide\&. Note that \fBcp_va_kparse_remove_keywords()\fP does not take the \fIfirst\fP argument; simply leave it off\&.  
+.IP "\fBMember \fBcp_va_space_parse\fP (const \fBString\fP &str, const \fBElement\fP *context, \fBErrorHandler\fP *errh,\&.\&.\&.)\fP" 1c
+Use \fBcp_va_space_kparse()\fP instead\&. See cp_va_parse(const \fBVector<String>\fP &, \fBElement\fP *, \fBErrorHandler\fP *, \&.\&.\&.) for a transition guide\&.  
+.IP "\fBMember \fBDirectEWMAX< P >::update_with\fP (value_type x)\fP" 1c
+Use \fBupdate()\fP instead\&.  
+.IP "\fBMember \fBElement::selected\fP (int fd)\fP" 1c
+Elements should define selected(\fIfd\fP, mask) in preference to selected(\fIfd\fP)\&. The default implementation of selected(\fIfd\fP, mask) calls selected(\fIfd\fP) for backwards compatibility\&. 
+.IP "\fBClass \fBElementFilter\fP \fP" 1c
+This class is deprecated\&. Use \fBRouterVisitor\fP instead\&. 
+.IP "\fBMember \fBEtherAddress::operator String\fP () const \fP" 1c
+The \fBunparse()\fP function should be preferred to this cast\&.  
+.IP "\fBMember \fBEtherAddress::s\fP () const \fP" 1c
+The \fBunparse()\fP function should be preferred to \fBs()\fP\&.  
+.IP "\fBMember \fBHashTable< K, V >::replace\fP (key_const_reference key, const mapped_type &value)\fP" 1c
+Use \fBset()\fP\&.  
+.IP "\fBMember \fBIPAddress::operator String\fP () const \fP" 1c
+The \fBunparse()\fP function should be preferred to this cast\&.  
+.IP "\fBMember \fBIPAddress::s\fP () const \fP" 1c
+The \fBunparse()\fP function should be preferred to \fBs()\fP\&.  
+.IP "\fBMember \fBRouter::downstream_elements\fP (\fBElement\fP *e, int port, \fBElementFilter\fP *filter, \fBVector< Element * >\fP &result)\fP" 1c
+This function is deprecated\&. Use \fBvisit_downstream()\fP instead\&. 
+.IP "\fBMember \fBRouter::upstream_elements\fP (\fBElement\fP *e, int port, \fBElementFilter\fP *filter, \fBVector< Element * >\fP &result)\fP" 1c
+This function is deprecated\&. Use \fBvisit_upstream()\fP instead\&. 
+.IP "\fBMember \fBString::unique\fP () const \fP" 1c
+Use \fBString::unshared()\fP instead\&. 
+.IP "\fBMember \fBTimer::reschedule_after_ms\fP (uint32_t delta_sec)\fP" 1c
+Use \fBreschedule_after_msec()\fP instead\&.  
+.IP "\fBMember \fBTimer::reschedule_after_s\fP (uint32_t delta_sec)\fP" 1c
+Use \fBreschedule_after_sec()\fP instead\&.  
+.IP "\fBMember \fBTimer::schedule_after_ms\fP (uint32_t delta_sec)\fP" 1c
+Use \fBschedule_after_msec()\fP instead\&.  
+.IP "\fBMember \fBTimer::schedule_after_s\fP (uint32_t delta_sec)\fP" 1c
+Use \fBschedule_after_sec()\fP instead\&. 
+.PP
+

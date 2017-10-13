@@ -1,0 +1,49 @@
+.TH "SecondsArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SecondsArg \- Parser class for seconds and powers thereof\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <args\&.hh>\fP
+.PP
+Inherits \fBNumArg\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBSecondsArg\fP (int d=0)"
+.br
+.ti -1c
+.RI "bool \fBparse_saturating\fP (const \fBString\fP &str, uint32_t &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, uint32_t &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, double &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBfraction_digits\fP"
+.br
+.ti -1c
+.RI "int \fBstatus\fP"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Parser class for seconds and powers thereof\&. 
+
+The \fId\fP argument is the number of digits of fraction to parse\&. For example, to parse milliseconds, use \fBSecondsArg(3)\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

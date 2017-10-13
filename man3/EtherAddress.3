@@ -1,0 +1,266 @@
+.TH "EtherAddress" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+EtherAddress \- An Ethernet address\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef uninitialized_type \fBuninitialized_t\fP"
+.br
+.ti -1c
+.RI "typedef bool(EtherAddress::* \fBunspecified_bool_type\fP) () const "
+.br
+.ti -1c
+.RI "typedef const \fBEtherAddress\fP & \fBparameter_type\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBEtherAddress\fP ()"
+.br
+.RI "\fIConstruct an \fBEtherAddress\fP equal to 00-00-00-00-00-00\&. \fP"
+.ti -1c
+.RI "\fBEtherAddress\fP (const unsigned char *\fBdata\fP)"
+.br
+.RI "\fIConstruct an \fBEtherAddress\fP from data\&. \fP"
+.ti -1c
+.RI "\fBEtherAddress\fP (const uninitialized_type &unused)"
+.br
+.RI "\fIConstruct an uninitialized \fBEtherAddress\fP\&. \fP"
+.ti -1c
+.RI "\fBoperator unspecified_bool_type\fP () const "
+.br
+.RI "\fIReturn true iff the address is not 00-00-00-00-00-00\&. \fP"
+.ti -1c
+.RI "bool \fBis_group\fP () const "
+.br
+.RI "\fIReturn true iff this address is a group address\&. \fP"
+.ti -1c
+.RI "bool \fBis_local\fP () const "
+.br
+.RI "\fIReturn true iff this address is a 'local' address\&. \fP"
+.ti -1c
+.RI "bool \fBis_broadcast\fP () const "
+.br
+.RI "\fIReturn true iff this address is the broadcast address\&. \fP"
+.ti -1c
+.RI "unsigned char * \fBdata\fP ()"
+.br
+.RI "\fIReturn a pointer to the address data\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBdata\fP () const "
+.br
+.ti -1c
+.RI "const uint16_t * \fBsdata\fP () const "
+.br
+.RI "\fIReturn a pointer to the address data, as an array of uint16_ts\&. \fP"
+.ti -1c
+.RI "size_t \fBhashcode\fP () const "
+.br
+.RI "\fIHash function\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse\fP () const "
+.br
+.RI "\fIUnparse this address into a dash-separated hex \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse_colon\fP () const "
+.br
+.RI "\fIUnparse this address into a colon-separated hex \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse_dash\fP () const "
+.br
+.RI "\fIUnparse this address into a dash-separated hex \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBs\fP () const "
+.br
+.RI "\fIUnparse this address into a dash-separated hex \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBoperator String\fP () const "
+.br
+.RI "\fIUnparse this address into a dash-separated hex \fBString\fP\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBEtherAddress\fP \fBmake_broadcast\fP ()"
+.br
+.RI "\fIReturn the broadcast \fBEtherAddress\fP, FF-FF-FF-FF-FF-FF\&. \fP"
+.ti -1c
+.RI "static \fBEtherAddress\fP \fBbroadcast\fP ()"
+.br
+.ti -1c
+.RI "static bool \fBis_broadcast\fP (const unsigned char *\fBdata\fP)"
+.br
+.RI "\fIReturn true if \fIdata\fP points to a broadcast address\&. \fP"
+.in -1c
+.SS "Related Functions"
+(Note that these are not member functions\&.) 
+.in +1c
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBEtherAddress\fP &a, const \fBEtherAddress\fP &b)"
+.br
+.RI "\fICompares two \fBEtherAddress\fP objects for equality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBEtherAddress\fP &a, const \fBEtherAddress\fP &b)"
+.br
+.RI "\fICompares two \fBEtherAddress\fP objects for inequality\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+An Ethernet address\&. 
+
+The \fBEtherAddress\fP type represents an Ethernet address\&. It supports equality operations and provides methods for unparsing addresses into ASCII form\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "EtherAddress::EtherAddress ()\fC [inline]\fP"
+
+.PP
+Construct an \fBEtherAddress\fP equal to 00-00-00-00-00-00\&. 
+.SS "EtherAddress::EtherAddress (const unsigned char * data)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct an \fBEtherAddress\fP from data\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP the address data, in network byte order
+.RE
+.PP
+The bytes data[0]\&.\&.\&.data[5] are used to construct the address\&. 
+.SS "EtherAddress::EtherAddress (const uninitialized_type & unused)\fC [inline]\fP"
+
+.PP
+Construct an uninitialized \fBEtherAddress\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "static \fBEtherAddress\fP EtherAddress::make_broadcast ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the broadcast \fBEtherAddress\fP, FF-FF-FF-FF-FF-FF\&. 
+.SS "EtherAddress::operator unspecified_bool_type () const\fC [inline]\fP"
+
+.PP
+Return true iff the address is not 00-00-00-00-00-00\&. 
+.SS "bool EtherAddress::is_group () const\fC [inline]\fP"
+
+.PP
+Return true iff this address is a group address\&. Group addresses have the low-order bit of the first byte set to 1, as in 01-00-00-00-00-00 or 03-00-00-02-04-09\&. 
+.SS "bool EtherAddress::is_local () const\fC [inline]\fP"
+
+.PP
+Return true iff this address is a 'local' address\&. Local addresses have the next-to-lowest-order bit of the first byte set to 1\&. 
+.SS "bool EtherAddress::is_broadcast () const\fC [inline]\fP"
+
+.PP
+Return true iff this address is the broadcast address\&. The Ethernet broadcast address is FF-FF-FF-FF-FF-FF\&. 
+.SS "static bool EtherAddress::is_broadcast (const unsigned char * data)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return true if \fIdata\fP points to a broadcast address\&. 
+.SS "unsigned char* EtherAddress::data ()\fC [inline]\fP"
+
+.PP
+Return a pointer to the address data\&. 
+.SS "const unsigned char* EtherAddress::data () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "const uint16_t* EtherAddress::sdata () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the address data, as an array of uint16_ts\&. 
+.SS "size_t EtherAddress::hashcode () const\fC [inline]\fP"
+
+.PP
+Hash function\&. 
+.SS "\fBString\fP EtherAddress::unparse () const\fC [inline]\fP"
+
+.PP
+Unparse this address into a dash-separated hex \fBString\fP\&. Examples include '00-00-00-00-00-00' and '00-05-4E-50-3C-1A'\&.
+.PP
+\fBNote:\fP
+.RS 4
+The IEEE standard for printing Ethernet addresses uses dashes as separators, not colons\&. Use \fBunparse_colon()\fP to unparse into the nonstandard colon-separated form\&. 
+.RE
+.PP
+
+.SS "\fBString\fP EtherAddress::unparse_colon () const"
+
+.PP
+Unparse this address into a colon-separated hex \fBString\fP\&. Examples include '00:00:00:00:00:00' and '00:05:4E:50:3C:1A'\&.
+.PP
+\fBNote:\fP
+.RS 4
+Use \fBunparse()\fP to create the IEEE standard dash-separated form\&. 
+.RE
+.PP
+
+.SS "\fBString\fP EtherAddress::unparse_dash () const"
+
+.PP
+Unparse this address into a dash-separated hex \fBString\fP\&. Examples include '00-00-00-00-00-00' and '00-05-4E-50-3C-1A'\&.
+.PP
+\fBNote:\fP
+.RS 4
+This is the IEEE standard for printing Ethernet addresses\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBunparse_colon\fP 
+.RE
+.PP
+
+.SS "\fBString\fP EtherAddress::s () const\fC [inline]\fP"
+
+.PP
+Unparse this address into a dash-separated hex \fBString\fP\&. 
+.PP
+\fBDeprecated\fP
+.RS 4
+The \fBunparse()\fP function should be preferred to \fBs()\fP\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBunparse\fP 
+.RE
+.PP
+
+.SS "EtherAddress::operator \fBString\fP () const\fC [inline]\fP"
+
+.PP
+Unparse this address into a dash-separated hex \fBString\fP\&. 
+.PP
+\fBDeprecated\fP
+.RS 4
+The \fBunparse()\fP function should be preferred to this cast\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBunparse\fP 
+.RE
+.PP
+
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "bool operator== (const \fBEtherAddress\fP & a, const \fBEtherAddress\fP & b)\fC [related]\fP"
+
+.PP
+Compares two \fBEtherAddress\fP objects for equality\&. 
+.SS "bool operator!= (const \fBEtherAddress\fP & a, const \fBEtherAddress\fP & b)\fC [related]\fP"
+
+.PP
+Compares two \fBEtherAddress\fP objects for inequality\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,36 @@
+.TH "IPAddressArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+IPAddressArg \- Parser class for IPv4 addresses\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ipaddress\&.hh>\fP
+.PP
+Inherited by DefaultArg< IPAddress >, DefaultArg< struct in_addr >, and DefaultArg< Vector< IPAddress > >\&.
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static const char * \fBbasic_parse\fP (const char *begin, const char *end, unsigned char value[4], int &nbytes)"
+.br
+.ti -1c
+.RI "static bool \fBparse\fP (const \fBString\fP &str, \fBIPAddress\fP &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "static bool \fBparse\fP (const \fBString\fP &str, struct in_addr &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "static bool \fBparse\fP (const \fBString\fP &str, \fBVector\fP< \fBIPAddress\fP > &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Parser class for IPv4 addresses\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

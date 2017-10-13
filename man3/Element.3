@@ -1,0 +1,2123 @@
+.TH "Element" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Element \- Base class for Click elements\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherited by AddressInfo, AlignmentInfo, ErrorElement, Lexer::Compound, PortInfo, ScheduleInfo, and XIAXIDInfo\&.
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBPort\fP"
+.br
+.RI "\fIAn \fBElement\fP's ports\&. \fP"
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBSELECT_READ\fP = 1, \fBSELECT_WRITE\fP = 2 }"
+.br
+.ti -1c
+.RI "enum \fBConfigurePhase\fP { \fBCONFIGURE_PHASE_FIRST\fP = 0, \fBCONFIGURE_PHASE_INFO\fP = 20, \fBCONFIGURE_PHASE_PRIVILEGED\fP = 90, \fBCONFIGURE_PHASE_DEFAULT\fP = 100, \fBCONFIGURE_PHASE_LAST\fP = 2000 }"
+.br
+.ti -1c
+.RI "enum \fBCleanupStage\fP { \fBCLEANUP_NO_ROUTER\fP, \fBCLEANUP_BEFORE_CONFIGURE\fP = CLEANUP_NO_ROUTER, \fBCLEANUP_CONFIGURE_FAILED\fP, \fBCLEANUP_CONFIGURED\fP, \fBCLEANUP_INITIALIZE_FAILED\fP, \fBCLEANUP_INITIALIZED\fP, \fBCLEANUP_ROUTER_INITIALIZED\fP, \fBCLEANUP_MANUAL\fP }"
+.br
+.ti -1c
+.RI "enum { \fBTASKHANDLER_WRITE_SCHEDULED\fP = 1, \fBTASKHANDLER_WRITE_TICKETS\fP = 2, \fBTASKHANDLER_WRITE_HOME_THREAD\fP = 4, \fBTASKHANDLER_WRITE_ALL\fP = 7, \fBTASKHANDLER_DEFAULT\fP = 6 }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBElement\fP ()"
+.br
+.RI "\fIConstruct an \fBElement\fP\&. \fP"
+.ti -1c
+.RI "virtual void \fBpush\fP (int \fBport\fP, \fBPacket\fP *p)"
+.br
+.RI "\fIPush packet \fIp\fP onto push input \fIport\fP\&. \fP"
+.ti -1c
+.RI "virtual \fBPacket\fP * \fBpull\fP (int \fBport\fP)"
+.br
+.RI "\fIPull a packet from pull output \fIport\fP\&. \fP"
+.ti -1c
+.RI "virtual \fBPacket\fP * \fBsimple_action\fP (\fBPacket\fP *p)"
+.br
+.RI "\fIProcess a packet for a simple packet filter\&. \fP"
+.ti -1c
+.RI "virtual bool \fBrun_task\fP (\fBTask\fP *task)"
+.br
+.RI "\fIRun the element's task\&. \fP"
+.ti -1c
+.RI "virtual void \fBrun_timer\fP (\fBTimer\fP *timer)"
+.br
+.RI "\fIRun the element's timer\&. \fP"
+.ti -1c
+.RI "virtual void \fBselected\fP (int fd, int mask)"
+.br
+.RI "\fIHandle a file descriptor event\&. \fP"
+.ti -1c
+.RI "virtual void \fBselected\fP (int fd)"
+.br
+.RI "\fIHandle a file descriptor event\&. \fP"
+.ti -1c
+.RI "void \fBchecked_output_push\fP (int \fBport\fP, \fBPacket\fP *p) const "
+.br
+.RI "\fIPush packet \fIp\fP to output \fIport\fP, or kill it if \fIport\fP is out of range\&. \fP"
+.ti -1c
+.RI "\fBPacket\fP * \fBchecked_input_pull\fP (int \fBport\fP) const "
+.br
+.RI "\fIPull a packet from input \fIport\fP, or return 0 if \fIport\fP is out of range\&. \fP"
+.ti -1c
+.RI "virtual const char * \fBclass_name\fP () const =0"
+.br
+.RI "\fIReturn the element's class name\&. \fP"
+.ti -1c
+.RI "virtual const char * \fBport_count\fP () const "
+.br
+.RI "\fIReturn the element's port count specifier\&. \fP"
+.ti -1c
+.RI "virtual const char * \fBprocessing\fP () const "
+.br
+.RI "\fIReturn the element's processing specifier\&. \fP"
+.ti -1c
+.RI "virtual const char * \fBflow_code\fP () const "
+.br
+.RI "\fIReturn the element's internal packet flow specifier (its \fIflow code\fP)\&. \fP"
+.ti -1c
+.RI "virtual const char * \fBflags\fP () const "
+.br
+.RI "\fIReturn the element's flags\&. \fP"
+.ti -1c
+.RI "int \fBflag_value\fP (int flag) const "
+.br
+.RI "\fIReturn the flag value for \fIflag\fP in \fBflags()\fP\&. \fP"
+.ti -1c
+.RI "virtual void * \fBcast\fP (const char *\fBname\fP)"
+.br
+.RI "\fIAttempt to cast the element to a named type\&. \fP"
+.ti -1c
+.RI "virtual void * \fBport_cast\fP (bool isoutput, int \fBport\fP, const char *\fBname\fP)"
+.br
+.RI "\fIAttempt to cast an element's port to a named type\&. \fP"
+.ti -1c
+.RI "virtual int \fBconfigure_phase\fP () const "
+.br
+.RI "\fIReturn the element's configure phase, which determines the order in which elements are configured and initialized\&. \fP"
+.ti -1c
+.RI "virtual int \fBconfigure\fP (\fBVector\fP< \fBString\fP > &conf, \fBErrorHandler\fP *errh)"
+.br
+.RI "\fIParse the element's configuration arguments\&. \fP"
+.ti -1c
+.RI "virtual void \fBadd_handlers\fP ()"
+.br
+.RI "\fIInstall the element's handlers\&. \fP"
+.ti -1c
+.RI "virtual int \fBinitialize\fP (\fBErrorHandler\fP *errh)"
+.br
+.RI "\fIInitialize the element\&. \fP"
+.ti -1c
+.RI "virtual void \fBtake_state\fP (\fBElement\fP *old_element, \fBErrorHandler\fP *errh)"
+.br
+.RI "\fIInitialize the element for hotswap, where the element should take \fIold_element's\fP state, if possible\&. \fP"
+.ti -1c
+.RI "virtual \fBElement\fP * \fBhotswap_element\fP () const "
+.br
+.RI "\fIReturn a compatible element in the hotswap router\&. \fP"
+.ti -1c
+.RI "virtual void \fBcleanup\fP (CleanupStage stage)"
+.br
+.RI "\fIClean up the element's state\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBname\fP () const "
+.br
+.RI "\fIReturn the element's name\&. \fP"
+.ti -1c
+.RI "virtual \fBString\fP \fBdeclaration\fP () const "
+.br
+.RI "\fIReturn a string giving the element's name and class name\&. \fP"
+.ti -1c
+.RI "\fBRouter\fP * \fBrouter\fP () const "
+.br
+.RI "\fIReturn the element's router\&. \fP"
+.ti -1c
+.RI "int \fBeindex\fP () const "
+.br
+.RI "\fIReturn the element's index within its router\&. \fP"
+.ti -1c
+.RI "int \fBeindex\fP (\fBRouter\fP *r) const "
+.br
+.RI "\fIReturn the element's index within router \fIr\fP\&. \fP"
+.ti -1c
+.RI "Master * \fBmaster\fP () const "
+.br
+.RI "\fIReturn the element's master\&. \fP"
+.ti -1c
+.RI "void \fBattach_router\fP (\fBRouter\fP *r, int \fBeindex\fP)"
+.br
+.ti -1c
+.RI "int \fBnports\fP (bool isoutput) const "
+.br
+.RI "\fIReturn the number of input or output ports\&. \fP"
+.ti -1c
+.RI "int \fBninputs\fP () const "
+.br
+.RI "\fIReturn the number of input ports\&. \fP"
+.ti -1c
+.RI "int \fBnoutputs\fP () const "
+.br
+.RI "\fIReturn the number of output ports\&. \fP"
+.ti -1c
+.RI "const \fBPort\fP & \fBport\fP (bool isoutput, int port) const "
+.br
+.RI "\fIReturn one of the element's ports\&. \fP"
+.ti -1c
+.RI "const \fBPort\fP & \fBinput\fP (int \fBport\fP) const "
+.br
+.RI "\fIReturn one of the element's input ports\&. \fP"
+.ti -1c
+.RI "const \fBPort\fP & \fBoutput\fP (int \fBport\fP) const "
+.br
+.RI "\fIReturn one of the element's output ports\&. \fP"
+.ti -1c
+.RI "bool \fBport_active\fP (bool isoutput, int \fBport\fP) const "
+.br
+.RI "\fICheck whether a port is active\&. \fP"
+.ti -1c
+.RI "bool \fBinput_is_push\fP (int \fBport\fP) const "
+.br
+.RI "\fICheck whether input \fIport\fP is push\&. \fP"
+.ti -1c
+.RI "bool \fBinput_is_pull\fP (int \fBport\fP) const "
+.br
+.RI "\fICheck whether input \fIport\fP is pull\&. \fP"
+.ti -1c
+.RI "bool \fBoutput_is_push\fP (int \fBport\fP) const "
+.br
+.RI "\fICheck whether output \fIport\fP is push\&. \fP"
+.ti -1c
+.RI "bool \fBoutput_is_pull\fP (int \fBport\fP) const "
+.br
+.RI "\fICheck whether output \fIport\fP is pull\&. \fP"
+.ti -1c
+.RI "void \fBport_flow\fP (bool isoutput, int \fBport\fP, \fBBitvector\fP *) const "
+.br
+.RI "\fIAnalyze internal packet flow with respect to port \fIp\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBconfiguration\fP () const "
+.br
+.RI "\fIReturn the element's current configuration string\&. \fP"
+.ti -1c
+.RI "virtual bool \fBcan_live_reconfigure\fP () const "
+.br
+.RI "\fIReturn whether an element supports live reconfiguration\&. \fP"
+.ti -1c
+.RI "virtual int \fBlive_reconfigure\fP (\fBVector\fP< \fBString\fP > &, \fBErrorHandler\fP *)"
+.br
+.RI "\fIReconfigure the element while the router is running\&. \fP"
+.ti -1c
+.RI "\fBRouterThread\fP * \fBhome_thread\fP () const "
+.br
+.RI "\fIReturn the element's home thread\&. \fP"
+.ti -1c
+.RI "int \fBadd_select\fP (int fd, int mask)"
+.br
+.RI "\fIRegister interest in \fImask\fP events on file descriptor \fIfd\fP\&. \fP"
+.ti -1c
+.RI "int \fBremove_select\fP (int fd, int mask)"
+.br
+.RI "\fIRemove interest in \fImask\fP events on file descriptor \fIfd\fP\&. \fP"
+.ti -1c
+.RI "void \fBadd_read_handler\fP (const \fBString\fP &\fBname\fP, ReadHandlerCallback read_callback, const void *user_data=0, uint32_t \fBflags\fP=0)"
+.br
+.RI "\fIRegister a read handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "void \fBadd_read_handler\fP (const \fBString\fP &\fBname\fP, ReadHandlerCallback read_callback, int user_data, uint32_t \fBflags\fP=0)"
+.br
+.RI "\fIRegister a read handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "void \fBadd_read_handler\fP (const char *\fBname\fP, ReadHandlerCallback read_callback, int user_data=0, uint32_t \fBflags\fP=0)"
+.br
+.RI "\fIRegister a read handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "void \fBadd_write_handler\fP (const \fBString\fP &\fBname\fP, WriteHandlerCallback write_callback, const void *user_data=0, uint32_t \fBflags\fP=0)"
+.br
+.RI "\fIRegister a write handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "void \fBadd_write_handler\fP (const \fBString\fP &\fBname\fP, WriteHandlerCallback write_callback, int user_data, uint32_t \fBflags\fP=0)"
+.br
+.RI "\fIRegister a write handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "void \fBadd_write_handler\fP (const char *\fBname\fP, WriteHandlerCallback write_callback, int user_data=0, uint32_t \fBflags\fP=0)"
+.br
+.RI "\fIRegister a write handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_handler\fP (const \fBString\fP &\fBname\fP, int \fBflags\fP, HandlerCallback callback, const void *read_user_data=0, const void *write_user_data=0)"
+.br
+.RI "\fIRegister a comprehensive handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_handler\fP (const \fBString\fP &\fBname\fP, int \fBflags\fP, HandlerCallback callback, int read_user_data, int write_user_data=0)"
+.br
+.RI "\fIRegister a comprehensive handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_handler\fP (const char *\fBname\fP, int \fBflags\fP, HandlerCallback callback, int read_user_data=0, int write_user_data=0)"
+.br
+.RI "\fIRegister a comprehensive handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "int \fBset_handler_flags\fP (const \fBString\fP &\fBname\fP, int set_flags, int clear_flags=0)"
+.br
+.RI "\fISet flags for the handler named \fIname\fP\&. \fP"
+.ti -1c
+.RI "void \fBadd_task_handlers\fP (\fBTask\fP *task, \fBNotifierSignal\fP *signal, int \fBflags\fP, const \fBString\fP &prefix=\fBString\fP())"
+.br
+.RI "\fIRegister handlers for a task\&. \fP"
+.ti -1c
+.RI "void \fBadd_task_handlers\fP (\fBTask\fP *task, \fBNotifierSignal\fP *signal, const \fBString\fP &prefix=\fBString\fP())"
+.br
+.ti -1c
+.RI "void \fBadd_task_handlers\fP (\fBTask\fP *task, const \fBString\fP &prefix=\fBString\fP())"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, uint8_t *data)"
+.br
+.RI "\fIRegister read and/or write handlers accessing \fIdata\fP\&. \fP"
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, bool *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, uint16_t *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, int *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, unsigned *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, \fBatomic_uint32_t\fP *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, long *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, unsigned long *data)"
+.br
+.ti -1c
+.RI "void \fBadd_net_order_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, uint16_t *data)"
+.br
+.RI "\fIRegister read and/or write handlers accessing \fIdata\fP in network byte order\&. \fP"
+.ti -1c
+.RI "void \fBadd_net_order_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, uint32_t *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, double *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, \fBString\fP *data)"
+.br
+.RI "\fIRegister read and/or write handlers accessing \fIdata\fP\&. \fP"
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, \fBIPAddress\fP *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, \fBEtherAddress\fP *data)"
+.br
+.ti -1c
+.RI "void \fBadd_data_handlers\fP (const char *\fBname\fP, int \fBflags\fP, \fBTimestamp\fP *data, bool is_interval=false)"
+.br
+.RI "\fIRegister read and/or write handlers accessing \fIdata\fP\&. \fP"
+.ti -1c
+.RI "virtual int \fBllrpc\fP (unsigned command, void *arg)"
+.br
+.RI "\fIHandle a low-level remote procedure call\&. \fP"
+.ti -1c
+.RI "int \fBlocal_llrpc\fP (unsigned command, void *arg)"
+.br
+.RI "\fIExecute an LLRPC from within the configuration\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static void \fBstatic_initialize\fP ()"
+.br
+.RI "\fIInitialize static data for this element class\&. \fP"
+.ti -1c
+.RI "static void \fBstatic_cleanup\fP ()"
+.br
+.RI "\fIClean up static data for this element class\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBread_positional_handler\fP (\fBElement\fP *, void *)"
+.br
+.RI "\fIStandard read handler returning a positional argument\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBread_keyword_handler\fP (\fBElement\fP *, void *)"
+.br
+.RI "\fIStandard read handler returning a keyword argument\&. \fP"
+.ti -1c
+.RI "static int \fBreconfigure_positional_handler\fP (const \fBString\fP &, \fBElement\fP *, void *, \fBErrorHandler\fP *)"
+.br
+.RI "\fIStandard write handler for reconfiguring an element by changing one of its positional arguments\&. \fP"
+.ti -1c
+.RI "static int \fBreconfigure_keyword_handler\fP (const \fBString\fP &, \fBElement\fP *, void *, \fBErrorHandler\fP *)"
+.br
+.RI "\fIStandard write handler for reconfiguring an element by changing one of its keyword arguments\&. \fP"
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static int \fBnelements_allocated\fP = 0"
+.br
+.ti -1c
+.RI "static const char \fBPORTS_0_0\fP [] = '0'"
+.br
+.ti -1c
+.RI "static const char \fBPORTS_0_1\fP [] = '0/1'"
+.br
+.ti -1c
+.RI "static const char \fBPORTS_1_0\fP [] = '1/0'"
+.br
+.ti -1c
+.RI "static const char \fBPORTS_1_1\fP [] = '1'"
+.br
+.ti -1c
+.RI "static const char \fBPORTS_1_1X2\fP [] = '1/1\-2'"
+.br
+.ti -1c
+.RI "static const char \fBAGNOSTIC\fP [] = 'a'"
+.br
+.ti -1c
+.RI "static const char \fBPUSH\fP [] = 'h'"
+.br
+.ti -1c
+.RI "static const char \fBPULL\fP [] = 'l'"
+.br
+.ti -1c
+.RI "static const char \fBPUSH_TO_PULL\fP [] = 'h/l'"
+.br
+.ti -1c
+.RI "static const char \fBPULL_TO_PUSH\fP [] = 'l/h'"
+.br
+.ti -1c
+.RI "static const char \fBPROCESSING_A_AH\fP [] = 'a/ah'"
+.br
+.ti -1c
+.RI "static const char \fBCOMPLETE_FLOW\fP [] = 'x/x'"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Base class for Click elements\&. 
+
+Click programmers spend most of their time writing elements, which are subclasses of class \fBElement\fP\&. \fBElement\fP provides functionality of its own, particularly the \fBinput()\fP and \fBoutput()\fP methods and associated \fBElement::Port\fP objects\&. More important, however, is the set of functions that derived classes override to define element behavior\&. Good Click programmers understand how the Click system uses these functions to manipulate and initialize elements\&. These functions fall into several categories:
+.PP
+.IP "\fBBehavior specifications \fP" 1c
+These functions return static constants that describe element properties, such as class names, valid numbers of ports, and port processing types\&. Their values are automatically extracted from element source code for use by tools, so your source code should follow a specific syntax\&. Examples: \fBclass_name()\fP, \fBport_count()\fP, \fBprocessing()\fP, \fBflow_code()\fP, \fBflags()\fP\&. 
+.IP "\fBConfiguration, initialization, and cleanup \fP" 1c
+Configuration and initialization functions are called to set up an element as a router is initialized (or when the element itself is reconfigured)\&. Most of the functions are passed an \fBErrorHandler\fP argument, to which they should report any errors\&. By returning negative values, they can prevent the router from initializing\&. Other functions clean up elements when a router is removed and reconfigure an element as the router runs\&. Examples: \fBcast()\fP, \fBconfigure()\fP, \fBconfigure_phase()\fP, \fBadd_handlers()\fP, \fBinitialize()\fP, \fBtake_state()\fP, \fBcleanup()\fP, \fBcan_live_reconfigure()\fP, \fBlive_reconfigure()\fP\&. 
+.IP "\fB\fBPacket\fP and event processing \fP" 1c
+These functions are called as the router runs to process packets and other events\&. Examples: \fBpush()\fP, \fBpull()\fP, \fBsimple_action()\fP, \fBrun_task()\fP, \fBrun_timer()\fP, \fBselected()\fP\&. 
+.PP
+.PP
+.SS "Examples"
+.PP
+Here is the simplest possible element definition\&.
+.PP
+.PP
+.nf
+class MyNothingElement : public Element { public:
+    MyNothingElement() { }
+    ~MyNothingElement() { }
+    const char *class_name() const { return "MyNothingElement"; }
+};
+.fi
+.PP
+.PP
+This element has no ports and accepts no configuration arguments; it does nothing\&. The required \fBclass_name()\fP function informs Click's infrastructure of the element's class name\&.
+.PP
+Although this element is code-complete, Click's build process requires a bit more boilerplate, like so:
+.PP
+.PP
+.nf
+// ================== elements/local/mynothingelement\&.hh ==================
+#ifndef CLICK_MYNOTHINGELEMENT_HH
+#define CLICK_MYNOTHINGELEMENT_HH
+#include <click/element\&.hh>
+CLICK_DECLS
+class MyNothingElement : public Element { public:
+    MyNothingElement() { }
+    ~MyNothingElement() { }
+    const char *class_name() const { return "MyNothingElement"; }
+};
+CLICK_ENDDECLS
+#endif
+
+// ================== elements/local/mynothingelement\&.cc ==================
+#include <click/config\&.h>
+#include "mynothingelement\&.hh"
+CLICK_DECLS
+// Non-inline element code would go here\&.
+CLICK_ENDDECLS
+EXPORT_ELEMENT(MyNothingElement)
+.fi
+.PP
+.PP
+Some things to notice:
+.PP
+.IP "\(bu" 2
+The element class must be defined in a header file and a source file\&.
+.IP "\(bu" 2
+The header file is protected from multiple inclusion\&. A common error is to copy and paste another element's header file, but forget to change the header protection symbol (here, CLICK_MYNOTHINGELEMENT_HH)\&.
+.IP "\(bu" 2
+All Click declarations are enclosed within a macro pair, \fCCLICK_DECLS\fP and \fCCLICK_ENDDECLS\fP\&. These are required for the NS and FreeBSD kernel drivers\&. Note that \fC#include\fP statements go \fIoutside\fP the \fCCLICK_DECLS/CLICK_ENDDECLS\fP pair\&.
+.IP "\(bu" 2
+The element's C++ class is defined in the header file\&.
+.IP "\(bu" 2
+The first thing the source file does is \fC#include <\fBclick/config\&.h\fP>\fP\&. \fBThis is mandatory\&.\fP
+.IP "\(bu" 2
+The source file must contain a line like \fCEXPORT_ELEMENT(NameOfC++ClassForElement)\fP\&. Click's compilation process will ignore your element unless there's a line like this\&.
+.PP
+.PP
+This slightly more complex example illustrates some more of Click's element infrastructure\&.
+.PP
+.PP
+.nf
+class MyNullElement : public Element { public:
+    MyNullElement() { }
+    ~MyNullElement() { }
+    const char *class_name() const { return "MyNullElement"; }
+    const char *port_count() const { return PORTS_1_1; }
+    const char *processing() const { return PUSH; }
+    void push(int port, Packet *p) {
+        output(0)\&.push(p);
+    }
+};
+.fi
+.PP
+.PP
+This element processes packets in push mode, much like the standard \fIPushNull\fP element\&.
+.PP
+.PD 0
+.IP "\(bu" 2
+The \fBport_count()\fP method tells Click that this element has one input and one output\&. See \fBport_count()\fP for more\&. 
+.IP "\(bu" 2
+The \fBprocessing()\fP method tells Click that this element's ports are in push mode\&. See \fBprocessing()\fP for more\&. 
+.IP "\(bu" 2
+The element doesn't define a \fBconfigure()\fP or \fBinitialize()\fP method, so the defaults are used: the element takes no configuration arguments, and always initializes successfully\&. 
+.IP "\(bu" 2
+The element has just one function called after router initialization, namely \fBpush()\fP\&. This function is called when another element pushes a packet to this element\&. The implementation here simply pushes the packet to the element's first output port\&. 
+.IP "\(bu" 2
+\fBInvariants:\fP Click's initialization process checks for many kinds of errors, allowing the \fBpush()\fP method to assume several invariants\&. In particular, \fBport_count()\fP and \fBprocessing()\fP specify that this element has one push input and one push output\&. Click therefore ensures that the element's first input is used in a connection at least once; that its first output is used in a connection \fIexactly\fP once; that its other inputs and outputs are not used at all; and that all connections involving the element's ports are push\&.
+.PP
+As a result, the \fBpush()\fP method can assume that \fCport == 0\fP, that \fCoutput(0)\fP exists, and that \fCoutput(0)\&.push(p)\fP is valid\&.
+.PP
+Elements must not push null packet pointers, either, so the \fBpush()\fP method can assume that \fCp != 0\fP\&.
+.PP
+There is no harm in verifying these invariants with assertions, since bogus element code can violate them (by passing a bad value for \fCport\fP or \fCp\fP, for example), but such errors are rare in practice\&. Our elements mostly assume that the invariants hold\&. 
+.PP
+.PP
+.SS "\fBPacket\fP Accounting"
+.PP
+\fBElement\fP run-time methods, such as \fBpush()\fP, \fBpull()\fP, \fBrun_task()\fP, and \fBrun_timer()\fP, must always obey the following rules:
+.PP
+.IP "\(bu" 2
+Each \fBPacket\fP pointer is used by at most one element at a time\&.
+.IP "\(bu" 2
+An element that obtains a \fBPacket\fP pointer must eventually free it or pass it to another element\&. This avoids memory leaks\&.
+.PP
+.PP
+Beginning Click programmers often violate these rules\&. Here are some examples to make them concrete\&.
+.PP
+This incorrect version of Click's \fITee\fP element attempts to duplicate a packet and send the duplicates to two different outputs\&.
+.PP
+.PP
+.nf
+void BadTee::push(int port, Packet *p) {
+    output(0)\&.push(p);
+    output(1)\&.push(p);
+}
+.fi
+.PP
+.PP
+A single packet pointer \fCp\fP has been pushed to two different outputs\&. This is always illegal; the rest of the configuration may have modified or even freed the packet before returning control to \fIBadTee\fP, so \fCoutput(1)\&.push(p)\fP would probably touch freed memory! This situation requires the \fBPacket::clone()\fP method, which makes a copy of a packet:
+.PP
+.PP
+.nf
+void BetterTee::push(int port, Packet *p) {
+    output(0)\&.push(p->clone());
+    output(1)\&.push(p);
+}
+.fi
+.PP
+.PP
+However, \fIBetterTee\fP would fail if the router ran out of memory for packet clones\&. \fCp->clone()\fP would return null, and passing a null pointer to another element's \fBpush()\fP method isn't allowed\&. Here's how to fix this:
+.PP
+.PP
+.nf
+void BestTee::push(int port, Packet *p) {
+    if (Packet *clone = p->clone())
+        output(0)\&.push(clone);
+    output(1)\&.push(p);
+}
+.fi
+.PP
+.PP
+Here's an example of a \fBpush()\fP method with an obvious leak:
+.PP
+.PP
+.nf
+void LeakyCounter::push(int port, Packet *p) {
+    _counter++;
+}
+.fi
+.PP
+.PP
+The method doesn't do anything with \fCp\fP, so its memory will never be reclaimed\&. Instead, it should either free the packet or pass it on to another element:
+.PP
+.PP
+.nf
+void BetterCounter1::push(int port, Packet *p) {
+    _counter++;
+    p->kill();            // free packet
+}
+
+void BetterCounter2::push(int port, Packet *p) {
+    _counter++;
+    output(0)\&.push(p);    // push packet on
+}
+.fi
+.PP
+.PP
+Leaks involving error conditions are more common in practice\&. For instance, this \fBpush()\fP method counts IP packets\&. The programmer has defensively checked whether or not the input packet's network header pointer is set\&.
+.PP
+.PP
+.nf
+void LeakyIPCounter::push(int port, Packet *p) {
+    if (!p->has_network_header())
+        return;
+    _counter++;
+    output(0)\&.push(p);
+}
+.fi
+.PP
+.PP
+Close, but no cigar: if the input packet has no network header pointer, the packet will leak\&. Here are some better versions\&.
+.PP
+.PP
+.nf
+void BetterIPCounter1::push(int port, Packet *p) {
+    // In this version, non-IP packets are dropped\&.  This is closest to LeakyIPCounter's intended functionality\&.
+    if (!p->has_network_header()) {
+        p->kill();
+        return;
+    }
+    _counter++;
+    output(0)\&.push(p);
+}
+
+void BetterIPCounter2::push(int port, Packet *p) {
+    // This programmer thinks non-IP packets are serious errors and should cause a crash\&.
+    assert(p->has_network_header());
+    _counter++;
+    output(0)\&.push(p);
+}
+
+void BetterIPCounter3::push(int port, Packet *p) {
+    // This programmer passes non-IP packets through without counting them\&.
+    if (p->has_network_header())
+        _counter++;
+    output(0)\&.push(p);
+}
+.fi
+.PP
+.PP
+.SS "Initialization Phases"
+.PP
+The Click infrastructure calls element initialization functions in a specific order during router initialization\&. Errors at any stage prevent later stages from running\&.
+.PP
+.IP "1." 4
+Collects element properties, specifically \fBconfigure_phase()\fP, \fBport_count()\fP, \fBflow_code()\fP, \fBprocessing()\fP, and \fBcan_live_reconfigure()\fP\&.
+.IP "2." 4
+Calculates how many of each element's input and output ports are used in the configuration\&. There is an error if \fBport_count()\fP doesn't allow the result\&.
+.IP "3." 4
+Calculates each port's push or pull status\&. This depends on \fBprocessing()\fP values, and for agnostic ports, a constraint satisfaction algorithm that uses \fBflow_code()\fP\&.
+.IP "4." 4
+Checks that every connection is between two push ports or two pull ports; that there are no agnostic port conflicts (each port is used as push or pull, never both); that no port goes unused; and that push output ports and pull input ports are connected exactly once\&. Violations cause an error\&.
+.IP "5." 4
+Sorts the elements by \fBconfigure_phase()\fP to construct a configuration order\&.
+.IP "6." 4
+Calls each element's \fBconfigure()\fP method in order, passing its configuration arguments and an \fBErrorHandler\fP\&. All \fBconfigure()\fP functions are called, even if a prior \fBconfigure()\fP function returns an error\&.
+.IP "7." 4
+Calls every element's \fBadd_handlers()\fP method\&.
+.IP "8." 4
+Calls every element's \fBinitialize()\fP method in configuration order\&. Initialization is aborted as soon as any method returns an error (i\&.e\&., some \fBinitialize()\fP methods might not be called)\&.
+.IP "9." 4
+At this point, the router will definitely be installed\&. If the router was installed with a hotswap option, then Click searches the old and new router for potentially compatible pairs using \fBhotswap_element()\fP, and calls \fBtake_state()\fP for each pair\&. Any errors are ignored\&.
+.IP "10." 4
+Installs the router\&.
+.PP
+.PP
+\fBRouter\fP cleanup takes place as follows\&. Click:
+.PP
+.IP "1." 4
+Removes all element handlers\&.
+.IP "2." 4
+Calls each element's \fBcleanup()\fP function in reverse configuration order\&. The argument to \fBcleanup()\fP indicates where the initialization process completed for that element\&. See \fBcleanup()\fP for the specific constant names\&.
+.IP "3." 4
+Deletes each element\&. This step might be delayed relative to \fBcleanup()\fP to allow the programmer to examine an erroneous router's state\&. 
+.PP
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Element::Element ()"
+
+.PP
+Construct an \fBElement\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "void Element::push (int port, \fBPacket\fP * p)\fC [virtual]\fP"
+
+.PP
+Push packet \fIp\fP onto push input \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIport\fP the input port number on which the packet arrives 
+.br
+\fIp\fP the packet
+.RE
+.PP
+An upstream element transferred packet \fIp\fP to this element over a push connection\&. This element should process the packet as necessary and return\&. The packet arrived on input port \fIport\fP\&. \fBpush()\fP must account for the packet either by pushing it further downstream, by freeing it, or by storing it temporarily\&.
+.PP
+The default implementation calls \fBsimple_action()\fP\&. 
+.SS "\fBPacket\fP * Element::pull (int port)\fC [virtual]\fP"
+
+.PP
+Pull a packet from pull output \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIport\fP the output port number receiving the pull request\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+a packet
+.RE
+.PP
+A downstream element initiated a packet transfer from this element over a pull connection\&. This element should return a packet pointer, or null if no packet is available\&. The pull request arrived on output port \fIport\fP\&.
+.PP
+Often, \fBpull()\fP methods will request packets from upstream using input(i)\&.\fBpull()\fP\&. The default implementation calls \fBsimple_action()\fP\&. 
+.SS "\fBPacket\fP * Element::simple_action (\fBPacket\fP * p)\fC [virtual]\fP"
+
+.PP
+Process a packet for a simple packet filter\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIp\fP the input packet 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the output packet, or null
+.RE
+.PP
+Many elements act as simple packet filters: they receive a packet from upstream using input 0, process that packet, and forward it downstream using output 0\&. The \fBsimple_action()\fP method automates this process\&. The \fIp\fP argument is the input packet\&. \fBsimple_action()\fP should process the packet and return a packet pointer -- either the same packet, a different packet, or null\&. If the return value isn't null, Click will forward that packet downstream\&.
+.PP
+\fBsimple_action()\fP must account for \fIp\fP, either by returning it, by freeing it, or by emitting it on some alternate push output port\&. (An optional second push output port 1 is often used to emit erroneous packets\&.)
+.PP
+\fBsimple_action()\fP works equally well for push or pull port pairs\&. The default \fBpush()\fP method calls \fBsimple_action()\fP this way:
+.PP
+.PP
+.nf
+if ((p = simple_action(p)))
+    output(0)\&.push(p);
+.fi
+.PP
+.PP
+The default \fBpull()\fP method calls it this way instead:
+.PP
+.PP
+.nf
+if (Packet *p = input(0)\&.pull())
+    if ((p = simple_action(p)))
+        return p;
+return 0;
+.fi
+.PP
+.PP
+An element that implements its processing with \fBsimple_action()\fP should have a \fBprocessing()\fP code like AGNOSTIC or 'a/ah', and a \fBflow_code()\fP like COMPLETE_FLOW or 'x/x' indicating that packets can flow between the first input and the first output\&.
+.PP
+Most elements that use \fBsimple_action()\fP have exactly one input and one output\&. However, \fBsimple_action()\fP may be used for any number of inputs and outputs; a packet arriving on input port P will be emitted or output port P\&.
+.PP
+For technical branch prediction-related reasons, elements that use \fBsimple_action()\fP can perform quite a bit slower than elements that use \fBpush()\fP and \fBpull()\fP directly\&. The devirtualizer (click-devirtualize) can mitigate this effect\&. 
+.SS "bool Element::run_task (\fBTask\fP * task)\fC [virtual]\fP"
+
+.PP
+Run the element's task\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+true if the task accomplished some meaningful work, false otherwise
+.RE
+.PP
+The \fBTask(Element *)\fP constructor creates a \fBTask\fP object that calls this method when it fires\&. Most elements that have tasks use this method\&.
+.PP
+\fBNote:\fP
+.RS 4
+The default implementation causes an assertion failure\&. 
+.RE
+.PP
+
+.SS "void Element::run_timer (\fBTimer\fP * timer)\fC [virtual]\fP"
+
+.PP
+Run the element's timer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItimer\fP the timer object that fired
+.RE
+.PP
+The \fBTimer(Element *)\fP constructor creates a \fBTimer\fP object that calls this method when it fires\&. Most elements that have timers use this method\&.
+.PP
+\fBNote:\fP
+.RS 4
+The default implementation causes an assertion failure\&. 
+.RE
+.PP
+
+.SS "void Element::selected (int fd, int mask)\fC [virtual]\fP"
+
+.PP
+Handle a file descriptor event\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfd\fP the file descriptor 
+.br
+\fImask\fP relevant events: bitwise-or of one or more of SELECT_READ, SELECT_WRITE
+.RE
+.PP
+Click's call to select() indicates that the file descriptor \fIfd\fP is readable, writable, or both\&. The overriding method should read or write the file descriptor as appropriate\&. The default implementation causes an assertion failure\&.
+.PP
+The element must have previously registered interest in \fIfd\fP with \fBadd_select()\fP\&.
+.PP
+\fBNote:\fP
+.RS 4
+Only available at user level\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_select\fP, \fBremove_select\fP 
+.RE
+.PP
+
+.SS "void Element::selected (int fd)\fC [virtual]\fP"
+
+.PP
+Handle a file descriptor event\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfd\fP the file descriptor
+.RE
+.PP
+\fBDeprecated\fP
+.RS 4
+Elements should define selected(\fIfd\fP, mask) in preference to selected(\fIfd\fP)\&. The default implementation of selected(\fIfd\fP, mask) calls selected(\fIfd\fP) for backwards compatibility\&.
+.RE
+.PP
+.PP
+\fBNote:\fP
+.RS 4
+Only available at user level\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_select\fP, \fBremove_select\fP 
+.RE
+.PP
+
+.SS "void Element::checked_output_push (int port, \fBPacket\fP * p) const\fC [inline]\fP"
+
+.PP
+Push packet \fIp\fP to output \fIport\fP, or kill it if \fIport\fP is out of range\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIport\fP output port number 
+.br
+\fIp\fP packet to push
+.RE
+.PP
+If \fIport\fP is in range (>= 0 and < \fBnoutputs()\fP), then push packet \fIp\fP forward using output(\fIport\fP)\&.push(\fIp\fP)\&. Otherwise, kill \fIp\fP with \fIp\fP ->kill()\&.
+.PP
+\fBNote:\fP
+.RS 4
+It is invalid to call \fBchecked_output_push()\fP on a pull output \fIport\fP\&. 
+.RE
+.PP
+
+.SS "\fBPacket\fP * Element::checked_input_pull (int port) const\fC [inline]\fP"
+
+.PP
+Pull a packet from input \fIport\fP, or return 0 if \fIport\fP is out of range\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIport\fP input port number
+.RE
+.PP
+If \fIport\fP is in range (>= 0 and < \fBninputs()\fP), then return the result of input(\fIport\fP)\&.\fBpull()\fP\&. Otherwise, return null\&.
+.PP
+\fBNote:\fP
+.RS 4
+It is invalid to call \fBchecked_input_pull()\fP on a push input \fIport\fP\&. 
+.RE
+.PP
+
+.SS "Element::class_name () const\fC [pure virtual]\fP"
+
+.PP
+Return the element's class name\&. Each element class must override this function to return its class name\&.
+.PP
+Click tools extract class names from the source\&. For Click to find a class name, the function definition must appear inline, on a single line, inside the element class's declaration, and must return a C string constant\&. It should also have public accessibility\&. Here's an acceptable \fBclass_name()\fP definition:
+.PP
+.PP
+.nf
+const char *class_name() const     { return "ARPQuerier"; }
+.fi
+.PP
+ 
+.SS "const char * Element::port_count () const\fC [virtual]\fP"
+
+.PP
+Return the element's port count specifier\&. An element class overrides this virtual function to return a C string describing its port counts\&. The string gives acceptable input and output ranges, separated by a slash\&. Examples:
+.PP
+.IP "\fB\fC'1/1'\fP \fP" 1c
+The element has exactly one input port and one output port\&. 
+.IP "\fB\fC'1-2/0'\fP \fP" 1c
+One or two input ports and zero output ports\&. 
+.IP "\fB\fC'1/-6'\fP \fP" 1c
+One input port and up to six output ports\&. 
+.IP "\fB\fC'2-/-'\fP \fP" 1c
+At least two input ports and any number of output ports\&. 
+.IP "\fB\fC'3'\fP \fP" 1c
+Exactly three input and output ports\&. (If no slash appears, the text is used for both input and output ranges\&.) 
+.IP "\fB\fC'1-/='\fP \fP" 1c
+At least one input port and \fIthe\fP \fIsame\fP number of output ports\&. 
+.IP "\fB\fC'1-/=+'\fP \fP" 1c
+At least one input port and \fIone\fP \fImore\fP output port than there are input ports\&. 
+.PP
+.PP
+\fBPort\fP counts are used to determine whether a configuration uses too few or too many ports, and lead to errors such as ''e' has no input 3' and ''e'
+input 3 unused'\&.
+.PP
+Click extracts port count specifiers from the source for use by tools\&. For Click to find a port count specifier, the function definition must appear inline, on a single line, inside the element class's declaration, and must return a C string constant (or a name below)\&. It should also have public accessibility\&. Here's an acceptable \fBport_count()\fP definition:
+.PP
+.PP
+.nf
+const char *port_count() const     { return "1/1"; }
+.fi
+.PP
+.PP
+The default \fBport_count()\fP method returns \fC'0/0'\fP\&.
+.PP
+The following names are available for common port count specifiers\&.
+.PP
+.PD 0
+.IP "\(bu" 2
+\fCPORTS_0_0\fP for \fC'0/0'\fP 
+.IP "\(bu" 2
+\fCPORTS_0_1\fP for \fC'0/1'\fP 
+.IP "\(bu" 2
+\fCPORTS_1_0\fP for \fC'1/0'\fP 
+.IP "\(bu" 2
+\fCPORTS_1_1\fP for \fC'1/1'\fP 
+.IP "\(bu" 2
+\fCPORTS_1_1X2\fP for \fC'1/1-2'\fP 
+.PP
+Since \fBport_count()\fP should simply return a C string constant, it shouldn't matter when it's called; nevertheless, it is called before \fBconfigure()\fP\&. 
+.SS "const char * Element::processing () const\fC [virtual]\fP"
+
+.PP
+Return the element's processing specifier\&. An element class overrides this virtual function to return a C string describing which of its ports are push, pull, or agnostic\&. The string gives acceptable input and output ranges, separated by a slash; the characters \fC'h'\fP, \fC'l'\fP, and \fC'a'\fP indicate push, pull, and agnostic ports, respectively\&. Examples:
+.PP
+.PD 0
+.IP "\(bu" 2
+\fC'h/h'\fP All input and output ports are push\&. 
+.IP "\(bu" 2
+\fC'h/l'\fP Push input ports and pull output ports\&. 
+.IP "\(bu" 2
+\fC'a/ah'\fP All input ports are agnostic\&. The first output port is also agnostic, but the second and subsequent output ports are push\&. 
+.IP "\(bu" 2
+\fC'hl/hlh'\fP Input port 0 and output port 0 are push\&. Input port 1 and output port 1 are pull\&. All remaining inputs are pull; all remaining outputs are push\&. 
+.IP "\(bu" 2
+\fC'a'\fP All input and output ports are agnostic\&. (If no slash appears, the text is used for both input and output ports\&.)
+.PP
+Thus, each character indicates a single port's processing type, except that the last character in the input section is used for all remaining input ports (and similarly for outputs)\&. It's OK to have more characters than ports; any extra characters are ignored\&.
+.PP
+Click extracts processing specifiers from the source for use by tools\&. For Click to find a processing specifier, the function definition must appear inline, on a single line, inside the element class's declaration, and must return a C string constant\&. It should also have public accessibility\&. Here's an acceptable \fBprocessing()\fP definition:
+.PP
+.PP
+.nf
+const char *processing() const     { return "a/ah"; }
+.fi
+.PP
+.PP
+The default \fBprocessing()\fP method returns \fC'a/a'\fP, which sets all ports to agnostic\&.
+.PP
+The following names are available for common processing specifiers\&.
+.PP
+.PD 0
+.IP "\(bu" 2
+\fCAGNOSTIC\fP for \fC'a/a'\fP 
+.IP "\(bu" 2
+\fCPUSH\fP for \fC'h/h'\fP 
+.IP "\(bu" 2
+\fCPULL\fP for \fC'l/l'\fP 
+.IP "\(bu" 2
+\fCPUSH_TO_PULL\fP for \fC'h/l'\fP 
+.IP "\(bu" 2
+\fCPULL_TO_PUSH\fP for \fC'l/h'\fP 
+.IP "\(bu" 2
+\fCPROCESSING_A_AH\fP for \fC'a/ah'\fP 
+.PP
+Since \fBprocessing()\fP should simply return a C string constant, it shouldn't matter when it's called; nevertheless, it is called before \fBconfigure()\fP\&. 
+.SS "const char * Element::flow_code () const\fC [virtual]\fP"
+
+.PP
+Return the element's internal packet flow specifier (its \fIflow code\fP)\&. An element class overrides this virtual function to return a C string describing how packets flow within the element\&. That is, can packets that arrive on input port X be emitted on output port Y? This information helps Click answer questions such as 'What Queues are downstream of this
+element?' and 'Should this agnostic port be push or pull?'\&. See below for more\&.
+.PP
+A flow code string consists of an input specification and an output specification, separated by a slash\&. Each specification is a sequence of \fIport\fP \fIcodes\fP\&. Packets can travel from an input port to an output port only if the port codes match\&.
+.PP
+The simplest port code is a single case-sensitive letter\&. For example, the flow code \fC'x/x'\fP says that packets can travel from the element's input port to its output port, while \fC'x/y'\fP says that packets never travel between ports\&.
+.PP
+A port code may also be a sequence of letters in brackets, such as \fC[abz]\fP\&. Two port codes match iff they have at least one letter in common, so \fC[abz]\fP matches \fCa\fP, but \fC[abz]\fP and \fC[cde]\fP do not match\&. If a caret \fC^\fP appears after the open bracket, the port code will match all letters \fIexcept\fP for those after the caret\&. Thus, the port code \fC[^bc]\fP is equivalent to \fC[ABC\&.\&.\&.XYZadef\&.\&.\&.xyz]\fP\&.
+.PP
+Finally, the \fC#\fP character is also a valid port code, and may be used within brackets\&. One \fC#\fP matches another \fC#\fP only when they represent the same port number -- for example, when one \fC#\fP corresponds to input port 2 and the other to output port 2\&. \fC#\fP never matches any letter\&. Thus, for an element with exactly 2 inputs and 2 outputs, the flow code \fC'##/##'\fP behaves like \fC'xy/xy'\fP\&.
+.PP
+The last code in each specification is duplicated as many times as necessary, and any extra codes are ignored\&. The flow codes \fC'[x#][x#][x#]/x######'\fP and \fC'[x#]/x#'\fP behave identically\&.
+.PP
+Here are some example flow codes\&.
+.PP
+.IP "\fB\fC'x/x'\fP \fP" 1c
+Packets may travel from any input port to any output port\&. Most elements use this flow code\&.
+.PP
+.IP "\fB\fC'xy/x'\fP \fP" 1c
+Packets arriving on input port 0 may travel to any output port, but those arriving on other input ports will not be emitted on any output\&. \fIARPQuerier\fP uses this flow code\&.
+.PP
+.IP "\fB\fC'x/y'\fP \fP" 1c
+Packets never travel between input and output ports\&. \fIIdle\fP and \fIError\fP use this flow code\&. So does \fIKernelTun\fP, since its input port and output port are decoupled (packets received on its input are sent to the kernel; packets received from the kernel are sent to its output)\&.
+.PP
+.IP "\fB\fC'#/#'\fP \fP" 1c
+Packets arriving on input port \fIK\fP may travel only to output port \fIK\fP\&. \fISuppressor\fP uses this flow code\&.
+.PP
+.IP "\fB\fC'#/[^#]'\fP \fP" 1c
+Packets arriving on input port \fIK\fP may travel to any output port except \fIK\fP\&. \fIEtherSwitch\fP uses this flow code\&.
+.PP
+.IP "\fB\fC'xy/[xy]x'\fP \fP" 1c
+Packets arriving on input port 0 may travel to any output port\&. \fBPacket\fP arriving on any other input port can \fIonly\fP travel to output port 0\&. \fIBypass\fP uses this flow code\&.
+.PP
+.PP
+.PP
+Click extracts flow codes from the source for use by tools\&. For Click to find a flow code, the function definition must appear inline, on a single line, inside the element class's declaration, and must return a C string constant\&. It should also have public accessibility\&. Here's an acceptable \fBflow_code()\fP definition:
+.PP
+.PP
+.nf
+const char *flow_code() const     { return "xy/x"; }
+.fi
+.PP
+.PP
+The default \fBflow_code()\fP method returns \fC'x/x'\fP, which indicates that packets may travel from any input to any output\&. This default is acceptable for the vast majority of elements\&.
+.PP
+The following name is available for a common flow code\&.
+.PP
+.PD 0
+.IP "\(bu" 2
+\fCCOMPLETE_FLOW\fP for \fC'x/x'\fP 
+.PP
+Since \fBflow_code()\fP should simply return a C string constant, it shouldn't matter when it's called; nevertheless, it is called before \fBconfigure()\fP\&.
+.PP
+.SS "Determining an element's flow code"
+.PP
+To pick the right flow code for an element, consider how a flow code would affect a simple router\&.
+.PP
+Given an element \fIE\fP with input port \fIM\fP and output port \fIN\fP, imagine this simple configuration (or a similar configuration):
+.PP
+\fC\&.\&.\&. -> RED -> [\fIM\fP] E [\fIN\fP] -> Queue -> \&.\&.\&.;\fP
+.PP
+Now, should the \fIRED\fP element include the \fIQueue\fP element in its queue length calculation? If so, then the flow code's \fIM\fPth input port code and \fIN\fPth output port code should match\&. If not, they shouldn't\&.
+.PP
+For example, consider \fIARPQuerier's\fP second input port\&. On receiving an ARP response on that input, \fIARPQuerier\fP may emit a held-over IP packet to its first output\&. However, a \fIRED\fP element upstream of that second input port probably wouldn't count the downstream \fIQueue\fP in its queue length calculation\&. After all, the ARP responses are effectively dropped; packets emitted onto the \fIQueue\fP originally came from \fIARPQuerier's\fP first input port\&. Therefore, \fIARPQuerier's\fP flow code, \fC'xy/x'\fP, specifies that packets arriving on the second input port are not emitted on any output port\&.
+.PP
+The \fIARPResponder\fP element provides a contrasting example\&. It has one input port, which receives ARP queries, and one output port, which emits the corresponding ARP responses\&. A \fIRED\fP element upstream of \fIARPResponder\fP probably \fIwould\fP want to include a downstream \fIQueue\fP, since queries received by \fIARPResponder\fP are effectively transmuted into emitted responses\&. Thus, \fIARPResponder's\fP flow code, \fC'x/x'\fP (the default), specifies that packets travel through it, even though the packets it emits are completely different from the packets it receives\&.
+.PP
+If you find this confusing, don't fret\&. It is perfectly fine to be conservative when assigning flow codes, and the vast majority of the Click distribution's elements use \fCCOMPLETE_FLOW\fP\&. 
+.SS "const char * Element::flags () const\fC [virtual]\fP"
+
+.PP
+Return the element's flags\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+This interface is not stable\&.
+.RE
+.PP
+This virtual function is called to fetch a string describing the element's flags\&. A flags word includes one or more space-separated flag settings, where a flag setting consists of an uppercase letter optionally followed by a number\&. The following flags are currently defined\&.
+.PP
+.IP "\fB\fCA\fP \fP" 1c
+This element requires AlignmentInfo information\&. The click-align tool only generates AlignmentInfo for \fCA\fP-flagged elements\&.
+.PP
+.IP "\fB\fCS0\fP \fP" 1c
+This element neither generates nor consumes packets\&. In other words, every packet received on its inputs will be emitted on its outputs, and every packet emitted on its outputs must have originated from its inputs\&. Notification uses this flag to discover certain idle paths\&. For example, packet schedulers (RoundRobinSched, PrioSched) never generate packets and so declare the \fCS0\fP flag\&. As a result, degenerate paths like 'RoundRobinSched -> ToDevice', where RoundRobinSched has 0 inputs, are idle rather than busy, and waste no CPU time\&.
+.PP
+.PP
+
+.SS "int Element::flag_value (int flag) const"
+
+.PP
+Return the flag value for \fIflag\fP in \fBflags()\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIflag\fP the flag
+.RE
+.PP
+Returns the numeric flag value if \fIflag\fP was specified in \fBflags()\fP, 1 if \fIflag\fP was specified without a numeric flag value, and -1 if \fIflag\fP was not specified\&. 
+.SS "void * Element::cast (const char * name)\fC [virtual]\fP"
+
+.PP
+Attempt to cast the element to a named type\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP name of the type being cast to
+.RE
+.PP
+Click calls this function to see whether this element has a given type, identified by \fIname\fP\&. Thus, \fBcast()\fP is Click's version of the C++ \fCdynamic_cast\fP operator\&. (\fCdynamic_cast\fP itself is not available in the Linux kernel, so we rolled our own\&.) The function should return a pointer to the named object, or a null pointer if this element doesn't have that type\&. \fIname\fP can name an element class or another type of interface, such as \fC'Storage'\fP or Notifier::EMPTY_NOTIFIER\&.
+.PP
+The default implementation returns this element if \fIname\fP equals \fBclass_name()\fP, and null otherwise\&.
+.PP
+You should override \fBcast()\fP if your element inherits from another element (and you want to expose that inheritance to Click); the resulting \fBcast()\fP method will check both class names\&. For example, if element \fIDerived\fP inherited from element \fIBase\fP, Derived::cast() might be defined like this:
+.PP
+.PP
+.nf
+void *Derived::cast(const char *name) {
+    if (strcmp(name, "Derived") == 0)
+        return (Derived *) this;
+    else if (strcmp(name, "Base") == 0)
+        return (Base *) this;
+    else
+        return Base::cast(name);
+}
+.fi
+.PP
+.PP
+The recursive call to Base::cast() is useful in case \fIBase\fP itself overrides \fBcast()\fP\&. The explicit check for the name \fC'Base'\fP is necessary in case \fIBase\fP did \fInot\fP override \fBcast()\fP: the default \fBcast()\fP implementation compares against \fBclass_name()\fP, which in this case is \fC'Derived'\fP\&. Always explicitly cast \fCthis\fP to the correct type before returning it\&.
+.PP
+You should also override \fBcast()\fP if your element provides another interface, such as Storage or a \fBNotifier\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBport_cast\fP 
+.RE
+.PP
+
+.SS "void * Element::port_cast (bool isoutput, int port, const char * name)\fC [virtual]\fP"
+
+.PP
+Attempt to cast an element's port to a named type\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIisoutput\fP false for input ports, true for output ports 
+.br
+\fIport\fP port number 
+.br
+\fIname\fP name of the type being cast to
+.RE
+.PP
+Click calls this function to see whether a port corresponds to an object of the type called \fIname\fP\&. The function should return a pointer to the named object, or a null pointer if this port doesn't have that type\&. \fIname\fP can name an element class or another type of interface, such as \fC'Storage'\fP or Notifier::EMPTY_NOTIFIER\&.
+.PP
+The default implementation returns the result of \fBcast()\fP, ignoring the \fIisoutput\fP and \fIport\fP arguments\&.
+.PP
+The \fBcast()\fP method suffices for most purposes, but some Click functionality, such as Notifiers, can use the additional precision of \fBport_cast()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBcast\fP 
+.RE
+.PP
+
+.SS "int Element::configure_phase () const\fC [virtual]\fP"
+
+.PP
+Return the element's configure phase, which determines the order in which elements are configured and initialized\&. Click configures and initializes elements in increasing order of \fBconfigure_phase()\fP\&. An element with configure phase 1 will always be configured (have its \fBconfigure()\fP method called) before an element with configure phase 2\&. Thus, if two element classes must be configured in a given order, they should define \fBconfigure_phase()\fP functions to enforce that order\&. For example, the \fIAddressInfo\fP element defines address abbreviations for other elements to use; it should thus be configured before other elements, and its \fBconfigure_phase()\fP method returns a low value\&.
+.PP
+Configure phases should be defined relative to the following constants, which are listed in increasing order\&.
+.PP
+.IP "\fB\fCCONFIGURE_PHASE_FIRST\fP \fP" 1c
+Configure before other elements\&. Used by \fIAddressInfo\fP\&.
+.PP
+.IP "\fB\fCCONFIGURE_PHASE_INFO\fP \fP" 1c
+Configure early\&. Appropriate for most information elements, such as \fIScheduleInfo\fP\&.
+.PP
+.IP "\fB\fCCONFIGURE_PHASE_PRIVILEGED\fP \fP" 1c
+Intended for elements that require root privilege when run at user level, such as \fIFromDevice\fP and \fIToDevice\fP\&. The \fIChangeUID\fP element, which reliquishes root privilege, runs at configure phase \fCCONFIGURE_PHASE_PRIVILEGED\fP + 1\&.
+.PP
+.IP "\fB\fCCONFIGURE_PHASE_DEFAULT\fP \fP" 1c
+The default implementation returns \fCCONFIGURE_PHASE_DEFAULT\fP, so most elements are configured at this phase\&. Appropriate for most elements\&.
+.PP
+.IP "\fB\fCCONFIGURE_PHASE_LAST\fP \fP" 1c
+Configure after other elements\&. 
+.PP
+.PP
+The body of a \fBconfigure_phase()\fP method should consist of a single \fCreturn\fP statement returning some constant\&. Although it shouldn't matter when it's called, it is called before \fBconfigure()\fP\&. 
+.SS "int Element::configure (\fBVector\fP< \fBString\fP > & conf, \fBErrorHandler\fP * errh)\fC [virtual]\fP"
+
+.PP
+Parse the element's configuration arguments\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconf\fP configuration arguments 
+.br
+\fIerrh\fP error handler
+.RE
+.PP
+The \fBconfigure()\fP method is passed the element's configuration arguments\&. It should parse them, report any errors, and initialize the element's internal state\&.
+.PP
+The \fIconf\fP argument is the element's configuration string, divided into configuration arguments by splitting at commas and removing comments and leading and trailing whitespace (see \fBcp_argvec()\fP)\&. If \fIconf\fP is empty, the element was not supplied with a configuration string (or its configuration string contained only comments and whitespace)\&. It is safe to modify \fIconf\fP; modifications will be thrown away when the function returns\&.
+.PP
+Any errors, warnings, or messages should be reported to \fIerrh\fP\&. Messages need not specify the element name or type, since this information will be provided as context\&. \fIerrh\&.nerrors()\fP is initially zero\&.
+.PP
+\fBconfigure()\fP should return a negative number if configuration fails\&. Returning a negative number prevents the router from initializing\&. The default \fBconfigure()\fP method succeeds if and only if there are no configuration arguments\&.
+.PP
+\fBconfigure()\fP methods are called in order of \fBconfigure_phase()\fP\&. All elements' \fBconfigure()\fP methods are called, even if an early \fBconfigure()\fP method fails; this is to report all relevant error messages to the user, rather than just the first\&.
+.PP
+\fBconfigure()\fP is called early in the initialization process, and cannot check whether a named handler exists\&. That function must be left for \fBinitialize()\fP\&. Assuming all router connections are valid and all \fBconfigure()\fP methods succeed, the \fBadd_handlers()\fP functions will be called next\&.
+.PP
+A \fBconfigure()\fP method should avoid potentially harmful actions, such as truncating files or attaching to devices\&. These actions should be left for the \fBinitialize()\fP method, which is called later\&. This avoids harm if another element cannot be configured, or if the router is incorrectly connected, since in those cases \fBinitialize()\fP will never be called\&.
+.PP
+Elements that support live reconfiguration (see \fBcan_live_reconfigure()\fP) should expect \fBconfigure()\fP to be called at run time, when a user writes to the element's \fCconfig\fP handler\&. In that case, \fBconfigure()\fP must be careful not to disturb the existing configuration unless the new configuration is error-free\&.
+.PP
+\fBNote:\fP
+.RS 4
+In previous releases, \fBconfigure()\fP could not determine whether a port is push or pull or query the router for information about neighboring elements\&. Those functions had to be left for \fBinitialize()\fP\&. Even in the current release, if any element in a configuration calls the deprecated set_ninputs() or set_noutputs() function from \fBconfigure()\fP, then all push, pull, and neighbor information is invalidated until \fBinitialize()\fP time\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBlive_reconfigure\fP, \fBargs\&.hh\fP for argument parsing 
+.RE
+.PP
+
+.SS "void Element::add_handlers ()\fC [virtual]\fP"
+
+.PP
+Install the element's handlers\&. The \fBadd_handlers()\fP method should install any handlers the element provides by calling \fBadd_read_handler()\fP, \fBadd_write_handler()\fP, and \fBset_handler()\fP\&. These functions may also be called from \fBconfigure()\fP, \fBinitialize()\fP, or even later, during router execution\&. However, it is better in most cases to initialize handlers in \fBconfigure()\fP or \fBadd_handlers()\fP, since elements that depend on other handlers often check in \fBinitialize()\fP whether those handlers exist\&.
+.PP
+\fBadd_handlers()\fP is called after \fBconfigure()\fP and before \fBinitialize()\fP\&. When it runs, it is guaranteed that every \fBconfigure()\fP method succeeded and that all connections are correct (push and pull match up correctly and there are no unused or badly-connected ports)\&.
+.PP
+Most \fBadd_handlers()\fP methods simply call \fBadd_read_handler()\fP, \fBadd_write_handler()\fP, \fBadd_task_handlers()\fP, and possibly \fBset_handler()\fP one or more times\&. The default \fBadd_handlers()\fP method does nothing\&.
+.PP
+Click automatically provides five handlers for each element: \fCclass\fP, \fCname\fP, \fCconfig\fP, \fCports\fP, and \fChandlers\fP\&. There is no need to provide these yourself\&. 
+.SS "int Element::initialize (\fBErrorHandler\fP * errh)\fC [virtual]\fP"
+
+.PP
+Initialize the element\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP error handler
+.RE
+.PP
+The \fBinitialize()\fP method is called just before the router is placed on line\&. It performs any final initialization, and provides the last chance to abort router installation with an error\&. Any errors, warnings, or messages should be reported to \fIerrh\fP\&. Messages need not specify the element name; this information will be supplied externally\&. \fIerrh\&.nerrors()\fP is initially zero\&.
+.PP
+\fBinitialize()\fP should return zero if initialization succeeds, or a negative number if it fails\&. Returning a negative number prevents the router from initializing\&. The default \fBinitialize()\fP method always returns zero (success)\&.
+.PP
+\fBinitialize()\fP methods are called in order of \fBconfigure_phase()\fP, using the same order as for \fBconfigure()\fP\&. When an \fBinitialize()\fP method fails, router initialization stops immediately, and no more \fBinitialize()\fP methods are called\&. Thus, at most one \fBinitialize()\fP method can fail per router configuration\&.
+.PP
+\fBinitialize()\fP is called after \fBadd_handlers()\fP and before \fBtake_state()\fP\&. When it runs, it is guaranteed that every \fBconfigure()\fP method succeeded, that all connections are correct (push and pull match up correctly and there are no unused or badly-connected ports), and that every \fBadd_handlers()\fP method has been called\&.
+.PP
+If every element's \fBinitialize()\fP method succeeds, then the router is installed, and will remain installed until another router replaces it\&. Any errors that occur later than \fBinitialize()\fP -- during \fBtake_state()\fP, \fBpush()\fP, or \fBpull()\fP, for example -- will not take the router off line\&.
+.PP
+Strictly speaking, the only task that \fImust\fP go in \fBinitialize()\fP is checking whether a handler exists, since that information isn't available at \fBconfigure()\fP time\&. It's often convenient, however, to put other functionality in \fBinitialize()\fP\&. For example, opening files for writing fits well in \fBinitialize()\fP: if the configuration has errors before the relevant element is initialized, any existing file will be left as is\&. Common tasks performed in \fBinitialize()\fP methods include:
+.PP
+.IP "\(bu" 2
+Initializing \fBTask\fP objects\&.
+.IP "\(bu" 2
+Allocating memory\&.
+.IP "\(bu" 2
+Opening files\&.
+.IP "\(bu" 2
+Initializing network devices\&.
+.PP
+.PP
+\fBNote:\fP
+.RS 4
+\fBinitialize()\fP methods may not create or destroy input and output ports, but this functionality is deprecated anyway\&.
+.PP
+In previous releases, \fBconfigure()\fP could not determine whether a port was push or pull or query the router for information about neighboring elements, so those tasks were relegated to \fBinitialize()\fP methods\&. In the current release, \fBconfigure()\fP can perform these tasks too\&. 
+.RE
+.PP
+
+.SS "void Element::take_state (\fBElement\fP * old_element, \fBErrorHandler\fP * errh)\fC [virtual]\fP"
+
+.PP
+Initialize the element for hotswap, where the element should take \fIold_element's\fP state, if possible\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIold_element\fP element in the old configuration; result of \fBhotswap_element()\fP 
+.br
+\fIerrh\fP error handler
+.RE
+.PP
+The \fBtake_state()\fP method supports hotswapping, and is the last stage of configuration installation\&. When a configuration is successfully installed with the hotswap option, the driver (1) stops the old configuration, (2) searches the two configurations for pairs of compatible elements, (3) calls \fBtake_state()\fP on the new elements in those pairs to give them a chance to take state from the old elements, and (4) starts the new configuration\&.
+.PP
+\fBtake_state()\fP is called only when a configuration is hotswapped in\&. The default \fBtake_state()\fP implementation does nothing; there's no need to override it unless your element has state you want preserved across hotswaps\&.
+.PP
+The \fIold_element\fP argument is an element from the old configuration (that is, from \fBrouter()\fP->\fBhotswap_router()\fP) obtained by calling \fBhotswap_element()\fP\&. If \fBhotswap_element()\fP returns null, \fBtake_state()\fP will not be called\&. The default \fBhotswap_element()\fP returns an \fIold_element\fP has the same \fBname()\fP as this element\&. This is often too loose; for instance, \fIold_element\fP might have a completely different class\&. Thus, most \fBtake_state()\fP methods begin by attempting to \fBcast()\fP \fIold_element\fP to a compatible class, and silently returning if the result is null\&. Alternatively, you can override \fBhotswap_element()\fP and put the check there\&.
+.PP
+Errors and warnings should be reported to \fIerrh\fP, but the router will be installed whether or not there are errors\&. \fBtake_state()\fP should always leave this element in a state that's safe to run, and \fIold_element\fP in a state that's safe to \fBcleanup()\fP\&.
+.PP
+\fBtake_state()\fP is called after \fBinitialize()\fP\&. When it runs, it is guaranteed that this element's configuration will shortly be installed\&. Every \fBconfigure()\fP and \fBinitialize()\fP method succeeded, all connections are correct (push and pull match up correctly and there are no unused or badly-connected ports), and every \fBadd_handlers()\fP method has been called\&. It is also guaranteed that the old configuration (of which old_element is a part) had been successfully installed, but that none of its tasks are running at the moment\&. 
+.SS "\fBElement\fP * Element::hotswap_element () const\fC [virtual]\fP"
+
+.PP
+Return a compatible element in the hotswap router\&. \fBhotswap_element()\fP searches the hotswap router, \fBrouter()\fP->\fBhotswap_router()\fP, for an element compatible with this element\&. It returns that element, if any\&. If there's no compatible element, or no hotswap router, then it returns 0\&.
+.PP
+The default implementation searches for an element with the same name as this element\&. Thus, it returns 0 or an element that satisfies this constraint: \fBhotswap_element()\fP->\fBname()\fP == \fBname()\fP\&.
+.PP
+Generally, this constraint is too loose\&. A \fIQueue\fP element can't hotswap state from an \fIARPResponder\fP, even if they do have the same name\&. Most elements also check that \fBhotswap_element()\fP has the right class, using the \fBcast()\fP function\&. This check can go either in \fBhotswap_element()\fP or in \fBtake_state()\fP itself, whichever is easier; Click doesn't use the result of \fBhotswap_element()\fP except as an argument to \fBtake_state()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtake_state\fP, \fBRouter::hotswap_router\fP 
+.RE
+.PP
+
+.SS "void Element::cleanup (CleanupStage stage)\fC [virtual]\fP"
+
+.PP
+Clean up the element's state\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstage\fP this element's maximum initialization stage
+.RE
+.PP
+The \fBcleanup()\fP method should clean up any state allocated by the initialization process\&. For example, it should close any open files, free up memory, and unhook from network devices\&. Click calls \fBcleanup()\fP when it determines that an element's state is no longer needed, either because a router configuration is about to be removed or because the router configuration failed to initialize properly\&. Click will call the \fBcleanup()\fP method exactly once on every element it creates\&.
+.PP
+The \fIstage\fP parameter is an enumeration constant indicating how far the element made it through the initialization process\&. Possible values are, in increasing order:
+.PP
+.IP "\fB\fCCLEANUP_BEFORE_CONFIGURE\fP \fP" 1c
+The element's \fBconfigure()\fP method was not called\&. This happens when some element's port counts or push/pull processing was wrong\&.
+.PP
+.IP "\fB\fCCLEANUP_CONFIGURE_FAILED\fP \fP" 1c
+The element's \fBconfigure()\fP method was called, but it failed\&.
+.PP
+.IP "\fB\fCCLEANUP_CONFIGURED\fP \fP" 1c
+The element's \fBconfigure()\fP method was called and succeeded, but its \fBinitialize()\fP method was not called (because some other element's \fBconfigure()\fP method failed, or there was a problem with the configuration's connections)\&.
+.PP
+.IP "\fB\fCCLEANUP_INITIALIZE_FAILED\fP \fP" 1c
+The element's \fBconfigure()\fP and \fBinitialize()\fP methods were both called\&. \fBconfigure()\fP succeeded, but \fBinitialize()\fP failed\&.
+.PP
+.IP "\fB\fCCLEANUP_INITIALIZED\fP \fP" 1c
+The element's \fBconfigure()\fP and \fBinitialize()\fP methods were called and succeeded, but its router was never installed (because some other element's \fBinitialize()\fP method failed)\&.
+.PP
+.IP "\fB\fCCLEANUP_ROUTER_INITIALIZED\fP \fP" 1c
+The element's \fBconfigure()\fP and \fBinitialize()\fP methods were called and succeeded, and the router of which it is a part was successfully installed\&.
+.PP
+.IP "\fB\fCCLEANUP_MANUAL\fP \fP" 1c
+Never used by Click\&. Intended for use when element code calls \fBcleanup()\fP explicitly\&. 
+.PP
+.PP
+A configuration's \fBcleanup()\fP methods are called in the reverse of the \fBconfigure_phase()\fP order used for \fBconfigure()\fP and \fBinitialize()\fP\&.
+.PP
+The default \fBcleanup()\fP method does nothing\&.
+.PP
+\fBcleanup()\fP serves some of the same functions as an element's destructor\&. However, \fBcleanup()\fP may be called long before an element is destroyed\&. Elements that are part of an erroneous router are cleaned up, but kept around for debugging purposes until another router is installed\&. 
+.SS "void Element::static_initialize ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Initialize static data for this element class\&. Place initialization code for an element class's shared global state in the \fBstatic_initialize()\fP static member function\&. (For example, the IPFilter element class uses \fBstatic_initialize()\fP to set up various parsing tables\&.) Click drivers will call this function when the element code is loaded, before any elements of the class are created\&.
+.PP
+static_initialize functions are called in an arbitrary and unpredictable order (not, for example, the \fBconfigure_phase()\fP order)\&. \fBElement\fP authors are responsible for handling static initialization dependencies\&.
+.PP
+For Click to find a static_initialize declaration, it must appear inside the element class's class declaration on its own line and have the following prototype:
+.PP
+.PP
+.nf
+static void static_initialize();
+.fi
+.PP
+.PP
+It must also have public accessibility\&.
+.PP
+\fBNote:\fP
+.RS 4
+In most cases you should also define a \fBstatic_cleanup()\fP function to clean up state initialized by \fBstatic_initialize()\fP\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBElement::static_cleanup\fP 
+.RE
+.PP
+
+.SS "void Element::static_cleanup ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Clean up static data for this element class\&. Place cleanup code for an element class's shared global state in the \fBstatic_cleanup()\fP static member function\&. Click drivers will call this function before unloading the element code\&.
+.PP
+static_cleanup functions are called in an arbitrary and unpredictable order (not, for example, the \fBconfigure_phase()\fP order, and not the reverse of the static_initialize order)\&. \fBElement\fP authors are responsible for handling static cleanup dependencies\&.
+.PP
+For Click to find a static_cleanup declaration, it must appear inside the element class's class declaration on its own line and have the following prototype:
+.PP
+.PP
+.nf
+static void static_cleanup();
+.fi
+.PP
+.PP
+It must also have public accessibility\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBElement::static_initialize\fP 
+.RE
+.PP
+
+.SS "\fBString\fP Element::name () const"
+
+.PP
+Return the element's name\&. This is the name used to declare the element in the router configuration, with all compound elements expanded\&. 
+.SS "\fBString\fP Element::declaration () const\fC [virtual]\fP"
+
+.PP
+Return a string giving the element's name and class name\&. neverThe result has the form "\fIname\fP :: \fIclass_name"\fP\&. \fBElement\fP classes can override this function to supply additional important information, if desired; for example, \fIFromDump\fP returns a string "\fIname\fP :: \fIclass_name\fP(\fIfilename\fP)"\&. 
+.SS "\fBRouter\fP * Element::router () const\fC [inline]\fP"
+
+.PP
+Return the element's router\&. 
+.SS "int Element::eindex () const\fC [inline]\fP"
+
+.PP
+Return the element's index within its router\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+this == \fBrouter()\fP->element(eindex()) 
+.RE
+.PP
+
+.SS "int Element::eindex (\fBRouter\fP * r) const\fC [inline]\fP"
+
+.PP
+Return the element's index within router \fIr\fP\&. Returns -1 if \fIr\fP != \fBrouter()\fP\&. 
+.SS "Master * Element::master () const\fC [inline]\fP"
+
+.PP
+Return the element's master\&. 
+.SS "int Element::nports (bool isoutput) const\fC [inline]\fP"
+
+.PP
+Return the number of input or output ports\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIisoutput\fP false for input ports, true for output ports 
+.RE
+.PP
+
+.SS "int Element::ninputs () const\fC [inline]\fP"
+
+.PP
+Return the number of input ports\&. 
+.SS "int Element::noutputs () const\fC [inline]\fP"
+
+.PP
+Return the number of output ports\&. 
+.SS "const \fBElement::Port\fP & Element::port (bool isoutput, int port) const\fC [inline]\fP"
+
+.PP
+Return one of the element's ports\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIisoutput\fP false for input ports, true for output ports 
+.br
+\fIport\fP port number
+.RE
+.PP
+An assertion fails if \fIp\fP is out of range\&. 
+.SS "const \fBElement::Port\fP & Element::input (int port) const\fC [inline]\fP"
+
+.PP
+Return one of the element's input ports\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIport\fP port number
+.RE
+.PP
+An assertion fails if \fIport\fP is out of range\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBPort\fP, \fBport\fP 
+.RE
+.PP
+
+.SS "const \fBElement::Port\fP & Element::output (int port) const\fC [inline]\fP"
+
+.PP
+Return one of the element's output ports\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIport\fP port number
+.RE
+.PP
+An assertion fails if \fIport\fP is out of range\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBPort\fP, \fBport\fP 
+.RE
+.PP
+
+.SS "bool Element::port_active (bool isoutput, int port) const\fC [inline]\fP"
+
+.PP
+Check whether a port is active\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIisoutput\fP false for input ports, true for output ports 
+.br
+\fIport\fP port number
+.RE
+.PP
+Returns true iff \fIport\fP is in range and \fIport\fP is active\&. Push outputs and pull inputs are active; pull outputs and push inputs are not\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBElement::Port::active\fP 
+.RE
+.PP
+
+.SS "bool Element::input_is_push (int port) const\fC [inline]\fP"
+
+.PP
+Check whether input \fIport\fP is push\&. Returns true iff input \fIport\fP exists and is push\&. 
+.SS "bool Element::input_is_pull (int port) const\fC [inline]\fP"
+
+.PP
+Check whether input \fIport\fP is pull\&. Returns true iff input \fIport\fP exists and is pull\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBport_active\fP 
+.RE
+.PP
+
+.SS "bool Element::output_is_push (int port) const\fC [inline]\fP"
+
+.PP
+Check whether output \fIport\fP is push\&. Returns true iff output \fIport\fP exists and is push\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBport_active\fP 
+.RE
+.PP
+
+.SS "bool Element::output_is_pull (int port) const\fC [inline]\fP"
+
+.PP
+Check whether output \fIport\fP is pull\&. Returns true iff output \fIport\fP exists and is pull\&. 
+.SS "void Element::port_flow (bool isoutput, int p, \fBBitvector\fP * travels) const"
+
+.PP
+Analyze internal packet flow with respect to port \fIp\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIisoutput\fP false for input ports, true for output ports 
+.br
+\fIp\fP port number 
+.br
+\fItravels\fP the bitvector to initialize with internal packet flow information
+.RE
+.PP
+Analyzes the element's \fBflow_code()\fP and determines how packets might travel from the specified port\&. The \fItravels\fP bitvector is initialized to have one entry per complementary port; thus, if \fIisoutput\fP is true, then \fItravels\fP has \fBninputs()\fP entries\&. The entry for port \fIx\fP is set to true iff packets can travel from \fIp\fP to \fIx\fP\&. Returns all false if \fIp\fP is out of range\&.
+.PP
+For example, if \fBflow_code()\fP is 'xy/xxyx', and the element has 2 inputs and 4 outputs, then:
+.PP
+.IP "\(bu" 2
+port_flow(false, 0, travels) returns [true, true, false, true]
+.IP "\(bu" 2
+port_flow(false, 1, travels) returns [false, false, true, false]
+.IP "\(bu" 2
+port_flow(true, 0, travels) returns [true, false]
+.PP
+.PP
+Uses an element's overridden flow code when one is supplied; see \fBRouter::flow_code_override()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBflow_code\fP 
+.RE
+.PP
+
+.SS "\fBString\fP Element::configuration () const"
+
+.PP
+Return the element's current configuration string\&. The configuration string is obtained by calling the element's 'config' read handler\&. The default read handler calls \fBRouter::econfiguration()\fP\&. 
+.SS "bool Element::can_live_reconfigure () const\fC [virtual]\fP"
+
+.PP
+Return whether an element supports live reconfiguration\&. Returns true iff this element can be reconfigured as the router is running\&. Click will make the element's 'config' handler writable if \fBcan_live_reconfigure()\fP returns true; when that handler is written, Click will call the element's \fBlive_reconfigure()\fP function\&. The default implementation returns false\&. 
+.SS "int Element::live_reconfigure (\fBVector\fP< \fBString\fP > & conf, \fBErrorHandler\fP * errh)\fC [virtual]\fP"
+
+.PP
+Reconfigure the element while the router is running\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIconf\fP configuration arguments 
+.br
+\fIerrh\fP error handler
+.RE
+.PP
+This function should parse the configuration arguments in \fIconf\fP, set the element's state accordingly, and report any error messages or warnings to \fIerrh\fP\&. This resembles \fBconfigure()\fP\&. However, \fBlive_reconfigure()\fP is called when the element's 'config' handler is written, rather than at router initialization time\&. Thus, the element already has a working configuration\&. If \fIconf\fP has an error, \fBlive_reconfigure()\fP should leave this previous working configuration alone\&.
+.PP
+\fBcan_live_reconfigure()\fP must return true for \fBlive_reconfigure()\fP to work\&.
+.PP
+Return >= 0 on success, < 0 on error\&. On success, Click will set the element's old configuration arguments to \fIconf\fP, so that later reads of the 'config' handler will return \fIconf\fP\&. (An element can override this by defining its own 'config' handler\&.)
+.PP
+The default implementation simply calls configure(\fIconf\fP, \fIerrh\fP)\&. This is OK as long as \fBconfigure()\fP doesn't change the element's state on error\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBcan_live_reconfigure\fP 
+.RE
+.PP
+
+.SS "\fBRouterThread\fP * Element::home_thread () const"
+
+.PP
+Return the element's home thread\&. 
+.SS "int Element::add_select (int fd, int mask)"
+
+.PP
+Register interest in \fImask\fP events on file descriptor \fIfd\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfd\fP the file descriptor 
+.br
+\fImask\fP relevant events: bitwise-or of one or more of SELECT_READ, SELECT_WRITE
+.RE
+.PP
+Click will register interest in readability and/or writability on file descriptor \fIfd\fP\&. When \fIfd\fP is ready, Click will call this element's selected(\fIfd\fP, \fImask\fP) method\&.
+.PP
+add_select(\fIfd\fP, \fImask\fP) overrides any previous \fBadd_select()\fP for the same \fIfd\fP and events in \fImask\fP\&. However, different elements may register interest in different events for the same \fIfd\fP\&.
+.PP
+\fBNote:\fP
+.RS 4
+Only available at user level\&.
+.PP
+Selecting for writability with SELECT_WRITE normally requires more care than selecting for readability with SELECT_READ\&. You should add_select(\fIfd\fP, SELECT_WRITE) only when there is data to write to \fIfd\fP\&. Otherwise, Click will constantly poll your element's selected(\fIfd\fP, \fImask\fP) method\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBremove_select\fP, \fBselected\fP 
+.RE
+.PP
+
+.SS "int Element::remove_select (int fd, int mask)"
+
+.PP
+Remove interest in \fImask\fP events on file descriptor \fIfd\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfd\fP the file descriptor 
+.br
+\fImask\fP relevant events: bitwise-or of one or more of SELECT_READ, SELECT_WRITE
+.RE
+.PP
+Click will remove any existing \fBadd_select()\fP registrations for readability and/or writability on file descriptor \fIfd\fP\&. The named events on \fIfd\fP will no longer cause a \fBselected()\fP call\&.
+.PP
+\fBNote:\fP
+.RS 4
+Only available at user level\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_select\fP, \fBselected\fP 
+.RE
+.PP
+
+.SS "void Element::add_read_handler (const \fBString\fP & name, ReadHandlerCallback read_callback, const void * user_data = \fC0\fP, uint32_t flags = \fC0\fP)"
+
+.PP
+Register a read handler named \fIname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP handler name 
+.br
+\fIread_callback\fP function called when handler is read 
+.br
+\fIuser_data\fP user data parameter passed to \fIread_callback\fP 
+.br
+\fIflags\fP flags to set
+.RE
+.PP
+Adds a read handler named \fIname\fP for this element\&. Reading the handler returns the result of the \fIread_callback\fP function, which is called like this:
+.PP
+.PP
+.nf
+String result = read_callback(e, user_data);
+.fi
+.PP
+.PP
+\fIe\fP is this element pointer\&.
+.PP
+add_read_handler(\fIname\fP) overrides any previous add_read_handler(\fIname\fP) or set_handler(\fIname\fP), but any previous add_write_handler(\fIname\fP) remains in effect\&.
+.PP
+The added read handler takes no parameters\&. To create a read handler with parameters, use \fBset_handler()\fP or \fBset_handler_flags()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBread_positional_handler\fP, \fBread_keyword_handler\fP: standard read handler callback functions 
+.PP
+\fBadd_write_handler\fP, \fBset_handler\fP, \fBadd_task_handlers\fP 
+.RE
+.PP
+
+.SS "void Element::add_read_handler (const \fBString\fP & name, ReadHandlerCallback read_callback, int user_data, uint32_t flags = \fC0\fP)"
+
+.PP
+Register a read handler named \fIname\fP\&. This version of \fBadd_read_handler()\fP is useful when \fIuser_data\fP is an integer\&. Note that the \fIread_callback\fP function must still cast its \fCvoid *\fP argument to \fCintptr_t\fP to obtain the integer value\&. 
+.SS "void Element::add_read_handler (const char * name, ReadHandlerCallback read_callback, int user_data = \fC0\fP, uint32_t flags = \fC0\fP)"
+
+.PP
+Register a read handler named \fIname\fP\&. This version of \fBadd_read_handler()\fP is useful when \fIname\fP is a static constant string\&. \fIname\fP is passed to \fBString::make_stable\fP\&. The memory referenced by \fIname\fP must remain valid for as long as the router containing this element\&. 
+.SS "void Element::add_write_handler (const \fBString\fP & name, WriteHandlerCallback write_callback, const void * user_data = \fC0\fP, uint32_t flags = \fC0\fP)"
+
+.PP
+Register a write handler named \fIname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP handler name 
+.br
+\fIwrite_callback\fP function called when handler is written 
+.br
+\fIuser_data\fP user data parameter passed to \fIwrite_callback\fP 
+.br
+\fIflags\fP flags to set
+.RE
+.PP
+Adds a write handler named \fIname\fP for this element\&. Writing the handler calls the \fIwrite_callback\fP function like this:
+.PP
+.PP
+.nf
+int r = write_callback(data, e, user_data, errh);
+.fi
+.PP
+.PP
+\fIe\fP is this element pointer\&. The return value \fIr\fP should be negative on error, positive or zero on success\&. Any messages should be reported to the \fIerrh\fP \fBErrorHandler\fP object\&.
+.PP
+add_write_handler(\fIname\fP) overrides any previous add_write_handler(\fIname\fP) or set_handler(\fIname\fP), but any previous add_read_handler(\fIname\fP) remains in effect\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBreconfigure_positional_handler\fP, \fBreconfigure_keyword_handler\fP: standard write handler callback functions 
+.PP
+\fBadd_read_handler\fP, \fBset_handler\fP, \fBadd_task_handlers\fP 
+.RE
+.PP
+
+.SS "void Element::add_write_handler (const \fBString\fP & name, WriteHandlerCallback write_callback, int user_data, uint32_t flags = \fC0\fP)"
+
+.PP
+Register a write handler named \fIname\fP\&. This version of \fBadd_write_handler()\fP is useful when \fIuser_data\fP is an integer\&. Note that the \fIwrite_callback\fP function must still cast its \fCvoid *\fP argument to \fCintptr_t\fP to obtain the integer value\&. 
+.SS "void Element::add_write_handler (const char * name, WriteHandlerCallback write_callback, int user_data = \fC0\fP, uint32_t flags = \fC0\fP)"
+
+.PP
+Register a write handler named \fIname\fP\&. This version of \fBadd_write_handler()\fP is useful when \fIname\fP is a static constant string\&. \fIname\fP is passed to \fBString::make_stable\fP\&. The memory referenced by \fIname\fP must remain valid for as long as the router containing this element\&. 
+.SS "void Element::set_handler (const \fBString\fP & name, int flags, HandlerCallback callback, const void * read_user_data = \fC0\fP, const void * write_user_data = \fC0\fP)"
+
+.PP
+Register a comprehensive handler named \fIname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP handler name 
+.br
+\fIflags\fP handler flags 
+.br
+\fIcallback\fP function called when handler is written 
+.br
+\fIread_user_data\fP read user data parameter stored in the handler 
+.br
+\fIwrite_user_data\fP write user data parameter stored in the handler
+.RE
+.PP
+Registers a comprehensive handler named \fIname\fP for this element\&. The handler handles the operations specified by \fIflags\fP, which can include \fBHandler::f_read\fP, \fBHandler::f_write\fP, \fBHandler::f_read_param\fP, and others\&. Reading the handler calls the \fIcallback\fP function like this:
+.PP
+.PP
+.nf
+String data;
+int r = callback(Handler::f_read, data, e, h, errh);
+.fi
+.PP
+.PP
+Writing the handler calls it like this:
+.PP
+.PP
+.nf
+int r = callback(Handler::f_write, data, e, h, errh);
+.fi
+.PP
+.PP
+\fIe\fP is this element pointer, and \fIh\fP points to the \fBHandler\fP object for this handler\&. The \fIdata\fP string is an out parameter for reading and an in parameter for writing; when reading with parameters, \fIdata\fP has the parameters on input and should be replaced with the result on output\&. The return value \fIr\fP should be negative on error, positive or zero on success\&. Any messages should be reported to the \fIerrh\fP \fBErrorHandler\fP object\&.
+.PP
+set_handler(\fIname\fP) overrides any previous add_read_handler(\fIname\fP), add_write_handler(\fIname\fP), or set_handler(\fIname\fP)\&. 
+.SS "void Element::set_handler (const \fBString\fP & name, int flags, HandlerCallback callback, int read_user_data, int write_user_data = \fC0\fP)"
+
+.PP
+Register a comprehensive handler named \fIname\fP\&. This version of \fBset_handler()\fP is useful when \fIuser_data\fP is an integer\&. Note that the \fBHandler::user_data()\fP methods still return \fCvoid *\fP values\&. 
+.SS "void Element::set_handler (const char * name, int flags, HandlerCallback callback, int read_user_data = \fC0\fP, int write_user_data = \fC0\fP)"
+
+.PP
+Register a comprehensive handler named \fIname\fP\&. This version of \fBset_handler()\fP is useful when \fIname\fP is a static constant string\&. \fIname\fP is passed to \fBString::make_stable\fP\&. The memory referenced by \fIname\fP must remain valid for as long as the router containing this element\&. 
+.SS "int Element::set_handler_flags (const \fBString\fP & name, int set_flags, int clear_flags = \fC0\fP)"
+
+.PP
+Set flags for the handler named \fIname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP handler name 
+.br
+\fIset_flags\fP handler flags to set 
+.br
+\fIclear_flags\fP handler flags to clear
+.RE
+.PP
+Sets flags for any handlers named \fIname\fP for this element\&. Fails if no \fIname\fP handler exists\&. 
+.SS "void Element::add_task_handlers (\fBTask\fP * task, \fBNotifierSignal\fP * signal, int flags, const \fBString\fP & prefix = \fC\fBString\fP()\fP)"
+
+.PP
+Register handlers for a task\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItask\fP \fBTask\fP object 
+.br
+\fIsignal\fP optional \fBNotifierSignal\fP object 
+.br
+\fIflags\fP defines handlers to install 
+.br
+\fIprefix\fP prefix for each handler
+.RE
+.PP
+Adds a standard set of handlers for the task\&. They can include:
+.PP
+.PD 0
+.IP "\(bu" 2
+A 'scheduled' read handler, which returns \fCtrue\fP if the task is scheduled and \fCfalse\fP if not\&. 
+.IP "\(bu" 2
+A 'scheduled' write handler, which accepts a Boolean and unschedules or reschedules the task as appropriate\&. 
+.IP "\(bu" 2
+A 'tickets' read handler, which returns the task's tickets\&. 
+.IP "\(bu" 2
+A 'tickets' write handler to set the task's tickets\&. 
+.IP "\(bu" 2
+A 'home_thread' read handler, which returns the task's home thread ID\&. 
+.IP "\(bu" 2
+A 'home_thread' write handler, which sets the task's home thread ID\&.
+.PP
+The \fIflags\fP argument controls which handlers are installed\&. By default, this is all but the the 'scheduled' write handler\&. Individual flags are:
+.PP
+.PD 0
+.IP "\(bu" 2
+TASKHANDLER_WRITE_SCHEDULED: A 'scheduled' write handler\&. 
+.IP "\(bu" 2
+TASKHANDLER_WRITE_TICKETS: A 'tickets' write handler\&. 
+.IP "\(bu" 2
+TASKHANDLER_WRITE_HOME_THREAD: A 'home_thread' write handler\&. 
+.IP "\(bu" 2
+TASKHANDLER_WRITE_ALL: All available write handlers\&. 
+.IP "\(bu" 2
+TASKHANDLER_DEFAULT: Equals TASKHANDLER_WRITE_TICKETS | TASKHANDLER_WRITE_HOME_THREAD\&.
+.PP
+Depending on Click's configuration options, some of these handlers might not be available\&. If Click was configured with schedule debugging, the 'scheduled' read handler will additionally report whether an unscheduled task is pending, and a 'notifier' read handler will report the state of the \fIsignal\fP, if any\&.
+.PP
+Each handler name is prefixed with the \fIprefix\fP string, so an element with multiple \fBTask\fP objects can register handlers for each of them\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_read_handler\fP, \fBadd_write_handler\fP, \fBset_handler\fP 
+.RE
+.PP
+
+.SS "void Element::add_data_handlers (const char * name, int flags, uint8_t * data)"
+
+.PP
+Register read and/or write handlers accessing \fIdata\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP handler name 
+.br
+\fIflags\fP handler flags, containing at least one of \fBHandler::f_read\fP and \fBHandler::f_write\fP 
+.br
+\fIdata\fP pointer to data
+.RE
+.PP
+Registers read and/or write handlers named \fIname\fP for this element\&. If (\fIflags\fP & \fBHandler::f_read\fP), registers a read handler; if (\fIflags\fP & \fBHandler::f_write\fP), registers a write handler\&. These handlers read or set the data stored at \fI*data\fP, which might, for example, be an element instance variable\&. This data is unparsed and/or parsed using the expected functions; for example, the \fCbool\fP version uses BoolArg::unparse() and BoolArg::parse()\&. \fIname\fP is passed to \fBString::make_stable\fP\&. The memory referenced by \fIname\fP must remain valid for as long as the router containing this element\&.
+.PP
+Overloaded versions of this function are available for many fundamental data types\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, bool * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, uint16_t * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, int * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, unsigned * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, \fBatomic_uint32_t\fP * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, long * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, unsigned long * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_net_order_data_handlers (const char * name, int flags, uint16_t * data)"
+
+.PP
+Register read and/or write handlers accessing \fIdata\fP in network byte order\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP handler name 
+.br
+\fIflags\fP handler flags, containing at least one of \fBHandler::f_read\fP and \fBHandler::f_write\fP 
+.br
+\fIdata\fP pointer to data
+.RE
+.PP
+Registers read and/or write handlers named \fIname\fP for this element\&. If (\fIflags\fP & \fBHandler::f_read\fP), registers a read handler; if (\fIflags\fP & \fBHandler::f_write\fP), registers a write handler\&. These handlers read or set the data stored at \fI*data\fP, which might, for example, be an element instance variable\&. 
+.SS "void Element::add_net_order_data_handlers (const char * name, int flags, uint32_t * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, double * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, \fBString\fP * data)"
+
+.PP
+Register read and/or write handlers accessing \fIdata\fP\&. This function's read handler returns *\fIdata\fP unchanged, and its write handler sets *\fIdata\fP to the input string as received, without unquoting or removing leading and trailing whitespace\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, \fBIPAddress\fP * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, \fBEtherAddress\fP * data)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Element::add_data_handlers (const char * name, int flags, \fBTimestamp\fP * data, bool is_interval = \fCfalse\fP)"
+
+.PP
+Register read and/or write handlers accessing \fIdata\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP handler name 
+.br
+\fIflags\fP handler flags, containing at least one of \fBHandler::f_read\fP and \fBHandler::f_write\fP 
+.br
+\fIdata\fP pointer to data 
+.br
+\fIis_interval\fP If true, the read handler unparses *\fIdata\fP as an interval\&. 
+.RE
+.PP
+
+.SS "\fBString\fP Element::read_positional_handler (\fBElement\fP * element, void * user_data)\fC [static]\fP"
+
+.PP
+Standard read handler returning a positional argument\&. Use this function to define a handler that returns one of an element's positional configuration arguments\&. The \fIthunk\fP argument is a typecast integer that specifies which one\&. For instance, to add 'first', 'second', and 'third' read handlers that return the element's first three configuration arguments:
+.PP
+.PP
+.nf
+add_read_handler("first", read_positional_handler, 0);
+add_read_handler("second", read_positional_handler, 1);
+add_read_handler("third", read_positional_handler, 2);
+.fi
+.PP
+.PP
+Returns the empty string if there aren't enough arguments\&.
+.PP
+\fBWarning:\fP
+.RS 4
+Prefer \fBread_keyword_handler()\fP to \fBread_positional_handler()\fP\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBconfiguration\fP: used to obtain the element's current \fBconfiguration\fP\&. 
+.PP
+\fBread_keyword_handler\fP, \fBreconfigure_positional_handler\fP, \fBadd_read_handler\fP 
+.RE
+.PP
+
+.SS "\fBString\fP Element::read_keyword_handler (\fBElement\fP * element, void * user_data)\fC [static]\fP"
+
+.PP
+Standard read handler returning a keyword argument\&. Use this function to define a handler that returns one of an element's keyword configuration arguments\&. The \fIuser_data\fP argument is a C string that specifies which one\&. For instance, to add a 'data' read handler that returns the element's 'DATA' keyword argument:
+.PP
+.PP
+.nf
+add_read_handler("data", read_keyword_handler, "DATA");
+.fi
+.PP
+.PP
+Returns the empty string if the configuration doesn't have the specified keyword\&.
+.PP
+The keyword might have been passed as a mandatory positional argument\&. Click will find it anyway if you prefix the keyword name with the mandatory position\&. For example, this tells reconfigure_keyword_handler to use the first positional argument for 'DATA' if the keyword itself is missing:
+.PP
+.PP
+.nf
+add_write_handler("data", reconfigure_keyword_handler, "0 DATA");
+.fi
+.PP
+.PP
+\fBSee also:\fP
+.RS 4
+\fBconfiguration\fP: used to obtain the element's current \fBconfiguration\fP\&. 
+.PP
+\fBread_positional_handler\fP, \fBreconfigure_keyword_handler\fP, \fBadd_read_handler\fP 
+.RE
+.PP
+
+.SS "int Element::reconfigure_positional_handler (const \fBString\fP & arg, \fBElement\fP * e, void * user_data, \fBErrorHandler\fP * errh)\fC [static]\fP"
+
+.PP
+Standard write handler for reconfiguring an element by changing one of its positional arguments\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+Prefer \fBreconfigure_keyword_handler()\fP to \fBreconfigure_positional_handler()\fP\&.
+.RE
+.PP
+Use this function to define a handler that, when written, reconfigures an element by changing one of its positional arguments\&. The \fIuser_data\fP argument is a typecast integer that specifies which one\&. For typecast integer that specifies which one\&. For instance, to add 'first', 'second', and 'third' write handlers that change the element's first three configuration arguments:
+.PP
+.PP
+.nf
+add_write_handler("first", reconfigure_positional_handler, 0);
+add_write_handler("second", reconfigure_positional_handler, 1);
+add_write_handler("third", reconfigure_positional_handler, 2);
+.fi
+.PP
+.PP
+When one of these handlers is written, Click will call the element's \fBconfiguration()\fP method to obtain the element's current configuration, change the relevant argument, and call \fBlive_reconfigure()\fP to reconfigure the element\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBconfiguration\fP: used to obtain the element's current \fBconfiguration\fP\&. 
+.PP
+\fBlive_reconfigure\fP: used to reconfigure the element\&. 
+.PP
+\fBreconfigure_keyword_handler\fP, \fBread_positional_handler\fP, \fBadd_write_handler\fP 
+.RE
+.PP
+
+.SS "int Element::reconfigure_keyword_handler (const \fBString\fP & arg, \fBElement\fP * e, void * user_data, \fBErrorHandler\fP * errh)\fC [static]\fP"
+
+.PP
+Standard write handler for reconfiguring an element by changing one of its keyword arguments\&. Use this function to define a handler that, when written, reconfigures an element by changing one of its keyword arguments\&. The \fIthunk\fP argument is a C string that specifies which one\&. For typecast integer that specifies which one\&. For instance, to add a 'data' write handler that changes the element's 'DATA' configuration argument:
+.PP
+.PP
+.nf
+add_write_handler("data", reconfigure_keyword_handler, "DATA");
+.fi
+.PP
+.PP
+When this handler is written, Click will obtain the element's current configuration, remove any previous occurrences of the keyword, add the new keyword argument to the end, and call \fBlive_reconfigure()\fP to reconfigure the element\&.
+.PP
+The keyword might have been passed as a mandatory positional argument\&. Click will find it anyway if you prefix the keyword name with the mandatory position\&. For example, this tells reconfigure_keyword_handler to use the first positional argument for 'DATA' if the keyword itself is missing:
+.PP
+.PP
+.nf
+add_write_handler("data", reconfigure_keyword_handler, "0 DATA");
+.fi
+.PP
+.PP
+\fBSee also:\fP
+.RS 4
+\fBconfiguration\fP: used to obtain the element's current \fBconfiguration\fP\&. 
+.PP
+\fBlive_reconfigure\fP: used to reconfigure the element\&. 
+.PP
+\fBreconfigure_positional_handler\fP, \fBread_keyword_handler\fP, \fBadd_write_handler\fP 
+.RE
+.PP
+
+.SS "int Element::llrpc (unsigned command, void * data)\fC [virtual]\fP"
+
+.PP
+Handle a low-level remote procedure call\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcommand\fP command number 
+.br
+\fIdata\fP pointer to any data for the command 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+>= 0 on success, < 0 on failure
+.RE
+.PP
+Low-level RPCs are a lightweight mechanism for communicating between user-level programs and a Click kernel module, although they're also available in user-level Click\&. Rather than open a file, write ASCII data to the file, and close it, as for handlers, the user-level program calls \fCioctl()\fP on an open file\&. Click intercepts the \fCioctl\fP and calls the \fBllrpc()\fP method, passing it the \fCioctl\fP number and the associated \fIdata\fP pointer\&. The \fBllrpc()\fP method should read and write \fIdata\fP as appropriate\&. \fIdata\fP may be either a kernel pointer (i\&.e\&., directly accessible) or a user pointer (i\&.e\&., requires special macros to access), depending on the LLRPC number; see <\fBclick/llrpc\&.h\fP> for more\&.
+.PP
+A negative return value is interpreted as an error and returned to the user in \fCerrno\fP\&. Overriding implementations should handle \fIcommands\fP they understand as appropriate, and call their parents' \fBllrpc()\fP method to handle any other commands\&. The default implementation simply returns \fC-EINVAL\fP\&.
+.PP
+Click elements should never call each other's \fBllrpc()\fP methods directly; use \fBlocal_llrpc()\fP instead\&. 
+.SS "int Element::local_llrpc (unsigned command, void * data)"
+
+.PP
+Execute an LLRPC from within the configuration\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcommand\fP command number 
+.br
+\fIdata\fP pointer to any data for the command
+.RE
+.PP
+Call this function to execute an element's LLRPC from within another element's code\&. It executes any setup code necessary to initialize memory state, then calls \fBllrpc()\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,53 @@
+.TH "FixedPointArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+FixedPointArg \- Parser class for fixed-point numbers with \fIb\fP bits of fraction\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <args\&.hh>\fP
+.PP
+Inherits \fBNumArg\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBFixedPointArg\fP (int b, int exponent=0)"
+.br
+.ti -1c
+.RI "bool \fBparse_saturating\fP (const \fBString\fP &str, uint32_t &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, uint32_t &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "bool \fBparse_saturating\fP (const \fBString\fP &str, int32_t &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, int32_t &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBfraction_bits\fP"
+.br
+.ti -1c
+.RI "int \fBexponent_delta\fP"
+.br
+.ti -1c
+.RI "int \fBstatus\fP"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Parser class for fixed-point numbers with \fIb\fP bits of fraction\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

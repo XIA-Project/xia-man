@@ -1,0 +1,274 @@
+.TH "include/click/integers.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/integers.hh \- Functions for manipulating integers\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/glue\&.hh>\fP
+.br
+\fC#include <click/type_traits\&.hh>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNEED_FFS_MSB_UINT64_T\fP   1"
+.br
+.ti -1c
+.RI "#define \fBNEED_FFS_LSB_UINT64_T\fP   1"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "uint64_t \fBhtonq\fP (uint64_t x)"
+.br
+.RI "\fIReturn \fIx\fP translated from host to network byte order\&. \fP"
+.ti -1c
+.RI "uint64_t \fBntohq\fP (uint64_t x)"
+.br
+.RI "\fIReturn \fIx\fP translated from network to host byte order\&. \fP"
+.ti -1c
+.RI "unsigned char \fBhost_to_net_order\fP (unsigned char x)"
+.br
+.RI "\fITranslate \fIx\fP to network byte order\&. \fP"
+.ti -1c
+.RI "signed char \fBhost_to_net_order\fP (signed char x)"
+.br
+.ti -1c
+.RI "char \fBhost_to_net_order\fP (char x)"
+.br
+.ti -1c
+.RI "short \fBhost_to_net_order\fP (short x)"
+.br
+.ti -1c
+.RI "unsigned short \fBhost_to_net_order\fP (unsigned short x)"
+.br
+.ti -1c
+.RI "int \fBhost_to_net_order\fP (int x)"
+.br
+.ti -1c
+.RI "unsigned \fBhost_to_net_order\fP (unsigned x)"
+.br
+.ti -1c
+.RI "int64_t \fBhost_to_net_order\fP (int64_t x)"
+.br
+.ti -1c
+.RI "uint64_t \fBhost_to_net_order\fP (uint64_t x)"
+.br
+.ti -1c
+.RI "unsigned char \fBnet_to_host_order\fP (unsigned char x)"
+.br
+.RI "\fITranslate \fIx\fP to host byte order\&. \fP"
+.ti -1c
+.RI "signed char \fBnet_to_host_order\fP (signed char x)"
+.br
+.ti -1c
+.RI "char \fBnet_to_host_order\fP (char x)"
+.br
+.ti -1c
+.RI "short \fBnet_to_host_order\fP (short x)"
+.br
+.ti -1c
+.RI "unsigned short \fBnet_to_host_order\fP (unsigned short x)"
+.br
+.ti -1c
+.RI "int \fBnet_to_host_order\fP (int x)"
+.br
+.ti -1c
+.RI "unsigned \fBnet_to_host_order\fP (unsigned x)"
+.br
+.ti -1c
+.RI "int64_t \fBnet_to_host_order\fP (int64_t x)"
+.br
+.ti -1c
+.RI "uint64_t \fBnet_to_host_order\fP (uint64_t x)"
+.br
+.ti -1c
+.RI "int \fBffs_msb\fP (unsigned x)"
+.br
+.RI "\fIReturn the index of the most significant bit set in \fIx\fP\&. \fP"
+.ti -1c
+.RI "int \fBffs_msb\fP (unsigned long x)"
+.br
+.ti -1c
+.RI "int \fBffs_msb\fP (uint64_t x)"
+.br
+.ti -1c
+.RI "int \fBffs_lsb\fP (unsigned x)"
+.br
+.RI "\fIReturn the index of the least significant bit set in \fIx\fP\&. \fP"
+.ti -1c
+.RI "int \fBffs_lsb\fP (unsigned long x)"
+.br
+.ti -1c
+.RI "int \fBffs_lsb\fP (uint64_t x)"
+.br
+.ti -1c
+.RI "uint32_t \fBint_sqrt\fP (uint32_t x)"
+.br
+.RI "\fIReturn the integer approximation of \fIx's\fP square root\&. \fP"
+.ti -1c
+.RI "uint64_t \fBint_sqrt\fP (uint64_t x)"
+.br
+.ti -1c
+.RI "uint32_t \fBint_divide\fP (uint32_t a, uint32_t b)"
+.br
+.RI "\fIReturn \fIa\fP / \fIb\fP\&. \fP"
+.ti -1c
+.RI "int32_t \fBint_divide\fP (int32_t a, uint32_t b)"
+.br
+.ti -1c
+.RI "uint64_t \fBint_divide\fP (uint64_t a, uint32_t b)"
+.br
+.ti -1c
+.RI "int64_t \fBint_divide\fP (int64_t a, uint32_t b)"
+.br
+.ti -1c
+.RI "template<typename T > void \fBint_multiply\fP (T a, T b, T &xlow, T &xhigh)"
+.br
+.RI "\fIMultiply \fIa\fP * \fIb\fP, placing the low-order bits of the result in \fIxlow\fP and the high-order bits in \fIxhigh\fP\&. \fP"
+.ti -1c
+.RI "uint32_t \fBint_divide\fP (uint32_t a, uint32_t b, uint32_t &quot)"
+.br
+.RI "\fIDivide \fIa\fP / \fIb\fP, placing quotient in \fIquot\fP and returning remainder\&. \fP"
+.ti -1c
+.RI "int32_t \fBint_divide\fP (int32_t a, uint32_t b, int32_t &quot)"
+.br
+.ti -1c
+.RI "uint32_t \fBint_divide\fP (uint64_t a, uint32_t b, uint64_t &quot)"
+.br
+.ti -1c
+.RI "uint32_t \fBint_divide\fP (int64_t a, uint32_t b, int64_t &quot)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for manipulating integers\&. 
+
+> 
+.SH "Function Documentation"
+.PP 
+.SS "uint64_t htonq (uint64_t x)\fC [inline]\fP"
+
+.PP
+Return \fIx\fP translated from host to network byte order\&. 
+.SS "uint64_t ntohq (uint64_t x)\fC [inline]\fP"
+
+.PP
+Return \fIx\fP translated from network to host byte order\&. 
+.SS "unsigned char host_to_net_order (unsigned char x)\fC [inline]\fP"
+
+.PP
+Translate \fIx\fP to network byte order\&. Compare htons/htonl/htonq\&. host_to_net_order is particularly useful in template functions, where the type to be translated to network byte order is unknown\&. 
+.SS "signed char host_to_net_order (signed char x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "char host_to_net_order (char x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "short host_to_net_order (short x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "unsigned short host_to_net_order (unsigned short x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int host_to_net_order (int x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "unsigned host_to_net_order (unsigned x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int64_t host_to_net_order (int64_t x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "uint64_t host_to_net_order (uint64_t x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "unsigned char net_to_host_order (unsigned char x)\fC [inline]\fP"
+
+.PP
+Translate \fIx\fP to host byte order\&. Compare ntohs/ntohl/ntohq\&. net_to_host_order is particularly useful in template functions, where the type to be translated to network byte order is unknown\&. 
+.SS "signed char net_to_host_order (signed char x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "char net_to_host_order (char x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "short net_to_host_order (short x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "unsigned short net_to_host_order (unsigned short x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int net_to_host_order (int x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "unsigned net_to_host_order (unsigned x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int64_t net_to_host_order (int64_t x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "uint64_t net_to_host_order (uint64_t x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int ffs_msb (unsigned x)\fC [inline]\fP"
+
+.PP
+Return the index of the most significant bit set in \fIx\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+0 if \fIx\fP = 0; otherwise the index of first bit set, where the most significant bit is numbered 1\&. 
+.RE
+.PP
+
+.SS "int ffs_msb (unsigned long x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int ffs_msb (uint64_t x)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int ffs_lsb (unsigned x)\fC [inline]\fP"
+
+.PP
+Return the index of the least significant bit set in \fIx\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+0 if \fIx\fP = 0; otherwise the index of first bit set, where the least significant bit is numbered 1\&. 
+.RE
+.PP
+
+.SS "int ffs_lsb (unsigned long x)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int ffs_lsb (uint64_t x)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "uint32_t int_sqrt (uint32_t x)"
+
+.PP
+Return the integer approximation of \fIx's\fP square root\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The integer \fIy\fP where \fIy*\fIy\fP <=\fP \fIx\fP, but (\fIy+1\fP)*(\fIy+1\fP) > \fIx\fP\&. 
+.RE
+.PP
+
+.SS "uint64_t int_sqrt (uint64_t x)"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "uint32_t int_divide (uint32_t a, uint32_t b)\fC [inline]\fP"
+
+.PP
+Return \fIa\fP / \fIb\fP\&. 
+.SS "int32_t int_divide (int32_t a, uint32_t b)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "uint64_t int_divide (uint64_t a, uint32_t b)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "int64_t int_divide (int64_t a, uint32_t b)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > void int_multiply (T a, T b, T & xlow, T & xhigh)"
+
+.PP
+Multiply \fIa\fP * \fIb\fP, placing the low-order bits of the result in \fIxlow\fP and the high-order bits in \fIxhigh\fP\&. 
+.SS "uint32_t int_divide (uint32_t a, uint32_t b, uint32_t & quot)\fC [inline]\fP"
+
+.PP
+Divide \fIa\fP / \fIb\fP, placing quotient in \fIquot\fP and returning remainder\&. 
+.SS "int32_t int_divide (int32_t a, uint32_t b, int32_t & quot)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "uint32_t int_divide (uint64_t a, uint32_t b, uint64_t & quot)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "uint32_t int_divide (int64_t a, uint32_t b, int64_t & quot)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

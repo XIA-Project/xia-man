@@ -1,0 +1,58 @@
+.TH "Clp_Option" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Clp_Option \- Option description\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <clp\&.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBlong_name\fP"
+.br
+.ti -1c
+.RI "int \fBshort_name\fP"
+.br
+.ti -1c
+.RI "int \fBoption_id\fP"
+.br
+.ti -1c
+.RI "int \fBval_type\fP"
+.br
+.ti -1c
+.RI "int \fBflags\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Option description\&. 
+
+CLP users declare arrays of \fBClp_Option\fP structures to specify what options should be parsed\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_NewParser\fP, \fBClp_SetOptions\fP 
+.RE
+.PP
+
+.SH "Member Data Documentation"
+.PP 
+.SS "const char* Clp_Option::long_name"
+Name of long option, or NULL if the option has no long name\&. 
+.SS "int Clp_Option::short_name"
+Character defining short option, or 0 if the option has no short name\&. 
+.SS "int Clp_Option::option_id"
+User-specified ID defining option, returned by Clp_Next\&. 
+.SS "int Clp_Option::val_type"
+ID of option's value type, or 0 if option takes no value\&. 
+.SS "int Clp_Option::flags"
+Option parsing flags\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,134 @@
+.TH "XID" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+XID \- \fBXID\fP helper class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBXID\fP (const struct click_xia_xid &\fBxid\fP)"
+.br
+.RI "\fIConstruct an \fBXID\fP from a struct click_xia_xid\&. \fP"
+.ti -1c
+.RI "\fBXID\fP (const \fBString\fP &str)"
+.br
+.ti -1c
+.RI "const struct click_xia_xid & \fBxid\fP () const "
+.br
+.RI "\fIReturn a struct click_xia_xid corresponding to the address\&. \fP"
+.ti -1c
+.RI "struct click_xia_xid & \fBxid\fP ()"
+.br
+.RI "\fIReturn a struct click_xia_xid corresponding to the address\&. \fP"
+.ti -1c
+.RI "uint32_t \fBtype\fP ()"
+.br
+.ti -1c
+.RI "unsigned char * \fBdata\fP ()"
+.br
+.RI "\fIReturn a pointer to the address data\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBdata\fP () const "
+.br
+.RI "\fIReturn a pointer to the address data\&. \fP"
+.ti -1c
+.RI "\fBoperator struct click_xia_xid\fP () const "
+.br
+.RI "\fIReturn a struct click_xia_xid corresponding to the address\&. \fP"
+.ti -1c
+.RI "uint32_t \fBhashcode\fP () const "
+.br
+.RI "\fIHash function\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBXID\fP &) const "
+.br
+.RI "\fIReturn if the addresses are the same\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBXID\fP &) const "
+.br
+.RI "\fIReturn if the addresses are different\&. \fP"
+.ti -1c
+.RI "\fBXID\fP & \fBoperator=\fP (const \fBXID\fP &)"
+.br
+.ti -1c
+.RI "\fBXID\fP & \fBoperator=\fP (const struct click_xia_xid &)"
+.br
+.ti -1c
+.RI "void \fBparse\fP (const \fBString\fP &str)"
+.br
+.ti -1c
+.RI "\fBString\fP \fBunparse\fP () const "
+.br
+.RI "\fIUnparses this address into a \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse_pretty\fP (const \fBElement\fP *context=NULL) const "
+.br
+.ti -1c
+.RI "bool \fBvalid\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBXID\fP helper class\&. 
+
+The \fBXID\fP type represents an \fBXID\fP address\&. It provides methods for unparsing IP addresses into ASCII form\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "XID::XID (const struct click_xia_xid & xid)\fC [inline]\fP"
+
+.PP
+Construct an \fBXID\fP from a struct click_xia_xid\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "const struct click_xia_xid & XID::xid () const"
+
+.PP
+Return a struct click_xia_xid corresponding to the address\&. 
+.SS "struct click_xia_xid & XID::xid ()"
+
+.PP
+Return a struct click_xia_xid corresponding to the address\&. 
+.SS "unsigned char * XID::data ()\fC [inline]\fP"
+
+.PP
+Return a pointer to the address data\&. 
+.SS "const unsigned char * XID::data () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the address data\&. 
+.SS "XID::operator struct click_xia_xid () const\fC [inline]\fP"
+
+.PP
+Return a struct click_xia_xid corresponding to the address\&. 
+.SS "uint32_t XID::hashcode () const\fC [inline]\fP"
+
+.PP
+Hash function\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The hash value of this \fBXID\fP\&.
+.RE
+.PP
+returns the first 32 bit of \fBXID\fP\&. This hash function assumes that XIDs are generated cryptographically 
+.SS "bool XID::operator== (const \fBXID\fP & rhs) const\fC [inline]\fP"
+
+.PP
+Return if the addresses are the same\&. 
+.SS "bool XID::operator!= (const \fBXID\fP & rhs) const\fC [inline]\fP"
+
+.PP
+Return if the addresses are different\&. 
+.SS "\fBString\fP XID::unparse () const"
+
+.PP
+Unparses this address into a \fBString\fP\&. Maintains the invariant that, for an \fBXID\fP \fIa\fP, \fBXID\fP(\fIa\&.unparse()\fP) == \fIa\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

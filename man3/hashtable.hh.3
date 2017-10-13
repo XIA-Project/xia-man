@@ -1,0 +1,83 @@
+.TH "include/click/hashtable.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/hashtable.hh \- Click's hash table container template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/pair\&.hh>\fP
+.br
+\fC#include <click/hashcontainer\&.hh>\fP
+.br
+\fC#include <click/hashallocator\&.hh>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBHashTable< K, V >\fP"
+.br
+.RI "\fIHash table template\&. \fP"
+.ti -1c
+.RI "class \fBHashTable_iterator< T >\fP"
+.br
+.RI "\fIThe iterator type for \fBHashTable\fP\&. \fP"
+.ti -1c
+.RI "class \fBHashTable_const_iterator< T >\fP"
+.br
+.RI "\fIThe const_iterator type for \fBHashTable\fP\&. \fP"
+.ti -1c
+.RI "class \fBHashTable_const_iterator< T >\fP"
+.br
+.RI "\fIThe const_iterator type for \fBHashTable\fP\&. \fP"
+.ti -1c
+.RI "class \fBHashTable_iterator< T >\fP"
+.br
+.RI "\fIThe iterator type for \fBHashTable\fP\&. \fP"
+.ti -1c
+.RI "class \fBHashTable< K, V >\fP"
+.br
+.RI "\fIHash table template\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "template<typename T > bool \fBoperator==\fP (const \fBHashTable_const_iterator\fP< T > &a, const \fBHashTable_const_iterator\fP< T > &b)"
+.br
+.RI "\fICompare two \fBHashTable\fP iterators for equality\&. \fP"
+.ti -1c
+.RI "template<typename T > bool \fBoperator!=\fP (const \fBHashTable_const_iterator\fP< T > &a, const \fBHashTable_const_iterator\fP< T > &b)"
+.br
+.RI "\fICompare two \fBHashTable\fP iterators for inequality\&. \fP"
+.ti -1c
+.RI "template<typename K , typename V > void \fBclick_swap\fP (\fBHashTable\fP< K, V > &a, \fBHashTable\fP< K, V > &b)"
+.br
+.ti -1c
+.RI "template<typename K , typename V > void \fBassign_consume\fP (\fBHashTable\fP< K, V > &a, \fBHashTable\fP< K, V > &b)"
+.br
+.ti -1c
+.RI "template<typename K , typename V > void \fBclear_by_swap\fP (\fBHashTable\fP< K, V > &x)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Click's hash table container template\&. 
+
+> 
+.SH "Function Documentation"
+.PP 
+.SS "template<typename T > bool operator== (const \fBHashTable_const_iterator\fP< T > & a, const \fBHashTable_const_iterator\fP< T > & b)\fC [inline]\fP"
+
+.PP
+Compare two \fBHashTable\fP iterators for equality\&. 
+.SS "template<typename T > bool operator!= (const \fBHashTable_const_iterator\fP< T > & a, const \fBHashTable_const_iterator\fP< T > & b)\fC [inline]\fP"
+
+.PP
+Compare two \fBHashTable\fP iterators for inequality\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

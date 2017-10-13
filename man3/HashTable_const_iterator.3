@@ -1,0 +1,132 @@
+.TH "HashTable_const_iterator< T >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HashTable_const_iterator< T > \- The const_iterator type for \fBHashTable\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <hashtable\&.hh>\fP
+.PP
+Inherited by \fBHashTable_iterator< T >\fP, and HashTable_iterator< Pair< K, V > >\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef bool(HashTable_const_iterator::* \fBunspecified_bool_type\fP) () const "
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHashTable_const_iterator\fP ()"
+.br
+.RI "\fIConstruct an uninitialized iterator\&. \fP"
+.ti -1c
+.RI "const T * \fBget\fP () const "
+.br
+.RI "\fIReturn a pointer to the element, null if *this == end()\&. \fP"
+.ti -1c
+.RI "const T * \fBoperator\->\fP () const "
+.br
+.RI "\fIReturn a pointer to the element\&. \fP"
+.ti -1c
+.RI "const T & \fBoperator*\fP () const "
+.br
+.RI "\fIReturn a reference to the element\&. \fP"
+.ti -1c
+.RI "\fBHashTable\fP< T >::key_const_reference \fBkey\fP () const "
+.br
+.RI "\fIReturn this element's key\&. \fP"
+.ti -1c
+.RI "bool \fBlive\fP () const "
+.br
+.RI "\fIReturn true iff *this != end()\&. \fP"
+.ti -1c
+.RI "\fBoperator unspecified_bool_type\fP () const "
+.br
+.RI "\fIReturn true iff *this != end()\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP (int)"
+.br
+.RI "\fIAdvance this iterator to the next element\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP ()"
+.br
+.RI "\fIAdvance this iterator to the next element\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T>
+.br
+class HashTable_const_iterator< T >"
+The const_iterator type for \fBHashTable\fP\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T> \fBHashTable_const_iterator\fP< T >::\fBHashTable_const_iterator\fP ()\fC [inline]\fP"
+
+.PP
+Construct an uninitialized iterator\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T> const T* \fBHashTable_const_iterator\fP< T >::get () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the element, null if *this == end()\&. 
+.SS "template<typename T> const T* \fBHashTable_const_iterator\fP< T >::operator\-> () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+*this != end() 
+.RE
+.PP
+
+.SS "template<typename T> const T& \fBHashTable_const_iterator\fP< T >::operator* () const\fC [inline]\fP"
+
+.PP
+Return a reference to the element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+*this != end() 
+.RE
+.PP
+
+.SS "template<typename T> \fBHashTable\fP<T>::key_const_reference \fBHashTable_const_iterator\fP< T >::key () const\fC [inline]\fP"
+
+.PP
+Return this element's key\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+*this != end() 
+.RE
+.PP
+
+.SS "template<typename T> bool \fBHashTable_const_iterator\fP< T >::live () const\fC [inline]\fP"
+
+.PP
+Return true iff *this != end()\&. 
+.SS "template<typename T> \fBHashTable_const_iterator\fP< T >::operator unspecified_bool_type () const\fC [inline]\fP"
+
+.PP
+Return true iff *this != end()\&. 
+.SS "template<typename T> void \fBHashTable_const_iterator\fP< T >::operator++ (int)\fC [inline]\fP"
+
+.PP
+Advance this iterator to the next element\&. 
+.SS "template<typename T> void \fBHashTable_const_iterator\fP< T >::operator++ ()\fC [inline]\fP"
+
+.PP
+Advance this iterator to the next element\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

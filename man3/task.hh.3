@@ -1,0 +1,52 @@
+.TH "include/click/task.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/task.hh \- Support for \fBTask\fP, which triggers execution frequently\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/element\&.hh>\fP
+.br
+\fC#include <click/sync\&.hh>\fP
+.br
+\fC#include <click/routerthread\&.hh>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBTask\fP"
+.br
+.RI "\fIRepresents a frequently-scheduled computational task\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBGIANT_REQUIRED\fP"
+.br
+.ti -1c
+.RI "#define \fBPASS_GT\fP(a,  b)   ((int)(a \- b) > 0)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef bool(* \fBTaskCallback\fP) (\fBTask\fP *, void *)"
+.br
+.ti -1c
+.RI "typedef TaskCallback \fBTaskHook\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Support for \fBTask\fP, which triggers execution frequently\&. 
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

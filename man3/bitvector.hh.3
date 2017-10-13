@@ -1,0 +1,120 @@
+.TH "include/click/bitvector.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/bitvector.hh \- Click's bitvector class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/glue\&.hh>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBBitvector\fP"
+.br
+.RI "\fI\fBVector\fP of bits\&. \fP"
+.ti -1c
+.RI "class \fBBitvector::Bit\fP"
+.br
+.RI "\fIA wrapper class that acts like a single bit\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBBitvector\fP &a, const \fBBitvector\fP &b)"
+.br
+.RI "\fITest bitvectors for equality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBBitvector\fP &a, const \fBBitvector\fP &b)"
+.br
+.RI "\fITest bitvectors for inequality\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP \fBoperator&\fP (\fBBitvector\fP a, const \fBBitvector\fP &b)"
+.br
+.RI "\fIReturn the bitwise and of two bitvectors\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP \fBoperator|\fP (\fBBitvector\fP a, const \fBBitvector\fP &b)"
+.br
+.RI "\fIReturn the bitwise or of two bitvectors\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP \fBoperator^\fP (\fBBitvector\fP a, const \fBBitvector\fP &b)"
+.br
+.RI "\fIReturn the bitwise exclusive or of two bitvectors\&. \fP"
+.ti -1c
+.RI "\fBBitvector\fP \fBoperator\-\fP (\fBBitvector\fP a, const \fBBitvector\fP &b)"
+.br
+.RI "\fIReturn the bitwise subtraction of two bitvectors\&. \fP"
+.ti -1c
+.RI "void \fBclick_swap\fP (\fBBitvector\fP &a, \fBBitvector\fP &b)"
+.br
+.ti -1c
+.RI "void \fBassign_consume\fP (\fBBitvector\fP &a, \fBBitvector\fP &b)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Click's bitvector class\&. 
+
+> 
+.SH "Function Documentation"
+.PP 
+.SS "bool operator== (const \fBBitvector\fP & a, const \fBBitvector\fP & b)\fC [inline]\fP"
+
+.PP
+Test bitvectors for equality\&. never 
+.SS "bool operator!= (const \fBBitvector\fP & a, const \fBBitvector\fP & b)\fC [inline]\fP"
+
+.PP
+Test bitvectors for inequality\&. 
+.SS "\fBBitvector\fP operator& (\fBBitvector\fP a, const \fBBitvector\fP & b)\fC [inline]\fP"
+
+.PP
+Return the bitwise and of two bitvectors\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIa\&.size()\fP == \fIb\&.size()\fP 
+.RE
+.PP
+
+.SS "\fBBitvector\fP operator| (\fBBitvector\fP a, const \fBBitvector\fP & b)\fC [inline]\fP"
+
+.PP
+Return the bitwise or of two bitvectors\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIa\&.size()\fP == \fIb\&.size()\fP 
+.RE
+.PP
+
+.SS "\fBBitvector\fP operator^ (\fBBitvector\fP a, const \fBBitvector\fP & b)\fC [inline]\fP"
+
+.PP
+Return the bitwise exclusive or of two bitvectors\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIa\&.size()\fP == \fIb\&.size()\fP 
+.RE
+.PP
+
+.SS "\fBBitvector\fP operator\- (\fBBitvector\fP a, const \fBBitvector\fP & b)\fC [inline]\fP"
+
+.PP
+Return the bitwise subtraction of two bitvectors\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIa\&.size()\fP == \fIb\&.size()\fP 
+.RE
+.PP
+\fCa - b\fP is equivalent to \fCa & ~b\fP\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

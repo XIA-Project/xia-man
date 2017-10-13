@@ -1,0 +1,398 @@
+.TH "NameInfo" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+NameInfo \- Manages Click name databases\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBDBType\fP { \fBT_NONE\fP = 0, \fBT_SCHEDULEINFO\fP = 0x00000001, \fBT_ANNOTATION\fP = 0x00000002, \fBT_SCRIPT_INSN\fP = 0x00000003, \fBT_SIGNO\fP = 0x00000004, \fBT_SPINLOCK\fP = 0x00000005, \fBT_ETHERNET_ADDR\fP = 0x01000001, \fBT_IP_ADDR\fP = 0x04000001, \fBT_IP_PREFIX\fP = 0x04000002, \fBT_IP_PROTO\fP = 0x04000003, \fBT_IPFILTER_TYPE\fP = 0x04000004, \fBT_TCP_OPT\fP = 0x04000005, \fBT_IPREWRITER_PATTERN\fP = 0x04000006, \fBT_ICMP_TYPE\fP = 0x04010000, \fBT_ICMP_CODE\fP = 0x04010100, \fBT_IP_PORT\fP = 0x04020000, \fBT_TCP_PORT\fP = 0x04020006, \fBT_UDP_PORT\fP = 0x04020011, \fBT_IP_FIELDNAME\fP = 0x04030000, \fBT_ICMP_FIELDNAME\fP = 0x04030001, \fBT_TCP_FIELDNAME\fP = 0x04030006, \fBT_UDP_FIELDNAME\fP = 0x04030011, \fBT_IP6_ADDR\fP = 0x06000001, \fBT_IP6_PREFIX\fP = 0x06000002, \fBT_XIA_XID\fP = 0x08000001 }
+.RI "\fIKnown name database types\&. \fP""
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBNameInfo\fP ()"
+.br
+.RI "\fIConstruct a \fBNameInfo\fP element\&. \fP"
+.ti -1c
+.RI "\fB~NameInfo\fP ()"
+.br
+.RI "\fIDestroy a \fBNameInfo\fP object\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static void \fBstatic_initialize\fP ()"
+.br
+.RI "\fIStatic initialization for \fBNameInfo\fP\&. \fP"
+.ti -1c
+.RI "static void \fBstatic_cleanup\fP ()"
+.br
+.RI "\fIStatic cleanup for \fBNameInfo\fP\&. \fP"
+.ti -1c
+.RI "static \fBNameDB\fP * \fBgetdb\fP (uint32_t type, const \fBElement\fP *context, size_t value_size, bool create)"
+.br
+.RI "\fIFind or create a name database\&. \fP"
+.ti -1c
+.RI "static void \fBinstalldb\fP (\fBNameDB\fP *db, const \fBElement\fP *context)"
+.br
+.RI "\fIInstall a name database\&. \fP"
+.ti -1c
+.RI "static void \fBuninstalldb\fP (\fBNameDB\fP *db)"
+.br
+.RI "\fIUninstall a name database\&. \fP"
+.ti -1c
+.RI "static bool \fBquery\fP (uint32_t type, const \fBElement\fP *context, const \fBString\fP &name, void *value_store, size_t value_size)"
+.br
+.RI "\fIQuery installed databases for \fIname\fP\&. \fP"
+.ti -1c
+.RI "static bool \fBquery_int\fP (uint32_t type, const \fBElement\fP *context, const \fBString\fP &name, int32_t *value_store)"
+.br
+.RI "\fIQuery installed databases for \fIname\fP, returning a 32-bit integer value\&. \fP"
+.ti -1c
+.RI "static bool \fBquery_int\fP (uint32_t type, const \fBElement\fP *context, const \fBString\fP &name, uint32_t *value_store)"
+.br
+.ti -1c
+.RI "static \fBString\fP \fBrevquery\fP (uint32_t type, const \fBElement\fP *context, const void *value, size_t value_size)"
+.br
+.RI "\fIQuery installed databases for \fIvalue\fP\&. \fP"
+.ti -1c
+.RI "static \fBString\fP \fBrevquery_int\fP (uint32_t type, const \fBElement\fP *context, int32_t value)"
+.br
+.RI "\fIQuery installed databases for a 32-bit integer \fIvalue\fP\&. \fP"
+.ti -1c
+.RI "static bool \fBdefine\fP (uint32_t type, const \fBElement\fP *context, const \fBString\fP &name, const void *value, size_t value_size)"
+.br
+.RI "\fIDefine \fIname\fP to equal \fIvalue\fP in the installed databases\&. \fP"
+.ti -1c
+.RI "static bool \fBdefine_int\fP (uint32_t type, const \fBElement\fP *context, const \fBString\fP &name, int32_t value)"
+.br
+.RI "\fIDefine \fIname\fP to equal 32-bit integer \fIvalue\fP in the installed databases\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Manages Click name databases\&. 
+
+\fBNameInfo\fP is the user interface to Click's name databases, a general mechanism for mapping names to values\&. \fBNameInfo\fP and \fBNameDB\fP implement generally useful properties like names local to a compound element context\&.
+.PP
+Every name database maps names, which are nonempty strings, to values, which are sequences of bytes\&. A database is identified by its type, which indicates the kind of name stored in the database, and, optionally, its compound element context, which is a pair of router and element name prefix\&. The database is used for queries that take place in the given context\&. A query bubbles up through the databases, starting with the most specific context and getting more general, until it succeeds\&. A database stores values with a fixed size; it is an error to query a database with the wrong size\&.
+.PP
+Many common types are defined in the NameDB::DBType enumeration, but \fBNameInfo\fP allows arbitrary other types to be added at run time\&.
+.PP
+Here's an example of how to query \fBNameInfo\fP:
+.PP
+.PP
+.nf
+EtherAddress ethaddr;
+if (NameInfo::query(NameInfo::T_ETHERNET_ADDR, this, name, &ethaddr, 6))
+    click_chatter("Found address!");
+else
+    click_chatter("Didn't find address\&.");
+.fi
+.PP
+.PP
+Many elements also add their own databases to \fBNameInfo\fP; see, for example, the IPNameInfo or IPFilter elements for examples\&. 
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum \fBNameInfo::DBType\fP"
+
+.PP
+Known name database types\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIT_NONE \fP\fP
+Nonexistent names database\&. 
+.TP
+\fB\fIT_SCHEDULEINFO \fP\fP
+ScheduleInfo database\&. 
+.TP
+\fB\fIT_ANNOTATION \fP\fP
+\fBPacket\fP annotation database\&. 
+.TP
+\fB\fIT_SCRIPT_INSN \fP\fP
+Script instruction names database\&. 
+.TP
+\fB\fIT_SIGNO \fP\fP
+User-level signal names database\&. 
+.TP
+\fB\fIT_SPINLOCK \fP\fP
+\fBSpinlock\fP names database\&. 
+.TP
+\fB\fIT_ETHERNET_ADDR \fP\fP
+Ethernet address names database\&. 
+.TP
+\fB\fIT_IP_ADDR \fP\fP
+IP address names database\&. 
+.TP
+\fB\fIT_IP_PREFIX \fP\fP
+IP prefix names database\&. 
+.TP
+\fB\fIT_IP_PROTO \fP\fP
+IP protocol names database\&. 
+.TP
+\fB\fIT_IPFILTER_TYPE \fP\fP
+IPFilter instruction names database\&. 
+.TP
+\fB\fIT_TCP_OPT \fP\fP
+TCP option names database\&. 
+.TP
+\fB\fIT_IPREWRITER_PATTERN \fP\fP
+IPRewriterPattern database\&. 
+.TP
+\fB\fIT_ICMP_TYPE \fP\fP
+ICMP type names database\&. 
+.TP
+\fB\fIT_ICMP_CODE \fP\fP
+ICMP code names database\&. 
+.TP
+\fB\fIT_IP_PORT \fP\fP
+Starting point for IP per-protocol port names databases\&. 
+.TP
+\fB\fIT_TCP_PORT \fP\fP
+TCP port names database\&. 
+.TP
+\fB\fIT_UDP_PORT \fP\fP
+UDP port names database\&. 
+.TP
+\fB\fIT_IP_FIELDNAME \fP\fP
+Starting point for IP per-protocol field names databases\&. 
+.TP
+\fB\fIT_ICMP_FIELDNAME \fP\fP
+ICMP field names database\&. 
+.TP
+\fB\fIT_TCP_FIELDNAME \fP\fP
+TCP field names database\&. 
+.TP
+\fB\fIT_UDP_FIELDNAME \fP\fP
+UDP field names database\&. 
+.TP
+\fB\fIT_IP6_ADDR \fP\fP
+IPv6 address names database\&. 
+.TP
+\fB\fIT_IP6_PREFIX \fP\fP
+IPv6 prefix names database\&. 
+.TP
+\fB\fIT_XIA_XID \fP\fP
+\fBXID\fP name database\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "NameInfo::NameInfo ()"
+
+.PP
+Construct a \fBNameInfo\fP element\&. Users never need to call this\&. 
+.SS "NameInfo::~NameInfo ()"
+
+.PP
+Destroy a \fBNameInfo\fP object\&. Also destroys all \fBNameDB\fP objects installed on this \fBNameInfo\fP\&.
+.PP
+Users never need to call this\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "void NameInfo::static_initialize ()\fC [static]\fP"
+
+.PP
+Static initialization for \fBNameInfo\fP\&. Creates the global \fBNameInfo\fP used for databases unconnected to any router\&. Users never need to call this\&. 
+.SS "void NameInfo::static_cleanup ()\fC [static]\fP"
+
+.PP
+Static cleanup for \fBNameInfo\fP\&. Destroys the global \fBNameInfo\fP used for databases unconnected to any router\&. Users never need to call this\&. 
+.SS "\fBNameDB\fP * NameInfo::getdb (uint32_t type, const \fBElement\fP * context, size_t value_size, bool create)\fC [static]\fP"
+
+.PP
+Find or create a name database\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP compound element context 
+.br
+\fIvalue_size\fP size of values stored in database 
+.br
+\fIcreate\fP whether to create a \fBDynamicNameDB\fP if no database exists
+.RE
+.PP
+Returns an installed name database matching \fItype\fP and \fIcontext\fP\&. (If \fIcontext\fP is non-null, then the database matches the implied router and compound element context\&. Otherwise, the database is the unique global database for the given \fItype\fP\&.) If \fIcreate\fP is true, and no database exists exactly matching \fItype\fP and \fIcontext\fP, then a \fBDynamicNameDB\fP is created and installed with that \fItype\fP, \fIcontext\fP, and \fIvalue_size\fP\&. Otherwise, the search bubbles up through the prefixes of \fIcontext\fP until an installed database is found\&.
+.PP
+Returns null if no installed database is found\&. \fIvalue_size\fP must match the value size in the returned database\&.
+.PP
+Most users will use \fBquery()\fP and \fBdefine()\fP directly, not call \fBgetdb()\fP\&. 
+.SS "void NameInfo::installdb (\fBNameDB\fP * db, const \fBElement\fP * context)\fC [static]\fP"
+
+.PP
+Install a name database\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdb\fP name database 
+.br
+\fIcontext\fP compound element context
+.RE
+.PP
+Installs the given name database for the compound element context implied by \fIcontext\fP\&. (If \fIcontext\fP is non-null, then the database is installed for the implied router and compound element context\&. If it is null, the database is installed globally\&.) The \fBquery()\fP and \fBdefine()\fP operations apply only to installed databases\&.
+.PP
+It is an error to install a database that has already been installed\&. It is also an error to install a database for a compound element context that already has a different database installed\&. An installed \fBNameDB\fP is automatically destroyed when its containing \fBNameInfo\fP is destroyed (for example, when \fIcontext's\fP router is destroyed)\&. 
+.SS "void NameInfo::uninstalldb (\fBNameDB\fP * db)\fC [static]\fP"
+
+.PP
+Uninstall a name database\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdb\fP name database
+.RE
+.PP
+Undoes the effects of \fBinstalldb()\fP\&. The given database will no longer be used for \fBquery()\fP and \fBdefine()\fP operations\&. 
+.SS "bool NameInfo::query (uint32_t type, const \fBElement\fP * context, const \fBString\fP & name, void * value_store, size_t value_size)\fC [static]\fP"
+
+.PP
+Query installed databases for \fIname\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP compound element context 
+.br
+\fIname\fP name to look up 
+.br
+\fIvalue_store\fP value storage 
+.br
+\fIvalue_size\fP size of value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the query succeeded
+.RE
+.PP
+Queries all installed \fItype\fP databases that apply to the compound element \fIcontext\fP, returning the most specific value matching \fIname\fP\&. The value is stored in \fIvalue_store\fP\&. The installed databases must have the given \fIvalue_size\fP\&. 
+.SS "bool NameInfo::query_int (uint32_t type, const \fBElement\fP * context, const \fBString\fP & name, int32_t * value_store)\fC [static]\fP"
+
+.PP
+Query installed databases for \fIname\fP, returning a 32-bit integer value\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP compound element context 
+.br
+\fIname\fP name to look up 
+.br
+\fIvalue_store\fP value storage 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the query succeeded
+.RE
+.PP
+Queries all installed \fItype\fP databases that apply to the compound element \fIcontext\fP, returning the most specific value matching \fIname\fP\&. The value is stored in \fIvalue_store\fP\&. The installed databases must have a value size of 4\&.
+.PP
+If no matching name is found, query_int checks whether \fIname\fP unparses into a 32-bit integer value (for example, '30')\&. If so, *\fIvalue_store\fP is set to the corresponding integer and true is returned\&. Otherwise, false is returned\&. 
+.SS "bool NameInfo::query_int (uint32_t type, const \fBElement\fP * context, const \fBString\fP & name, uint32_t * value_store)\fC [static]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "\fBString\fP NameInfo::revquery (uint32_t type, const \fBElement\fP * context, const void * value, size_t value_size)\fC [static]\fP"
+
+.PP
+Query installed databases for \fIvalue\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP compound element context 
+.br
+\fIvalue\fP points to value to look up 
+.br
+\fIvalue_size\fP size of value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the name, or the empty string if the query failed
+.RE
+.PP
+Queries all installed \fItype\fP databases that apply to the compound element \fIcontext\fP, returning the name in the most specific database whose value matches \fIvalue\fP, or the empty string if the relevant databases don't support reverse queries or no such value exists\&. The installed databases must have the given \fIvalue_size\fP\&. 
+.SS "\fBString\fP NameInfo::revquery_int (uint32_t type, const \fBElement\fP * context, int32_t value)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Query installed databases for a 32-bit integer \fIvalue\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP compound element context 
+.br
+\fIvalue\fP value to look up 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the name, or the empty string if the query failed
+.RE
+.PP
+Queries all installed \fItype\fP databases that apply to the compound element \fIcontext\fP, returning the name in the most specific database whose value matches \fIvalue\fP, or the empty string if the relevant databases don't support reverse queries or no such value exists\&. The installed databases must have value size 4\&. 
+.SS "bool NameInfo::define (uint32_t type, const \fBElement\fP * context, const \fBString\fP & name, const void * value, size_t value_size)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Define \fIname\fP to equal \fIvalue\fP in the installed databases\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP compound element context 
+.br
+\fIname\fP name to define 
+.br
+\fIvalue\fP points to defined value 
+.br
+\fIvalue_size\fP size of value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the name was defined
+.RE
+.PP
+Defines the given \fIname\fP to \fIvalue\fP in the installed \fItype\fP database with compound element \fIcontext\fP\&. If no database exists exactly matching that \fItype\fP and \fIcontext\fP, a new \fBDynamicNameDB\fP is created and installed with those values (and the given \fIvalue_size\fP)\&. A name might not be defined if the existing database for that \fItype\fP and \fIcontext\fP doesn't support definitions, or if no new database can be created\&. If any database exists, it must match the given \fIvalue_size\fP\&. 
+.SS "bool NameInfo::define_int (uint32_t type, const \fBElement\fP * context, const \fBString\fP & name, int32_t value)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Define \fIname\fP to equal 32-bit integer \fIvalue\fP in the installed databases\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP database type 
+.br
+\fIcontext\fP compound element context 
+.br
+\fIname\fP name to define 
+.br
+\fIvalue\fP defined value 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true iff the value was defined
+.RE
+.PP
+Defines the given \fIname\fP to \fIvalue\fP in the installed \fItype\fP database with compound element \fIcontext\fP\&. If no database exists exactly matching that \fItype\fP and \fIcontext\fP, a new \fBDynamicNameDB\fP is created and installed with those values (and value size 4)\&. A name might not be defined if the existing database for that \fItype\fP and \fIcontext\fP doesn't support definitions, or if no new database can be created\&. If any database exists, it must have value size 4\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

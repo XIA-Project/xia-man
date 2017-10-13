@@ -1,0 +1,469 @@
+.TH "IPAddress" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+IPAddress \- An IPv4 address\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef uninitialized_type \fBuninitialized_t\fP"
+.br
+.ti -1c
+.RI "typedef \fBIPAddress\fP \fBparameter_type\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBIPAddress\fP ()"
+.br
+.RI "\fIConstruct an \fBIPAddress\fP equal to 0\&.0\&.0\&.0\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP (unsigned x)"
+.br
+.RI "\fIConstruct an \fBIPAddress\fP from an integer in network byte order\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP (int x)"
+.br
+.ti -1c
+.RI "\fBIPAddress\fP (unsigned long x)"
+.br
+.ti -1c
+.RI "\fBIPAddress\fP (long x)"
+.br
+.ti -1c
+.RI "\fBIPAddress\fP (struct \fBin_addr\fP x)"
+.br
+.RI "\fIConstruct an \fBIPAddress\fP from a struct in_addr\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP (const unsigned char *\fBdata\fP)"
+.br
+.RI "\fIConstruct an \fBIPAddress\fP from data\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP (const \fBString\fP &x)"
+.br
+.RI "\fIConstructs an \fBIPAddress\fP from a human-readable dotted-quad representation\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP (const uninitialized_type &unused)"
+.br
+.RI "\fIConstruct an uninitialized \fBIPAddress\fP\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fITest if the address is 0\&.0\&.0\&.0\&. \fP"
+.ti -1c
+.RI "uint32_t \fBaddr\fP () const "
+.br
+.RI "\fIReturn the address as a uint32_t in network byte order\&. \fP"
+.ti -1c
+.RI "\fBoperator uint32_t\fP () const "
+.br
+.RI "\fIReturn the address as a uint32_t in network byte order\&. \fP"
+.ti -1c
+.RI "bool \fBis_multicast\fP () const "
+.br
+.RI "\fIReturn true iff the address is a multicast address\&. \fP"
+.ti -1c
+.RI "bool \fBis_link_local\fP () const "
+.br
+.ti -1c
+.RI "struct in_addr \fBin_addr\fP () const "
+.br
+.RI "\fIReturn a struct in_addr corresponding to the address\&. \fP"
+.ti -1c
+.RI "\fBoperator struct in_addr\fP () const "
+.br
+.RI "\fIReturn a struct in_addr corresponding to the address\&. \fP"
+.ti -1c
+.RI "unsigned char * \fBdata\fP ()"
+.br
+.RI "\fIReturn a pointer to the address data\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBdata\fP () const "
+.br
+.RI "\fIReturn a pointer to the address data\&. \fP"
+.ti -1c
+.RI "uint32_t \fBhashcode\fP () const "
+.br
+.RI "\fIHash function\&. \fP"
+.ti -1c
+.RI "int \fBmask_to_prefix_len\fP () const "
+.br
+.RI "\fIReturns the prefix length equivalent to this prefix mask, or -1 if this is not a prefix mask\&. \fP"
+.ti -1c
+.RI "bool \fBmatches_prefix\fP (\fBIPAddress\fP \fBaddr\fP, \fBIPAddress\fP mask) const "
+.br
+.RI "\fIReturn true iff this address matches the address prefix \fIaddr/\fImask\fP\&.\fP \fP"
+.ti -1c
+.RI "bool \fBmask_as_specific\fP (\fBIPAddress\fP mask) const "
+.br
+.RI "\fIReturn true iff this address, considered as a prefix mask, is at least as specific as \fImask\fP\&. \fP"
+.ti -1c
+.RI "bool \fBmask_more_specific\fP (\fBIPAddress\fP mask) const "
+.br
+.RI "\fIReturn true iff this prefix mask is more specific than \fImask\fP\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP & \fBoperator&=\fP (\fBIPAddress\fP)"
+.br
+.RI "\fIAssign this address to its bitwise-and with \fIa\fP\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP & \fBoperator|=\fP (\fBIPAddress\fP)"
+.br
+.RI "\fIAssign this address to its bitwise-or with \fIa\fP\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP & \fBoperator^=\fP (\fBIPAddress\fP)"
+.br
+.RI "\fIAssign this address to its bitwise-xor with \fIa\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse\fP () const "
+.br
+.RI "\fIUnparses this address into a dotted-quad format \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse_mask\fP () const "
+.br
+.RI "\fIUnparses this address into IP address mask format: either a prefix length or \fBunparse()\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBunparse_with_mask\fP (\fBIPAddress\fP) const "
+.br
+.RI "\fIUnparses an address prefix, specified by address and mask, into 'address/mask' format\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBs\fP () const "
+.br
+.RI "\fIUnparse this address into a dotted-quad format \fBString\fP\&. \fP"
+.ti -1c
+.RI "\fBoperator String\fP () const "
+.br
+.RI "\fIUnparse this address into a dotted-quad format \fBString\fP\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBIPAddress\fP \fBmake_prefix\fP (int prefix_len)"
+.br
+.RI "\fIReturn an \fBIPAddress\fP equal to the prefix mask of length \fIprefix\fP\&. \fP"
+.ti -1c
+.RI "static \fBIPAddress\fP \fBmake_broadcast\fP ()"
+.br
+.RI "\fIReturn the broadcast IP address, 255\&.255\&.255\&.255\&. \fP"
+.in -1c
+.SS "Related Functions"
+(Note that these are not member functions\&.) 
+.in +1c
+.ti -1c
+.RI "bool \fBoperator==\fP (\fBIPAddress\fP a, \fBIPAddress\fP b)"
+.br
+.RI "\fICompare two \fBIPAddress\fP objects for equality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator==\fP (\fBIPAddress\fP a, uint32_t b)"
+.br
+.RI "\fICompare an \fBIPAddress\fP with a network-byte-order address value for equality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (\fBIPAddress\fP a, \fBIPAddress\fP b)"
+.br
+.RI "\fICompare two \fBIPAddress\fP objects for inequality\&. \fP"
+.ti -1c
+.RI "bool \fBoperator!=\fP (\fBIPAddress\fP a, uint32_t b)"
+.br
+.RI "\fICompare an \fBIPAddress\fP with a network-byte-order address value for inequality\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP \fBoperator&\fP (\fBIPAddress\fP a, \fBIPAddress\fP b)"
+.br
+.RI "\fICalculate the \fBIPAddress\fP representing the bitwise-and of \fIa\fP and \fIb\fP\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP \fBoperator|\fP (\fBIPAddress\fP a, \fBIPAddress\fP b)"
+.br
+.RI "\fICalculate the \fBIPAddress\fP representing the bitwise-or of \fIa\fP and \fIb\fP\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP \fBoperator^\fP (\fBIPAddress\fP a, \fBIPAddress\fP b)"
+.br
+.RI "\fICalculate the \fBIPAddress\fP representing the bitwise-xor of \fIa\fP and \fIb\fP\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP \fBoperator~\fP (\fBIPAddress\fP a)"
+.br
+.RI "\fICalculate the \fBIPAddress\fP representing the bitwise complement of \fIa\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+An IPv4 address\&. 
+
+The \fBIPAddress\fP type represents an IPv4 address\&. It supports bitwise operations like & and | and provides methods for unparsing IP addresses into ASCII dotted-quad form\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "IPAddress::IPAddress ()\fC [inline]\fP"
+
+.PP
+Construct an \fBIPAddress\fP equal to 0\&.0\&.0\&.0\&. 
+.SS "IPAddress::IPAddress (unsigned x)\fC [inline]\fP"
+
+.PP
+Construct an \fBIPAddress\fP from an integer in network byte order\&. 
+.SS "IPAddress::IPAddress (int x)\fC [inline]\fP, \fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "IPAddress::IPAddress (unsigned long x)\fC [inline]\fP, \fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "IPAddress::IPAddress (long x)\fC [inline]\fP, \fC [explicit]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "IPAddress::IPAddress (struct \fBin_addr\fP x)\fC [inline]\fP"
+
+.PP
+Construct an \fBIPAddress\fP from a struct in_addr\&. 
+.SS "IPAddress::IPAddress (const unsigned char * data)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct an \fBIPAddress\fP from data\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP the address data, in network byte order
+.RE
+.PP
+Bytes data[0]\&.\&.\&.data[3] are used to construct the address\&. 
+.SS "IPAddress::IPAddress (const \fBString\fP & x)\fC [explicit]\fP"
+
+.PP
+Constructs an \fBIPAddress\fP from a human-readable dotted-quad representation\&. If \fIx\fP is not a valid dotted-quad address, then the \fBIPAddress\fP is initialized to 0\&.0\&.0\&.0\&. 
+.SS "IPAddress::IPAddress (const uninitialized_type & unused)\fC [inline]\fP"
+
+.PP
+Construct an uninitialized \fBIPAddress\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBIPAddress\fP IPAddress::make_prefix (int prefix_len)\fC [static]\fP"
+
+.PP
+Return an \fBIPAddress\fP equal to the prefix mask of length \fIprefix\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIprefix_len\fP prefix length; 0 <= \fIprefix_len\fP <= 32
+.RE
+.PP
+For example, make_prefix(0) is 0\&.0\&.0\&.0, make_prefix(8) is 255\&.0\&.0\&.0, and make_prefix(32) is 255\&.255\&.255\&.255\&. Causes an assertion failure if \fIprefix_len\fP is out of range\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBmask_to_prefix_len\fP 
+.RE
+.PP
+
+.SS "static \fBIPAddress\fP IPAddress::make_broadcast ()\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Return the broadcast IP address, 255\&.255\&.255\&.255\&. 
+.SS "bool IPAddress::empty () const\fC [inline]\fP"
+
+.PP
+Test if the address is 0\&.0\&.0\&.0\&. 
+.SS "uint32_t IPAddress::addr () const\fC [inline]\fP"
+
+.PP
+Return the address as a uint32_t in network byte order\&. 
+.SS "IPAddress::operator uint32_t () const\fC [inline]\fP"
+
+.PP
+Return the address as a uint32_t in network byte order\&. Also suitable for use as an operator bool, returning true iff the address is not 0\&.0\&.0\&.0\&. 
+.SS "bool IPAddress::is_multicast () const\fC [inline]\fP"
+
+.PP
+Return true iff the address is a multicast address\&. These are the class D addresses, 224\&.0\&.0\&.0-239\&.255\&.255\&.255\&. 
+.SS "struct in_addr IPAddress::in_addr () const"
+
+.PP
+Return a struct in_addr corresponding to the address\&. 
+.SS "IPAddress::operator struct \fBin_addr\fP () const\fC [inline]\fP"
+
+.PP
+Return a struct in_addr corresponding to the address\&. 
+.SS "unsigned char * IPAddress::data ()\fC [inline]\fP"
+
+.PP
+Return a pointer to the address data\&. Since the address is stored in network byte order, \fBdata()\fP[0] is the top 8 bits of the address, \fBdata()\fP[1] the next 8 bits, and so forth\&. 
+.SS "const unsigned char * IPAddress::data () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the address data\&. Since the address is stored in network byte order, \fBdata()\fP[0] is the top 8 bits of the address, \fBdata()\fP[1] the next 8 bits, and so forth\&. 
+.SS "uint32_t IPAddress::hashcode () const\fC [inline]\fP"
+
+.PP
+Hash function\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The hash value of this \fBIPAddress\fP\&.
+.RE
+.PP
+Equal \fBIPAddress\fP objects always have equal \fBhashcode()\fP values\&. 
+.SS "int IPAddress::mask_to_prefix_len () const"
+
+.PP
+Returns the prefix length equivalent to this prefix mask, or -1 if this is not a prefix mask\&. Maintains the invariant that make_prefix(\fIprefix_len\fP)\&.\fBmask_to_prefix_len()\fP == \fIprefix_len\fP\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBmake_prefix\fP 
+.RE
+.PP
+
+.SS "bool IPAddress::matches_prefix (\fBIPAddress\fP addr, \fBIPAddress\fP mask) const\fC [inline]\fP"
+
+.PP
+Return true iff this address matches the address prefix \fIaddr/\fImask\fP\&.\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIaddr\fP prefix address 
+.br
+\fImask\fP prefix mask
+.RE
+.PP
+Equivalent to (\fIaddr\fP & \fImask\fP) == (*this & \fImask\fP)\&. The prefix address \fIaddr\fP may be nonzero outside the \fImask\fP\&. 
+.SS "bool IPAddress::mask_as_specific (\fBIPAddress\fP mask) const\fC [inline]\fP"
+
+.PP
+Return true iff this address, considered as a prefix mask, is at least as specific as \fImask\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImask\fP prefix mask
+.RE
+.PP
+Longer prefix masks are more specific than shorter ones\&. For example, make_prefix(20)\&.mask_as_specific(make_prefix(18)) is true, but make_prefix(10)\&.mask_as_specific(make_prefix(14)) is false\&.
+.PP
+Equivalent to (*this & \fImask\fP) == \fImask\fP\&. 
+.SS "bool IPAddress::mask_more_specific (\fBIPAddress\fP mask) const\fC [inline]\fP"
+
+.PP
+Return true iff this prefix mask is more specific than \fImask\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImask\fP prefix mask
+.RE
+.PP
+Both this address and \fImask\fP must be prefix masks -- i\&.e\&., \fBmask_to_prefix_len()\fP returns 0-32\&. Returns true iff this address contains a longer prefix than \fImask\fP\&. For example, make_prefix(20)\&.mask_more_specific(make_prefix(18)) is true, but make_prefix(20)\&.mask_more_specific(make_prefix(20)) is false\&. 
+.SS "\fBIPAddress\fP & IPAddress::operator&= (\fBIPAddress\fP a)\fC [inline]\fP"
+
+.PP
+Assign this address to its bitwise-and with \fIa\fP\&. 
+.SS "\fBIPAddress\fP & IPAddress::operator|= (\fBIPAddress\fP a)\fC [inline]\fP"
+
+.PP
+Assign this address to its bitwise-or with \fIa\fP\&. 
+.SS "\fBIPAddress\fP & IPAddress::operator^= (\fBIPAddress\fP a)\fC [inline]\fP"
+
+.PP
+Assign this address to its bitwise-xor with \fIa\fP\&. 
+.SS "\fBString\fP IPAddress::unparse () const"
+
+.PP
+Unparses this address into a dotted-quad format \fBString\fP\&. Examples include '0\&.0\&.0\&.0' and '18\&.26\&.4\&.9'\&. Maintains the invariant that, for an \fBIPAddress\fP \fIa\fP, \fBIPAddress\fP(\fIa\&.unparse()\fP) == \fIa\fP\&. 
+.SS "\fBString\fP IPAddress::unparse_mask () const"
+
+.PP
+Unparses this address into IP address mask format: either a prefix length or \fBunparse()\fP\&. If \fBmask_to_prefix_len()\fP >= 0, then returns that value as a base-10 \fBString\fP; otherwise, returns \fBunparse()\fP\&. Example results include '8' (for 255\&.0\&.0\&.0) and '18\&.26\&.4\&.9'\&. 
+.SS "\fBString\fP IPAddress::unparse_with_mask (\fBIPAddress\fP mask) const"
+
+.PP
+Unparses an address prefix, specified by address and mask, into 'address/mask' format\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fImask\fP the address mask
+.RE
+.PP
+Equivalent to \fBunparse()\fP + '/' + \fImask\&.unparse_mask()\fP\&. 
+.SS "\fBString\fP IPAddress::s () const\fC [inline]\fP"
+
+.PP
+Unparse this address into a dotted-quad format \fBString\fP\&. 
+.PP
+\fBDeprecated\fP
+.RS 4
+The \fBunparse()\fP function should be preferred to \fBs()\fP\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBunparse\fP 
+.RE
+.PP
+
+.SS "IPAddress::operator \fBString\fP () const\fC [inline]\fP"
+
+.PP
+Unparse this address into a dotted-quad format \fBString\fP\&. 
+.PP
+\fBDeprecated\fP
+.RS 4
+The \fBunparse()\fP function should be preferred to this cast\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBunparse\fP 
+.RE
+.PP
+
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "bool operator== (\fBIPAddress\fP a, \fBIPAddress\fP b)\fC [related]\fP"
+
+.PP
+Compare two \fBIPAddress\fP objects for equality\&. 
+.SS "bool operator== (\fBIPAddress\fP a, uint32_t b)\fC [related]\fP"
+
+.PP
+Compare an \fBIPAddress\fP with a network-byte-order address value for equality\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP an address 
+.br
+\fIb\fP an address value in network byte order 
+.RE
+.PP
+
+.SS "bool operator!= (\fBIPAddress\fP a, \fBIPAddress\fP b)\fC [related]\fP"
+
+.PP
+Compare two \fBIPAddress\fP objects for inequality\&. 
+.SS "bool operator!= (\fBIPAddress\fP a, uint32_t b)\fC [related]\fP"
+
+.PP
+Compare an \fBIPAddress\fP with a network-byte-order address value for inequality\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIa\fP an address 
+.br
+\fIb\fP an address value in network byte order 
+.RE
+.PP
+
+.SS "\fBIPAddress\fP operator& (\fBIPAddress\fP a, \fBIPAddress\fP b)\fC [related]\fP"
+
+.PP
+Calculate the \fBIPAddress\fP representing the bitwise-and of \fIa\fP and \fIb\fP\&. 
+.SS "\fBIPAddress\fP operator| (\fBIPAddress\fP a, \fBIPAddress\fP b)\fC [related]\fP"
+
+.PP
+Calculate the \fBIPAddress\fP representing the bitwise-or of \fIa\fP and \fIb\fP\&. 
+.SS "\fBIPAddress\fP operator^ (\fBIPAddress\fP a, \fBIPAddress\fP b)\fC [related]\fP"
+
+.PP
+Calculate the \fBIPAddress\fP representing the bitwise-xor of \fIa\fP and \fIb\fP\&. 
+.SS "\fBIPAddress\fP operator~ (\fBIPAddress\fP a)\fC [related]\fP"
+
+.PP
+Calculate the \fBIPAddress\fP representing the bitwise complement of \fIa\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

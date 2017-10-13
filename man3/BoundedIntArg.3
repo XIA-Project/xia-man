@@ -1,0 +1,65 @@
+.TH "BoundedIntArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+BoundedIntArg \- Parser class for integers with explicit bounds\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <args\&.hh>\fP
+.PP
+Inherits \fBIntArg\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "template<typename T > \fBBoundedIntArg\fP (T min_value, T max_value, int b=0)"
+.br
+.ti -1c
+.RI "template<typename V > bool \fBparse\fP (const \fBString\fP &str, V &result, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "bool \fBcheck_min\fP (click_int_large_t x) const "
+.br
+.ti -1c
+.RI "bool \fBcheck_min\fP (click_uint_large_t x) const "
+.br
+.ti -1c
+.RI "bool \fBcheck_max\fP (click_int_large_t x) const "
+.br
+.ti -1c
+.RI "bool \fBcheck_max\fP (click_uint_large_t x) const "
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "click_intmax_t \fBmin_value\fP"
+.br
+.ti -1c
+.RI "click_intmax_t \fBmax_value\fP"
+.br
+.ti -1c
+.RI "bool \fBis_signed\fP"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Parser class for integers with explicit bounds\&. 
+
+\fBBoundedIntArg\fP(\fImin\fP, \fImax\fP, \fIbase\fP) is like \fBIntArg\fP(\fIbase\fP), but numbers less than \fImin\fP or greater than \fImax\fP are treated as errors\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBIntArg\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

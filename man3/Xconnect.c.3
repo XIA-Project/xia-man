@@ -1,0 +1,56 @@
+.TH "xsocket/Xconnect.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xconnect.c \- \fBXconnect()\fP - initiate a connection on a socket\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXconnect\fP (int sockfd, const sockaddr *addr, socklen_t addrlen)"
+.br
+.RI "\fIInitiate a connection on a socket\&. \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xconnect (int sockfd, const sockaddr * addr, socklen_t addrlen)"
+The \fBXconnect()\fP call connects the socket referred to by the sockfd to the address specified by addr\&.
+.PP
+If sockfd is of type SOCK_DGRAM, then addr is the address to which datagrams are sent by default, and the only address from which datagrams are received\&.
+.PP
+If the socket is of type SOCK_STREAM this call attempts to make a connection to the socket that is bound to the address specified by addr\&.
+.PP
+SOCK_STREAM sockets may successfully \fBXconnect()\fP only once; SOCK_DGRAM sockets may use \fBXconnect()\fP multiple times to change their association\&. SOCK_DGRAM sockets may dissolve the association by connecting to an address with the sa_family member of sockaddr set to AF_UNSPEC\&.
+.PP
+\fBNote:\fP
+.RS 4
+See the man page for the standard connect() call for more details\&.
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP The control socket 
+.br
+\fIaddr\fP The address (SID) of the remote service to connect to\&. 
+.br
+\fIaddrlen\fP The length of addr
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on error with errno set to an error compatible with those returned by the standard connect call\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

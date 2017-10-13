@@ -1,0 +1,267 @@
+.TH "xsocket/XgetDAGbyName.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/XgetDAGbyName.c \- \fBXgetDAGbyName()\fP, \fBXgetNamebyDAG()\fP, \fBXregisterName()\fP, \fBXgetpeername()\fP, \fBXgetsockname()\fP, \fBxia_ntop()\fP, \fBxia_pton()\fP - network address management\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBxia_ntop\fP (int af, const sockaddr_x *src, char *dst, socklen_t size)"
+.br
+.RI "\fIconvert a DAG from binary to text form \fP"
+.ti -1c
+.RI "int \fBxia_pton\fP (int af, const char *src, sockaddr_x *dst)"
+.br
+.RI "\fIconvert a DAG from binary to text form \fP"
+.ti -1c
+.RI "int \fB_rquery\fP (char *name, int namelen, const sockaddr_x *addr, char flags)"
+.br
+.ti -1c
+.RI "int \fB_fquery\fP (const char *name, sockaddr_x *addr, socklen_t *addrlen, char flags)"
+.br
+.ti -1c
+.RI "int \fBXgetNamebyDAG\fP (char *name, int namelen, const sockaddr_x *addr)"
+.br
+.RI "\fIreverse lookup, find a name based on the specified network address \fP"
+.ti -1c
+.RI "int \fBXgetHostIDbyDAG\fP (char *name, int namelen, const sockaddr_x *addr)"
+.br
+.ti -1c
+.RI "int \fBXgetAddrIDbyDAG\fP (char *name, int namelen, const sockaddr_x *addr)"
+.br
+.ti -1c
+.RI "int \fBXgetDAGbyName\fP (const char *name, sockaddr_x *addr, socklen_t *addrlen)"
+.br
+.RI "\fIlookup a DAG using a host or service name \fP"
+.ti -1c
+.RI "int \fBXgetDAGbyHostID\fP (const char *name, sockaddr_x *addr, socklen_t *addrlen)"
+.br
+.ti -1c
+.RI "int \fBXgetDAGbyAddrID\fP (const char *name, sockaddr_x *addr, socklen_t *addrlen)"
+.br
+.ti -1c
+.RI "int \fBXregisterName\fP (const char *name, sockaddr_x *DAG)"
+.br
+.RI "\fIregister a service or hostname with the name server \fP"
+.ti -1c
+.RI "int \fBXregisterAddrID\fP (const char *name, sockaddr_x *DAG)"
+.br
+.ti -1c
+.RI "int \fBXregisterHostID\fP (const char *name, sockaddr_x *DAG)"
+.br
+.ti -1c
+.RI "int \fBXgetpeername\fP (int sockfd, struct sockaddr *addr, socklen_t *addrlen)"
+.br
+.RI "\fIget name of connected peer socket \fP"
+.ti -1c
+.RI "int \fBXgetsockname\fP (int sockfd, struct sockaddr *addr, socklen_t *addrlen)"
+.br
+.RI "\fIget socket name \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int _fquery (const char * name, sockaddr_x * addr, socklen_t * addrlen, char flags)"
+
+.SS "int _rquery (char * name, int namelen, const sockaddr_x * addr, char flags)"
+
+.SS "int XgetAddrIDbyDAG (char * name, int namelen, const sockaddr_x * addr)"
+
+.SS "int XgetDAGbyAddrID (const char * name, sockaddr_x * addr, socklen_t * addrlen)"
+
+.SS "int XgetDAGbyHostID (const char * name, sockaddr_x * addr, socklen_t * addrlen)"
+
+.SS "int XgetDAGbyName (const char * name, sockaddr_x * addr, socklen_t * addrlen)"
+Lookup the DAG associated with name\&.
+.PP
+The local hosts\&.xia file is checked first and if addr is not found, a query is sent to the nameserver\&.
+.PP
+\fBNote:\fP
+.RS 4
+Xgetaddrinfo should be used rather than this function as it is very primative\&.
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP a test string representing the name of an XIA service or host 
+.br
+\fIaddr\fP a sockaddr_x to received the address 
+.br
+\fIaddrlen\fP pointer to the length of addr on call, contains actual length on return
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 with addr filled in and addrlen specifying the length of addr 
+.PP
+NULL on failure with errno set appropriately 
+.RE
+.PP
+
+.SS "int XgetHostIDbyDAG (char * name, int namelen, const sockaddr_x * addr)"
+
+.SS "int XgetNamebyDAG (char * name, int namelen, const sockaddr_x * addr)"
+Performs a reverse name lookup to find the name associated with addr\&.
+.PP
+The local hosts\&.xia file is checked first and if name is not found, a query is sent to the nameserver\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP pointer to menory that will contain the returned name 
+.br
+\fInamlen\fP the size of name 
+.br
+\fIaddr\fP the network address to lookup
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 with name filled in with a null terminted string\&. If name is not long enough, the returned name will be truncated\&. 
+.PP
+-1 on failure with errno set appropraitely 
+.RE
+.PP
+
+.SS "int Xgetpeername (int sockfd, struct sockaddr * addr, socklen_t * addrlen)"
+This function returns the address of the peer connected to the Xsocket sockfd, in the buffer pointed to by addr\&.
+.PP
+\fBNote:\fP
+.RS 4
+See the man page for the standard getpeername() call for more details\&.
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP a connected Xsocket 
+.br
+\fIdag\fP A sockaddr to hold the returned DAG 
+.br
+\fIlen\fP On input contans the size of the sockaddr on output contains sizeof(sockaddr_x)\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on failure with errno set 
+.PP
+errno = EFAULT if dag is NULL 
+.PP
+errno = EOPNOTSUPP if sockfd is not of type XSSOCK_STREAM 
+.PP
+errno = ENOTCONN if sockfd is not in a connected state 
+.RE
+.PP
+
+.SS "int Xgetsockname (int sockfd, struct sockaddr * addr, socklen_t * addrlen)"
+Returns the current address to which the socket sockfd is bound, in the buffer pointed to by addr\&.
+.PP
+\fBNote:\fP
+.RS 4
+See the man page for the standard getsockname() call for more details\&.
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsockfd\fP An Xsocket 
+.br
+\fIdag\fP A sockaddr_x to hold the returned DAG\&. 
+.br
+\fIlen\fP On input contans the size of the addr, on output contains sizeof(sockaddr_x)\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on failure with errno set 
+.PP
+errno = EFAULT if dag is NULL 
+.PP
+errno = EOPNOTSUPP if sockfd is not an Xsocket 
+.RE
+.PP
+
+.SS "const char* xia_ntop (int af, const sockaddr_x * src, char * dst, socklen_t size)"
+This function converts the network address structure src in the AF_XIA address family into a character string\&. The resulting string is copied to the buffer pointed to by dst, which must be a non-null pointer\&. The caller specifies the number of bytes available in this buffer in the argument size\&.
+.PP
+The returned text is formatted in the DAG text string format\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIaf\fP family (must be AF_XIA) 
+.br
+\fIsrc\fP DAG to convert 
+.br
+\fIdst\fP buffer to hold the converted address 
+.br
+\fIsize\fP length of dst
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+non-null pointer to dst on success 
+.PP
+NULL with errno set on failure\&. 
+.RE
+.PP
+
+.SS "int xia_pton (int af, const char * src, sockaddr_x * dst)"
+This function converts the character string src into an XIA network address structure, then copies the network address structure to dst\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIaf\fP family (must be AF_XIA) 
+.br
+\fIsrc\fP text representation of the DAG to convert\&. Can be, DAG, RE, or HTTP formatted 
+.br
+\fIdst\fP destination
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success (network address was successfully converted) 
+.PP
+0 if src does not contain a character string representing a valid network address 
+.PP
+-1 with errno set to EAFNOSUPPORT If af is not AF_XIA 
+.RE
+.PP
+
+.SS "int XregisterAddrID (const char * name, sockaddr_x * DAG)"
+
+.SS "int XregisterHostID (const char * name, sockaddr_x * DAG)"
+
+.SS "int XregisterName (const char * name, sockaddr_x * DAG)"
+Register a host or service name with the XIA nameserver\&.
+.PP
+\fBNote:\fP
+.RS 4
+this function does not currently check to ensure that the client is allowed to bind to name\&.
+.RE
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP the name of an XIA service or host 
+.br
+\fIDAG\fP the DAG to be bound to name
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on failure with errno set 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

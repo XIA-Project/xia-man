@@ -1,0 +1,1264 @@
+.TH "include/click/clp.h" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/clp.h \- Functions for parsing command line options\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <stdarg\&.h>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBClp_Option\fP"
+.br
+.RI "\fIOption description\&. \fP"
+.ti -1c
+.RI "struct \fBClp_Parser\fP"
+.br
+.RI "\fICommand line parser\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBClp_NotOption\fP   0"
+.br
+.RI "\fIClp_Next value: argument was not an option\&. \fP"
+.ti -1c
+.RI "#define \fBClp_Done\fP   \-1"
+.br
+.RI "\fIClp_Next value: there are no more arguments\&. \fP"
+.ti -1c
+.RI "#define \fBClp_BadOption\fP   \-2"
+.br
+.RI "\fIClp_Next value: argument was an erroneous option\&. \fP"
+.ti -1c
+.RI "#define \fBClp_Error\fP   \-3"
+.br
+.RI "\fIClp_Next value: internal CLP error\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValSize\fP   40"
+.br
+.RI "\fIMinimum size of the \fBClp_Parser\fP val\&.cs field\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValIntSize\fP   10"
+.br
+.RI "\fIMinimum size of the \fBClp_Parser\fP val\&.is field\&. \fP"
+.ti -1c
+.RI "#define \fBClp_DisallowOptions\fP   (1<<0)"
+.br
+.RI "\fIValue type flag: value can't be an option string\&. \fP"
+.ti -1c
+.RI "#define \fBClp_AllowNumbers\fP   (1<<0)"
+.br
+.RI "\fI\fBString\fP list flag: allow explicit numbers\&. \fP"
+.ti -1c
+.RI "#define \fBClp_StringListLong\fP   (1<<1)"
+.br
+.RI "\fI\fBString\fP list flag: values have long type\&. \fP"
+.in -1c
+.PP
+.RI "\fBValue types\fP"
+.br
+These values describe the type of an option's argument and are used in the \fBClp_Option\fP val_type field\&. For example, if an option took integers, its \fBClp_Option\fP structure would have val_type set to Clp_ValInt\&. 
+.PP
+.in +1c
+.in +1c
+.ti -1c
+.RI "#define \fBClp_NoVal\fP   0"
+.br
+.RI "\fIOption takes no value\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValString\fP   1"
+.br
+.RI "\fIOption value is an arbitrary string\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValStringNotOption\fP   2"
+.br
+.RI "\fIOption value is a non-option string\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValBool\fP   3"
+.br
+.RI "\fIOption value is a boolean\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValInt\fP   4"
+.br
+.RI "\fIOption value is a signed int\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValUnsigned\fP   5"
+.br
+.RI "\fIOption value is an unsigned int\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValLong\fP   6"
+.br
+.RI "\fIOption value is a signed long\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValUnsignedLong\fP   7"
+.br
+.RI "\fIOption value is an unsigned long\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValDouble\fP   8"
+.br
+.RI "\fIOption value is a double\&. Accepts a real number as defined by strtod()\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ValFirstUser\fP   10"
+.br
+.RI "\fIValue types >= Clp_ValFirstUser are available for user types\&. \fP"
+.in -1c
+.in -1c
+.PP
+.RI "\fBOption flags\fP"
+.br
+These flags are used in the \fBClp_Option\fP flags field\&. 
+.PP
+.in +1c
+.in +1c
+.ti -1c
+.RI "#define \fBClp_Mandatory\fP   (1<<0)"
+.br
+.RI "\fIOption flag: value is mandatory\&. \fP"
+.ti -1c
+.RI "#define \fBClp_Optional\fP   (1<<1)"
+.br
+.RI "\fIOption flag: value is optional\&. \fP"
+.ti -1c
+.RI "#define \fBClp_Negate\fP   (1<<2)"
+.br
+.RI "\fIOption flag: option may be negated\&. \fP"
+.ti -1c
+.RI "#define \fBClp_OnlyNegated\fP   (1<<3)"
+.br
+.RI "\fIOption flag: option \fImust\fP be negated\&. \fP"
+.ti -1c
+.RI "#define \fBClp_PreferredMatch\fP   (1<<4)"
+.br
+.RI "\fIOption flag: prefer this option when matching\&. \fP"
+.in -1c
+.in -1c
+.PP
+.RI "\fBOption character types\fP"
+.br
+These flags are used in to define character types in \fBClp_SetOptionChar()\fP\&. 
+.PP
+.in +1c
+.in +1c
+.ti -1c
+.RI "#define \fBClp_Short\fP   (1<<0)"
+.br
+.RI "\fIOption character begins a set of short options\&. \fP"
+.ti -1c
+.RI "#define \fBClp_Long\fP   (1<<1)"
+.br
+.RI "\fIOption character begins a long option\&. \fP"
+.ti -1c
+.RI "#define \fBClp_ShortNegated\fP   (1<<2)"
+.br
+.RI "\fIOption character begins a set of negated short options\&. \fP"
+.ti -1c
+.RI "#define \fBClp_LongNegated\fP   (1<<3)"
+.br
+.RI "\fIOption character begins a negated long option\&. \fP"
+.ti -1c
+.RI "#define \fBClp_LongImplicit\fP   (1<<4)"
+.br
+.RI "\fIOption character can begin a long option, and is part of that long option\&. \fP"
+.in -1c
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBClp_Option\fP \fBClp_Option\fP"
+.br
+.ti -1c
+.RI "typedef struct \fBClp_Parser\fP \fBClp_Parser\fP"
+.br
+.ti -1c
+.RI "typedef struct Clp_ParserState \fBClp_ParserState\fP"
+.br
+.ti -1c
+.RI "typedef int(* \fBClp_ValParseFunc\fP) (\fBClp_Parser\fP *clp, const char *vstr, int complain, void *user_data)"
+.br
+.RI "\fIA value parsing function\&. \fP"
+.ti -1c
+.RI "typedef void(* \fBClp_ErrorHandler\fP) (\fBClp_Parser\fP *clp, const char *message)"
+.br
+.RI "\fIA function for reporting option errors\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBClp_Parser\fP * \fBClp_NewParser\fP (int argc, const char *const *argv, int nopt, const \fBClp_Option\fP *opt)"
+.br
+.RI "\fICreate a new \fBClp_Parser\fP\&. \fP"
+.ti -1c
+.RI "void \fBClp_DeleteParser\fP (\fBClp_Parser\fP *clp)"
+.br
+.RI "\fIDestroy a \fBClp_Parser\fP object\&. \fP"
+.ti -1c
+.RI "const char * \fBClp_ProgramName\fP (\fBClp_Parser\fP *clp)"
+.br
+.RI "\fIReturn \fIclp's\fP program name\&. \fP"
+.ti -1c
+.RI "const char * \fBClp_SetProgramName\fP (\fBClp_Parser\fP *clp, const char *name)"
+.br
+.RI "\fISet \fIclp's\fP program name\&. \fP"
+.ti -1c
+.RI "\fBClp_ErrorHandler\fP \fBClp_SetErrorHandler\fP (\fBClp_Parser\fP *clp, \fBClp_ErrorHandler\fP errh)"
+.br
+.RI "\fISet \fIclp's\fP error handler function\&. \fP"
+.ti -1c
+.RI "int \fBClp_SetUTF8\fP (\fBClp_Parser\fP *clp, int utf8)"
+.br
+.RI "\fISet \fIclp's\fP UTF-8 mode\&. \fP"
+.ti -1c
+.RI "int \fBClp_OptionChar\fP (\fBClp_Parser\fP *clp, int c)"
+.br
+.RI "\fIReturn \fIclp's\fP treatment of character \fIc\fP\&. \fP"
+.ti -1c
+.RI "int \fBClp_SetOptionChar\fP (\fBClp_Parser\fP *clp, int c, int type)"
+.br
+.RI "\fISet \fIclp's\fP treatment of character \fIc\fP\&. \fP"
+.ti -1c
+.RI "int \fBClp_SetOptions\fP (\fBClp_Parser\fP *clp, int nopt, const \fBClp_Option\fP *opt)"
+.br
+.RI "\fISet \fIclp's\fP option definitions\&. \fP"
+.ti -1c
+.RI "void \fBClp_SetArguments\fP (\fBClp_Parser\fP *clp, int argc, const char *const *argv)"
+.br
+.RI "\fISet \fIclp's\fP arguments\&. \fP"
+.ti -1c
+.RI "int \fBClp_SetOptionProcessing\fP (\fBClp_Parser\fP *clp, int on)"
+.br
+.RI "\fISet whether \fIclp\fP is searching for options\&. \fP"
+.ti -1c
+.RI "int \fBClp_AddType\fP (\fBClp_Parser\fP *clp, int val_type, int flags, \fBClp_ValParseFunc\fP parser, void *user_data)"
+.br
+.RI "\fIDefine a new value type for \fIclp\fP\&. \fP"
+.ti -1c
+.RI "int \fBClp_AddStringListTypeVec\fP (\fBClp_Parser\fP *clp, int val_type, int flags, int nstrs, const char *const *strs, const int *vals)"
+.br
+.RI "\fIDefine a new string list value type for \fIclp\fP\&. \fP"
+.ti -1c
+.RI "int \fBClp_AddStringListType\fP (\fBClp_Parser\fP *clp, int val_type, int flags,\&.\&.\&.) CLP_SENTINEL"
+.br
+.RI "\fIDefine a new string list value type for \fIclp\fP\&. \fP"
+.ti -1c
+.RI "int \fBClp_Next\fP (\fBClp_Parser\fP *clp)"
+.br
+.RI "\fIParse and return the next argument from \fIclp\fP\&. \fP"
+.ti -1c
+.RI "const char * \fBClp_Shift\fP (\fBClp_Parser\fP *clp, int allow_options)"
+.br
+.RI "\fIReturn the next argument from \fIclp\fP without option parsing\&. \fP"
+.ti -1c
+.RI "Clp_ParserState * \fBClp_NewParserState\fP (void)"
+.br
+.RI "\fICreate a new Clp_ParserState\&. \fP"
+.ti -1c
+.RI "void \fBClp_DeleteParserState\fP (Clp_ParserState *state)"
+.br
+.RI "\fIDestroy a Clp_ParserState object\&. \fP"
+.ti -1c
+.RI "void \fBClp_SaveParser\fP (const \fBClp_Parser\fP *clp, Clp_ParserState *state)"
+.br
+.RI "\fISave \fIclp's\fP current state in \fIstate\fP\&. \fP"
+.ti -1c
+.RI "void \fBClp_RestoreParser\fP (\fBClp_Parser\fP *clp, const Clp_ParserState *state)"
+.br
+.RI "\fIRestore parser state from \fIstate\fP into \fIclp\fP\&. \fP"
+.ti -1c
+.RI "int \fBClp_OptionError\fP (\fBClp_Parser\fP *clp, const char *format,\&.\&.\&.)"
+.br
+.RI "\fIReport a parser error\&. \fP"
+.ti -1c
+.RI "int \fBClp_vsnprintf\fP (\fBClp_Parser\fP *clp, char *str, size_t size, const char *format, va_list val)"
+.br
+.RI "\fIFormat a message\&. \fP"
+.ti -1c
+.RI "int \fBClp_fprintf\fP (\fBClp_Parser\fP *clp, FILE *f, const char *format,\&.\&.\&.)"
+.br
+.RI "\fIPrint a message\&. \fP"
+.ti -1c
+.RI "int \fBClp_vfprintf\fP (\fBClp_Parser\fP *clp, FILE *f, const char *format, va_list val)"
+.br
+.RI "\fIPrint a message\&. \fP"
+.ti -1c
+.RI "int \fBClp_CurOptionNameBuf\fP (\fBClp_Parser\fP *clp, char *buf, int len)"
+.br
+.RI "\fIExtract the current option as a string\&. \fP"
+.ti -1c
+.RI "const char * \fBClp_CurOptionName\fP (\fBClp_Parser\fP *clp)"
+.br
+.RI "\fIExtract the current option as a string\&. \fP"
+.ti -1c
+.RI "int \fBClp_IsLong\fP (\fBClp_Parser\fP *clp, const char *long_name)"
+.br
+.RI "\fITest if the current option had long name \fIname\fP\&. \fP"
+.ti -1c
+.RI "int \fBClp_IsShort\fP (\fBClp_Parser\fP *clp, int short_name)"
+.br
+.RI "\fITest if the current option had short name \fIname\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for parsing command line options\&. 
+
+The CLP functions are used to parse command line arugments into options\&. It automatically handles value parsing, error messages, long options with minimum prefix matching, short options, and negated options\&.
+.PP
+The CLP model works like this\&.
+.PP
+.PD 0
+.IP "1." 4
+The user declares an array of \fBClp_Option\fP structures that define the options their program accepts\&. 
+.IP "2." 4
+The user creates a \fBClp_Parser\fP object using \fBClp_NewParser()\fP, passing in the command line arguments to parse and the \fBClp_Option\fP structures\&. 
+.IP "3." 4
+A loop repeatedly calls \fBClp_Next()\fP to parse the arguments\&. 
+.PP
+.PP
+Unlike many command line parsing libraries, CLP steps through all arguments one at a time, rather than slurping up all options at once\&. This makes it meaningful to give an option more than once\&.
+.PP
+Here's an example\&.
+.PP
+.PP
+.nf
+#define ANIMAL_OPT 1
+#define VEGETABLE_OPT 2
+#define MINERALS_OPT 3
+#define USAGE_OPT 4
+
+static const Clp_Option options[] = {
+    { "animal", 'a', ANIMAL_OPT, Clp_ValString, 0 },
+    { "vegetable", 'v', VEGETABLE_OPT, Clp_ValString, Clp_Negate | Clp_Optional },
+    { "minerals", 'm', MINERALS_OPT, Clp_ValInt, 0 },
+    { "usage", 0, USAGE_OPT, 0, 0 }
+};
+
+int main(int argc, char *argv[]) {
+    Clp_Parser *clp = Clp_NewParser(argc, argv,
+              sizeof(options) / sizeof(options[0]), options);
+    int opt;
+    while ((opt = Clp_Next(clp)) != Clp_Done)
+        switch (opt) {
+        case ANIMAL_OPT:
+            fprintf(stderr, "animal is %s\n", clp->val\&.s);
+            break;
+        case VEGETABLE_OPT:
+            if (clp->negated)
+                fprintf(stderr, "no vegetables!\n");
+            else if (clp->have_val)
+                fprintf(stderr, "vegetable is %s\n", clp->val\&.s);
+            else
+                fprintf(stderr, "vegetables OK\n");
+            break;
+        case MINERALS_OPT:
+            fprintf(stderr, "%d minerals\n", clp->val\&.i);
+            break;
+        case USAGE_OPT:
+            fprintf(stderr, "Usage: 20q [--animal=ANIMAL] [--vegetable[=VEGETABLE]] [--minerals=N]\n");
+            break;
+        case Clp_NotOption:
+            fprintf(stderr, "non-option %s\n", clp->vstr);
+            break;
+        }
+    }
+}
+.fi
+.PP
+.PP
+Here are a couple of executions\&.
+.PP
+.PP
+.nf
+
+% \&./20q --animal=cat
+animal is cat
+% \&./20q --animal=cat -a dog -afish --animal bird --an=snake
+animal is cat
+animal is dog
+animal is fish
+animal is bird
+animal is snake
+% \&./20q --no-vegetables
+no vegetables!
+% \&./20q -v
+vegetables OK
+% \&./20q -vkale
+vegetable is kale
+% \&./20q -m10
+10 minerals
+% \&./20q -m foo
+'-m' expects an integer, not 'foo'
+.fi
+.PP
+ 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define Clp_NoVal   0"
+
+.PP
+Option takes no value\&. 
+.SS "#define Clp_ValString   1"
+
+.PP
+Option value is an arbitrary string\&. 
+.SS "#define Clp_ValStringNotOption   2"
+
+.PP
+Option value is a non-option string\&. See Clp_DisallowOptions\&. 
+.SS "#define Clp_ValBool   3"
+
+.PP
+Option value is a boolean\&. Accepts 'true', 'false', 'yes', 'no', '1', and '0', or any prefixes thereof\&. The match is case-insensitive\&. 
+.SS "#define Clp_ValInt   4"
+
+.PP
+Option value is a signed int\&. Accepts an optional '+' or '-' sign, followed by one or more digits\&. The digits may be include a '0x' or '0X' prefix, for a hexadecimal number, or a '0' prefix, for an octal number; otherwise it is decimal\&. 
+.SS "#define Clp_ValUnsigned   5"
+
+.PP
+Option value is an unsigned int\&. Accepts an optional '+' sign, followed by one or more digits\&. The digits may be include a '0x' or '0X' prefix, for a hexadecimal number, or a '0' prefix, for an octal number; otherwise it is decimal\&. 
+.SS "#define Clp_ValLong   6"
+
+.PP
+Option value is a signed long\&. 
+.SS "#define Clp_ValUnsignedLong   7"
+
+.PP
+Option value is an unsigned long\&. 
+.SS "#define Clp_ValDouble   8"
+
+.PP
+Option value is a double\&. Accepts a real number as defined by strtod()\&. 
+.SS "#define Clp_ValFirstUser   10"
+
+.PP
+Value types >= Clp_ValFirstUser are available for user types\&. 
+.SS "#define Clp_Mandatory   (1<<0)"
+
+.PP
+Option flag: value is mandatory\&. It is an error if the option has no value\&. This is the default if an option has arg_type != 0 and the Clp_Optional flag is not provided\&. 
+.SS "#define Clp_Optional   (1<<1)"
+
+.PP
+Option flag: value is optional\&. 
+.SS "#define Clp_Negate   (1<<2)"
+
+.PP
+Option flag: option may be negated\&. --no-[long_name] will be accepted in argument lists\&. 
+.SS "#define Clp_OnlyNegated   (1<<3)"
+
+.PP
+Option flag: option \fImust\fP be negated\&. --no-[long_name] will be accepted in argument lists, but --[long_name] will not\&. This is the default if long_name begins with 'no-'\&. 
+.SS "#define Clp_PreferredMatch   (1<<4)"
+
+.PP
+Option flag: prefer this option when matching\&. Prefixes of --[long_name] should map to this option, even if other options begin with --[long_name]\&. 
+.SS "#define Clp_Short   (1<<0)"
+
+.PP
+Option character begins a set of short options\&. 
+.SS "#define Clp_Long   (1<<1)"
+
+.PP
+Option character begins a long option\&. 
+.SS "#define Clp_ShortNegated   (1<<2)"
+
+.PP
+Option character begins a set of negated short options\&. 
+.SS "#define Clp_LongNegated   (1<<3)"
+
+.PP
+Option character begins a negated long option\&. 
+.SS "#define Clp_LongImplicit   (1<<4)"
+
+.PP
+Option character can begin a long option, and is part of that long option\&. 
+.SS "#define Clp_NotOption   0"
+
+.PP
+Clp_Next value: argument was not an option\&. 
+.SS "#define Clp_Done   \-1"
+
+.PP
+Clp_Next value: there are no more arguments\&. 
+.SS "#define Clp_BadOption   \-2"
+
+.PP
+Clp_Next value: argument was an erroneous option\&. 
+.SS "#define Clp_Error   \-3"
+
+.PP
+Clp_Next value: internal CLP error\&. 
+.SS "#define Clp_ValSize   40"
+
+.PP
+Minimum size of the \fBClp_Parser\fP val\&.cs field\&. 
+.SS "#define Clp_ValIntSize   10"
+
+.PP
+Minimum size of the \fBClp_Parser\fP val\&.is field\&. 
+.SS "#define Clp_DisallowOptions   (1<<0)"
+
+.PP
+Value type flag: value can't be an option string\&. See \fBClp_AddType()\fP\&. 
+.SS "#define Clp_AllowNumbers   (1<<0)"
+
+.PP
+\fBString\fP list flag: allow explicit numbers\&. See \fBClp_AddStringListType()\fP and \fBClp_AddStringListTypeVec()\fP\&. 
+.SS "#define Clp_StringListLong   (1<<1)"
+
+.PP
+\fBString\fP list flag: values have long type\&. 
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef int(* Clp_ValParseFunc) (\fBClp_Parser\fP *clp, const char *vstr, int complain, void *user_data)"
+
+.PP
+A value parsing function\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIvstr\fP the value to be parsed 
+.br
+\fIcomplain\fP if nonzero, report error messages via Clp_OptionError 
+.br
+\fIuser_data\fP user data passed to \fBClp_AddType()\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if parsing succeeded, 0 otherwise 
+.RE
+.PP
+
+.SS "typedef void(* Clp_ErrorHandler) (\fBClp_Parser\fP *clp, const char *message)"
+
+.PP
+A function for reporting option errors\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fImessage\fP error message 
+.RE
+.PP
+
+.SH "Function Documentation"
+.PP 
+.SS "\fBClp_Parser\fP* Clp_NewParser (int argc, const char *const * argv, int nopt, const \fBClp_Option\fP * opt)"
+
+.PP
+Create a new \fBClp_Parser\fP\&. never
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargc\fP number of arguments 
+.br
+\fIargv\fP argument array 
+.br
+\fInopt\fP number of option definitions 
+.br
+\fIopt\fP option definition array 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the parser
+.RE
+.PP
+The new \fBClp_Parser\fP that will parse the arguments in \fIargv\fP according to the option definitions in \fIopt\fP\&.
+.PP
+The \fBClp_Parser\fP is created with the following characteristics:
+.PP
+.PD 0
+.IP "\(bu" 2
+The '-' character introduces short options (\fCClp_SetOptionChar(clp, '-', Clp_Short)\fP)\&. 
+.IP "\(bu" 2
+Clp_ProgramName is set from the first argument in \fIargv\fP, if any\&. The first argument returned by \fBClp_Next()\fP will be the second argument in \fIargv\fP\&. Note that this behavior differs from Clp_SetArguments\&. 
+.IP "\(bu" 2
+UTF-8 support is on iff the \fCLANG\fP environment variable contains one of the substrings 'UTF-8', 'UTF8', or 'utf8'\&. Override this with \fBClp_SetUTF8()\fP\&. 
+.IP "\(bu" 2
+The Clp_ValString, Clp_ValStringNotOption, Clp_ValInt, Clp_ValUnsigned, Clp_ValLong, Clp_ValUnsignedLong, Clp_ValBool, and Clp_ValDouble types are installed\&. 
+.IP "\(bu" 2
+Errors are reported to standard error\&. 
+.PP
+.PP
+You may also create a \fBClp_Parser\fP with no arguments or options (\fCClp_NewParser(0, 0, 0, 0)\fP) and set the arguments and options later\&.
+.PP
+Returns NULL if there isn't enough memory to construct the parser\&.
+.PP
+\fBNote:\fP
+.RS 4
+The CLP library will not modify the contents of \fIargv\fP or \fIopt\fP\&. The calling program must not modify \fIopt\fP\&. It may modify \fIargv\fP in limited cases\&. 
+.RE
+.PP
+
+.SS "void Clp_DeleteParser (\fBClp_Parser\fP * clp)"
+
+.PP
+Destroy a \fBClp_Parser\fP object\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser
+.RE
+.PP
+All memory associated with \fIclp\fP is freed\&. 
+.SS "const char* Clp_ProgramName (\fBClp_Parser\fP * clp)"
+
+.PP
+Return \fIclp's\fP program name\&. 
+.SS "const char* Clp_SetProgramName (\fBClp_Parser\fP * clp, const char * name)"
+
+.PP
+Set \fIclp's\fP program name\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIname\fP new program name 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+previous program name
+.RE
+.PP
+The calling program should not modify or free \fIname\fP until \fIclp\fP itself is destroyed\&. 
+.SS "\fBClp_ErrorHandler\fP Clp_SetErrorHandler (\fBClp_Parser\fP * clp, \fBClp_ErrorHandler\fP errh)"
+
+.PP
+Set \fIclp's\fP error handler function\&. 
+.SS "int Clp_SetUTF8 (\fBClp_Parser\fP * clp, int utf8)"
+
+.PP
+Set \fIclp's\fP UTF-8 mode\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIutf8\fP does the parser support UTF-8? 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+previous UTF-8 mode
+.RE
+.PP
+In UTF-8 mode, all input strings (arguments and long names for options) are assumed to be encoded via UTF-8, and all character names (\fBClp_SetOptionChar()\fP and short names for options) may cover the whole Unicode range\&. Out of UTF-8 mode, all input strings are treated as binary, and all character names must be unsigned char values\&.
+.PP
+Furthermore, error messages in UTF-8 mode may contain Unicode quote characters\&. 
+.SS "int Clp_OptionChar (\fBClp_Parser\fP * clp, int c)"
+
+.PP
+Return \fIclp's\fP treatment of character \fIc\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIc\fP character 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+option character treatment
+.RE
+.PP
+Returns an integer specifying how CLP treats arguments that begin with character \fIc\fP\&. See Clp_SetOptionChar for possibilities\&. 
+.SS "int Clp_SetOptionChar (\fBClp_Parser\fP * clp, int c, int type)"
+
+.PP
+Set \fIclp's\fP treatment of character \fIc\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIc\fP character 
+.br
+\fItype\fP option character treatment 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+previous option character treatment, or -1 on error
+.RE
+.PP
+\fItype\fP specifies how CLP treats arguments that begin with character \fIc\fP\&. Possibilities are:
+.PP
+.IP "\fBClp_NotOption (or 0) \fP" 1c
+The argument cannot be an option\&. 
+.IP "\fBClp_Long \fP" 1c
+The argument is a long option\&. 
+.IP "\fBClp_Short \fP" 1c
+The argument is a set of short options\&. 
+.IP "\fBClp_Short|Clp_Long \fP" 1c
+The argument is either a long option or, if no matching long option is found, a set of short options\&. 
+.IP "\fBClp_LongNegated \fP" 1c
+The argument is a negated long option\&. For example, after Clp_SetOptionChar(\fIclp\fP, '^', Clp_LongNegated), the argument '^foo' is equivalent to '--no-foo'\&. 
+.IP "\fBClp_ShortNegated \fP" 1c
+The argument is a set of negated short options\&. 
+.IP "\fBClp_ShortNegated|Clp_LongNegated \fP" 1c
+The argument is either a negated long option or, if no matching long option is found, a set of negated short options\&. 
+.IP "\fBClp_LongImplicit \fP" 1c
+The argument may be a long option, where the character \fIc\fP is actually part of the long option name\&. For example, after Clp_SetOptionChar(\fIclp\fP, 'f', Clp_LongImplicit), the argument 'foo' may be equivalent to '--foo'\&. 
+.PP
+.PP
+In UTF-8 mode, \fIc\fP may be any Unicode character\&. Otherwise, \fIc\fP must be an unsigned char value\&. The special character 0 assigns \fItype\fP to \fIevery\fP character\&.
+.PP
+It is an error if \fIc\fP is out of range, \fItype\fP is illegal, or there are too many character definitions stored in \fIclp\fP already\&. The function returns -1 on error\&.
+.PP
+A double hyphen '--' always introduces a long option\&. This behavior cannot currently be changed with \fBClp_SetOptionChar()\fP\&. 
+.SS "int Clp_SetOptions (\fBClp_Parser\fP * clp, int nopt, const \fBClp_Option\fP * opt)"
+
+.PP
+Set \fIclp's\fP option definitions\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fInopt\fP number of option definitions 
+.br
+\fIopt\fP option definition array 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -1 on failure
+.RE
+.PP
+Installs the option definitions in \fIopt\fP\&. Future option parsing will use \fIopt\fP to search for options\&.
+.PP
+Also checks \fIopt's\fP option definitions for validity\&. 'CLP internal
+errors' are reported via \fBClp_OptionError()\fP if:
+.PP
+.PD 0
+.IP "\(bu" 2
+An option has a negative ID\&. 
+.IP "\(bu" 2
+Two different short options have the same name\&. 
+.IP "\(bu" 2
+Two different long options have the same name\&. 
+.IP "\(bu" 2
+A short and a long option are ambiguous, in that some option character might introduce either a short or a long option (e\&.g\&., Clp_SetOptionChar(\fIclp\fP, '-', Clp_Long|Clp_Short)), and a short name equals a long name\&. 
+.PP
+.PP
+If necessary memory cannot be allocated, this function returns -1 without modifying the parser\&.
+.PP
+\fBNote:\fP
+.RS 4
+The CLP library will not modify the contents of \fIargv\fP or \fIopt\fP\&. The calling program must not modify \fIopt\fP either until another call to \fBClp_SetOptions()\fP or the parser is destroyed\&. 
+.RE
+.PP
+
+.SS "void Clp_SetArguments (\fBClp_Parser\fP * clp, int argc, const char *const * argv)"
+
+.PP
+Set \fIclp's\fP arguments\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIargc\fP number of arguments 
+.br
+\fIargv\fP argument array
+.RE
+.PP
+Installs the arguments in \fIargv\fP for parsing\&. Future option parsing will analyze \fIargv\fP\&.
+.PP
+Unlike \fBClp_NewParser()\fP, this function does not treat \fIargv\fP[0] specially\&. The first subsequent call to \fBClp_Next()\fP will analyze \fIargv\fP[0]\&.
+.PP
+This function also sets option processing to on, as by Clp_SetOptionProcessing(\fIclp\fP, 1)\&.
+.PP
+\fBNote:\fP
+.RS 4
+The CLP library will not modify the contents of \fIargv\fP\&. The calling program should not generally modify the element of \fIargv\fP that CLP is currently analyzing\&. 
+.RE
+.PP
+
+.SS "int Clp_SetOptionProcessing (\fBClp_Parser\fP * clp, int on)"
+
+.PP
+Set whether \fIclp\fP is searching for options\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIon\fP whether to search for options 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+previous option processing setting
+.RE
+.PP
+When option processing is off, every call to \fBClp_Next()\fP returns Clp_NotOption\&. By default the option \fC'--'\fP turns off option processing and is otherwise ignored\&. 
+.SS "int Clp_AddType (\fBClp_Parser\fP * clp, int val_type, int flags, \fBClp_ValParseFunc\fP parser, void * user_data)"
+
+.PP
+Define a new value type for \fIclp\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIval_type\fP value type ID 
+.br
+\fIflags\fP value type flags 
+.br
+\fIparser\fP parser function 
+.br
+\fIuser_data\fP user data for \fIparser\fP function 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -1 on failure
+.RE
+.PP
+Defines argument type \fIval_type\fP in parser \fIclp\fP\&. The parsing function \fIparser\fP will be passed argument values for type \fIval_type\fP\&. It should parse the argument into values (usually in \fIclp->val\fP, but sometimes elsewhere), report errors if necessary, and return whether the parse was successful\&.
+.PP
+Any prior argument parser match \fIval_type\fP is removed\&. \fIval_type\fP must be greater than zero\&.
+.PP
+\fIflags\fP specifies additional parsing flags\&. At the moment the only relevant flag is Clp_DisallowOptions, which means that separated values must not look like options\&. For example, assume argument \fC--a\fP/\fC-a\fP has mandatory value type Clp_ValStringNotOption (which has Clp_DisallowOptions)\&. Then:
+.PP
+.PD 0
+.IP "\(bu" 2
+\fC--a=--b\fP will parse with value \fC--b\fP\&. 
+.IP "\(bu" 2
+\fC-a--b\fP will parse with value \fC--b\fP\&. 
+.IP "\(bu" 2
+\fC--a --b\fP will not parse, since the mandatory value looks like an option\&. 
+.IP "\(bu" 2
+\fC-a --b\fP will not parse, since the mandatory value looks like an option\&. 
+.PP
+
+.SS "int Clp_AddStringListTypeVec (\fBClp_Parser\fP * clp, int val_type, int flags, int nstrs, const char *const * strs, const int * vals)"
+
+.PP
+Define a new string list value type for \fIclp\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIval_type\fP value type ID 
+.br
+\fIflags\fP string list flags 
+.br
+\fInstrs\fP number of strings in list 
+.br
+\fIstrs\fP array of strings 
+.br
+\fIvals\fP array of values 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -1 on failure
+.RE
+.PP
+Defines argument type \fIval_type\fP in parser \fIclp\fP\&. The parsing function sets \fIclp->val\&.i\fP to an integer\&. The value string is matched against the \fIstrs\fP\&. If there's a unique match, the corresponding entry from \fIvals\fP is returned\&. Unique prefix matches also work\&. Finally, if \fIflags\fP contains the Clp_AllowNumbers flag, then integers are also accepted\&.
+.PP
+For example: 
+.PP
+.nf
+1 const char * const strs[] = { "cat", "cattle", "dog" };
+2 const int vals[]          = { 1,     2,        3     };
+3 Clp_AddStringListTypeVec(clp, 100, Clp_AllowNumbers, 3, strs, vals);
+
+.fi
+.PP
+.PP
+Say that option \fC--animal\fP takes value type 100\&. Then:
+.PP
+.PD 0
+.IP "\(bu" 2
+\fC--animal=cat\fP will succeed and set \fIclp->val\&.i\fP = 1\&. 
+.IP "\(bu" 2
+\fC--animal=cattle\fP will succeed and set \fIclp->val\&.i\fP = 2\&. 
+.IP "\(bu" 2
+\fC--animal=dog\fP will succeed and set \fIclp->val\&.i\fP = 3\&. 
+.IP "\(bu" 2
+\fC--animal=d\fP will succeed and set \fIclp->val\&.i\fP = 3\&. 
+.IP "\(bu" 2
+\fC--animal=c\fP will fail, since \fCc\fP is ambiguous\&. 
+.IP "\(bu" 2
+\fC--animal=4\fP will succeed and set \fIclp->val\&.i\fP = 4\&. 
+.PP
+.PP
+\fBNote:\fP
+.RS 4
+The CLP library will not modify the contents of \fIstrs\fP or \fIvals\fP\&. The calling program can modify the \fIstrs\fP array, but the actual strings (for instance, \fIstrs\fP[0] and \fIstrs\fP[1]) must not be modified or freed until the parser is destroyed\&. 
+.RE
+.PP
+
+.SS "int Clp_AddStringListType (\fBClp_Parser\fP * clp, int val_type, int flags,  \&.\&.\&.)"
+
+.PP
+Define a new string list value type for \fIclp\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIval_type\fP value type ID 
+.br
+\fIflags\fP string list flags 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, -1 on failure
+.RE
+.PP
+Defines argument type \fIval_type\fP in parser \fIclp\fP\&. The parsing function sets \fIclp->val\&.i\fP to an integer\&. The value string is matched against strings provided in the ellipsis arguments\&. For example, the \fBClp_AddStringListType()\fP call below has the same effect as the \fBClp_AddStringListTypeVec()\fP call:
+.PP
+For example: 
+.PP
+.nf
+1 Clp_AddStringListType(clp, 100, Clp_AllowNumbers, "cat", 1,
+2                       "cattle", 2, "dog", 3, (const char *) NULL);
+3 
+4 const char * const strs[] = { "cat", "cattle", "dog" };
+5 const int vals[]          = { 1,     2,        3     };
+6 Clp_AddStringListTypeVec(clp, 100, Clp_AllowNumbers, 3, strs, vals);
+
+.fi
+.PP
+.PP
+\fBNote:\fP
+.RS 4
+The CLP library will not modify any of the passed-in strings\&. The calling program must not modify or free them either until the parser is destroyed\&. 
+.RE
+.PP
+
+.SS "int Clp_Next (\fBClp_Parser\fP * clp)"
+
+.PP
+Parse and return the next argument from \fIclp\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+option ID of next option
+.RE
+.PP
+Parse the next argument from the argument list, store information about that argument in the fields of \fIclp\fP, and return the option's ID\&.
+.PP
+If an argument was successfully parsed, that option's ID is returned\&. Other possible return values are:
+.PP
+.IP "\fBClp_Done \fP" 1c
+There are no more arguments\&. 
+.IP "\fBClp_NotOption \fP" 1c
+The next argument was not an option\&. The argument's text is \fIclp->vstr\fP (and \fIclp->val\&.s\fP)\&. 
+.IP "\fBClp_BadOption \fP" 1c
+The next argument was a bad option: either an option that wasn't understood, or an option lacking a required value, or an option whose value couldn't be parsed\&. The option has been skipped\&. 
+.IP "\fBClp_Error \fP" 1c
+There was an internal error\&. This should never occur unless a user messes with, for example, a \fBClp_Option\fP array\&. 
+.PP
+.PP
+The fields of \fIclp\fP are set as follows\&.
+.PP
+.IP "\fB\fCnegated\fP \fP" 1c
+1 if the option was negated, 0 if it wasn't\&. 
+.IP "\fB\fChave_val\fP \fP" 1c
+1 if the option had a value, 0 if it didn't\&. Note that negated options are not allowed to have values\&. 
+.IP "\fB\fCvstr\fP \fP" 1c
+The value string, if any\&. NULL if there was no value\&. 
+.IP "\fB\fCval\fP \fP" 1c
+An option's value type will parse the value string into this union\&. 
+.PP
+.PP
+The parsed argument is shifted off the argument list, so that sequential calls to \fBClp_Next()\fP step through the arugment list\&. 
+.SS "const char* Clp_Shift (\fBClp_Parser\fP * clp, int allow_options)"
+
+.PP
+Return the next argument from \fIclp\fP without option parsing\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIallow_options\fP whether options will be allowed
+.RE
+.PP
+Remove and return the next argument from \fIclp's\fP argument array\&. If there are no arguments left, or if the next argument is an option and \fIallow_options\fP != 0, then returns null\&. 
+.SS "Clp_ParserState* Clp_NewParserState (void)"
+
+.PP
+Create a new Clp_ParserState\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+the parser state
+.RE
+.PP
+A Clp_ParserState object can store a parsing state of a \fBClp_Parser\fP object\&. This state specifies exactly how far the \fBClp_Parser\fP has gotten in parsing an argument list\&. The \fBClp_SaveParser()\fP and \fBClp_RestoreParser()\fP functions can be used to save this state and then restore it later, allowing a \fBClp_Parser\fP to switch among argument lists\&.
+.PP
+The initial state is empty, in that after Clp_RestoreParser(clp, state), Clp_Next(clp) would return Clp_Done\&.
+.PP
+Parser states can be saved and restored among different parser objects\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_DeleteParserState\fP, \fBClp_SaveParser\fP, \fBClp_RestoreParser\fP 
+.RE
+.PP
+
+.SS "void Clp_DeleteParserState (Clp_ParserState * state)"
+
+.PP
+Destroy a Clp_ParserState object\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstate\fP parser state
+.RE
+.PP
+The memory associated with \fIstate\fP is freed\&. 
+.SS "void Clp_SaveParser (const \fBClp_Parser\fP * clp, Clp_ParserState * state)"
+
+.PP
+Save \fIclp's\fP current state in \fIstate\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIstate\fP parser state 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_NewParserState\fP, \fBClp_RestoreParser\fP 
+.RE
+.PP
+
+.SS "void Clp_RestoreParser (\fBClp_Parser\fP * clp, const Clp_ParserState * state)"
+
+.PP
+Restore parser state from \fIstate\fP into \fIclp\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIstate\fP parser state
+.RE
+.PP
+The parser state in \fIstate\fP is restored into \fIclp\fP\&. The next call to \fBClp_Next()\fP will return the same result as it would have at the time \fIstate\fP was saved (probably by Clp_SaveParser(\fIclp\fP, \fIstate\fP))\&.
+.PP
+A parser state contains information about arguments (argc and argv; see \fBClp_SetArguments()\fP) and option processing (\fBClp_SetOptionProcessing()\fP), but not about options (\fBClp_SetOptions()\fP)\&. Changes to options and value types are preserved across \fBClp_RestoreParser()\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_NewParserState\fP, \fBClp_SaveParser\fP 
+.RE
+.PP
+
+.SS "int Clp_OptionError (\fBClp_Parser\fP * clp, const char * format,  \&.\&.\&.)"
+
+.PP
+Report a parser error\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIformat\fP error format
+.RE
+.PP
+Format an error message from \fIformat\fP and any additional arguments in the ellipsis\&. The resulting error string is then printed to standard error (or passed to the error handler specified by Clp_SetErrorHandler)\&. Returns the number of characters printed\&.
+.PP
+The following format characters are accepted:
+.PP
+.IP "\fB\fC%\fP\fCc\fP \fP" 1c
+A character (type \fCint\fP)\&. Control characters are printed in caret notation\&. If the parser is in UTF-8 mode, the character is formatted in UTF-8\&. Otherwise, special characters are printed with backslashes and octal notation\&. 
+.IP "\fB\fC%\fP\fCs\fP \fP" 1c
+A string (type \fCconst char *\fP)\&. 
+.IP "\fB\fC%\fP\fCC\fP \fP" 1c
+The argument is a string (type \fCconst char *\fP)\&. The first character in this string is printed\&. If the parser is in UTF-8 mode, this may involve multiple bytes\&. 
+.IP "\fB\fC%\fP\fCd\fP \fP" 1c
+An integer (type \fCint\fP)\&. Printed in decimal\&. 
+.IP "\fB\fC%\fP\fCO\fP \fP" 1c
+The current option\&. No values are read from the argument list; the current option is defined in the \fBClp_Parser\fP object itself\&. 
+.IP "\fB\fC%\fP\fCV\fP \fP" 1c
+Like \fC%\fP\fCO\fP, but also includes the current value, if any\&. 
+.IP "\fB\fC%%\fP \fP" 1c
+Prints a percent character\&. 
+.IP "\fB\fC%\fP\fC<\fP \fP" 1c
+Prints an open quote string\&. In UTF-8 mode, prints a left single quote\&. Otherwise prints a single quote\&. 
+.IP "\fB\fC%\fP\fC>\fP \fP" 1c
+Prints a closing quote string\&. In UTF-8 mode, prints a right single quote\&. Otherwise prints a single quote\&. 
+.IP "\fB\fC%\fP\fC,\fP \fP" 1c
+Prints an apostrophe\&. In UTF-8 mode, prints a right single quote\&. Otherwise prints a single quote\&. 
+.PP
+.PP
+Note that no flag characters, precision, or field width characters are currently supported\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_SetErrorHandler\fP 
+.RE
+.PP
+
+.SS "int Clp_vsnprintf (\fBClp_Parser\fP * clp, char * str, size_t size, const char * format, va_list val)"
+
+.PP
+Format a message\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIstr\fP output string 
+.br
+\fIsize\fP size of output string 
+.br
+\fIformat\fP error format
+.RE
+.PP
+Format an error message from \fIformat\fP and any additional arguments in the ellipsis, according to the Clp_OptionError formatting conventions\&. The resulting string is written to \fIstr\fP\&. At most \fIsize\fP characters are written to \fIstr\fP, including a terminating null byte\&. The return value is the number of characters that would have been written (excluding the terminating null byte) if \fIsize\fP were large enough to contain the entire string\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_OptionError\fP 
+.RE
+.PP
+
+.SS "int Clp_fprintf (\fBClp_Parser\fP * clp, FILE * f, const char * format,  \&.\&.\&.)"
+
+.PP
+Print a message\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIf\fP output file 
+.br
+\fIformat\fP error format
+.RE
+.PP
+Format an error message using \fIformat\fP and additional arguments in the ellipsis, according to the Clp_OptionError formatting conventions\&. The resulting message is written to \fIf\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_OptionError\fP 
+.RE
+.PP
+
+.SS "int Clp_vfprintf (\fBClp_Parser\fP * clp, FILE * f, const char * format, va_list val)"
+
+.PP
+Print a message\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIf\fP output file 
+.br
+\fIformat\fP error format 
+.br
+\fIval\fP arguments
+.RE
+.PP
+Format an error message using \fIformat\fP and \fIval\fP, according to the Clp_OptionError formatting conventions\&. The resulting message is written to \fIf\fP\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_OptionError\fP 
+.RE
+.PP
+
+.SS "int Clp_CurOptionNameBuf (\fBClp_Parser\fP * clp, char * buf, int len)"
+
+.PP
+Extract the current option as a string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.br
+\fIbuf\fP output buffer 
+.br
+\fIlen\fP length of output buffer 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+number of characters written to the buffer, not including the terminating NUL
+.RE
+.PP
+A string that looks like the last option parsed by \fIclp\fP is extracted into \fIbuf\fP\&. The correct option characters are put into the string first, followed by the option text\&. The output buffer is null-terminated unless \fIlen\fP == 0\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_CurOptionName\fP 
+.RE
+.PP
+
+.SS "const char* Clp_CurOptionName (\fBClp_Parser\fP * clp)"
+
+.PP
+Extract the current option as a string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIclp\fP the parser 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+string describing the current option
+.RE
+.PP
+This function acts like \fBClp_CurOptionNameBuf()\fP, but returns a pointer into a static buffer that will be rewritten on the next call to \fBClp_CurOptionName()\fP\&.
+.PP
+\fBNote:\fP
+.RS 4
+This function is not thread safe\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBClp_CurOptionName\fP 
+.RE
+.PP
+
+.SS "int Clp_IsLong (\fBClp_Parser\fP * clp, const char * long_name)"
+
+.PP
+Test if the current option had long name \fIname\fP\&. 
+.SS "int Clp_IsShort (\fBClp_Parser\fP * clp, int short_name)"
+
+.PP
+Test if the current option had short name \fIname\fP\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

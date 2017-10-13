@@ -1,0 +1,54 @@
+.TH "include/click/sync.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/sync.hh \- Classes for synchronizing among multiple CPUs, particularly in the Linux kernel\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/machine\&.hh>\fP
+.br
+\fC#include <click/glue\&.hh>\fP
+.br
+\fC#include <click/atomic\&.hh>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBSpinlock\fP"
+.br
+.RI "\fIA recursive spinlock for SMP Click threads\&. \fP"
+.ti -1c
+.RI "class \fBSimpleSpinlock\fP"
+.br
+.RI "\fIA non-recursive spinlock for SMP Click threads\&. \fP"
+.ti -1c
+.RI "class \fBSpinlockIRQ\fP"
+.br
+.RI "\fIA spinlock that disables interrupts\&. \fP"
+.ti -1c
+.RI "class \fBReadWriteLock\fP"
+.br
+.RI "\fIA read/write lock\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCLICK_MULTITHREAD_SPINLOCK\fP   1"
+.br
+.ti -1c
+.RI "#define \fBSPINLOCK_ASSERTLEVEL\fP   '<\-999>'"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Classes for synchronizing among multiple CPUs, particularly in the Linux kernel\&. 
+
+> 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

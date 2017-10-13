@@ -1,0 +1,521 @@
+.TH "Deque< T >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Deque< T > \- \fBDeque\fP template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <deque\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBRESERVE_GROW\fP = (size_type) -1 }
+.RI "\fIConstant passed to \fBreserve()\fP to grow the deque\&. \fP""
+.br
+.ti -1c
+.RI "typedef T \fBvalue_type\fP"
+.br
+.RI "\fIValue type\&. \fP"
+.ti -1c
+.RI "typedef T & \fBreference\fP"
+.br
+.RI "\fIReference to value type\&. \fP"
+.ti -1c
+.RI "typedef const T & \fBconst_reference\fP"
+.br
+.RI "\fIConst reference to value type\&. \fP"
+.ti -1c
+.RI "typedef T * \fBpointer\fP"
+.br
+.RI "\fIPointer to value type\&. \fP"
+.ti -1c
+.RI "typedef const T * \fBconst_pointer\fP"
+.br
+.RI "\fIPointer to const value type\&. \fP"
+.ti -1c
+.RI "typedef \fBfast_argument\fP< T >::type \fBvalue_argument_type\fP"
+.br
+.RI "\fIType used for value arguments (either T or const T &)\&. \fP"
+.ti -1c
+.RI "typedef const T & \fBconst_access_type\fP"
+.br
+.ti -1c
+.RI "typedef int \fBsize_type\fP"
+.br
+.RI "\fIType of sizes (\fBsize()\fP)\&. \fP"
+.ti -1c
+.RI "typedef \fBDeque_iterator\fP< T > \fBiterator\fP"
+.br
+.RI "\fIIterator type\&. \fP"
+.ti -1c
+.RI "typedef Deque_const_iterator< T > \fBconst_iterator\fP"
+.br
+.RI "\fIConst iterator type\&. \fP"
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDeque\fP ()"
+.br
+.RI "\fIConstruct an empty deque\&. \fP"
+.ti -1c
+.RI "\fBDeque\fP (\fBsize_type\fP n, \fBvalue_argument_type\fP v)"
+.br
+.RI "\fIConstruct a deque containing \fIn\fP copies of \fIv\fP\&. \fP"
+.ti -1c
+.RI "\fBDeque\fP (const \fBDeque\fP< T > &x)"
+.br
+.RI "\fIConstruct a deque as a copy of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBDeque\fP< T > & \fBoperator=\fP (const \fBDeque\fP< T > &x)"
+.br
+.RI "\fIReplace this deque's contents with a copy of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fBDeque\fP< T > & \fBassign\fP (\fBsize_type\fP n, \fBvalue_argument_type\fP v=T())"
+.br
+.RI "\fIReplace this deque's contents with \fIn\fP copies of \fIv\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBbegin\fP ()"
+.br
+.RI "\fIReturn an iterator for the first element in the deque\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBend\fP ()"
+.br
+.RI "\fIReturn an iterator for the end of the deque\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBbegin\fP () const "
+.br
+.ti -1c
+.RI "\fBconst_iterator\fP \fBend\fP () const "
+.br
+.ti -1c
+.RI "\fBconst_iterator\fP \fBcbegin\fP () const "
+.br
+.RI "\fIReturn a const_iterator for the beginning of the deque\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBcend\fP () const "
+.br
+.RI "\fIReturn a const_iterator for the end of the deque\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBsize\fP () const "
+.br
+.RI "\fIReturn the number of elements\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBcapacity\fP () const "
+.br
+.RI "\fIReturn the deque's capacity\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fITest if the deque is empty (\fBsize()\fP == 0)\&. \fP"
+.ti -1c
+.RI "void \fBresize\fP (\fBsize_type\fP n, \fBvalue_argument_type\fP v=T())"
+.br
+.RI "\fIResize the deque to contain \fIn\fP elements\&. \fP"
+.ti -1c
+.RI "bool \fBreserve\fP (\fBsize_type\fP n)"
+.br
+.RI "\fIReserve space for at least \fIn\fP more elements\&. \fP"
+.ti -1c
+.RI "T & \fBoperator[]\fP (\fBsize_type\fP i)"
+.br
+.RI "\fIReturn a reference to the \fIi\fPth element\&. \fP"
+.ti -1c
+.RI "const T & \fBoperator[]\fP (\fBsize_type\fP i) const "
+.br
+.ti -1c
+.RI "T & \fBat\fP (\fBsize_type\fP i)"
+.br
+.RI "\fIReturn a reference to the \fIi\fPth element\&. \fP"
+.ti -1c
+.RI "const T & \fBat\fP (\fBsize_type\fP i) const "
+.br
+.ti -1c
+.RI "T & \fBfront\fP ()"
+.br
+.RI "\fIReturn a reference to the first element\&. \fP"
+.ti -1c
+.RI "const T & \fBfront\fP () const "
+.br
+.ti -1c
+.RI "T & \fBback\fP ()"
+.br
+.RI "\fIReturn a reference to the last element (number \fBsize()\fP-1)\&. \fP"
+.ti -1c
+.RI "const T & \fBback\fP () const "
+.br
+.ti -1c
+.RI "T & \fBunchecked_at\fP (\fBsize_type\fP i)"
+.br
+.RI "\fIReturn a reference to the \fIi\fPth element\&. \fP"
+.ti -1c
+.RI "const T & \fBunchecked_at\fP (\fBsize_type\fP i) const "
+.br
+.ti -1c
+.RI "T & \fBat_u\fP (\fBsize_type\fP i)"
+.br
+.ti -1c
+.RI "const T & \fBat_u\fP (\fBsize_type\fP i) const "
+.br
+.ti -1c
+.RI "void \fBpush_back\fP (\fBvalue_argument_type\fP v)"
+.br
+.RI "\fIAppend \fIv\fP to the end of the deque\&. \fP"
+.ti -1c
+.RI "void \fBpop_back\fP ()"
+.br
+.RI "\fIRemove the last element\&. \fP"
+.ti -1c
+.RI "void \fBpush_front\fP (\fBvalue_argument_type\fP v)"
+.br
+.RI "\fIPrepend element \fIv\fP\&. \fP"
+.ti -1c
+.RI "void \fBpop_front\fP ()"
+.br
+.RI "\fIRemove the first element\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBinsert\fP (\fBiterator\fP it, \fBvalue_argument_type\fP v)"
+.br
+.RI "\fIInsert \fIv\fP before position \fIit\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBerase\fP (\fBiterator\fP it)"
+.br
+.RI "\fIRemove the element at position \fIit\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBerase\fP (\fBiterator\fP a, \fBiterator\fP b)"
+.br
+.RI "\fIRemove the elements in [\fIa\fP, \fIb\fP)\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIRemove all elements\&. \fP"
+.ti -1c
+.RI "void \fBswap\fP (\fBDeque\fP< T > &x)"
+.br
+.RI "\fISwap the contents of this deque and \fIx\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T>
+.br
+class Deque< T >"
+\fBDeque\fP template\&. 
+
+\fBDeque\fP implements a double-ended queue: a growable array that can efficiently add and remove elements at both ends (see \fBpush_back()\fP, \fBpop_back()\fP, \fBpush_front()\fP, and \fBpop_front()\fP)\&. Its interface should be compatible with C++'s std::deque, although that type has more methods\&. \fBDeque\fP elements are accessed with operator[] like arrays\&.
+.PP
+\fBDeque\fP is implemented using a circular buffer of elements\&. This makes its operations slightly slower than those of \fBVector\fP\&. If you only need to push elements to the end of an array, prefer \fBVector\fP\&.
+.PP
+Example code: 
+.PP
+.nf
+Deque<int> d;
+printf("%d\n", d\&.size());         // prints "0"
+
+d\&.push_back(1);
+d\&.push_back(2);
+printf("%d\n", d\&.size());         // prints "2"
+printf("%d %d\n", d[0], d[1]);    // prints "1 2"
+
+d\&.push_front(0);
+d\&.push_front(-1);
+printf("%d\n", d\&.size());         // prints "4"
+printf("%d %d %d %d\n", d[0], d[1], d[2], d[3]);
+                                  // prints "-1 0 1 2"
+
+d\&.pop_front();
+d\&.pop_back();
+printf("%d\n", d\&.size());         // prints "2"
+printf("%d %d\n", d[0], d[1]);    // prints "0 1"
+
+.fi
+.PP
+ 
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<typename T> typedef T \fBDeque\fP< T >::\fBvalue_type\fP"
+
+.PP
+Value type\&. 
+.SS "template<typename T> typedef T& \fBDeque\fP< T >::\fBreference\fP"
+
+.PP
+Reference to value type\&. 
+.SS "template<typename T> typedef const T& \fBDeque\fP< T >::\fBconst_reference\fP"
+
+.PP
+Const reference to value type\&. 
+.SS "template<typename T> typedef T* \fBDeque\fP< T >::\fBpointer\fP"
+
+.PP
+Pointer to value type\&. 
+.SS "template<typename T> typedef const T* \fBDeque\fP< T >::\fBconst_pointer\fP"
+
+.PP
+Pointer to const value type\&. 
+.SS "template<typename T> typedef \fBfast_argument\fP<T>::type \fBDeque\fP< T >::\fBvalue_argument_type\fP"
+
+.PP
+Type used for value arguments (either T or const T &)\&. 
+.SS "template<typename T> typedef int \fBDeque\fP< T >::\fBsize_type\fP"
+
+.PP
+Type of sizes (\fBsize()\fP)\&. 
+.SS "template<typename T> typedef \fBDeque_iterator\fP<T> \fBDeque\fP< T >::\fBiterator\fP"
+
+.PP
+Iterator type\&. 
+.SS "template<typename T> typedef Deque_const_iterator<T> \fBDeque\fP< T >::\fBconst_iterator\fP"
+
+.PP
+Const iterator type\&. 
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "template<typename T> anonymous enum"
+
+.PP
+Constant passed to \fBreserve()\fP to grow the deque\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T > \fBDeque\fP< T >::\fBDeque\fP ()\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct an empty deque\&. 
+.SS "template<typename T > \fBDeque\fP< T >::\fBDeque\fP (\fBsize_type\fP n, \fBvalue_argument_type\fP v)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct a deque containing \fIn\fP copies of \fIv\fP\&. 
+.SS "template<typename T> \fBDeque\fP< T >::\fBDeque\fP (const \fBDeque\fP< T > & x)\fC [inline]\fP"
+
+.PP
+Construct a deque as a copy of \fIx\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T> \fBDeque\fP< T > & \fBDeque\fP< T >::operator= (const \fBDeque\fP< T > & x)\fC [inline]\fP"
+
+.PP
+Replace this deque's contents with a copy of \fIx\fP\&. 
+.SS "template<typename T > \fBDeque\fP< T > & \fBDeque\fP< T >::assign (\fBsize_type\fP n, \fBvalue_argument_type\fP v = \fCT()\fP)\fC [inline]\fP"
+
+.PP
+Replace this deque's contents with \fIn\fP copies of \fIv\fP\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBsize()\fP == \fIn\fP 
+.RE
+.PP
+
+.SS "template<typename T > \fBDeque\fP< T >::\fBiterator\fP \fBDeque\fP< T >::begin ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the first element in the deque\&. 
+.SS "template<typename T > \fBDeque\fP< T >::\fBiterator\fP \fBDeque\fP< T >::end ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the end of the deque\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBend()\fP == \fBbegin()\fP + \fBsize()\fP 
+.RE
+.PP
+
+.SS "template<typename T > \fBDeque\fP< T >::\fBconst_iterator\fP \fBDeque\fP< T >::begin () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > \fBDeque\fP< T >::\fBconst_iterator\fP \fBDeque\fP< T >::end () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > \fBDeque\fP< T >::\fBconst_iterator\fP \fBDeque\fP< T >::cbegin () const\fC [inline]\fP"
+
+.PP
+Return a const_iterator for the beginning of the deque\&. 
+.SS "template<typename T > \fBDeque\fP< T >::\fBconst_iterator\fP \fBDeque\fP< T >::cend () const\fC [inline]\fP"
+
+.PP
+Return a const_iterator for the end of the deque\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBend()\fP == \fBbegin()\fP + \fBsize()\fP 
+.RE
+.PP
+
+.SS "template<typename T > \fBDeque\fP< T >::\fBsize_type\fP \fBDeque\fP< T >::size () const\fC [inline]\fP"
+
+.PP
+Return the number of elements\&. 
+.SS "template<typename T > \fBDeque\fP< T >::\fBsize_type\fP \fBDeque\fP< T >::capacity () const\fC [inline]\fP"
+
+.PP
+Return the deque's capacity\&. The capacity is greater than or equal to the \fBsize()\fP\&. Functions such as resize(n) will not allocate new memory for the deque if n <= \fBcapacity()\fP\&. 
+.SS "template<typename T > bool \fBDeque\fP< T >::empty () const\fC [inline]\fP"
+
+.PP
+Test if the deque is empty (\fBsize()\fP == 0)\&. 
+.SS "template<typename T > void \fBDeque\fP< T >::resize (\fBsize_type\fP n, \fBvalue_argument_type\fP v = \fCT()\fP)\fC [inline]\fP"
+
+.PP
+Resize the deque to contain \fIn\fP elements\&. never
+.PP
+\fBParameters:\fP
+.RS 4
+\fIn\fP new size 
+.br
+\fIv\fP value used to fill new elements 
+.RE
+.PP
+
+.SS "template<typename T > bool \fBDeque\fP< T >::reserve (\fBsize_type\fP n)\fC [inline]\fP"
+
+.PP
+Reserve space for at least \fIn\fP more elements\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+true iff reserve succeeded\&.
+.RE
+.PP
+This function changes the deque's \fBcapacity()\fP, not its \fBsize()\fP\&. If reserve(\fIn\fP) succeeds, then any succeeding call to resize(\fIm\fP) with \fIm\fP < \fIn\fP will succeed without allocating deque memory\&. 
+.SS "template<typename T > T & \fBDeque\fP< T >::operator[] (\fBsize_type\fP i)\fC [inline]\fP"
+
+.PP
+Return a reference to the \fIi\fPth element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBsize()\fP 
+.RE
+.PP
+
+.SS "template<typename T > const T & \fBDeque\fP< T >::operator[] (\fBsize_type\fP i) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > T & \fBDeque\fP< T >::at (\fBsize_type\fP i)\fC [inline]\fP"
+
+.PP
+Return a reference to the \fIi\fPth element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBsize()\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBoperator[]()\fP 
+.RE
+.PP
+
+.SS "template<typename T > const T & \fBDeque\fP< T >::at (\fBsize_type\fP i) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > T & \fBDeque\fP< T >::front ()\fC [inline]\fP"
+
+.PP
+Return a reference to the first element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+!empty() 
+.RE
+.PP
+
+.SS "template<typename T > const T & \fBDeque\fP< T >::front () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > T & \fBDeque\fP< T >::back ()\fC [inline]\fP"
+
+.PP
+Return a reference to the last element (number \fBsize()\fP-1)\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+!empty() 
+.RE
+.PP
+
+.SS "template<typename T > const T & \fBDeque\fP< T >::back () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > T & \fBDeque\fP< T >::unchecked_at (\fBsize_type\fP i)\fC [inline]\fP"
+
+.PP
+Return a reference to the \fIi\fPth element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBsize()\fP
+.RE
+.PP
+Unlike \fBoperator[]()\fP and \fBat()\fP, this function does not check bounds, even if assertions are enabled\&. Use with caution\&. 
+.SS "template<typename T > const T & \fBDeque\fP< T >::unchecked_at (\fBsize_type\fP i) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename T > void \fBDeque\fP< T >::push_back (\fBvalue_argument_type\fP v)\fC [inline]\fP"
+
+.PP
+Append \fIv\fP to the end of the deque\&. A copy of \fIv\fP is added to position \fBsize()\fP\&. Takes amortized O(1) time\&. 
+.SS "template<typename T > void \fBDeque\fP< T >::pop_back ()\fC [inline]\fP"
+
+.PP
+Remove the last element\&. Takes O(1) time\&. 
+.SS "template<typename T > void \fBDeque\fP< T >::push_front (\fBvalue_argument_type\fP v)\fC [inline]\fP"
+
+.PP
+Prepend element \fIv\fP\&. A copy of \fIv\fP is added to position 0\&. Other elements are shifted one position forward\&. Takes amortized O(1) time\&. 
+.SS "template<typename T > void \fBDeque\fP< T >::pop_front ()\fC [inline]\fP"
+
+.PP
+Remove the first element\&. Other elements are shifted one position backward\&. Takes O(1) time\&. 
+.SS "template<typename T > \fBDeque\fP< T >::\fBiterator\fP \fBDeque\fP< T >::insert (\fBiterator\fP it, \fBvalue_argument_type\fP v)\fC [inline]\fP"
+
+.PP
+Insert \fIv\fP before position \fIit\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+An iterator pointing at the new element\&. 
+.RE
+.PP
+
+.SS "template<typename T > \fBDeque\fP< T >::\fBiterator\fP \fBDeque\fP< T >::erase (\fBiterator\fP it)\fC [inline]\fP"
+
+.PP
+Remove the element at position \fIit\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+An iterator pointing at the element following \fIit\fP\&. 
+.RE
+.PP
+
+.SS "template<typename T > \fBDeque\fP< T >::\fBiterator\fP \fBDeque\fP< T >::erase (\fBiterator\fP a, \fBiterator\fP b)\fC [inline]\fP"
+
+.PP
+Remove the elements in [\fIa\fP, \fIb\fP)\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+An iterator corresponding to \fIb\fP\&. 
+.RE
+.PP
+
+.SS "template<typename T > void \fBDeque\fP< T >::clear ()\fC [inline]\fP"
+
+.PP
+Remove all elements\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBsize()\fP == 0 
+.RE
+.PP
+
+.SS "template<typename T> void \fBDeque\fP< T >::swap (\fBDeque\fP< T > & x)\fC [inline]\fP"
+
+.PP
+Swap the contents of this deque and \fIx\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

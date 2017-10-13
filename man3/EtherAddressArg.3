@@ -1,0 +1,58 @@
+.TH "EtherAddressArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+EtherAddressArg \- Parser class for Ethernet addresses\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <etheraddress\&.hh>\fP
+.PP
+Inherited by DefaultArg< EtherAddress >\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef void \fBenable_direct_parse\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBEtherAddressArg\fP (int flags=0)"
+.br
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, \fBEtherAddress\fP &value, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, unsigned char *value, const \fBArgContext\fP &args=blank_args)"
+.br
+.ti -1c
+.RI "bool \fBdirect_parse\fP (const \fBString\fP &str, \fBEtherAddress\fP &value, \fBArgs\fP &args)"
+.br
+.ti -1c
+.RI "bool \fBdirect_parse\fP (const \fBString\fP &str, unsigned char *value, \fBArgs\fP &args)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Parser class for Ethernet addresses\&. 
+
+This is the default parser for objects of \fBEtherAddress\fP type\&. For 6-byte arrays like 'click_ether::ether_shost' and 'click_ether::ether_dhost', you must pass an \fBEtherAddressArg()\fP explicitly:
+.PP
+.PP
+.nf
+struct click_ether ethh;
+\&.\&.\&. Args(\&.\&.\&.) \&.\&.\&.
+    \&.read_mp("SRC", EtherAddressArg(), ethh\&.ether_shost)
+    \&.\&.\&.
+.fi
+.PP
+ 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,40 @@
+.TH "xsocket/Xnotify.c" 3 "Fri Mar 3 2017" "Version 2.0" "XSocket API" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+xsocket/Xnotify.c \- \fBXnotify()\fP - get notification of network changes\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Xsocket\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBXnotify\fP (void)"
+.br
+.RI "\fIBlock waiting for notification that the network interface has changed state\&. \fP"
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int Xnotify (void)"
+Blocks and waits for for click to return a status when the joining daemon changes the AD or other network parameters\&. Multiple applications or threads may call this API, and all will be nofitied when a change occurs\&.
+.PP
+DO NOT call Xfork while blocking on this function\&. Only one of the processes will properly recieve the notification\&.
+.PP
+WARNING, THIS IS A STOPGAP API THAT WILL BE REPLACED ONCE WE DETERMIN WHAT THE LONGERM NOTIFICATION MECHANISM LOOKS LIKE\&. BE PREPARED FOR THIS CALL TO BE DEPRECATED OR MODIFIED
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success 
+.PP
+-1 on error with errno set 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for XSocket API from the source code\&.

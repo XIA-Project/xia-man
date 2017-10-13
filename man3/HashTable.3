@@ -1,0 +1,480 @@
+.TH "HashTable< K, V >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HashTable< K, V > \- Hash table template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <hashtable\&.hh>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef K \fBkey_type\fP"
+.br
+.RI "\fIKey type\&. \fP"
+.ti -1c
+.RI "typedef const K & \fBkey_const_reference\fP"
+.br
+.RI "\fIConst reference to key type\&. \fP"
+.ti -1c
+.RI "typedef V \fBmapped_type\fP"
+.br
+.RI "\fIValue type\&. \fP"
+.ti -1c
+.RI "typedef Pair< const K, V > \fBvalue_type\fP"
+.br
+.RI "\fIPair of key type and value type\&. \fP"
+.ti -1c
+.RI "typedef \fBrep_type::size_type\fP \fBsize_type\fP"
+.br
+.RI "\fIType of sizes\&. \fP"
+.ti -1c
+.RI "typedef \fBHashTable_const_iterator\fP< \fBvalue_type\fP > \fBconst_iterator\fP"
+.br
+.ti -1c
+.RI "typedef \fBHashTable_iterator\fP< \fBvalue_type\fP > \fBiterator\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHashTable\fP ()"
+.br
+.RI "\fIConstruct an empty hash table with normal default value\&. \fP"
+.ti -1c
+.RI "\fBHashTable\fP (const \fBmapped_type\fP &d)"
+.br
+.RI "\fIConstruct an empty hash table with default value \fId\fP\&. \fP"
+.ti -1c
+.RI "\fBHashTable\fP (const \fBmapped_type\fP &d, \fBsize_type\fP n)"
+.br
+.RI "\fIConstruct an empty hash table with at least \fIn\fP buckets\&. \fP"
+.ti -1c
+.RI "\fBHashTable\fP (const \fBHashTable\fP< K, V > &x)"
+.br
+.RI "\fIConstruct a hash table as a copy of \fIx\fP\&. \fP"
+.ti -1c
+.RI "\fB~HashTable\fP ()"
+.br
+.RI "\fIDestroy this hash table, freeing its memory\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBsize\fP () const "
+.br
+.RI "\fIReturn the number of elements in the hash table\&. \fP"
+.ti -1c
+.RI "bool \fBempty\fP () const "
+.br
+.RI "\fIReturn true iff \fBsize()\fP == 0\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBbucket_count\fP () const "
+.br
+.RI "\fIReturn the number of buckets in the hash table\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBbucket_size\fP (\fBsize_type\fP n) const "
+.br
+.RI "\fIReturn the number of elements in bucket \fIn\fP\&. \fP"
+.ti -1c
+.RI "const \fBmapped_type\fP & \fBdefault_value\fP () const "
+.br
+.RI "\fIReturn the hash table's default value\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBbegin\fP ()"
+.br
+.RI "\fIReturn an iterator for the first element in the table\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBbegin\fP () const "
+.br
+.ti -1c
+.RI "\fBiterator\fP \fBend\fP ()"
+.br
+.RI "\fIReturn an iterator for the end of the table\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBend\fP () const "
+.br
+.ti -1c
+.RI "\fBsize_type\fP \fBcount\fP (\fBkey_const_reference\fP key) const "
+.br
+.RI "\fIReturn 1 if an element with key \fIkey\fP exists, 0 otherwise\&. \fP"
+.ti -1c
+.RI "\fBconst_iterator\fP \fBfind\fP (\fBkey_const_reference\fP key) const "
+.br
+.RI "\fIReturn an iterator for the element with key \fIkey\fP, if any\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBfind\fP (\fBkey_const_reference\fP key)"
+.br
+.ti -1c
+.RI "\fBiterator\fP \fBfind_prefer\fP (\fBkey_const_reference\fP key)"
+.br
+.RI "\fIReturn an iterator for the element with key \fIkey\fP, if any\&. \fP"
+.ti -1c
+.RI "const \fBmapped_type\fP & \fBget\fP (\fBkey_const_reference\fP key) const "
+.br
+.RI "\fIReturn the value for \fIkey\fP\&. \fP"
+.ti -1c
+.RI "\fBmapped_type\fP * \fBget_pointer\fP (\fBkey_const_reference\fP key)"
+.br
+.RI "\fIReturn a pointer to the value for \fIkey\fP\&. \fP"
+.ti -1c
+.RI "const \fBmapped_type\fP * \fBget_pointer\fP (\fBkey_const_reference\fP key) const "
+.br
+.ti -1c
+.RI "const \fBmapped_type\fP & \fBoperator[]\fP (\fBkey_const_reference\fP key) const "
+.br
+.RI "\fIReturn the value for \fIkey\fP\&. \fP"
+.ti -1c
+.RI "\fBmapped_type\fP & \fBoperator[]\fP (\fBkey_const_reference\fP key)"
+.br
+.RI "\fIReturn a reference to the value for \fIkey\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBfind_insert\fP (\fBkey_const_reference\fP key)"
+.br
+.RI "\fIEnsure an element with key \fIkey\fP and return its iterator\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBfind_insert\fP (\fBkey_const_reference\fP key, const \fBmapped_type\fP &value)"
+.br
+.RI "\fIEnsure an element for key \fIkey\fP and return its iterator\&. \fP"
+.ti -1c
+.RI "bool \fBset\fP (\fBkey_const_reference\fP key, const \fBmapped_type\fP &value)"
+.br
+.RI "\fISet the mapping for \fIkey\fP to \fIvalue\fP\&. \fP"
+.ti -1c
+.RI "bool \fBreplace\fP (\fBkey_const_reference\fP key, const \fBmapped_type\fP &value)"
+.br
+.RI "\fISet the mapping for \fIkey\fP to \fIvalue\fP\&. \fP"
+.ti -1c
+.RI "\fBiterator\fP \fBerase\fP (const \fBiterator\fP &it)"
+.br
+.RI "\fIRemove the element indicated by \fIit\fP\&. \fP"
+.ti -1c
+.RI "\fBsize_type\fP \fBerase\fP (\fBkey_const_reference\fP key)"
+.br
+.RI "\fIRemove any element with \fIkey\fP\&. \fP"
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.RI "\fIRemove all elements\&. \fP"
+.ti -1c
+.RI "void \fBswap\fP (\fBHashTable\fP< K, V > &x)"
+.br
+.RI "\fISwap the contents of this hash table and \fIx\fP\&. \fP"
+.ti -1c
+.RI "void \fBrehash\fP (\fBsize_type\fP nb)"
+.br
+.RI "\fIRehash the table, ensuring it contains at least \fIn\fP buckets\&. \fP"
+.ti -1c
+.RI "\fBHashTable\fP< K, V > & \fBoperator=\fP (const \fBHashTable\fP< K, V > &x)"
+.br
+.RI "\fIAssign this hash table's contents to a copy of \fIx\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename K, typename V>
+.br
+class HashTable< K, V >"
+Hash table template\&. 
+
+The \fBHashTable\fP template implements a hash table or associative array suitable for use in the kernel or at user level\&. Its interface is similar to C++'s std::map and std::unordered_map, although those types have more methods\&.
+.PP
+Used with two template parameters, as HashTable<K, V>, the table maps keys K to values V\&. Used with one template parameter, as \fBHashTable<T>\fP, \fBHashTable\fP is a hash set\&. The type T must declare types named key_type and key_const_reference\&. It also must declare a hashkey() member function returning type key_const_reference\&. An object's hashkey() defines its key\&.
+.PP
+\fBHashTable\fP is a chained hash table\&. (Open coding is not appropriate in the kernel, where large contiguous memory allocations are essentially impossible\&.) When run through Google's sparse_hash_table tests (April 2008, sparsehash-1\&.1), \fBHashTable\fP appears to perform slightly better than g++'s hash_map, better than sparse_hash_map, and worse than dense_hash_map; it takes less memory than hash_map and dense_hash_map\&.
+.PP
+\fBHashTable\fP is faster than Click's prior HashMap class and has fewer potential race conditions in multithreaded use\&. HashMap remains for backward compatibility but should not be used in new code\&.
+.PP
+\fBWarning:\fP
+.RS 4
+HashMap users should beware of \fBHashTable\fP's operator[]\&. HashMap's operator[] returned a non-assignable const reference; it would never add an element to the hash table\&. In contrast, the \fBHashTable\fP operator[] \fImay\fP add an element to the table\&. (If added, the element will initially have the table's default value\&.) For instance, consider: 
+.PP
+.nf
+HashMap<String, int> h(0);
+h\&.insert("A", 1);
+if (!h["B"])      // Nota bene
+    printf("B wasn't in table, and still isn't\n");
+for (HashMap<String, int>::iterator it = h\&.begin(); it; ++it)
+    printf("%s -> %d\n", it\&.key()\&.c_str(), it\&.value());
+                  // Prints  B wasn't in table, and still isn't
+                  //         A -> 1
+
+.fi
+.PP
+.PP
+Here the h['B'] reference does not add an element to the hash table, as you can see from the iteration\&. Similar \fBHashTable\fP code has a different result: 
+.PP
+.nf
+HashTable<String, int> h(0);
+h["A"] = 1;
+if (!h["B"])      // Nota bene
+    printf("B wasn't in table, but it is now\n");
+for (HashMap<String, int>::iterator it = h\&.begin(); it; ++it)
+    printf("%s -> %d\n", it\&.key()\&.c_str(), it\&.value());
+                  // Prints  B wasn't in table, but it is now
+                  //         A -> 1
+                  //         B -> 0
+
+.fi
+.PP
+.PP
+If you don't want operator[] to add an element, either access operator[] through a const hash table, or use \fBget()\fP: 
+.PP
+.nf
+HashTable<String, int> h(0);
+if (!h\&.get("B"))
+    printf("B wasn't in table, and still isn't\n");
+const HashTable<String, int> &const_h = h;
+if (!const_h["B"])
+    printf("B wasn't in table, and still isn't\n");
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<typename K, typename V> typedef K \fBHashTable\fP< K, V >::\fBkey_type\fP"
+
+.PP
+Key type\&. 
+.SS "template<typename K, typename V> typedef const K& \fBHashTable\fP< K, V >::\fBkey_const_reference\fP"
+
+.PP
+Const reference to key type\&. 
+.SS "template<typename K, typename V> typedef V \fBHashTable\fP< K, V >::\fBmapped_type\fP"
+
+.PP
+Value type\&. 
+.SS "template<typename K, typename V> typedef Pair<const K, V> \fBHashTable\fP< K, V >::\fBvalue_type\fP"
+
+.PP
+Pair of key type and value type\&. 
+.SS "template<typename K, typename V> typedef \fBrep_type::size_type\fP \fBHashTable\fP< K, V >::\fBsize_type\fP"
+
+.PP
+Type of sizes\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename K, typename V> \fBHashTable\fP< K, V >::\fBHashTable\fP ()\fC [inline]\fP"
+
+.PP
+Construct an empty hash table with normal default value\&. 
+.SS "template<typename K, typename V> \fBHashTable\fP< K, V >::\fBHashTable\fP (const \fBmapped_type\fP & d)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Construct an empty hash table with default value \fId\fP\&. 
+.SS "template<typename K, typename V> \fBHashTable\fP< K, V >::\fBHashTable\fP (const \fBmapped_type\fP & d, \fBsize_type\fP n)\fC [inline]\fP"
+
+.PP
+Construct an empty hash table with at least \fIn\fP buckets\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fId\fP default value 
+.br
+\fIn\fP minimum number of buckets 
+.RE
+.PP
+
+.SS "template<typename K, typename V> \fBHashTable\fP< K, V >::\fBHashTable\fP (const \fBHashTable\fP< K, V > & x)\fC [inline]\fP"
+
+.PP
+Construct a hash table as a copy of \fIx\fP\&. 
+.SS "template<typename K, typename V> \fBHashTable\fP< K, V >::~\fBHashTable\fP ()\fC [inline]\fP"
+
+.PP
+Destroy this hash table, freeing its memory\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename K, typename V> \fBsize_type\fP \fBHashTable\fP< K, V >::size () const\fC [inline]\fP"
+
+.PP
+Return the number of elements in the hash table\&. 
+.SS "template<typename K, typename V> bool \fBHashTable\fP< K, V >::empty () const\fC [inline]\fP"
+
+.PP
+Return true iff \fBsize()\fP == 0\&. 
+.SS "template<typename K, typename V> \fBsize_type\fP \fBHashTable\fP< K, V >::bucket_count () const\fC [inline]\fP"
+
+.PP
+Return the number of buckets in the hash table\&. 
+.SS "template<typename K, typename V> \fBsize_type\fP \fBHashTable\fP< K, V >::bucket_size (\fBsize_type\fP n) const\fC [inline]\fP"
+
+.PP
+Return the number of elements in bucket \fIn\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIn\fP bucket number, >= 0 and < \fBbucket_count()\fP 
+.RE
+.PP
+
+.SS "template<typename K, typename V> const \fBmapped_type\fP& \fBHashTable\fP< K, V >::default_value () const\fC [inline]\fP"
+
+.PP
+Return the hash table's default value\&. The default value is returned by \fBoperator[]()\fP when a key does not exist\&. 
+.SS "template<typename K, typename V> \fBiterator\fP \fBHashTable\fP< K, V >::begin ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the first element in the table\&. 
+.PP
+\fBNote:\fP
+.RS 4
+\fBHashTable\fP iterators return elements in undefined order\&. 
+.RE
+.PP
+
+.SS "template<typename K, typename V> \fBconst_iterator\fP \fBHashTable\fP< K, V >::begin () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename K, typename V> \fBiterator\fP \fBHashTable\fP< K, V >::end ()\fC [inline]\fP"
+
+.PP
+Return an iterator for the end of the table\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBend()\fP\&.live() == false 
+.RE
+.PP
+
+.SS "template<typename K, typename V> \fBconst_iterator\fP \fBHashTable\fP< K, V >::end () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename K, typename V> \fBsize_type\fP \fBHashTable\fP< K, V >::count (\fBkey_const_reference\fP key) const\fC [inline]\fP"
+
+.PP
+Return 1 if an element with key \fIkey\fP exists, 0 otherwise\&. 
+.SS "template<typename K, typename V> \fBconst_iterator\fP \fBHashTable\fP< K, V >::find (\fBkey_const_reference\fP key) const\fC [inline]\fP"
+
+.PP
+Return an iterator for the element with key \fIkey\fP, if any\&. Returns \fBend()\fP if no such element exists\&. 
+.SS "template<typename K, typename V> \fBiterator\fP \fBHashTable\fP< K, V >::find (\fBkey_const_reference\fP key)\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename K, typename V> \fBiterator\fP \fBHashTable\fP< K, V >::find_prefer (\fBkey_const_reference\fP key)\fC [inline]\fP"
+
+.PP
+Return an iterator for the element with key \fIkey\fP, if any\&. Like \fBfind()\fP, but additionally moves the found element to the head of its bucket, possibly speeding up future lookups\&. 
+.SS "template<typename K, typename V> const \fBmapped_type\fP& \fBHashTable\fP< K, V >::get (\fBkey_const_reference\fP key) const\fC [inline]\fP"
+
+.PP
+Return the value for \fIkey\fP\&. If no element for \fIkey\fP currently exists (find(\fIkey\fP) == \fBend()\fP), returns \fBdefault_value()\fP\&. 
+.SS "template<typename K, typename V> \fBmapped_type\fP* \fBHashTable\fP< K, V >::get_pointer (\fBkey_const_reference\fP key)\fC [inline]\fP"
+
+.PP
+Return a pointer to the value for \fIkey\fP\&. If no element for \fIkey\fP currently exists (find(\fIkey\fP) == \fBend()\fP), returns null\&. 
+.SS "template<typename K, typename V> const \fBmapped_type\fP* \fBHashTable\fP< K, V >::get_pointer (\fBkey_const_reference\fP key) const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "template<typename K, typename V> const \fBmapped_type\fP& \fBHashTable\fP< K, V >::operator[] (\fBkey_const_reference\fP key) const\fC [inline]\fP"
+
+.PP
+Return the value for \fIkey\fP\&. If no element for \fIkey\fP currently exists (find(\fIkey\fP) == \fBend()\fP), returns \fBdefault_value()\fP\&.
+.PP
+\fBWarning:\fP
+.RS 4
+The overloaded operator[] on non-const hash tables may add an element to the table\&. If you don't want to add an element, either access operator[] through a const hash table, or use \fBget()\fP\&. 
+.RE
+.PP
+
+.SS "template<typename K , typename V > \fBHashTable\fP< K, V >::\fBmapped_type\fP & \fBHashTable\fP< K, V >::operator[] (\fBkey_const_reference\fP key)\fC [inline]\fP"
+
+.PP
+Return a reference to the value for \fIkey\fP\&. The caller can assign the reference to change the value\&. If no element for \fIkey\fP currently exists (find(\fIkey\fP) == \fBend()\fP), adds a new element with \fBdefault_value()\fP and returns a reference to that value\&.
+.PP
+\fBNote:\fP
+.RS 4
+Inserting an element into a \fBHashTable\fP invalidates all existing iterators\&. 
+.RE
+.PP
+
+.SS "template<typename K, typename V> \fBiterator\fP \fBHashTable\fP< K, V >::find_insert (\fBkey_const_reference\fP key)\fC [inline]\fP"
+
+.PP
+Ensure an element with key \fIkey\fP and return its iterator\&. If an element with \fIkey\fP already exists in the table, then find(\fIkey\fP) and find_insert(\fIkey\fP) are equivalent\&. Otherwise, find_insert adds a new element with key \fIkey\fP and value \fBdefault_value()\fP to the table and returns its iterator\&.
+.PP
+\fBNote:\fP
+.RS 4
+Inserting an element into a \fBHashTable\fP invalidates all existing iterators\&. 
+.RE
+.PP
+
+.SS "template<typename K, typename V> \fBiterator\fP \fBHashTable\fP< K, V >::find_insert (\fBkey_const_reference\fP key, const \fBmapped_type\fP & value)\fC [inline]\fP"
+
+.PP
+Ensure an element for key \fIkey\fP and return its iterator\&. If an element with \fIkey\fP already exists in the table, then find(\fIkey\fP) and find_insert(\fIvalue\fP) are equivalent\&. Otherwise, find_insert(\fIkey\fP, \fIvalue\fP) adds a new element with key \fIkey\fP and value \fIvalue\fP to the table and returns its iterator\&.
+.PP
+\fBNote:\fP
+.RS 4
+Inserting an element into a \fBHashTable\fP invalidates all existing iterators\&. 
+.RE
+.PP
+
+.SS "template<typename K , typename V > bool \fBHashTable\fP< K, V >::set (\fBkey_const_reference\fP key, const \fBmapped_type\fP & value)"
+
+.PP
+Set the mapping for \fIkey\fP to \fIvalue\fP\&. If an element for \fIkey\fP already exists in the table, then its value is assigned to \fIvalue\fP and the function returns false\&. Otherwise, a new element mapping \fIkey\fP to \fIvalue\fP is added and the function returns true\&.
+.PP
+The behavior is basically the same as '(*this)[@a key] = @a value'\&. (The difference is that if (*this)[\fIkey\fP] is not already in the hash table, the new \fIvalue\fP is constructed rather than assigned\&.)
+.PP
+\fBNote:\fP
+.RS 4
+Inserting an element into a \fBHashTable\fP invalidates all existing iterators\&. 
+.RE
+.PP
+
+.SS "template<typename K , typename V > bool \fBHashTable\fP< K, V >::replace (\fBkey_const_reference\fP key, const \fBmapped_type\fP & value)"
+
+.PP
+Set the mapping for \fIkey\fP to \fIvalue\fP\&. This is a deprecated synonym for \fBset()\fP\&.
+.PP
+\fBDeprecated\fP
+.RS 4
+Use \fBset()\fP\&. 
+.RE
+.PP
+
+.SS "template<typename K, typename V> \fBiterator\fP \fBHashTable\fP< K, V >::erase (const \fBiterator\fP & it)\fC [inline]\fP"
+
+.PP
+Remove the element indicated by \fIit\fP\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+A valid iterator pointing at the next element remaining, or \fBend()\fP if no such element exists\&. 
+.RE
+.PP
+
+.SS "template<typename K, typename V> \fBsize_type\fP \fBHashTable\fP< K, V >::erase (\fBkey_const_reference\fP key)\fC [inline]\fP"
+
+.PP
+Remove any element with \fIkey\fP\&. Returns the number of elements removed, which is always 0 or 1\&. 
+.SS "template<typename K, typename V> void \fBHashTable\fP< K, V >::clear ()\fC [inline]\fP"
+
+.PP
+Remove all elements\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBsize()\fP == 0 
+.RE
+.PP
+
+.SS "template<typename K, typename V> void \fBHashTable\fP< K, V >::swap (\fBHashTable\fP< K, V > & x)\fC [inline]\fP"
+
+.PP
+Swap the contents of this hash table and \fIx\fP\&. 
+.SS "template<typename K, typename V> void \fBHashTable\fP< K, V >::rehash (\fBsize_type\fP nb)\fC [inline]\fP"
+
+.PP
+Rehash the table, ensuring it contains at least \fIn\fP buckets\&. All existing iterators are invalidated\&. If \fIn\fP < \fBbucket_count()\fP, this function may make the hash table slower\&. 
+.SS "template<typename K, typename V> \fBHashTable\fP<K, V>& \fBHashTable\fP< K, V >::operator= (const \fBHashTable\fP< K, V > & x)\fC [inline]\fP"
+
+.PP
+Assign this hash table's contents to a copy of \fIx\fP\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

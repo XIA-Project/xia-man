@@ -1,0 +1,76 @@
+.TH "include/click/ewma.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/ewma.hh \- Click's classes for supporting exponentially weighted moving averages\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/glue\&.hh>\fP
+.br
+\fC#include <click/confparse\&.hh>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBDirectEWMAX< P >\fP"
+.br
+.RI "\fIAn exponentially weighted moving average\&. \fP"
+.ti -1c
+.RI "class \fBFixedEWMAXParameters< STABILITY, SCALE, T, U >\fP"
+.br
+.RI "\fIParameters for a EWMA with constant scaling factor and stability shift\&. \fP"
+.ti -1c
+.RI "class \fBStabilityEWMAXParameters< SCALE, T, U >\fP"
+.br
+.RI "\fIParameters for a EWMA with constant scaling factor and user-settable alpha\&. \fP"
+.ti -1c
+.RI "class \fBRateEWMAX< P >\fP"
+.br
+.RI "\fIAn exponentially weighted moving average used to measure a rate\&. \fP"
+.ti -1c
+.RI "class \fBRateEWMAXParameters< STABILITY, SCALE, T, U >\fP"
+.br
+.RI "\fIParameters for a RateEWMA with constant scaling factor and alpha, one rate count, and epochs of jiffies\&. \fP"
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBDirectEWMAX\fP< \fBFixedEWMAXParameters\fP< 4, 10 > > \fBDirectEWMA\fP"
+.br
+.RI "\fIA \fBDirectEWMAX\fP with stability shift 4 (alpha 1/16), scaling factor 10 (10 bits of fraction), and underlying type \fCunsigned\fP\&. \fP"
+.ti -1c
+.RI "typedef \fBDirectEWMAX\fP< \fBFixedEWMAXParameters\fP< 3, 10 > > \fBFastDirectEWMA\fP"
+.br
+.RI "\fIA \fBDirectEWMAX\fP with stability shift 3 (alpha 1/8), scaling factor 10 (10 bits of fraction), and underlying type \fCunsigned\fP\&. \fP"
+.ti -1c
+.RI "typedef \fBRateEWMAX\fP< \fBRateEWMAXParameters\fP< 4, 10 > > \fBRateEWMA\fP"
+.br
+.RI "\fIA \fBRateEWMAX\fP with stability shift 4 (alpha 1/16), scaling factor 10 (10 bits of fraction), one rate, and underlying type \fCunsigned\fP that measures epochs in jiffies\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Click's classes for supporting exponentially weighted moving averages\&. 
+
+> 
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef \fBDirectEWMAX\fP<\fBFixedEWMAXParameters\fP<4, 10> > \fBDirectEWMA\fP"
+
+.PP
+A \fBDirectEWMAX\fP with stability shift 4 (alpha 1/16), scaling factor 10 (10 bits of fraction), and underlying type \fCunsigned\fP\&. 
+.SS "typedef \fBDirectEWMAX\fP<\fBFixedEWMAXParameters\fP<3, 10> > \fBFastDirectEWMA\fP"
+
+.PP
+A \fBDirectEWMAX\fP with stability shift 3 (alpha 1/8), scaling factor 10 (10 bits of fraction), and underlying type \fCunsigned\fP\&. 
+.SS "typedef \fBRateEWMAX\fP<\fBRateEWMAXParameters\fP<4, 10> > \fBRateEWMA\fP"
+
+.PP
+A \fBRateEWMAX\fP with stability shift 4 (alpha 1/16), scaling factor 10 (10 bits of fraction), one rate, and underlying type \fCunsigned\fP that measures epochs in jiffies\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

@@ -1,0 +1,162 @@
+.TH "ErrorVeneer" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ErrorVeneer \- Base class for ErrorHandlers that forward messages\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <error\&.hh>\fP
+.PP
+Inherits \fBErrorHandler\fP\&.
+.PP
+Inherited by \fBBailErrorHandler\fP, \fBContextErrorHandler\fP, \fBLandmarkErrorHandler\fP, \fBLocalErrorHandler\fP, and \fBPrefixErrorHandler\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBErrorVeneer\fP (\fBErrorHandler\fP *errh)"
+.br
+.RI "\fIConstruct an \fBErrorVeneer\fP\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBvformat\fP (const char *fmt, va_list val)"
+.br
+.RI "\fIFormat an error string\&. \fP"
+.ti -1c
+.RI "\fBString\fP \fBdecorate\fP (const \fBString\fP &str)"
+.br
+.RI "\fIDecorate an error message\&. \fP"
+.ti -1c
+.RI "void * \fBemit\fP (const \fBString\fP &str, void *user_data, bool more)"
+.br
+.RI "\fIOutput an error message line\&. \fP"
+.ti -1c
+.RI "void \fBaccount\fP (int level)"
+.br
+.RI "\fIAccount for an error message at level \fIlevel\fP\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Base class for ErrorHandlers that forward messages\&. 
+
+ErrorHandlers can stack\&. Stacking ErrorHandlers simplify modify a message and then pass the result to a base \fBErrorHandler\fP, which does the actual printing\&. The \fBErrorVeneer\fP base class simplifies the implementation of stacking ErrorHandlers\&. It provides versions of \fBErrorHandler\fP's \fBformat()\fP, \fBdecorate()\fP, \fBemit()\fP, and \fBaccount()\fP methods that forward to the underlying handler\&. Note that the \fBclear()\fP method is \fInot\fP automatically forwarded\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "ErrorVeneer::ErrorVeneer (\fBErrorHandler\fP * errh)\fC [inline]\fP"
+
+.PP
+Construct an \fBErrorVeneer\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrh\fP base \fBErrorHandler\fP
+.RE
+.PP
+If \fIerrh\fP is 0, then the \fBErrorVeneer\fP acts like a \fBSilentErrorHandler\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBString\fP ErrorVeneer::vformat (const char * fmt, va_list val)\fC [virtual]\fP"
+
+.PP
+Format an error string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfmt\fP format string 
+.br
+\fIval\fP argument list
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+This virtual function is called to format an error message\&. The default implementation returns the result of vxformat(\fIfmt\fP, \fIval\fP)\&. 
+.PP
+Reimplemented from \fBErrorHandler\fP\&.
+.SS "\fBString\fP ErrorVeneer::decorate (const \fBString\fP & str)\fC [virtual]\fP"
+
+.PP
+Decorate an error message\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP error message, possibly with annotations 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+decorated error message
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+This virtual function is called to decorate an error message before it is emitted\&. The input \fIstr\fP is an error message string, possibly annotated\&. The default implementation returns \fIstr\fP unchanged\&. Other ErrorHandlers might add context lines (\fBContextErrorHandler\fP), prefixes (\fBPrefixErrorHandler\fP), or a default landmark (\fBLandmarkErrorHandler\fP)\&. 
+.PP
+Reimplemented from \fBErrorHandler\fP\&.
+.PP
+Reimplemented in \fBLandmarkErrorHandler\fP, \fBPrefixErrorHandler\fP, and \fBContextErrorHandler\fP\&.
+.SS "void * ErrorVeneer::emit (const \fBString\fP & str, void * user_data, bool more)\fC [virtual]\fP"
+
+.PP
+Output an error message line\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP error message line, possibly with annotations 
+.br
+\fIuser_data\fP callback data, 0 for first line in a message 
+.br
+\fImore\fP true iff this is the last line in the current message 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fIuser_data\fP to be passed to \fBemit()\fP for the next line
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+After calling \fBdecorate()\fP, \fBErrorHandler\fP splits the message into individual lines and calls \fBemit()\fP once per line\&. \fBErrorHandler\fP subclasses should output the error lines as appropriate; for example, \fBFileErrorHandler\fP outputs the error message to a file\&.
+.PP
+\fIstr\fP does not contain a newline, but may contain annotations, including a landmark annotation\&. Most ErrorHandlers use \fBparse_anno()\fP to extract the landmark annotation, clean it with \fBclean_landmark()\fP, and print it ahead of the error message proper\&.
+.PP
+\fBErrorHandler\fP can handle multi-line error messages\&. However, the \fBemit()\fP function takes a line at a time; this is more useful in practice for most error message printers\&. The \fIuser_data\fP and \fImore\fP arguments can help an \fBErrorHandler\fP combine the lines of a multi-line error message\&. \fIuser_data\fP is null for the first line; for second and subsequent lines, \fBErrorHandler\fP passes the result of the last line's \fBemit()\fP call\&. \fImore\fP is true iff this is the last line in the current message\&.
+.PP
+The default \fBemit()\fP implementation does nothing\&. 
+.PP
+Reimplemented from \fBErrorHandler\fP\&.
+.SS "void ErrorVeneer::account (int level)\fC [virtual]\fP"
+
+.PP
+Account for an error message at level \fIlevel\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlevel\fP minimum error level in the message
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+\fBErrorHandler\fP users don't need to call this function directly; it is called implicitly by the \fBerror()\fP/xmessage() functions\&.
+.RE
+.PP
+After calling \fBemit()\fP for the lines of an error message, \fBErrorHandler\fP calls \fBaccount()\fP, passing the minimum (worst) error level of any message line (or 1000 if no line had a level)\&. The default implementation updates the \fBnerrors()\fP counter\&. Some other ErrorHandlers add \fBaccount()\fP behavior that, for example, exits after printing messages at el_fatal level or below\&. 
+.PP
+Reimplemented from \fBErrorHandler\fP\&.
+.PP
+Reimplemented in \fBBailErrorHandler\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

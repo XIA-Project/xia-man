@@ -1,0 +1,129 @@
+.TH "HashContainer_const_iterator< T, A >" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HashContainer_const_iterator< T, A > \- The const_iterator type for \fBHashContainer\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <hashcontainer\&.hh>\fP
+.PP
+Inherited by \fBHashContainer_iterator< T, A >\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBHashContainer\fP< T, A >::size_type \fBsize_type\fP"
+.br
+.ti -1c
+.RI "typedef T *(HashContainer_const_iterator::* \fBunspecified_bool_type\fP) () const "
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHashContainer_const_iterator\fP ()"
+.br
+.RI "\fIConstruct an uninitialized iterator\&. \fP"
+.ti -1c
+.RI "T * \fBget\fP () const "
+.br
+.RI "\fIReturn a pointer to the element, null if *this == end()\&. \fP"
+.ti -1c
+.RI "T * \fBoperator\->\fP () const "
+.br
+.RI "\fIReturn a pointer to the element, null if *this == end()\&. \fP"
+.ti -1c
+.RI "T & \fBoperator*\fP () const "
+.br
+.RI "\fIReturn a reference to the element\&. \fP"
+.ti -1c
+.RI "bool \fBlive\fP () const "
+.br
+.RI "\fIReturn true iff *this != end()\&. \fP"
+.ti -1c
+.RI "\fBoperator unspecified_bool_type\fP () const "
+.br
+.RI "\fIReturn true iff *this != end()\&. \fP"
+.ti -1c
+.RI "const \fBHashContainer\fP< T, A > * \fBhashcontainer\fP () const "
+.br
+.RI "\fIReturn the corresponding \fBHashContainer\fP\&. \fP"
+.ti -1c
+.RI "size_type \fBbucket\fP () const "
+.br
+.RI "\fIReturn the bucket number this iterator is in\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP ()"
+.br
+.RI "\fIAdvance this iterator to the next element\&. \fP"
+.ti -1c
+.RI "void \fBoperator++\fP (int)"
+.br
+.RI "\fIAdvance this iterator to the next element\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename T, typename A>
+.br
+class HashContainer_const_iterator< T, A >"
+The const_iterator type for \fBHashContainer\fP\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename T, typename A> \fBHashContainer_const_iterator\fP< T, A >::\fBHashContainer_const_iterator\fP ()\fC [inline]\fP"
+
+.PP
+Construct an uninitialized iterator\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename T, typename A> T* \fBHashContainer_const_iterator\fP< T, A >::get () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the element, null if *this == end()\&. 
+.SS "template<typename T, typename A> T* \fBHashContainer_const_iterator\fP< T, A >::operator\-> () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the element, null if *this == end()\&. 
+.SS "template<typename T, typename A> T& \fBHashContainer_const_iterator\fP< T, A >::operator* () const\fC [inline]\fP"
+
+.PP
+Return a reference to the element\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+*this != end() 
+.RE
+.PP
+
+.SS "template<typename T, typename A> bool \fBHashContainer_const_iterator\fP< T, A >::live () const\fC [inline]\fP"
+
+.PP
+Return true iff *this != end()\&. 
+.SS "template<typename T, typename A> \fBHashContainer_const_iterator\fP< T, A >::operator unspecified_bool_type () const\fC [inline]\fP"
+
+.PP
+Return true iff *this != end()\&. 
+.SS "template<typename T, typename A> const \fBHashContainer\fP<T, A>* \fBHashContainer_const_iterator\fP< T, A >::hashcontainer () const\fC [inline]\fP"
+
+.PP
+Return the corresponding \fBHashContainer\fP\&. 
+.SS "template<typename T, typename A> size_type \fBHashContainer_const_iterator\fP< T, A >::bucket () const\fC [inline]\fP"
+
+.PP
+Return the bucket number this iterator is in\&. 
+.SS "template<typename T, typename A> void \fBHashContainer_const_iterator\fP< T, A >::operator++ ()\fC [inline]\fP"
+
+.PP
+Advance this iterator to the next element\&. 
+.SS "template<typename T, typename A> void \fBHashContainer_const_iterator\fP< T, A >::operator++ (int)\fC [inline]\fP"
+
+.PP
+Advance this iterator to the next element\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

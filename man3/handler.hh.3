@@ -1,0 +1,57 @@
+.TH "include/click/handler.hh" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/click/handler.hh \- The \fBHandler\fP class for router handlers\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <click/string\&.hh>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBHandler\fP"
+.br
+.RI "\fIRepresents a router's handlers\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBLARGEST_HANDLER_WRITE\fP   65536"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int(* \fBHandlerCallback\fP) (int operation, \fBString\fP &data, \fBElement\fP *element, const \fBHandler\fP *handler, \fBErrorHandler\fP *errh)"
+.br
+.ti -1c
+.RI "typedef \fBString\fP(* \fBReadHandlerCallback\fP) (\fBElement\fP *handler, void *user_data)"
+.br
+.ti -1c
+.RI "typedef int(* \fBWriteHandlerCallback\fP) (const \fBString\fP &data, \fBElement\fP *element, void *user_data, \fBErrorHandler\fP *errh)"
+.br
+.ti -1c
+.RI "typedef HandlerCallback \fBHandlerHook\fP"
+.br
+.ti -1c
+.RI "typedef ReadHandlerCallback \fBReadHandlerHook\fP"
+.br
+.ti -1c
+.RI "typedef WriteHandlerCallback \fBWriteHandlerHook\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+The \fBHandler\fP class for router handlers\&. 
+
+> 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

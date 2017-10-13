@@ -1,0 +1,586 @@
+.TH "Notifier" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Notifier \- A basic activity signal and notification provider\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherited by \fBActiveNotifier\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum \fBSearchOp\fP { \fBSEARCH_STOP\fP = 0, \fBSEARCH_CONTINUE\fP, \fBSEARCH_CONTINUE_WAKE\fP }"
+.br
+.ti -1c
+.RI "typedef void(* \fBcallback_type\fP) (void *, \fBNotifier\fP *)"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBNotifier\fP (SearchOp op=SEARCH_STOP)"
+.br
+.RI "\fIConstructs a \fBNotifier\fP\&. \fP"
+.ti -1c
+.RI "\fBNotifier\fP (const \fBNotifierSignal\fP &\fBsignal\fP, SearchOp op=SEARCH_STOP)"
+.br
+.RI "\fIConstructs a \fBNotifier\fP associated with a given signal\&. \fP"
+.ti -1c
+.RI "virtual \fB~Notifier\fP ()"
+.br
+.RI "\fIDestruct a \fBNotifier\fP\&. \fP"
+.ti -1c
+.RI "bool \fBinitialized\fP () const "
+.br
+.RI "\fIReturn whether the \fBNotifier\fP is initialized\&. \fP"
+.ti -1c
+.RI "int \fBinitialize\fP (const char *name, \fBRouter\fP *router)"
+.br
+.RI "\fIInitialize the associated \fBNotifierSignal\fP, if necessary\&. \fP"
+.ti -1c
+.RI "const \fBNotifierSignal\fP & \fBsignal\fP () const "
+.br
+.RI "\fIReturn this \fBNotifier\fP's associated \fBNotifierSignal\fP\&. \fP"
+.ti -1c
+.RI "SearchOp \fBsearch_op\fP () const "
+.br
+.RI "\fIReturn this \fBNotifier\fP's search operation\&. \fP"
+.ti -1c
+.RI "bool \fBactive\fP () const "
+.br
+.RI "\fIReturns whether the associated signal is active\&. \fP"
+.ti -1c
+.RI "bool \fBset_active\fP (bool \fBactive\fP)"
+.br
+.RI "\fISet the associated signal's activity\&. \fP"
+.ti -1c
+.RI "void \fBwake\fP ()"
+.br
+.RI "\fISet the associated signal to active\&. \fP"
+.ti -1c
+.RI "void \fBsleep\fP ()"
+.br
+.RI "\fISet the associated signal to inactive\&. \fP"
+.ti -1c
+.RI "virtual int \fBadd_activate_callback\fP (callback_type f, void *user_data)"
+.br
+.RI "\fIRegister an activate callback with this \fBNotifier\fP\&. \fP"
+.ti -1c
+.RI "virtual void \fBremove_activate_callback\fP (callback_type f, void *user_data)"
+.br
+.RI "\fIUnregister an activate callback with this \fBNotifier\fP\&. \fP"
+.ti -1c
+.RI "int \fBadd_listener\fP (\fBTask\fP *task)"
+.br
+.RI "\fIRegister a listener with this \fBNotifier\fP\&. \fP"
+.ti -1c
+.RI "void \fBremove_listener\fP (\fBTask\fP *task)"
+.br
+.RI "\fIUnregister a listener with this \fBNotifier\fP\&. \fP"
+.ti -1c
+.RI "int \fBadd_dependent_signal\fP (\fBNotifierSignal\fP *\fBsignal\fP)"
+.br
+.RI "\fIRegister a dependent signal with this \fBNotifier\fP\&. \fP"
+.ti -1c
+.RI "void \fBremove_dependent_signal\fP (\fBNotifierSignal\fP *\fBsignal\fP)"
+.br
+.RI "\fIUnregister a dependent signal with this \fBNotifier\fP\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBupstream_empty_signal\fP (\fBElement\fP *e, int port)"
+.br
+.RI "\fICalculate and return the \fBNotifierSignal\fP derived from all empty notifiers upstream of element \fIe's\fP input \fIport\fP\&. \fP"
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBupstream_empty_signal\fP (\fBElement\fP *e, int port, \fBTask\fP *task)"
+.br
+.RI "\fICalculate and return the \fBNotifierSignal\fP derived from all empty notifiers upstream of element \fIe's\fP input \fIport\fP\&. \fP"
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBupstream_empty_signal\fP (\fBElement\fP *e, int port, \fBNotifier\fP *dependent_notifier)"
+.br
+.RI "\fICalculate and return the \fBNotifierSignal\fP derived from all empty notifiers upstream of element \fIe's\fP input \fIport\fP\&. \fP"
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBupstream_empty_signal\fP (\fBElement\fP *e, int port, callback_type f, void *user_data)"
+.br
+.RI "\fICalculate and return the \fBNotifierSignal\fP derived from all empty notifiers upstream of element \fIe's\fP input \fIport\fP\&. \fP"
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBdownstream_full_signal\fP (\fBElement\fP *e, int port)"
+.br
+.RI "\fICalculate and return the \fBNotifierSignal\fP derived from all full notifiers downstream of element \fIe's\fP output \fIport\fP\&. \fP"
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBdownstream_full_signal\fP (\fBElement\fP *e, int port, \fBTask\fP *task)"
+.br
+.RI "\fICalculate and return the \fBNotifierSignal\fP derived from all full notifiers downstream of element \fIe's\fP output \fIport\fP\&. \fP"
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBdownstream_full_signal\fP (\fBElement\fP *e, int port, \fBNotifier\fP *dependent_notifier)"
+.br
+.RI "\fICalculate and return the \fBNotifierSignal\fP derived from all full notifiers downstream of element \fIe's\fP output \fIport\fP\&. \fP"
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBdownstream_full_signal\fP (\fBElement\fP *e, int port, callback_type f, void *user_data)"
+.br
+.RI "\fICalculate and return the \fBNotifierSignal\fP derived from all full notifiers downstream of element \fIe's\fP output \fIport\fP\&. \fP"
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBupstream_empty_signal\fP (\fBElement\fP *e, int port, int)"
+.br
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBupstream_empty_signal\fP (\fBElement\fP *e, int port, int, \fBNotifier\fP *)"
+.br
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBdownstream_full_signal\fP (\fBElement\fP *e, int port, int)"
+.br
+.ti -1c
+.RI "static \fBNotifierSignal\fP \fBdownstream_full_signal\fP (\fBElement\fP *e, int port, int, \fBNotifier\fP *)"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static const char \fBEMPTY_NOTIFIER\fP [] = 'empty'"
+.br
+.ti -1c
+.RI "static const char \fBFULL_NOTIFIER\fP [] = 'full'"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A basic activity signal and notification provider\&. 
+
+The \fBNotifier\fP class represents a basic activity signal associated with an element\&. Elements that contain a \fBNotifier\fP object will override \fBElement::cast()\fP or \fBElement::port_cast()\fP to return that \fBNotifier\fP when given the proper name\&. This lets other parts of the configuration find the Notifiers\&. See \fBupstream_empty_signal()\fP and \fBdownstream_full_signal()\fP\&.
+.PP
+The \fBActiveNotifier\fP class, which derives from \fBNotifier\fP, can wake up clients when its activity signal becomes active\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Notifier::Notifier (SearchOp op = \fCSEARCH_STOP\fP)\fC [inline]\fP"
+
+.PP
+Constructs a \fBNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIop\fP controls notifier path search
+.RE
+.PP
+This function constructs a \fBNotifier\fP object\&. The \fBNotifier\fP's associated \fBNotifierSignal\fP is initially idle; it becomes associated with a signal after \fBinitialize()\fP is called\&.
+.PP
+The \fIop\fP argument controls path search\&. The rest of this entry describes it further\&.
+.PP
+Elements interested in notification generally search for \fBNotifier\fP objects along all possible packet paths upstream (or downstream) of one of their ports\&. When a \fBNotifier\fP is found along a path, further searching along that path is cut off, so only the closest Notifiers are found\&. Sometimes, however, it makes more sense to continue searching for more Notifiers\&. The correct behavior is Notifier-specific, and is controlled by this method\&. When the search encounters a \fBNotifier\fP, it consults the \fBNotifier\fP's \fIop\fP variable supplied to the constructor\&. It should equal one of three SearchOp constants, which correspond to the following behavior:
+.PP
+.IP "\fBSEARCH_STOP \fP" 1c
+Stop searching along this path\&. This is the default\&. 
+.IP "\fBSEARCH_CONTINUE \fP" 1c
+Continue searching along this path\&. 
+.IP "\fBSEARCH_CONTINUE_WAKE \fP" 1c
+Continue searching along this path, but any further Notifiers should only be used for adding and removing listeners; ignore their \fBNotifierSignal\fP objects\&. This operation is useful, for example, for schedulers that store packets temporarily\&. Such schedulers provide their own \fBNotifierSignal\fP, since the scheduler may still hold a packet even when all upstream sources are empty, but since they aren't packet sources, they don't know when new packets arrive and can't wake up sleeping listeners\&. During initialization, such schedulers should call \fBNotifier::upstream_empty_signal\fP, passing their own \fBNotifier\fP as the fourth argument\&. This will ensure that their signal is turned on appropriately whenever an upstream queue becomes nonempty\&. 
+.PP
+
+.SS "Notifier::Notifier (const \fBNotifierSignal\fP & signal, SearchOp op = \fCSEARCH_STOP\fP)\fC [inline]\fP"
+
+.PP
+Constructs a \fBNotifier\fP associated with a given signal\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsignal\fP the associated \fBNotifierSignal\fP 
+.br
+\fIop\fP controls notifier path search
+.RE
+.PP
+This function constructs a \fBNotifier\fP object associated with a specific \fBNotifierSignal\fP, such as \fBNotifierSignal::idle_signal()\fP\&. Calling \fBinitialize()\fP on this \fBNotifier\fP will not change the associated \fBNotifierSignal\fP\&. The \fIop\fP argument is as in \fBNotifier::Notifier(SearchOp)\fP, above\&. 
+.SS "Notifier::~Notifier ()\fC [virtual]\fP"
+
+.PP
+Destruct a \fBNotifier\fP\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool Notifier::initialized () const\fC [inline]\fP"
+
+.PP
+Return whether the \fBNotifier\fP is initialized\&. 
+.SS "int Notifier::initialize (const char * name, \fBRouter\fP * r)"
+
+.PP
+Initialize the associated \fBNotifierSignal\fP, if necessary\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP signal name 
+.br
+\fIr\fP associated router
+.RE
+.PP
+Initialize the \fBNotifier\fP's associated \fBNotifierSignal\fP by calling \fIr's\fP \fBRouter::new_notifier_signal()\fP method, obtaining a new basic activity signal\&. Does nothing if the signal is already initialized\&. 
+.SS "const \fBNotifierSignal\fP & Notifier::signal () const\fC [inline]\fP"
+
+.PP
+Return this \fBNotifier\fP's associated \fBNotifierSignal\fP\&. Every \fBNotifier\fP object corresponds to one \fBNotifierSignal\fP; this method returns it\&. The signal is \fBidle() \fP before \fBinitialize()\fP is called\&. 
+.SS "Notifier::SearchOp Notifier::search_op () const\fC [inline]\fP"
+
+.PP
+Return this \fBNotifier\fP's search operation\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBNotifier()\fP for a detailed explanation of search operations\&. 
+.RE
+.PP
+
+.SS "bool Notifier::active () const\fC [inline]\fP"
+
+.PP
+Returns whether the associated signal is active\&. Same as \fBsignal()\fP\&.\fBactive()\fP\&. 
+.SS "bool Notifier::set_active (bool active)\fC [inline]\fP"
+
+.PP
+Set the associated signal's activity\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIactive\fP true iff the signal should be active 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+previous active state 
+.RE
+.PP
+
+.SS "void Notifier::wake ()\fC [inline]\fP"
+
+.PP
+Set the associated signal to active\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_active\fP 
+.RE
+.PP
+
+.SS "void Notifier::sleep ()\fC [inline]\fP"
+
+.PP
+Set the associated signal to inactive\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_active\fP 
+.RE
+.PP
+
+.SS "int Notifier::add_activate_callback (callback_type f, void * user_data)\fC [virtual]\fP"
+
+.PP
+Register an activate callback with this \fBNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIf\fP callback function 
+.br
+\fIuser_data\fP callback data for \fIf\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 if notifier was added, 0 on other success, negative on error
+.RE
+.PP
+When this \fBNotifier\fP's associated signal is activated, this \fBNotifier\fP should call \fIf\fP(\fIuser_data\fP, this)\&. Not all types of \fBNotifier\fP provide this functionality\&. The default implementation does nothing\&.
+.PP
+If \fIf\fP is null, then \fIuser_data\fP is a \fBTask\fP pointer passed to add_listener\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBremove_activate_callback\fP, \fBadd_listener\fP, \fBadd_dependent_signal\fP 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBActiveNotifier\fP\&.
+.SS "void Notifier::remove_activate_callback (callback_type f, void * user_data)\fC [virtual]\fP"
+
+.PP
+Unregister an activate callback with this \fBNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIf\fP callback function 
+.br
+\fIuser_data\fP callback data for \fIf\fP 
+.RE
+.PP
+Undoes the effect of all prior add_activate_callback(\fIf\fP, \fIuser_data\fP) calls\&. Does nothing if (\fIf\fP,\fIuser_data\fP) was never added\&. The default implementation does nothing\&.
+.PP
+If \fIf\fP is null, then \fIuser_data\fP is a \fBTask\fP pointer passed to remove_listener\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_activate_callback\fP 
+.RE
+.PP
+
+.PP
+Reimplemented in \fBActiveNotifier\fP\&.
+.SS "int Notifier::add_listener (\fBTask\fP * task)\fC [inline]\fP"
+
+.PP
+Register a listener with this \fBNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItask\fP \fBTask\fP to reschedule when this \fBNotifier\fP becomes active
+.RE
+.PP
+When this \fBNotifier\fP's associated signal is activated, the \fBNotifier\fP should schedule \fItask\fP\&. Not all types of \fBNotifier\fP provide this functionality\&. The default implementation does nothing\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBremove_listener\fP, \fBadd_activate_callback\fP, \fBadd_dependent_signal\fP 
+.RE
+.PP
+
+.SS "void Notifier::remove_listener (\fBTask\fP * task)\fC [inline]\fP"
+
+.PP
+Unregister a listener with this \fBNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItask\fP listener \fBTask\fP
+.RE
+.PP
+Undoes the effect of all prior add_listener(\fItask\fP) calls\&. Does nothing if \fItask\fP was never added\&. The default implementation does nothing\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_listener\fP 
+.RE
+.PP
+
+.SS "int Notifier::add_dependent_signal (\fBNotifierSignal\fP * signal)\fC [inline]\fP"
+
+.PP
+Register a dependent signal with this \fBNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsignal\fP dependent signal
+.RE
+.PP
+When this \fBNotifier\fP's associated signal is activated, the \fBNotifier\fP should also activate \fIsignal\fP\&. Not all types of \fBNotifier\fP provide this functionality\&. The default implementation does nothing\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_listener\fP, \fBadd_activate_callback\fP, \fBremove_dependent_signal\fP 
+.RE
+.PP
+
+.SS "void Notifier::remove_dependent_signal (\fBNotifierSignal\fP * signal)\fC [inline]\fP"
+
+.PP
+Unregister a dependent signal with this \fBNotifier\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsignal\fP dependent signal
+.RE
+.PP
+Undoes the effect of all prior add_dependent_signal(\fIsignal\fP) calls\&. Does nothing if \fIsignal\fP was never added\&. The default implementation does nothing\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_dependent_signal\fP 
+.RE
+.PP
+
+.SS "\fBNotifierSignal\fP Notifier::upstream_empty_signal (\fBElement\fP * e, int port)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Calculate and return the \fBNotifierSignal\fP derived from all empty notifiers upstream of element \fIe's\fP input \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an element 
+.br
+\fIport\fP the input port of \fIe\fP at which to start the upstream search
+.RE
+.PP
+Searches the configuration upstream of element \fIe's\fP input \fIport\fP for \fIempty\fP \fInotifiers\fP\&. These notifiers are associated with packet storage, and should be true when packets are available (or likely to be available quite soon), and false when they are not\&. All notifiers found are combined into a single derived signal\&. Thus, if any of the base notifiers are active, indicating that at least one packet is available upstream, the derived signal will also be active\&. \fBElement\fP \fIe's\fP code generally uses the resulting signal to decide whether or not to reschedule itself\&.
+.PP
+The returned signal is generally conservative, meaning that the signal is true whenever a packet exists upstream, but the elements that provide notification are responsible for ensuring this\&.
+.PP
+Overloaded versions of this function can also register a task (as in \fBadd_listener()\fP), a signal (as in add_dependent_notifier()), or a callback function (as in add_active_callback()) for each located notifier\&. When packets become available, the task will be scheduled, the signal will be activated, or the callback will be called\&.
+.PP
+.SS "Supporting \fBupstream_empty_signal()\fP"
+.PP
+Elements that have an empty notifier must override the \fBElement::cast()\fP method\&. When passed the \fIname\fP Notifier::EMPTY_NOTIFIER, this method should return a pointer to the corresponding \fBNotifier\fP object\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBdownstream_full_signal\fP 
+.RE
+.PP
+
+.SS "\fBNotifierSignal\fP Notifier::upstream_empty_signal (\fBElement\fP * e, int port, \fBTask\fP * task)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Calculate and return the \fBNotifierSignal\fP derived from all empty notifiers upstream of element \fIe's\fP input \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an element 
+.br
+\fIport\fP the input port of \fIe\fP at which to start the upstream search 
+.br
+\fItask\fP task to schedule when packets become available 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_listener\fP 
+.RE
+.PP
+
+.SS "\fBNotifierSignal\fP Notifier::upstream_empty_signal (\fBElement\fP * e, int port, \fBNotifier\fP * dependent_notifier)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Calculate and return the \fBNotifierSignal\fP derived from all empty notifiers upstream of element \fIe's\fP input \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an element 
+.br
+\fIport\fP the input port of \fIe\fP at which to start the upstream search 
+.br
+\fInotifier\fP notifier to activate when packets become available 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_dependent_signal\fP 
+.RE
+.PP
+
+.SS "\fBNotifierSignal\fP Notifier::upstream_empty_signal (\fBElement\fP * e, int port, callback_type f, void * user_data)\fC [static]\fP"
+
+.PP
+Calculate and return the \fBNotifierSignal\fP derived from all empty notifiers upstream of element \fIe's\fP input \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an element 
+.br
+\fIport\fP the input port of \fIe\fP at which to start the upstream search 
+.br
+\fIf\fP callback function 
+.br
+\fIuser_data\fP user data for callback function 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_activate_callback\fP 
+.RE
+.PP
+
+.SS "\fBNotifierSignal\fP Notifier::downstream_full_signal (\fBElement\fP * e, int port)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Calculate and return the \fBNotifierSignal\fP derived from all full notifiers downstream of element \fIe's\fP output \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an element 
+.br
+\fIport\fP the output port of \fIe\fP at which to start the downstream search
+.RE
+.PP
+Searches the configuration downstream of element \fIe's\fP output \fIport\fP for \fIfull\fP \fInotifiers\fP\&. These notifiers are associated with packet storage, and should be true when there is space for at least one packet, and false when there is not\&. All notifiers found are combined into a single derived signal\&. Thus, if any of the base notifiers are active, indicating that at least one path has available space, the derived signal will also be active\&. \fBElement\fP \fIe's\fP code generally uses the resulting signal to decide whether or not to reschedule itself\&.
+.PP
+Overloaded versions of this function can also register a task (as in \fBadd_listener()\fP), a signal (as in add_dependent_notifier()), or a callback function (as in add_active_callback()) for each located notifier\&. When space becomes available, the task will be scheduled, the signal will be activated, or the callback will be called\&.
+.PP
+In current Click, the returned signal is conservative: if it's inactive, then there is no space for packets downstream\&.
+.PP
+.SS "Supporting \fBdownstream_full_signal()\fP"
+.PP
+Elements that have a full notifier must override the \fBElement::cast()\fP method\&. When passed the \fIname\fP Notifier::FULL_NOTIFIER, this method should return a pointer to the corresponding \fBNotifier\fP object\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBupstream_empty_signal\fP 
+.RE
+.PP
+
+.SS "\fBNotifierSignal\fP Notifier::downstream_full_signal (\fBElement\fP * e, int port, \fBTask\fP * task)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Calculate and return the \fBNotifierSignal\fP derived from all full notifiers downstream of element \fIe's\fP output \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an element 
+.br
+\fIport\fP the output port of \fIe\fP at which to start the downstream search 
+.br
+\fItask\fP task to schedule when packets become available 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_listener\fP 
+.RE
+.PP
+
+.SS "\fBNotifierSignal\fP Notifier::downstream_full_signal (\fBElement\fP * e, int port, \fBNotifier\fP * dependent_notifier)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Calculate and return the \fBNotifierSignal\fP derived from all full notifiers downstream of element \fIe's\fP output \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an element 
+.br
+\fIport\fP the output port of \fIe\fP at which to start the downstream search 
+.br
+\fInotifier\fP notifier to activate when packets become available 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_dependent_signal\fP 
+.RE
+.PP
+
+.SS "\fBNotifierSignal\fP Notifier::downstream_full_signal (\fBElement\fP * e, int port, callback_type f, void * user_data)\fC [static]\fP"
+
+.PP
+Calculate and return the \fBNotifierSignal\fP derived from all full notifiers downstream of element \fIe's\fP output \fIport\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIe\fP an element 
+.br
+\fIport\fP the output port of \fIe\fP at which to start the downstream search 
+.br
+\fIf\fP callback function 
+.br
+\fIuser_data\fP user data for callback function 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBadd_activate_callback\fP 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

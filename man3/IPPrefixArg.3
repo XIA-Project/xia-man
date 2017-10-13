@@ -1,0 +1,38 @@
+.TH "IPPrefixArg" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+IPPrefixArg \- Parser class for IPv4 prefixes\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ipaddress\&.hh>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBIPPrefixArg\fP (bool allow_bare_address_=false)"
+.br
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, \fBIPAddress\fP &result_addr, \fBIPAddress\fP &result_mask, const \fBArgContext\fP &args=blank_args) const "
+.br
+.ti -1c
+.RI "bool \fBparse\fP (const \fBString\fP &str, struct in_addr &result_addr, struct in_addr &result_mask, const \fBArgContext\fP &args=blank_args) const "
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "bool \fBallow_bare_address\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Parser class for IPv4 prefixes\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.

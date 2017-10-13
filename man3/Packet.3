@@ -1,0 +1,2083 @@
+.TH "Packet" 3 "Thu Oct 12 2017" "Click" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Packet \- A network packet\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherited by \fBWritablePacket\fP\&.
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBtypeof\fP (((struct sk_buff *) 0) \->\fBmac_header\fP) mac_header_type"
+.br
+.ti -1c
+.RI "typedef \fBtypeof\fP (((struct sk_buff *) 0) \->\fBnetwork_header\fP) network_header_type"
+.br
+.ti -1c
+.RI "typedef \fBtypeof\fP (((struct sk_buff *) 0) \->\fBtransport_header\fP) transport_header_type"
+.br
+.in -1c
+.SS "Data"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBdefault_headroom\fP = 28, \fBmin_buffer_length\fP = 64 }"
+.br
+.ti -1c
+.RI "typedef void(* \fBbuffer_destructor_type\fP) (unsigned char *buf, size_t sz, void *argument)"
+.br
+.ti -1c
+.RI "static \fBWritablePacket\fP * \fBmake\fP (uint32_t \fBheadroom\fP, const void *\fBdata\fP, uint32_t \fBlength\fP, uint32_t \fBtailroom\fP)"
+.br
+.RI "\fICreate and return a new packet\&. \fP"
+.ti -1c
+.RI "static \fBWritablePacket\fP * \fBmake\fP (const void *\fBdata\fP, uint32_t \fBlength\fP)"
+.br
+.RI "\fICreate and return a new packet\&. \fP"
+.ti -1c
+.RI "static \fBWritablePacket\fP * \fBmake\fP (uint32_t \fBlength\fP)"
+.br
+.RI "\fICreate and return a new packet\&. \fP"
+.ti -1c
+.RI "static \fBPacket\fP * \fBmake\fP (struct sk_buff *skb)"
+.br
+.RI "\fIChange an sk_buff into a \fBPacket\fP (linuxmodule)\&. \fP"
+.ti -1c
+.RI "static \fBWritablePacket\fP * \fBmake\fP (unsigned char *\fBdata\fP, uint32_t \fBlength\fP, buffer_destructor_type buffer_destructor, void *argument=(void *) 0)"
+.br
+.RI "\fICreate and return a new packet (userlevel)\&. \fP"
+.ti -1c
+.RI "static void \fBstatic_cleanup\fP ()"
+.br
+.ti -1c
+.RI "void \fBkill\fP ()"
+.br
+.RI "\fIDelete this packet\&. \fP"
+.ti -1c
+.RI "bool \fBshared\fP () const "
+.br
+.RI "\fITest whether this packet's data is shared\&. \fP"
+.ti -1c
+.RI "\fBPacket\fP * \fBclone\fP ()"
+.br
+.RI "\fICreate a clone of this packet\&. \fP"
+.ti -1c
+.RI "\fBWritablePacket\fP * \fBuniqueify\fP ()"
+.br
+.RI "\fIReturn an unshared packet containing this packet's data\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBdata\fP () const "
+.br
+.RI "\fIReturn the packet's data pointer\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBend_data\fP () const "
+.br
+.RI "\fIReturn the packet's end data pointer\&. \fP"
+.ti -1c
+.RI "uint32_t \fBlength\fP () const "
+.br
+.RI "\fIReturn the packet's length\&. \fP"
+.ti -1c
+.RI "uint32_t \fBheadroom\fP () const "
+.br
+.RI "\fIReturn the packet's headroom\&. \fP"
+.ti -1c
+.RI "uint32_t \fBtailroom\fP () const "
+.br
+.RI "\fIReturn the packet's tailroom\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBbuffer\fP () const "
+.br
+.RI "\fIReturn a pointer to the packet's data buffer\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBend_buffer\fP () const "
+.br
+.RI "\fIReturn the packet's end data buffer pointer\&. \fP"
+.ti -1c
+.RI "uint32_t \fBbuffer_length\fP () const "
+.br
+.RI "\fIReturn the packet's buffer length\&. \fP"
+.ti -1c
+.RI "struct sk_buff * \fBskb\fP ()"
+.br
+.ti -1c
+.RI "const struct sk_buff * \fBskb\fP () const "
+.br
+.ti -1c
+.RI "\fBWritablePacket\fP * \fBpush\fP (uint32_t len)"
+.br
+.RI "\fIAdd space for a header before the packet\&. \fP"
+.ti -1c
+.RI "\fBWritablePacket\fP * \fBpush_mac_header\fP (uint32_t len)"
+.br
+.RI "\fIAdd space for a MAC header before the packet\&. \fP"
+.ti -1c
+.RI "\fBPacket\fP * \fBnonunique_push\fP (uint32_t len)"
+.br
+.RI "\fIAdd space for a header before the packet\&. \fP"
+.ti -1c
+.RI "void \fBpull\fP (uint32_t len)"
+.br
+.RI "\fIRemove a header from the front of the packet\&. \fP"
+.ti -1c
+.RI "\fBWritablePacket\fP * \fBput\fP (uint32_t len)"
+.br
+.RI "\fIAdd space for data after the packet\&. \fP"
+.ti -1c
+.RI "\fBPacket\fP * \fBnonunique_put\fP (uint32_t len)"
+.br
+.RI "\fIAdd space for data after the packet\&. \fP"
+.ti -1c
+.RI "void \fBtake\fP (uint32_t len)"
+.br
+.RI "\fIRemove space from the end of the packet\&. \fP"
+.ti -1c
+.RI "\fBPacket\fP * \fBshift_data\fP (int offset, bool free_on_failure=true)"
+.br
+.RI "\fIShift packet data within the data buffer\&. \fP"
+.ti -1c
+.RI "void \fBshrink_data\fP (const unsigned char *\fBdata\fP, uint32_t \fBlength\fP)"
+.br
+.RI "\fIShrink the packet's data\&. \fP"
+.ti -1c
+.RI "void \fBchange_headroom_and_length\fP (uint32_t \fBheadroom\fP, uint32_t \fBlength\fP)"
+.br
+.RI "\fIShift the packet's data view to a different part of its buffer\&. \fP"
+.in -1c
+.SS "Header Pointers"
+
+.in +1c
+.ti -1c
+.RI "bool \fBhas_mac_header\fP () const "
+.br
+.RI "\fIReturn true iff the packet's MAC header pointer is set\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBmac_header\fP () const "
+.br
+.RI "\fIReturn the packet's MAC header pointer\&. \fP"
+.ti -1c
+.RI "int \fBmac_header_offset\fP () const "
+.br
+.RI "\fIReturn the offset from the packet data to the MAC header\&. \fP"
+.ti -1c
+.RI "uint32_t \fBmac_header_length\fP () const "
+.br
+.RI "\fIReturn the MAC header length\&. \fP"
+.ti -1c
+.RI "int \fBmac_length\fP () const "
+.br
+.RI "\fIReturn the packet's length starting from its MAC header pointer\&. \fP"
+.ti -1c
+.RI "void \fBset_mac_header\fP (const unsigned char *p)"
+.br
+.RI "\fISet the MAC header pointer\&. \fP"
+.ti -1c
+.RI "void \fBset_mac_header\fP (const unsigned char *p, uint32_t len)"
+.br
+.RI "\fISet the MAC and network header pointers\&. \fP"
+.ti -1c
+.RI "void \fBclear_mac_header\fP ()"
+.br
+.RI "\fIUnset the MAC header pointer\&. \fP"
+.ti -1c
+.RI "bool \fBhas_network_header\fP () const "
+.br
+.RI "\fIReturn true iff the packet's network header pointer is set\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBnetwork_header\fP () const "
+.br
+.RI "\fIReturn the packet's network header pointer\&. \fP"
+.ti -1c
+.RI "int \fBnetwork_header_offset\fP () const "
+.br
+.RI "\fIReturn the offset from the packet data to the network header\&. \fP"
+.ti -1c
+.RI "uint32_t \fBnetwork_header_length\fP () const "
+.br
+.RI "\fIReturn the network header length\&. \fP"
+.ti -1c
+.RI "int \fBnetwork_length\fP () const "
+.br
+.RI "\fIReturn the packet's length starting from its network header pointer\&. \fP"
+.ti -1c
+.RI "void \fBset_network_header\fP (const unsigned char *p, uint32_t len)"
+.br
+.RI "\fISet the network and transport header pointers\&. \fP"
+.ti -1c
+.RI "void \fBset_network_header_length\fP (uint32_t len)"
+.br
+.RI "\fISet the network header length\&. \fP"
+.ti -1c
+.RI "void \fBclear_network_header\fP ()"
+.br
+.RI "\fIUnset the network header pointer\&. \fP"
+.ti -1c
+.RI "bool \fBhas_transport_header\fP () const "
+.br
+.RI "\fIReturn true iff the packet's network header pointer is set\&. \fP"
+.ti -1c
+.RI "const unsigned char * \fBtransport_header\fP () const "
+.br
+.RI "\fIReturn the packet's transport header pointer\&. \fP"
+.ti -1c
+.RI "int \fBtransport_header_offset\fP () const "
+.br
+.RI "\fIReturn the offset from the packet data to the transport header\&. \fP"
+.ti -1c
+.RI "int \fBtransport_length\fP () const "
+.br
+.RI "\fIReturn the packet's length starting from its transport header pointer\&. \fP"
+.ti -1c
+.RI "void \fBclear_transport_header\fP ()"
+.br
+.RI "\fIUnset the transport header pointer\&. \fP"
+.ti -1c
+.RI "const click_ether * \fBether_header\fP () const "
+.br
+.RI "\fIReturn the packet's MAC header pointer as Ethernet\&. \fP"
+.ti -1c
+.RI "void \fBset_ether_header\fP (const click_ether *ethh)"
+.br
+.RI "\fISet the MAC header pointer to an Ethernet header\&. \fP"
+.ti -1c
+.RI "const click_ip * \fBip_header\fP () const "
+.br
+.RI "\fIReturn the packet's network header pointer as IPv4\&. \fP"
+.ti -1c
+.RI "int \fBip_header_offset\fP () const "
+.br
+.RI "\fIReturn the offset from the packet data to the IP header\&. \fP"
+.ti -1c
+.RI "uint32_t \fBip_header_length\fP () const "
+.br
+.RI "\fIReturn the IP header length\&. \fP"
+.ti -1c
+.RI "void \fBset_ip_header\fP (const click_ip *iph, uint32_t len)"
+.br
+.RI "\fISet the network header pointer to an IPv4 header\&. \fP"
+.ti -1c
+.RI "const click_ip6 * \fBip6_header\fP () const "
+.br
+.RI "\fIReturn the packet's network header pointer as IPv6\&. \fP"
+.ti -1c
+.RI "int \fBip6_header_offset\fP () const "
+.br
+.RI "\fIReturn the offset from the packet data to the IPv6 header\&. \fP"
+.ti -1c
+.RI "uint32_t \fBip6_header_length\fP () const "
+.br
+.RI "\fIReturn the IPv6 header length\&. \fP"
+.ti -1c
+.RI "void \fBset_ip6_header\fP (const click_ip6 *ip6h)"
+.br
+.RI "\fISet the network header pointer to an IPv6 header\&. \fP"
+.ti -1c
+.RI "void \fBset_ip6_header\fP (const click_ip6 *ip6h, uint32_t len)"
+.br
+.RI "\fISet the network header pointer to an IPv6 header\&. \fP"
+.ti -1c
+.RI "const click_icmp * \fBicmp_header\fP () const "
+.br
+.RI "\fIReturn the packet's transport header pointer as ICMP\&. \fP"
+.ti -1c
+.RI "const click_tcp * \fBtcp_header\fP () const "
+.br
+.RI "\fIReturn the packet's transport header pointer as TCP\&. \fP"
+.ti -1c
+.RI "const click_udp * \fBudp_header\fP () const "
+.br
+.RI "\fIReturn the packet's transport header pointer as UDP\&. \fP"
+.in -1c
+.SS "Annotations"
+never 
+.in +1c
+.ti -1c
+.RI "enum { \fBanno_size\fP = 56 }"
+.br
+.ti -1c
+.RI "enum \fBPacketType\fP { \fBHOST\fP = 0, \fBBROADCAST\fP = 1, \fBMULTICAST\fP = 2, \fBOTHERHOST\fP = 3, \fBOUTGOING\fP = 4, \fBLOOPBACK\fP = 5, \fBFASTROUTE\fP = 6 }
+.RI "\fIValues for \fBpacket_type_anno()\fP\&. Must agree with Linux's PACKET_ constants in <linux/if_packet\&.h>\&. \fP""
+.br
+.ti -1c
+.RI "enum { \fBdst_ip_anno_offset\fP = 0, \fBdst_ip_anno_size\fP = 4, \fBdst_ip6_anno_offset\fP = 0, \fBdst_ip6_anno_size\fP = 16, \fBsrc_ip_anno_offset\fP = 52, \fBsrc_ip_anno_size\fP = 4 }"
+.br
+.ti -1c
+.RI "const \fBTimestamp\fP & \fBtimestamp_anno\fP () const "
+.br
+.RI "\fIReturn the timestamp annotation\&. \fP"
+.ti -1c
+.RI "\fBTimestamp\fP & \fBtimestamp_anno\fP ()"
+.br
+.ti -1c
+.RI "void \fBset_timestamp_anno\fP (const \fBTimestamp\fP &t)"
+.br
+.RI "\fISet the timestamp annotation\&. \fP"
+.ti -1c
+.RI "net_device * \fBdevice_anno\fP () const "
+.br
+.RI "\fIReturn the device annotation\&. \fP"
+.ti -1c
+.RI "void \fBset_device_anno\fP (net_device *dev)"
+.br
+.RI "\fISet the device annotation\&. \fP"
+.ti -1c
+.RI "\fBPacketType\fP \fBpacket_type_anno\fP () const "
+.br
+.RI "\fIReturn the packet type annotation\&. \fP"
+.ti -1c
+.RI "void \fBset_packet_type_anno\fP (\fBPacketType\fP t)"
+.br
+.RI "\fISet the packet type annotation\&. \fP"
+.ti -1c
+.RI "\fBPacket\fP * \fBnext\fP () const "
+.br
+.RI "\fIReturn the next packet annotation\&. \fP"
+.ti -1c
+.RI "\fBPacket\fP *& \fBnext\fP ()"
+.br
+.ti -1c
+.RI "void \fBset_next\fP (\fBPacket\fP *p)"
+.br
+.RI "\fISet the next packet annotation\&. \fP"
+.ti -1c
+.RI "\fBPacket\fP * \fBprev\fP () const "
+.br
+.RI "\fIReturn the previous packet annotation\&. \fP"
+.ti -1c
+.RI "\fBPacket\fP *& \fBprev\fP ()"
+.br
+.ti -1c
+.RI "void \fBset_prev\fP (\fBPacket\fP *p)"
+.br
+.RI "\fISet the previous packet annotation\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP \fBdst_ip_anno\fP () const "
+.br
+.RI "\fIReturn the destination IPv4 address annotation\&. \fP"
+.ti -1c
+.RI "void \fBset_dst_ip_anno\fP (\fBIPAddress\fP addr)"
+.br
+.RI "\fISet the destination IPv4 address annotation\&. \fP"
+.ti -1c
+.RI "\fBIPAddress\fP \fBsrc_ip_anno\fP () const "
+.br
+.RI "\fIReturn the source IPv4 address annotation\&. \fP"
+.ti -1c
+.RI "void \fBset_src_ip_anno\fP (\fBIPAddress\fP addr)"
+.br
+.RI "\fISet the source IPv4 address annotation\&. \fP"
+.ti -1c
+.RI "void * \fBanno\fP ()"
+.br
+.RI "\fIReturn a pointer to the annotation area\&. \fP"
+.ti -1c
+.RI "const void * \fBanno\fP () const "
+.br
+.ti -1c
+.RI "uint8_t * \fBanno_u8\fP ()"
+.br
+.RI "\fIReturn a pointer to the annotation area as uint8_ts\&. \fP"
+.ti -1c
+.RI "const uint8_t * \fBanno_u8\fP () const "
+.br
+.RI "\fIoverload \fP"
+.ti -1c
+.RI "uint32_t * \fBanno_u32\fP ()"
+.br
+.RI "\fIReturn a pointer to the annotation area as uint32_ts\&. \fP"
+.ti -1c
+.RI "const uint32_t * \fBanno_u32\fP () const "
+.br
+.RI "\fIoverload \fP"
+.ti -1c
+.RI "uint8_t \fBanno_u8\fP (int i) const "
+.br
+.RI "\fIReturn annotation byte at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_anno_u8\fP (int i, uint8_t x)"
+.br
+.RI "\fISet annotation byte at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "uint16_t \fBanno_u16\fP (int i) const "
+.br
+.RI "\fIReturn 16-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_anno_u16\fP (int i, uint16_t x)"
+.br
+.RI "\fISet 16-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "int16_t \fBanno_s16\fP (int i) const "
+.br
+.RI "\fIReturn 16-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_anno_s16\fP (int i, int16_t x)"
+.br
+.RI "\fISet 16-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "uint32_t \fBanno_u32\fP (int i) const "
+.br
+.RI "\fIReturn 32-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_anno_u32\fP (int i, uint32_t x)"
+.br
+.RI "\fISet 32-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "int32_t \fBanno_s32\fP (int i) const "
+.br
+.RI "\fIReturn 32-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_anno_s32\fP (int i, int32_t x)"
+.br
+.RI "\fISet 32-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "uint64_t \fBanno_u64\fP (int i) const "
+.br
+.RI "\fIReturn 64-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_anno_u64\fP (int i, uint64_t x)"
+.br
+.RI "\fISet 64-bit annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "void * \fBanno_ptr\fP (int i) const "
+.br
+.RI "\fIReturn void * sized annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "void \fBset_anno_ptr\fP (int i, const void *x)"
+.br
+.RI "\fISet void * sized annotation at offset \fIi\fP\&. \fP"
+.ti -1c
+.RI "void \fBclear_annotations\fP (bool all=true)"
+.br
+.RI "\fIClear all packet annotations\&. \fP"
+.ti -1c
+.RI "void \fBcopy_annotations\fP (const \fBPacket\fP *)"
+.br
+.RI "\fICopy most packet annotations from \fIp\fP\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+A network packet\&. 
+
+Click's \fBPacket\fP class represents network packets within a router\&. \fBPacket\fP objects are passed from \fBElement\fP to \fBElement\fP via the \fBElement::push()\fP and \fBElement::pull()\fP functions\&. The vast majority of elements handle packets\&.
+.PP
+A packet consists of a \fIdata buffer\fP, which stores the actual packet wire data, and a set of \fIannotations\fP, which store extra information calculated about the packet, such as the destination address to be used for routing\&. Every \fBPacket\fP object has different annotations, but a data buffer may be shared among multiple \fBPacket\fP objects, saving memory and speeding up packet copies\&. (See \fBPacket::clone\fP\&.) As a result a \fBPacket\fP's data buffer is not writable\&. To write into a packet, turn it into a nonshared \fBWritablePacket\fP first, using \fBuniqueify()\fP, \fBpush()\fP, or \fBput()\fP\&.
+.PP
+.SS "Data Buffer"
+.PP
+A packet's data buffer is a single flat array of bytes\&. The buffer may be larger than the actual packet data, leaving unused spaces called \fIheadroom\fP and \fItailroom\fP before and after the data proper\&. Prepending headers or appending data to a packet can be quite efficient if there is enough headroom or tailroom\&.
+.PP
+The relationships among a \fBPacket\fP object's data buffer variables is shown here:
+.PP
+.PP
+.nf
+
+                    \fBdata()\fP               \fBend_data()\fP
+                       |                      |
+      |<- \fBheadroom()\fP ->|<----- \fBlength()\fP ----->|<- \fBtailroom()\fP ->|
+      |                v                      v                |
+      +================+======================+================+
+      |XXXXXXXXXXXXXXXX|   PACKET CONTENTS    |XXXXXXXXXXXXXXXX|
+      +================+======================+================+
+      ^                                                        ^
+      |<------------------ \fBbuffer_length()\fP ------------------->|
+      |                                                        |
+   \fBbuffer()\fP                                               \fBend_buffer()\fP
+.fi
+.PP
+.PP
+Most code that manipulates packets is interested only in \fBdata()\fP and \fBlength()\fP\&.
+.PP
+To create a \fBPacket\fP, call one of the \fBmake()\fP functions\&. To destroy a \fBPacket\fP, call \fBkill()\fP\&. To clone a \fBPacket\fP, which creates a new \fBPacket\fP object that shares this packet's data, call \fBclone()\fP\&. To uniqueify a \fBPacket\fP, which unshares the packet data if necessary, call \fBuniqueify()\fP\&. To allocate extra space for headers or trailers, call \fBpush()\fP and \fBput()\fP\&. To remove headers or trailers, call \fBpull()\fP and \fBtake()\fP\&.
+.PP
+.PP
+.nf
+
+               \fBdata()\fP                          \fBend_data()\fP
+                  |                                |
+          \fBpush()\fP  |  \fBpull()\fP                \fBtake()\fP  |  \fBput()\fP
+         <======= | =======>              <======= | =======>
+                  v                                v
+      +===========+================================+===========+
+      |XXXXXXXXXXX|        PACKET CONTENTS         |XXXXXXXXXXX|
+      +===========+================================+===========+
+.fi
+.PP
+.PP
+\fBPacket\fP objects are implemented in different ways in different drivers\&. The userlevel driver has its own C++ implementation\&. In the linuxmodule driver, however, \fBPacket\fP is an overlay on Linux's native sk_buff object: the \fBPacket\fP methods access underlying sk_buff data directly, with no overhead\&. (For example, \fBPacket::data()\fP returns the sk_buff's data field\&.)
+.PP
+.SS "Annotations"
+.PP
+Annotations are extra information about a packet above and beyond the packet data\&. \fBPacket\fP supports several specific annotations, plus a \fIuser annotation area\fP available for arbitrary use by elements\&.
+.PP
+.PD 0
+.IP "\(bu" 2
+\fBHeader pointers:\fP Each packet has three header pointers, designed to point to the packet's MAC header, network header, and transport header, respectively\&. Convenience functions like \fBip_header()\fP access these pointers cast to common header types\&. The header pointers are kept up to date when operations like \fBpush()\fP or \fBuniqueify()\fP change the packet's data buffer\&. Header pointers can be null, and they can even point to memory outside the current packet data bounds\&. For example, a MAC header pointer will remain set even after \fBpull()\fP is used to shift the packet data past the MAC header\&. As a result, functions like \fBmac_header_offset()\fP can return negative numbers\&. 
+.IP "\(bu" 2
+\fB\fBTimestamp\fP:\fP A timestamp associated with the packet\&. Most packet sources timestamp packets when they enter the router; other elements examine or modify the timestamp\&. 
+.IP "\(bu" 2
+\fBDevice:\fP A pointer to the device on which the packet arrived\&. Only meaningful in the linuxmodule driver, but provided in every driver\&. 
+.IP "\(bu" 2
+\fB\fBPacket\fP type:\fP A small integer indicating whether the packet is meant for this host, broadcast, multicast, or some other purpose\&. Several elements manipulate this annotation; in linuxmodule, setting the annotation is required for the host network stack to process incoming packets correctly\&. 
+.IP "\(bu" 2
+\fBPerformance counter\fP (linuxmodule only): A 64-bit integer intended to hold a performance counter value\&. Used by SetCycleCount and others\&. 
+.IP "\(bu" 2
+\fBNext and previous packet:\fP Pointers provided to allow elements to chain packets into a doubly linked list\&. 
+.IP "\(bu" 2
+\fBAnnotations:\fP Each packet has \fBanno_size \fP bytes available for annotations\&. Elements agree to use portions of the annotation area to communicate per-packet information\&. Macros in the <\fBclick/packet_anno\&.hh\fP> header file define the annotations used by Click's current elements\&. One common annotation is the network address annotation -- see \fBPacket::dst_ip_anno()\fP\&. Routing elements, such as RadixIPLookup, set the address annotation to indicate the desired next hop; ARPQuerier uses this annotation to query the next hop's MAC\&. 
+.PP
+.PP
+New packets start wth all annotations set to zero or null\&. Cloning a packet copies its annotations\&. 
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "anonymous enum"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIdefault_headroom \fP\fP
+Default packet \fBheadroom()\fP for \fBPacket::make()\fP\&. 4-byte aligned\&. 
+.TP
+\fB\fImin_buffer_length \fP\fP
+Minimum \fBbuffer_length()\fP for \fBPacket::make()\fP 
+.SS "anonymous enum"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIanno_size \fP\fP
+Size of annotation area\&. 
+.SS "enum \fBPacket::PacketType\fP"
+
+.PP
+Values for \fBpacket_type_anno()\fP\&. Must agree with Linux's PACKET_ constants in <linux/if_packet\&.h>\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIHOST \fP\fP
+\fBPacket\fP was sent to this host\&. 
+.TP
+\fB\fIBROADCAST \fP\fP
+\fBPacket\fP was sent to a link-level multicast address\&. 
+.TP
+\fB\fIMULTICAST \fP\fP
+\fBPacket\fP was sent to a link-level multicast address\&. 
+.TP
+\fB\fIOTHERHOST \fP\fP
+\fBPacket\fP was sent to a different host, but received anyway\&. The receiving device is probably in promiscuous mode\&. 
+.TP
+\fB\fIOUTGOING \fP\fP
+\fBPacket\fP was generated by this host and is being sent elsewhere\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBWritablePacket\fP * Packet::make (uint32_t headroom, const void * data, uint32_t length, uint32_t tailroom)\fC [static]\fP"
+
+.PP
+Create and return a new packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIheadroom\fP headroom in new packet 
+.br
+\fIdata\fP data to be copied into the new packet 
+.br
+\fIlength\fP length of packet 
+.br
+\fItailroom\fP tailroom in new packet 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+new packet, or null if no packet could be created
+.RE
+.PP
+The \fIdata\fP is copied into the new packet\&. If \fIdata\fP is null, the packet's data is left uninitialized\&. The resulting packet's \fBbuffer_length()\fP will be at least \fBmin_buffer_length \fP; if \fIheadroom\fP + \fIlength\fP + \fItailroom\fP would be less, then \fItailroom\fP is increased to make the total \fBmin_buffer_length \fP\&.
+.PP
+The new packet's annotations are cleared and its header pointers are null\&. 
+.SS "\fBWritablePacket\fP * Packet::make (const void * data, uint32_t length)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Create and return a new packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP data to be copied into the new packet 
+.br
+\fIlength\fP length of packet 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+new packet, or null if no packet could be created
+.RE
+.PP
+The \fIdata\fP is copied into the new packet\&. If \fIdata\fP is null, the packet's data is left uninitialized\&. The new packet's headroom equals \fBdefault_headroom \fP, its tailroom is 0\&.
+.PP
+The returned packet's annotations are cleared and its header pointers are null\&. 
+.SS "\fBWritablePacket\fP * Packet::make (uint32_t length)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Create and return a new packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlength\fP length of packet 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+new packet, or null if no packet could be created
+.RE
+.PP
+The packet's data is left uninitialized\&. The new packet's headroom equals \fBdefault_headroom \fP, its tailroom is 0\&.
+.PP
+The returned packet's annotations are cleared and its header pointers are null\&. 
+.SS "\fBPacket\fP * Packet::make (struct sk_buff * skb)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+Change an sk_buff into a \fBPacket\fP (linuxmodule)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIskb\fP input sk_buff 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the packet
+.RE
+.PP
+In the Linux kernel module, \fBPacket\fP objects are sk_buff objects\&. This function simply changes an sk_buff into a \fBPacket\fP by claiming its \fIskb\fP argument\&. If \fCskb->users\fP is 1, then \fIskb\fP is orphaned by \fCskb_orphan(skb)\fP and returned\&. If it is larger than 1, then \fIskb\fP is cloned and the clone is returned\&. (sk_buffs used for Click \fBPacket\fP objects must have \fCskb->users\fP == 1\&.) Null might be returned if there's no memory for the clone\&.
+.PP
+The returned packet's annotations and header pointers \fIare not cleared\fP: they have the same values they did in the sk_buff\&. If the packet came from Linux, then the header pointers and shared annotations (timestamp, packet type, next/prev packet) might have valid values, but the Click annotations (address, user) likely do not\&. Use \fBclear_annotations()\fP to clear them\&. 
+.SS "\fBWritablePacket\fP * Packet::make (unsigned char * data, uint32_t length, buffer_destructor_type destructor, void * argument = \fC(void*) 0\fP)\fC [static]\fP"
+
+.PP
+Create and return a new packet (userlevel)\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP data used in the new packet 
+.br
+\fIlength\fP length of packet 
+.br
+\fIdestructor\fP destructor function 
+.br
+\fIargument\fP argument to destructor function 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+new packet, or null if no packet could be created
+.RE
+.PP
+The packet's data pointer becomes the \fIdata:\fP the data is not copied into the new packet, rather the packet owns the \fIdata\fP pointer\&. When the packet's data is eventually destroyed, either because the packet is deleted or because of something like a \fBpush()\fP or full(), the \fIdestructor\fP will be called as \fIdestructor\fP(\fIdata\fP, \fIlength\fP, \fIargument\fP)\&. (If \fIdestructor\fP is null, the packet data will be freed by \fCdelete[] \fIdata\fP\fP\&.) The packet has zero headroom and tailroom\&.
+.PP
+The returned packet's annotations are cleared and its header pointers are null\&. 
+.SS "void Packet::kill ()\fC [inline]\fP"
+
+.PP
+Delete this packet\&. The packet header (including annotations) is destroyed and its memory returned to the system\&. The packet's data is also freed if this is the last clone\&. 
+.SS "bool Packet::shared () const\fC [inline]\fP"
+
+.PP
+Test whether this packet's data is shared\&. Returns true iff the packet's data is shared\&. If \fBshared()\fP is false, then the result of \fBuniqueify()\fP will equal \fCthis\fP\&. 
+.SS "\fBPacket\fP * Packet::clone ()"
+
+.PP
+Create a clone of this packet\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+the cloned packet
+.RE
+.PP
+The returned clone has independent annotations, initially copied from this packet, but shares this packet's data\&. \fBshared()\fP returns true for both the packet and its clone\&. Returns null if there's no memory for the clone\&. 
+.SS "\fBWritablePacket\fP * Packet::uniqueify ()\fC [inline]\fP"
+
+.PP
+Return an unshared packet containing this packet's data\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+the unshared packet, which is writable
+.RE
+.PP
+The returned packet's data is unshared with any other packet, so it's safe to write the data\&. If \fBshared()\fP is false, this operation simply returns the input packet\&. If \fBshared()\fP is true, \fBuniqueify()\fP makes a copy of the data\&. The input packet is freed if the copy fails\&.
+.PP
+The returned \fBWritablePacket\fP pointer may not equal the input \fBPacket\fP pointer, so do not use the input pointer after the \fBuniqueify()\fP call\&.
+.PP
+The input packet's headroom and tailroom areas are copied in addition to its true contents\&. The header annotations are shifted to point into the new packet data if necessary\&.
+.PP
+\fBuniqueify()\fP is usually used like this: 
+.PP
+.nf
+WritablePacket *q = p->uniqueify();
+if (!q)
+    return 0;
+// p must not be used here\&.
+
+.fi
+.PP
+ 
+.SS "const unsigned char * Packet::data () const\fC [inline]\fP"
+
+.PP
+Return the packet's data pointer\&. This is the pointer to the first byte of packet data\&. 
+.SS "const unsigned char * Packet::end_data () const\fC [inline]\fP"
+
+.PP
+Return the packet's end data pointer\&. The result points at the byte following the packet data\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBend_data()\fP == \fBdata()\fP + \fBlength()\fP 
+.RE
+.PP
+
+.SS "uint32_t Packet::length () const\fC [inline]\fP"
+
+.PP
+Return the packet's length\&. 
+.SS "uint32_t Packet::headroom () const\fC [inline]\fP"
+
+.PP
+Return the packet's headroom\&. The headroom is the amount of space available in the current packet buffer before \fBdata()\fP\&. A \fBpush()\fP operation is cheap if the packet's unshared and the length pushed is less than \fBheadroom()\fP\&. 
+.SS "uint32_t Packet::tailroom () const\fC [inline]\fP"
+
+.PP
+Return the packet's tailroom\&. The tailroom is the amount of space available in the current packet buffer following \fBend_data()\fP\&. A \fBput()\fP operation is cheap if the packet's unshared and the length put is less than \fBtailroom()\fP\&. 
+.SS "const unsigned char * Packet::buffer () const\fC [inline]\fP"
+
+.PP
+Return a pointer to the packet's data buffer\&. The result points at the packet's headroom, not its data\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBbuffer()\fP == \fBdata()\fP - \fBheadroom()\fP 
+.RE
+.PP
+
+.SS "const unsigned char * Packet::end_buffer () const\fC [inline]\fP"
+
+.PP
+Return the packet's end data buffer pointer\&. The result points past the packet's tailroom\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBend_buffer()\fP == \fBend_data()\fP + \fBtailroom()\fP 
+.RE
+.PP
+
+.SS "uint32_t Packet::buffer_length () const\fC [inline]\fP"
+
+.PP
+Return the packet's buffer length\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBbuffer_length()\fP == \fBheadroom()\fP + \fBlength()\fP + \fBtailroom()\fP 
+.PP
+\fBbuffer()\fP + \fBbuffer_length()\fP == \fBend_buffer()\fP 
+.RE
+.PP
+
+.SS "\fBWritablePacket\fP * Packet::push (uint32_t len)\fC [inline]\fP"
+
+.PP
+Add space for a header before the packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlen\fP amount of space to add 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+packet with added header space, or null on failure
+.RE
+.PP
+Returns a packet with an additional \fIlen\fP bytes of uninitialized space before the current packet's \fBdata()\fP\&. A copy of the packet data is made if there isn't enough \fBheadroom()\fP in the current packet, or if the current packet is \fBshared()\fP\&. If no copy is made, this operation is quite efficient\&.
+.PP
+If a data copy would be required, but the copy fails because of lack of memory, then the current packet is freed\&.
+.PP
+\fBpush()\fP is usually used like this: 
+.PP
+.nf
+WritablePacket *q = p->push(14);
+if (!q)
+    return 0;
+// p must not be used here\&.
+
+.fi
+.PP
+.PP
+\fBPostcondition:\fP
+.RS 4
+new \fBlength()\fP == old \fBlength()\fP + \fIlen\fP (if no failure)
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnonunique_push\fP, \fBpush_mac_header\fP, \fBpull\fP 
+.RE
+.PP
+
+.SS "\fBWritablePacket\fP * Packet::push_mac_header (uint32_t len)\fC [inline]\fP"
+
+.PP
+Add space for a MAC header before the packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlen\fP amount of space to add and length of MAC header 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+packet with added header space, or null on failure
+.RE
+.PP
+Combines the action of \fBpush()\fP and \fBset_mac_header()\fP\&. \fIlen\fP bytes are pushed for a MAC header, and on success, the packet's returned MAC and network header pointers are set as by set_mac_header(\fBdata()\fP, \fIlen\fP)\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBpush\fP 
+.RE
+.PP
+
+.SS "\fBPacket\fP * Packet::nonunique_push (uint32_t len)\fC [inline]\fP"
+
+.PP
+Add space for a header before the packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlen\fP amount of space to add 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+packet with added header space, or null on failure
+.RE
+.PP
+This is a variant of \fBpush()\fP\&. Returns a packet with an additional \fIlen\fP bytes of uninitialized space before the current packet's \fBdata()\fP\&. A copy of the packet data is made if there isn't enough \fBheadroom()\fP in the current packet\&. However, no copy is made if the current packet is shared; and if no copy is made, this operation is quite efficient\&.
+.PP
+If a data copy would be required, but the copy fails because of lack of memory, then the current packet is freed\&.
+.PP
+\fBNote:\fP
+.RS 4
+Unlike \fBpush()\fP, \fBnonunique_push()\fP returns a \fBPacket\fP object, which has non-writable data\&.
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBpush\fP 
+.RE
+.PP
+
+.SS "void Packet::pull (uint32_t len)\fC [inline]\fP"
+
+.PP
+Remove a header from the front of the packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlen\fP amount of space to remove
+.RE
+.PP
+Removes \fIlen\fP bytes from the initial part of the packet, usually corresponding to some network header (for example, pull(14) removes an Ethernet header)\&. This operation is efficient: it just bumps a pointer\&.
+.PP
+It is an error to attempt to pull more than \fBlength()\fP bytes\&.
+.PP
+\fBPostcondition:\fP
+.RS 4
+new \fBdata()\fP == old \fBdata()\fP + \fIlen\fP 
+.PP
+new \fBlength()\fP == old \fBlength()\fP - \fIlen\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBpush\fP 
+.RE
+.PP
+
+.SS "\fBWritablePacket\fP * Packet::put (uint32_t len)\fC [inline]\fP"
+
+.PP
+Add space for data after the packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlen\fP amount of space to add 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+packet with added trailer space, or null on failure
+.RE
+.PP
+Returns a packet with an additional \fIlen\fP bytes of uninitialized space after the current packet's data (starting at \fBend_data()\fP)\&. A copy of the packet data is made if there isn't enough \fBtailroom()\fP in the current packet, or if the current packet is \fBshared()\fP\&. If no copy is made, this operation is quite efficient\&.
+.PP
+If a data copy would be required, but the copy fails because of lack of memory, then the current packet is freed\&.
+.PP
+\fBput()\fP is usually used like this: 
+.PP
+.nf
+WritablePacket *q = p->put(100);
+if (!q)
+    return 0;
+// p must not be used here\&.
+
+.fi
+.PP
+.PP
+\fBPostcondition:\fP
+.RS 4
+new \fBlength()\fP == old \fBlength()\fP + \fIlen\fP (if no failure)
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnonunique_put\fP, \fBtake\fP 
+.RE
+.PP
+
+.SS "\fBPacket\fP * Packet::nonunique_put (uint32_t len)\fC [inline]\fP"
+
+.PP
+Add space for data after the packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlen\fP amount of space to add 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+packet with added trailer space, or null on failure
+.RE
+.PP
+This is a variant of \fBput()\fP\&. Returns a packet with an additional \fIlen\fP bytes of uninitialized space after the current packet's data (starting at \fBend_data()\fP)\&. A copy of the packet data is made if there isn't enough \fBtailroom()\fP in the current packet\&. However, no copy is made if the current packet is shared; and if no copy is made, this operation is quite efficient\&.
+.PP
+If a data copy would be required, but the copy fails because of lack of memory, then the current packet is freed\&.
+.PP
+\fBSee also:\fP
+.RS 4
+\fBput\fP 
+.RE
+.PP
+
+.SS "void Packet::take (uint32_t len)\fC [inline]\fP"
+
+.PP
+Remove space from the end of the packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlen\fP amount of space to remove
+.RE
+.PP
+Removes \fIlen\fP bytes from the end of the packet\&. This operation is efficient: it just bumps a pointer\&.
+.PP
+It is an error to attempt to pull more than \fBlength()\fP bytes\&.
+.PP
+\fBPostcondition:\fP
+.RS 4
+new \fBdata()\fP == old \fBdata()\fP 
+.PP
+new \fBend_data()\fP == old \fBend_data()\fP - \fIlen\fP 
+.PP
+new \fBlength()\fP == old \fBlength()\fP - \fIlen\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBpush\fP 
+.RE
+.PP
+
+.SS "\fBPacket\fP * Packet::shift_data (int offset, bool free_on_failure = \fCtrue\fP)"
+
+.PP
+Shift packet data within the data buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIoffset\fP amount to shift packet data 
+.br
+\fIfree_on_failure\fP if true, then delete the input packet on failure 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+a packet with shifted data, or null on failure
+.RE
+.PP
+Useful to align packet data\&. For example, if the packet's embedded IP header is located at pointer value 0x8CCA03, then shift_data(1) or shift_data(-3) will both align the header on a 4-byte boundary\&.
+.PP
+If the packet is \fBshared()\fP or there isn't enough headroom or tailroom for the operation, the packet is passed to \fBuniqueify()\fP first\&. This can fail if there isn't enough memory\&. If it fails, shift_data returns null, and if \fIfree_on_failure\fP is true (the default), the input packet is freed\&.
+.PP
+The packet's mac_header, network_header, and transport_header areas are preserved, even if they lie within the headroom\&. Any headroom outside these regions may be overwritten, as may any tailroom\&.
+.PP
+\fBPostcondition:\fP
+.RS 4
+new \fBdata()\fP == old \fBdata()\fP + \fIoffset\fP (if no copy is made) 
+.PP
+new \fBbuffer()\fP == old \fBbuffer()\fP (if no copy is made) 
+.RE
+.PP
+
+.SS "void Packet::shrink_data (const unsigned char * data, uint32_t length)\fC [inline]\fP"
+
+.PP
+Shrink the packet's data\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP new data pointer 
+.br
+\fIlength\fP new length
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+This function is useful only in special contexts\&. 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+Only available at user level
+.RE
+.PP
+User-level programs that read packet logs commonly read a large chunk of data (32 kB or more) into a base \fBPacket\fP object\&. The log reader then works over the data buffer and, for each packet contained therein, outputs a clone that shares memory with the base packet\&. This is space- and time-efficient, but the generated packets have gigantic headroom and tailroom\&. Uniqueifying a generated packet will wastefully copy this headroom and tailroom as well\&. The shrink_data function addresses this problem\&.
+.PP
+\fBshrink_data()\fP removes all of a packet's headroom and tailroom\&. The resulting packet has \fBdata()\fP equal to \fIdata\fP, \fBlength()\fP equal to \fIlength\fP, and \fBheadroom()\fP and \fBtailroom()\fP equal to zero\&.
+.PP
+\fBPrecondition:\fP
+.RS 4
+The packet \fImust\fP be a \fBclone()\fP of another existing packet\&. 
+.PP
+\fIdata\fP >= \fBdata()\fP, \fIdata\fP <= \fBend_data()\fP, \fIdata\fP + \fIlength\fP >= \fBdata()\fP, and \fIdata\fP + \fIlength\fP <= \fBend_data()\fP
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBchange_headroom_and_length\fP 
+.RE
+.PP
+
+.SS "void Packet::change_headroom_and_length (uint32_t headroom, uint32_t length)\fC [inline]\fP"
+
+.PP
+Shift the packet's data view to a different part of its buffer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIheadroom\fP new headroom 
+.br
+\fIlength\fP new length
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+This function is useful only in special contexts\&. 
+.RE
+.PP
+\fBNote:\fP
+.RS 4
+Only available at user level
+.RE
+.PP
+Shifts the packet's \fBdata()\fP pointer to a different part of the packet's data buffer\&. The buffer pointer itself is not changed, and the packet's contents are not affected (except by the new view)\&.
+.PP
+\fBPrecondition:\fP
+.RS 4
+\fIheadroom\fP + \fIlength\fP <= \fBbuffer_length()\fP 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+new \fBbuffer()\fP == old \fBbuffer()\fP 
+.PP
+new \fBend_buffer()\fP == old \fBend_buffer()\fP 
+.PP
+new \fBheadroom()\fP == \fIheadroom\fP 
+.PP
+new \fBlength()\fP == \fIlength\fP 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBshrink_data\fP 
+.RE
+.PP
+
+.SS "bool Packet::has_mac_header () const\fC [inline]\fP"
+
+.PP
+Return true iff the packet's MAC header pointer is set\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_mac_header\fP, \fBclear_mac_header\fP 
+.RE
+.PP
+
+.SS "const unsigned char * Packet::mac_header () const\fC [inline]\fP"
+
+.PP
+Return the packet's MAC header pointer\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_mac_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBether_header\fP, \fBset_mac_header\fP, \fBclear_mac_header\fP, \fBmac_header_length\fP, \fBmac_length\fP 
+.RE
+.PP
+
+.SS "int Packet::mac_header_offset () const\fC [inline]\fP"
+
+.PP
+Return the offset from the packet data to the MAC header\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fBmac_header()\fP - \fBdata()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_mac_header()\&. 
+.RE
+.PP
+
+.SS "uint32_t Packet::mac_header_length () const\fC [inline]\fP"
+
+.PP
+Return the MAC header length\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fBnetwork_header()\fP - \fBmac_header()\fP
+.RE
+.PP
+This equals the offset from the MAC header pointer to the network header pointer\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_mac_header() or !has_network_header()\&. 
+.RE
+.PP
+
+.SS "int Packet::mac_length () const\fC [inline]\fP"
+
+.PP
+Return the packet's length starting from its MAC header pointer\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBmac_length()\fP == \fBend_data()\fP - \fBmac_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_mac_header()\&. 
+.RE
+.PP
+
+.SS "void Packet::set_mac_header (const unsigned char * p)\fC [inline]\fP"
+
+.PP
+Set the MAC header pointer\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIp\fP new header pointer 
+.RE
+.PP
+
+.SS "void Packet::set_mac_header (const unsigned char * p, uint32_t len)\fC [inline]\fP"
+
+.PP
+Set the MAC and network header pointers\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIp\fP new MAC header pointer 
+.br
+\fIlen\fP new MAC header length 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBmac_header()\fP == \fIp\fP and \fBnetwork_header()\fP == \fIp\fP + \fIlen\fP 
+.RE
+.PP
+
+.SS "void Packet::clear_mac_header ()\fC [inline]\fP"
+
+.PP
+Unset the MAC header pointer\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBhas_mac_header()\fP == false Does not affect the network or transport header pointers\&. 
+.RE
+.PP
+
+.SS "bool Packet::has_network_header () const\fC [inline]\fP"
+
+.PP
+Return true iff the packet's network header pointer is set\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_network_header\fP, \fBclear_network_header\fP 
+.RE
+.PP
+
+.SS "const unsigned char * Packet::network_header () const\fC [inline]\fP"
+
+.PP
+Return the packet's network header pointer\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBip_header\fP, \fBip6_header\fP, \fBset_network_header\fP, \fBclear_network_header\fP, \fBnetwork_header_length\fP, \fBnetwork_length\fP 
+.RE
+.PP
+
+.SS "int Packet::network_header_offset () const\fC [inline]\fP"
+
+.PP
+Return the offset from the packet data to the network header\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fBnetwork_header()\fP - \fBdata()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header()\&. 
+.RE
+.PP
+
+.SS "uint32_t Packet::network_header_length () const\fC [inline]\fP"
+
+.PP
+Return the network header length\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fBtransport_header()\fP - \fBnetwork_header()\fP
+.RE
+.PP
+This equals the offset from the network header pointer to the transport header pointer\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header() or !has_transport_header()\&. 
+.RE
+.PP
+
+.SS "int Packet::network_length () const\fC [inline]\fP"
+
+.PP
+Return the packet's length starting from its network header pointer\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBnetwork_length()\fP == \fBend_data()\fP - \fBnetwork_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header()\&. 
+.RE
+.PP
+
+.SS "void Packet::set_network_header (const unsigned char * p, uint32_t len)\fC [inline]\fP"
+
+.PP
+Set the network and transport header pointers\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIp\fP new network header pointer 
+.br
+\fIlen\fP new network header length 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBnetwork_header()\fP == \fIp\fP and \fBtransport_header()\fP == \fIp\fP + \fIlen\fP 
+.RE
+.PP
+
+.SS "void Packet::set_network_header_length (uint32_t len)\fC [inline]\fP"
+
+.PP
+Set the network header length\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlen\fP new network header length
+.RE
+.PP
+Setting the network header length really just sets the transport header pointer\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBtransport_header()\fP == \fBnetwork_header()\fP + \fIlen\fP 
+.RE
+.PP
+
+.SS "void Packet::clear_network_header ()\fC [inline]\fP"
+
+.PP
+Unset the network header pointer\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBhas_network_header()\fP == false Does not affect the MAC or transport header pointers\&. 
+.RE
+.PP
+
+.SS "bool Packet::has_transport_header () const\fC [inline]\fP"
+
+.PP
+Return true iff the packet's network header pointer is set\&. 
+.PP
+\fBSee also:\fP
+.RS 4
+\fBset_network_header\fP, \fBclear_transport_header\fP 
+.RE
+.PP
+
+.SS "const unsigned char * Packet::transport_header () const\fC [inline]\fP"
+
+.PP
+Return the packet's transport header pointer\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_transport_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtcp_header\fP, \fBudp_header\fP, \fBicmp_header\fP, set_transport_header, \fBclear_transport_header\fP, \fBtransport_length\fP 
+.RE
+.PP
+
+.SS "int Packet::transport_header_offset () const\fC [inline]\fP"
+
+.PP
+Return the offset from the packet data to the transport header\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fBtransport_header()\fP - \fBdata()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_transport_header()\&. 
+.RE
+.PP
+
+.SS "int Packet::transport_length () const\fC [inline]\fP"
+
+.PP
+Return the packet's length starting from its transport header pointer\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+\fBtransport_length()\fP == \fBend_data()\fP - \fBtransport_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_transport_header()\&. 
+.RE
+.PP
+
+.SS "void Packet::clear_transport_header ()\fC [inline]\fP"
+
+.PP
+Unset the transport header pointer\&. 
+.PP
+\fBPostcondition:\fP
+.RS 4
+\fBhas_transport_header()\fP == false Does not affect the MAC or network header pointers\&. 
+.RE
+.PP
+
+.SS "const click_ether * Packet::ether_header () const\fC [inline]\fP"
+
+.PP
+Return the packet's MAC header pointer as Ethernet\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+(void *) \fBether_header()\fP == (void *) \fBmac_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_mac_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBmac_header\fP 
+.RE
+.PP
+
+.SS "void Packet::set_ether_header (const click_ether * ethh)\fC [inline]\fP"
+
+.PP
+Set the MAC header pointer to an Ethernet header\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIethh\fP new Ethernet header pointer 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+(void *) \fBmac_header()\fP == (void *) \fIethh\fP 
+.PP
+\fBmac_header_length()\fP == 14 
+.PP
+(void *) \fBnetwork_header()\fP == (void *) (\fIethh\fP + 1) 
+.RE
+.PP
+
+.SS "const click_ip * Packet::ip_header () const\fC [inline]\fP"
+
+.PP
+Return the packet's network header pointer as IPv4\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+(void *) \fBip_header()\fP == (void *) \fBnetwork_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnetwork_header\fP 
+.RE
+.PP
+
+.SS "int Packet::ip_header_offset () const\fC [inline]\fP"
+
+.PP
+Return the offset from the packet data to the IP header\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fBnetwork_header()\fP - \fBmac_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnetwork_header_offset\fP 
+.RE
+.PP
+
+.SS "uint32_t Packet::ip_header_length () const\fC [inline]\fP"
+
+.PP
+Return the IP header length\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fBtransport_header()\fP - \fBnetwork_header()\fP
+.RE
+.PP
+This equals the offset from the network header pointer to the transport header pointer\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header() or !has_transport_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnetwork_header_length\fP 
+.RE
+.PP
+
+.SS "void Packet::set_ip_header (const click_ip * iph, uint32_t len)\fC [inline]\fP"
+
+.PP
+Set the network header pointer to an IPv4 header\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIiph\fP new IP header pointer 
+.br
+\fIlen\fP new IP header length in bytes 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+(char *) \fBnetwork_header()\fP == (char *) \fIiph\fP 
+.PP
+\fBnetwork_header_length()\fP == \fIlen\fP 
+.PP
+(char *) \fBtransport_header()\fP == (char *) \fIiph\fP + \fIlen\fP 
+.RE
+.PP
+
+.SS "const click_ip6 * Packet::ip6_header () const\fC [inline]\fP"
+
+.PP
+Return the packet's network header pointer as IPv6\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+(void *) \fBip6_header()\fP == (void *) \fBnetwork_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnetwork_header\fP 
+.RE
+.PP
+
+.SS "int Packet::ip6_header_offset () const\fC [inline]\fP"
+
+.PP
+Return the offset from the packet data to the IPv6 header\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fBnetwork_header()\fP - \fBdata()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnetwork_header_offset\fP 
+.RE
+.PP
+
+.SS "uint32_t Packet::ip6_header_length () const\fC [inline]\fP"
+
+.PP
+Return the IPv6 header length\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+\fBtransport_header()\fP - \fBnetwork_header()\fP
+.RE
+.PP
+This equals the offset from the network header pointer to the transport header pointer\&. 
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_network_header() or !has_transport_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBnetwork_header_length\fP 
+.RE
+.PP
+
+.SS "void Packet::set_ip6_header (const click_ip6 * ip6h)\fC [inline]\fP"
+
+.PP
+Set the network header pointer to an IPv6 header\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIip6h\fP new IP header pointer 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+(char *) \fBnetwork_header()\fP == (char *) \fIip6h\fP 
+.PP
+\fBnetwork_header_length()\fP == 40 
+.PP
+(char *) \fBtransport_header()\fP == (char *) (\fIip6h\fP + 1) 
+.RE
+.PP
+
+.SS "void Packet::set_ip6_header (const click_ip6 * ip6h, uint32_t len)\fC [inline]\fP"
+
+.PP
+Set the network header pointer to an IPv6 header\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIip6h\fP new IP header pointer 
+.br
+\fIlen\fP new IP header length in bytes 
+.RE
+.PP
+\fBPostcondition:\fP
+.RS 4
+(char *) \fBnetwork_header()\fP == (char *) \fIip6h\fP 
+.PP
+\fBnetwork_header_length()\fP == \fIlen\fP 
+.PP
+(char *) \fBtransport_header()\fP == (char *) \fIip6h\fP + \fIlen\fP 
+.RE
+.PP
+
+.SS "const click_icmp * Packet::icmp_header () const\fC [inline]\fP"
+
+.PP
+Return the packet's transport header pointer as ICMP\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+(void *) \fBicmp_header()\fP == (void *) \fBtransport_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_transport_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtransport_header\fP 
+.RE
+.PP
+
+.SS "const click_tcp * Packet::tcp_header () const\fC [inline]\fP"
+
+.PP
+Return the packet's transport header pointer as TCP\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+(void *) \fBtcp_header()\fP == (void *) \fBtransport_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_transport_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtransport_header\fP 
+.RE
+.PP
+
+.SS "const click_udp * Packet::udp_header () const\fC [inline]\fP"
+
+.PP
+Return the packet's transport header pointer as UDP\&. 
+.PP
+\fBInvariant:\fP
+.RS 4
+(void *) \fBudp_header()\fP == (void *) \fBtransport_header()\fP 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+Not useful if !has_transport_header()\&. 
+.RE
+.PP
+\fBSee also:\fP
+.RS 4
+\fBtransport_header\fP 
+.RE
+.PP
+
+.SS "const \fBTimestamp\fP & Packet::timestamp_anno () const\fC [inline]\fP"
+
+.PP
+Return the timestamp annotation\&. 
+.SS "\fBTimestamp\fP & Packet::timestamp_anno ()\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Packet::set_timestamp_anno (const \fBTimestamp\fP & t)\fC [inline]\fP"
+
+.PP
+Set the timestamp annotation\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIt\fP new timestamp 
+.RE
+.PP
+
+.SS "net_device * Packet::device_anno () const\fC [inline]\fP"
+
+.PP
+Return the device annotation\&. 
+.SS "void Packet::set_device_anno (net_device * dev)\fC [inline]\fP"
+
+.PP
+Set the device annotation\&. 
+.SS "\fBPacket::PacketType\fP Packet::packet_type_anno () const\fC [inline]\fP"
+
+.PP
+Return the packet type annotation\&. 
+.SS "void Packet::set_packet_type_anno (\fBPacketType\fP t)\fC [inline]\fP"
+
+.PP
+Set the packet type annotation\&. 
+.SS "\fBPacket\fP * Packet::next () const\fC [inline]\fP"
+
+.PP
+Return the next packet annotation\&. 
+.SS "\fBPacket\fP *& Packet::next ()\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Packet::set_next (\fBPacket\fP * p)\fC [inline]\fP"
+
+.PP
+Set the next packet annotation\&. 
+.SS "\fBPacket\fP * Packet::prev () const\fC [inline]\fP"
+
+.PP
+Return the previous packet annotation\&. 
+.SS "\fBPacket\fP *& Packet::prev ()\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "void Packet::set_prev (\fBPacket\fP * p)\fC [inline]\fP"
+
+.PP
+Set the previous packet annotation\&. 
+.SS "\fBIPAddress\fP Packet::dst_ip_anno () const\fC [inline]\fP"
+
+.PP
+Return the destination IPv4 address annotation\&. The value is taken from the address annotation area\&. 
+.SS "void Packet::set_dst_ip_anno (\fBIPAddress\fP addr)\fC [inline]\fP"
+
+.PP
+Set the destination IPv4 address annotation\&. The value is stored in the address annotation area\&. 
+.SS "\fBIPAddress\fP Packet::src_ip_anno () const\fC [inline]\fP"
+
+.PP
+Return the source IPv4 address annotation\&. The value is taken from the address annotation area\&. 
+.SS "void Packet::set_src_ip_anno (\fBIPAddress\fP addr)\fC [inline]\fP"
+
+.PP
+Set the source IPv4 address annotation\&. The value is stored in the address annotation area\&. 
+.SS "void* Packet::anno ()\fC [inline]\fP"
+
+.PP
+Return a pointer to the annotation area\&. The area is \fBanno_size \fP bytes long\&. 
+.SS "const void* Packet::anno () const\fC [inline]\fP"
+This is an overloaded member function, provided for convenience\&. It differs from the above function only in what argument(s) it accepts\&. 
+.SS "uint8_t* Packet::anno_u8 ()\fC [inline]\fP"
+
+.PP
+Return a pointer to the annotation area as uint8_ts\&. 
+.SS "const uint8_t* Packet::anno_u8 () const\fC [inline]\fP"
+
+.PP
+overload 
+.SS "uint32_t* Packet::anno_u32 ()\fC [inline]\fP"
+
+.PP
+Return a pointer to the annotation area as uint32_ts\&. 
+.SS "const uint32_t* Packet::anno_u32 () const\fC [inline]\fP"
+
+.PP
+overload 
+.SS "uint8_t Packet::anno_u8 (int i) const\fC [inline]\fP"
+
+.PP
+Return annotation byte at offset \fIi\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP 
+.RE
+.PP
+
+.SS "void Packet::set_anno_u8 (int i, uint8_t x)\fC [inline]\fP"
+
+.PP
+Set annotation byte at offset \fIi\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP annotation offset in bytes 
+.br
+\fIx\fP value 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP 
+.RE
+.PP
+
+.SS "uint16_t Packet::anno_u16 (int i) const\fC [inline]\fP"
+
+.PP
+Return 16-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 1 
+.PP
+On aligned targets, \fIi\fP must be evenly divisible by 2\&.
+.RE
+.PP
+Affects annotation bytes [\fIi\fP, \fIi+1\fP]\&. 
+.SS "void Packet::set_anno_u16 (int i, uint16_t x)\fC [inline]\fP"
+
+.PP
+Set 16-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP annotation offset in bytes 
+.br
+\fIx\fP value 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 1 
+.PP
+On aligned targets, \fIi\fP must be evenly divisible by 2\&.
+.RE
+.PP
+Affects annotation bytes [\fIi\fP, \fIi+1\fP]\&. 
+.SS "int16_t Packet::anno_s16 (int i) const\fC [inline]\fP"
+
+.PP
+Return 16-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 1 
+.PP
+On aligned targets, \fIi\fP must be evenly divisible by 2\&.
+.RE
+.PP
+Affects annotation bytes [\fIi\fP, \fIi+1\fP]\&. 
+.SS "void Packet::set_anno_s16 (int i, int16_t x)\fC [inline]\fP"
+
+.PP
+Set 16-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP annotation offset in bytes 
+.br
+\fIx\fP value 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 1 
+.PP
+On aligned targets, \fIi\fP must be evenly divisible by 2\&.
+.RE
+.PP
+Affects annotation bytes [\fIi\fP, \fIi+1\fP]\&. 
+.SS "uint32_t Packet::anno_u32 (int i) const\fC [inline]\fP"
+
+.PP
+Return 32-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 3 
+.PP
+On aligned targets, \fIi\fP must be evenly divisible by 4\&.
+.RE
+.PP
+Affects user annotation bytes [\fIi\fP, \fIi+3\fP]\&. 
+.SS "void Packet::set_anno_u32 (int i, uint32_t x)\fC [inline]\fP"
+
+.PP
+Set 32-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP annotation offset in bytes 
+.br
+\fIx\fP value 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 3 
+.PP
+On aligned targets, \fIi\fP must be evenly divisible by 4\&.
+.RE
+.PP
+Affects user annotation bytes [\fIi\fP, \fIi+3\fP]\&. 
+.SS "int32_t Packet::anno_s32 (int i) const\fC [inline]\fP"
+
+.PP
+Return 32-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 3
+.RE
+.PP
+Affects user annotation bytes [4*\fIi\fP, 4*\fIi+3\fP]\&. 
+.SS "void Packet::set_anno_s32 (int i, int32_t x)\fC [inline]\fP"
+
+.PP
+Set 32-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP annotation offset in bytes 
+.br
+\fIx\fP value 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 3 
+.PP
+On aligned targets, \fIi\fP must be evenly divisible by 4\&.
+.RE
+.PP
+Affects user annotation bytes [\fIi\fP, \fIi+3\fP]\&. 
+.SS "uint64_t Packet::anno_u64 (int i) const\fC [inline]\fP"
+
+.PP
+Return 64-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 7 
+.PP
+On aligned targets, \fIi\fP must be aligned properly for uint64_t\&.
+.RE
+.PP
+Affects user annotation bytes [\fIi\fP, \fIi+7\fP]\&. 
+.SS "void Packet::set_anno_u64 (int i, uint64_t x)\fC [inline]\fP"
+
+.PP
+Set 64-bit annotation at offset \fIi\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP annotation offset in bytes 
+.br
+\fIx\fP value 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - 7 
+.PP
+On aligned targets, \fIi\fP must be aligned properly for uint64_t\&.
+.RE
+.PP
+Affects user annotation bytes [\fIi\fP, \fIi+7\fP]\&. 
+.SS "void* Packet::anno_ptr (int i) const\fC [inline]\fP"
+
+.PP
+Return void * sized annotation at offset \fIi\fP\&. 
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - sizeof(void *) 
+.PP
+On aligned targets, \fIi\fP must be aligned properly\&.
+.RE
+.PP
+Affects user annotation bytes [\fIi\fP, \fIi+sizeof\fP(void *)]\&. 
+.SS "void Packet::set_anno_ptr (int i, const void * x)\fC [inline]\fP"
+
+.PP
+Set void * sized annotation at offset \fIi\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIi\fP annotation offset in bytes 
+.br
+\fIx\fP value 
+.RE
+.PP
+\fBPrecondition:\fP
+.RS 4
+0 <= \fIi\fP < \fBanno_size \fP - sizeof(void *) 
+.PP
+On aligned targets, \fIi\fP must be aligned properly\&.
+.RE
+.PP
+Affects user annotation bytes [\fIi\fP, \fIi+sizeof\fP(void *)]\&. 
+.SS "void Packet::clear_annotations (bool all = \fCtrue\fP)\fC [inline]\fP"
+
+.PP
+Clear all packet annotations\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIall\fP If true, clear all annotations\&. If false, clear only Click's internal annotations\&.
+.RE
+.PP
+All user annotations and the address annotation are set to zero, the packet type annotation is set to HOST, the device annotation and all header pointers are set to null, the timestamp annotation is cleared, and the next/prev-packet annotations are set to null\&.
+.PP
+If \fIall\fP is false, then the packet type, device, timestamp, header, and next/prev-packet annotations are left alone\&. 
+.SS "void Packet::copy_annotations (const \fBPacket\fP * p)\fC [inline]\fP"
+
+.PP
+Copy most packet annotations from \fIp\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIp\fP source of annotations
+.RE
+.PP
+This packet's user annotations, address annotation, packet type annotation, device annotation, and timestamp annotation are set to the corresponding annotations from \fIp\fP\&.
+.PP
+\fBNote:\fP
+.RS 4
+The next/prev-packet and header annotations are not copied\&. 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Click from the source code\&.
